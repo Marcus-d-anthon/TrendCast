@@ -1,0 +1,36 @@
+import { Router } from "express";
+import { alertasRouter } from "../modules/alertas/alertas.routes";
+import { almacenesRouter } from "../modules/almacenes/almacenes.routes";
+import { authRouter } from "../modules/auth/auth.routes";
+import { categoriasRouter } from "../modules/categorias/categorias.routes";
+import { clientesRouter } from "../modules/clientes/clientes.routes";
+import { comprasRouter } from "../modules/compras/compras.routes";
+import { marcasRouter } from "../modules/marcas/marcas.routes";
+import { movimientosRouter } from "../modules/movimientos/movimientos.routes";
+import { notificacionesRouter } from "../modules/notificaciones/notificaciones.routes";
+import { prediccionRouter } from "../modules/prediccion/prediccion.routes";
+import { productosRouter } from "../modules/productos/productos.routes";
+import { proveedoresRouter } from "../modules/proveedores/proveedores.routes";
+import { reportesRouter } from "../modules/reportes/reportes.routes";
+import { unidadesMedidaRouter } from "../modules/unidades-medida/unidades-medida.routes";
+import { usuariosRouter } from "../modules/usuarios/usuarios.routes";
+import { ventasRouter } from "../modules/ventas/ventas.routes";
+
+export const apiRouter = Router();
+
+apiRouter.use("/auth", authRouter);
+apiRouter.use("/usuarios", usuariosRouter);
+apiRouter.use("/categorias", categoriasRouter);
+apiRouter.use("/marcas", marcasRouter);
+apiRouter.use("/unidades-medida", unidadesMedidaRouter);
+apiRouter.use("/almacenes", almacenesRouter);
+apiRouter.use("/clientes", clientesRouter);
+apiRouter.use("/proveedores", proveedoresRouter);
+apiRouter.use("/compras", comprasRouter);
+apiRouter.use("/ventas", ventasRouter);
+apiRouter.use("/productos", productosRouter);
+apiRouter.use("/movimientos", movimientosRouter);
+apiRouter.use("/alertas", alertasRouter);
+apiRouter.use("/notificaciones", notificacionesRouter);
+apiRouter.use("/prediccion", prediccionRouter);
+apiRouter.use("/reportes", reportesRouter);

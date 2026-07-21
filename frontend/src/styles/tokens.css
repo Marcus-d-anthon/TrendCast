@@ -1,0 +1,242 @@
+/*
+ * Sistema de diseño — Fluxo
+ * Paleta clínica/fresca: menta pálido de fondo, tarjetas blancas puras,
+ * texto verde pino oscuro (nunca negro puro), esmeralda para acciones
+ * positivas (Guardar, Añadir, stock saludable) y coral solo para lo crítico
+ * (stock agotado, eliminar). Soporta tema claro (por defecto) y oscuro,
+ * conmutable por el usuario vía [data-theme] en <html> (ver theme/ThemeContext).
+ */
+:root {
+  /* ---- Paleta base ---- */
+  --pine-900: #1a362b;
+  --pine-700: #234a3b;
+  --pine-500: #3d6b57;
+  --pine-100: #dceee6;
+
+  --mint-050: #f0f7f4;
+  --surface-0: #ffffff;
+
+  --mist-200: #d9eae1;
+  --mist-300: #c3dbce;
+  --stone-500: #55645b;
+
+  --emerald-500: #2ecc71;
+  --emerald-700: #219150;
+  --emerald-100: #dff7e8;
+
+  --coral-500: #e74c3c;
+  --coral-700: #c0392b;
+  --coral-100: #fdebe9;
+
+  --amber-500: #d98c1f;
+  --amber-700: #b06e14;
+  --amber-100: #fbedd8;
+
+  --teal-500: #1b7f8c;
+  --teal-700: #145f69;
+  --teal-100: #dceef0;
+
+  /* ---- Roles semanticos ---- */
+  --color-bg: var(--mint-050);
+  --color-surface: var(--surface-0);
+  --color-border: var(--mist-200);
+  --color-border-strong: var(--mist-300);
+  --color-text: var(--pine-900);
+  --color-text-secondary: var(--stone-500);
+  /* Emerald (#2ECC71) no da suficiente contraste con texto blanco (~2.1:1);
+     el pino oscuro sobre esmeralda si cumple AA (~6.2:1). El coral si
+     funciona con blanco (~3.8:1), de ahi los dos tokens separados. */
+  --color-text-on-primary: var(--pine-900);
+  --color-text-on-danger: var(--surface-0);
+
+  --color-primary: var(--emerald-500);
+  --color-primary-hover: var(--emerald-700);
+  --color-primary-soft: var(--emerald-100);
+
+  --color-accent: var(--amber-500);
+  --color-accent-text: var(--amber-700);
+  --color-accent-soft: var(--amber-100);
+
+  --color-info: var(--teal-500);
+  --color-info-text: var(--teal-700);
+  --color-info-soft: var(--teal-100);
+
+  --color-danger: var(--coral-500);
+  --color-danger-text: var(--coral-700);
+  --color-danger-soft: var(--coral-100);
+
+  --color-success: var(--emerald-500);
+  --color-success-text: var(--emerald-700);
+  --color-success-soft: var(--emerald-100);
+
+  /* Movimientos: mapeo semantico explicito (ver signature MovementTape).
+     ENTRADA = esmeralda (accion positiva, el inventario crece). SALIDA =
+     teal (neutro-informativo, una venta no es una alarma). AJUSTE = ambar
+     (atencion). TRANSFERENCIA = piedra (neutro: no crece ni reduce el
+     inventario total, solo lo mueve entre almacenes). */
+  --color-entrada: var(--emerald-500);
+  --color-salida: var(--teal-500);
+  --color-ajuste: var(--amber-500);
+  --color-transferencia: var(--stone-500);
+
+  /* ---- Tipografia ---- */
+  --font-display: "Bricolage Grotesque Variable", "Segoe UI", sans-serif;
+  --font-body: "Figtree", -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", "Cascadia Mono", ui-monospace, monospace;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.9375rem;
+  --text-md: 1.0625rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 2rem;
+  --text-3xl: 2.75rem;
+
+  --leading-tight: 1.15;
+  --leading-snug: 1.35;
+  --leading-normal: 1.55;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --weight-display: 650;
+  --weight-display-strong: 780;
+
+  /* ---- Espaciado (escala de 4px) ---- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+
+  /* ---- Radio ---- */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-full: 999px;
+
+  /* ---- Sombra (tenidas con tinta, no gris puro) ---- */
+  --shadow-sm: 0 1px 2px rgba(26, 54, 43, 0.06), 0 1px 1px rgba(26, 54, 43, 0.04);
+  --shadow-md: 0 4px 12px rgba(26, 54, 43, 0.08), 0 2px 4px rgba(26, 54, 43, 0.05);
+  --shadow-lg: 0 12px 32px rgba(26, 54, 43, 0.12), 0 4px 10px rgba(26, 54, 43, 0.06);
+
+  /* ---- Movimiento ---- */
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --duration-slow: 340ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --stagger-step: 60ms;
+
+  /* ---- Capas ---- */
+  --z-dropdown: 100;
+  --z-drawer: 200;
+  --z-modal: 300;
+  --z-toast: 400;
+
+  /* ---- Layout ---- */
+  --sidebar-width: 15.5rem;
+  --topbar-height: 3.75rem;
+  --content-max-width: 84rem;
+
+  /* ---- Graficos ---- */
+  --chart-series-1: #1fa75f;
+  --chart-series-2: #1b7f95;
+  --chart-series-3: #b87424;
+  --chart-series-4: #6b7a70;
+  --chart-grid: var(--color-border);
+  --chart-surface: var(--color-surface);
+}
+
+/* Tema oscuro: por defecto sigue la preferencia del sistema (si el usuario
+   no eligio nada explicito via el toggle) y siempre puede forzarse con
+   [data-theme] en <html>, que gana en ambas direcciones. El sidebar
+   (Sidebar.module.css) usa --pine-900 crudo a proposito: es una franja
+   siempre oscura, igual en ambos temas, por eso esos tokens no cambian aqui. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --color-bg: #0e1712;
+    --color-surface: #17251e;
+    --color-border: #263b32;
+    --color-border-strong: #34503f;
+    --color-text: #e9f2ed;
+    --color-text-secondary: #9fb3a8;
+
+    --color-primary: #35d67d;
+    --color-primary-hover: #2bb868;
+    --color-primary-soft: #163a28;
+    --color-accent: #e3a64e;
+    --color-accent-text: #f0c67e;
+    --color-accent-soft: #3a2c14;
+    --color-info: #4fb6c2;
+    --color-info-text: #8fd4dc;
+    --color-info-soft: #16292c;
+    --color-danger: #f0685a;
+    --color-danger-text: #f5988d;
+    --color-danger-soft: #34201c;
+    --color-success: #35d67d;
+    --color-success-text: #8fe6b3;
+    --color-success-soft: #163a28;
+
+    --color-entrada: #35d67d;
+    --color-salida: #4fb6c2;
+    --color-ajuste: #e3a64e;
+    --color-transferencia: #8fa398;
+
+    --chart-series-1: #33b36e;
+    --chart-series-2: #46a6bd;
+    --chart-series-3: #d9a254;
+    --chart-series-4: #8fa398;
+
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.35);
+    --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.45);
+  }
+}
+
+:root[data-theme="dark"] {
+  --color-bg: #0e1712;
+  --color-surface: #17251e;
+  --color-border: #263b32;
+  --color-border-strong: #34503f;
+  --color-text: #e9f2ed;
+  --color-text-secondary: #9fb3a8;
+
+  --color-primary: #35d67d;
+  --color-primary-hover: #2bb868;
+  --color-primary-soft: #163a28;
+  --color-accent: #e3a64e;
+  --color-accent-text: #f0c67e;
+  --color-accent-soft: #3a2c14;
+  --color-info: #4fb6c2;
+  --color-info-text: #8fd4dc;
+  --color-info-soft: #16292c;
+  --color-danger: #f0685a;
+  --color-danger-text: #f5988d;
+  --color-danger-soft: #34201c;
+  --color-success: #35d67d;
+  --color-success-soft: #163a28;
+
+  --color-entrada: #35d67d;
+  --color-salida: #4fb6c2;
+  --color-ajuste: #e3a64e;
+  --color-transferencia: #8fa398;
+
+  --chart-series-1: #33b36e;
+  --chart-series-2: #46a6bd;
+  --chart-series-3: #d9a254;
+  --chart-series-4: #8fa398;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.45);
+}

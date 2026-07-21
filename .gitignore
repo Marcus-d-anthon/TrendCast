@@ -1,0 +1,12 @@
+node_modules
+dist
+
+# Variables de entorno (nunca versionar secretos/credenciales)
+.env
+.env.test
+
+# Cliente Prisma generado (se regenera con `npx prisma generate`)
+src/generated/prisma
+
+# Logs
+*.log
