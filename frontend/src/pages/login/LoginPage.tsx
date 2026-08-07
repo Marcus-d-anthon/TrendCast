@@ -1,3 +1,4 @@
+import { Eye, EyeOff } from 'lucide-react';
 import { useState, type FormEvent } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '../../components/ui/Button';
@@ -20,6 +21,7 @@ export function LoginPage() {
   const location = useLocation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [mostrarPassword, setMostrarPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -95,15 +97,27 @@ export function LoginPage() {
               <label className={styles.label} htmlFor="password">
                 Contraseña
               </label>
-              <input
-                id="password"
-                type="password"
-                className={styles.input}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                autoComplete="current-password"
-                required
-              />
+              <div className={styles.passwordWrap}>
+                <input
+                  id="password"
+                  type={mostrarPassword ? 'text' : 'password'}
+                  className={styles.input}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  autoComplete="current-password"
+                  required
+                />
+                <button
+                  type="button"
+                  className={styles.togglePassword}
+                  onClick={() => setMostrarPassword((v) => !v)}
+                  aria-label={mostrarPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+                  aria-pressed={mostrarPassword}
+                  tabIndex={-1}
+                >
+                  {mostrarPassword ? <EyeOff size={18} aria-hidden="true" /> : <Eye size={18} aria-hidden="true" />}
+                </button>
+              </div>
             </div>
 
             <Button type="submit" className={styles.submit} disabled={loading}>

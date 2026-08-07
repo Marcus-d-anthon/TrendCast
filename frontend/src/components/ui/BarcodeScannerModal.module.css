@@ -1,21 +1,43 @@
 .hint {
   font-size: var(--text-sm);
   color: var(--color-text-secondary);
+  line-height: var(--leading-normal);
   margin-bottom: var(--space-4);
 }
 
-.viewport {
-  width: 100%;
-  min-height: 16rem;
+.inputWrap {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 2px dashed var(--color-border-strong);
   border-radius: var(--radius-md);
-  overflow: hidden;
   background: var(--color-bg);
-  border: 1px solid var(--color-border);
 }
 
-.error {
-  color: var(--color-danger-text);
-  font-size: var(--text-sm);
-  padding: var(--space-6) 0;
-  text-align: center;
+.inputWrap:focus-within {
+  border-color: var(--color-primary);
+  border-style: solid;
+}
+
+.icon {
+  color: var(--color-text-secondary);
+  flex-shrink: 0;
+}
+
+.input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: var(--text-lg);
+  color: var(--color-text);
+  outline: none;
+}
+
+.input::placeholder {
+  color: var(--color-text-secondary);
+  opacity: 0.6;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
 }

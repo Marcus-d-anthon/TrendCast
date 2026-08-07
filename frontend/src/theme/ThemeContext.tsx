@@ -2,7 +2,7 @@ import { createContext, useCallback, useEffect, useState, type ReactNode } from 
 
 export type Theme = 'light' | 'dark';
 
-const STORAGE_KEY = 'fluxo-theme';
+const STORAGE_KEY = 'trendcast-theme';
 
 function sistemaPrefiereOscuro(): boolean {
   return window.matchMedia('(prefers-color-scheme: dark)').matches;

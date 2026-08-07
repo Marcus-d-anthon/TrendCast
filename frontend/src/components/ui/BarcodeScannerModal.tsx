@@ -1,5 +1,5 @@
+import { ScanBarcode } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
-import type { Html5Qrcode } from 'html5-qrcode';
 import { Modal } from './Modal';
 import styles from './BarcodeScannerModal.module.css';
 
@@ -8,57 +8,51 @@ interface BarcodeScannerModalProps {
   onClose: () => void;
 }
 
-const ELEMENT_ID = 'barcode-scanner-viewport';
-
 /**
- * Escaneo de codigo de barras/QR via camara. Usa html5-qrcode con import
- * dinamico: es una libreria pesada y de uso opcional, no tiene sentido
- * cargarla en el bundle principal para todos los usuarios que nunca escanean.
- * El SKU del producto ES el valor codificado (ver BarcodeLabel.tsx), asi que
- * escanear equivale a buscar por SKU exacto.
+ * Lectura via lector de codigo de barras USB/HID, no camara: en un
+ * escritorio de bodega/mostrador el dispositivo real es un lector que se
+ * conecta como teclado y "escribe" el codigo seguido de Enter -- no hay
+ * camara del navegador que usar como en un celular. El input queda
+ * enfocado todo el tiempo que el modal esta abierto; cualquier tecla que no
+ * sea la del lector (un usuario tipeando a mano) funciona igual de bien.
  */
 export function BarcodeScannerModal({ onScan, onClose }: BarcodeScannerModalProps) {
-  const [error, setError] = useState<string | null>(null);
-  const scannerRef = useRef<Html5Qrcode | null>(null);
+  const [valor, setValor] = useState('');
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    let cancelado = false;
+    inputRef.current?.focus();
+  }, []);
 
-    import('html5-qrcode').then(({ Html5Qrcode }) => {
-      if (cancelado) return;
-      const scanner = new Html5Qrcode(ELEMENT_ID);
-      scannerRef.current = scanner;
-
-      scanner
-        .start(
-          { facingMode: 'environment' },
-          { fps: 10, qrbox: { width: 250, height: 120 } },
-          (decodedText) => {
-            onScan(decodedText);
-          },
-          () => {
-            // Errores por-frame (ningun codigo en el cuadro actual): se ignoran a proposito, son constantes durante el enfoque.
-          },
-        )
-        .catch(() => {
-          setError('No se pudo acceder a la cámara. Verifica los permisos del navegador.');
-        });
-    });
-
-    return () => {
-      cancelado = true;
-      scannerRef.current?.stop().catch(() => undefined);
-    };
-  }, [onScan]);
+  function manejarEnvio() {
+    const codigo = valor.trim();
+    if (codigo) onScan(codigo);
+  }
 
   return (
     <Modal title="Escanear código de barras" onClose={onClose}>
-      <p className={styles.hint}>Apunta la cámara al código de barras del producto (codifica el SKU).</p>
-      {error ? (
-        <p className={styles.error}>{error}</p>
-      ) : (
-        <div id={ELEMENT_ID} className={styles.viewport} />
-      )}
+      <p className={styles.hint}>
+        Apunta el lector al código de barras del producto (codifica el SKU) y dispara la lectura; también puedes
+        escribir el código a mano y presionar Enter.
+      </p>
+      <div className={styles.inputWrap}>
+        <ScanBarcode size={20} className={styles.icon} aria-hidden="true" />
+        <input
+          ref={inputRef}
+          className={styles.input}
+          value={valor}
+          onChange={(e) => setValor(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              manejarEnvio();
+            }
+          }}
+          placeholder="Esperando lectura…"
+          aria-label="Código escaneado"
+          autoComplete="off"
+        />
+      </div>
     </Modal>
   );
 }

@@ -1,16 +1,49 @@
+import { Prisma } from "../../generated/prisma/client";
 import { obtenerEmpresaId } from "../../lib/empresa";
 import { prisma } from "../../lib/prisma";
 import type { ActualizarProductoInput, CrearProductoInput } from "./ProductosValidators";
 
 const INCLUDE_RELACIONES = { categoria: true, marca: true, unidadMedida: true, stocks: { include: { almacen: true } } } as const;
 
+export interface ListarPaginadoParams {
+  page: number;
+  pageSize: number;
+  busqueda?: string;
+  categoriaId?: string;
+}
+
 export const productosRepository = {
+  // Usado por exportacion (catalogo completo) y por cualquier consumidor
+  // interno que de verdad necesite TODOS los productos, no una pagina.
   listar() {
     return prisma.producto.findMany({
       where: { deletedAt: null },
       orderBy: { nombre: "asc" },
       include: INCLUDE_RELACIONES,
     });
+  },
+
+  async listarPaginado({ page, pageSize, busqueda, categoriaId }: ListarPaginadoParams) {
+    const where: Prisma.ProductoWhereInput = {
+      deletedAt: null,
+      ...(categoriaId ? { categoriaId } : {}),
+      ...(busqueda
+        ? { OR: [{ nombre: { contains: busqueda, mode: "insensitive" } }, { sku: { contains: busqueda, mode: "insensitive" } }] }
+        : {}),
+    };
+
+    const [data, total] = await Promise.all([
+      prisma.producto.findMany({
+        where,
+        orderBy: { nombre: "asc" },
+        include: INCLUDE_RELACIONES,
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+      }),
+      prisma.producto.count({ where }),
+    ]);
+
+    return { data, total };
   },
 
   buscarPorId(id: string) {

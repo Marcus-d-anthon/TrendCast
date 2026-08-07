@@ -7,10 +7,20 @@ import {
   exportarProductosQuerySchema,
   idParamSchema,
   importarProductosSchema,
+  listarProductosQuerySchema,
 } from "./ProductosValidators";
 
 export const productosController = {
-  async listar(_req: Request, res: Response): Promise<void> {
+  // Paginado SOLO si el caller manda "page" en el query string: selects que
+  // necesitan el catalogo completo (ej. la linea de detalle de una compra o
+  // venta) siguen pidiendo /productos tal cual, sin romperse.
+  async listar(req: Request, res: Response): Promise<void> {
+    if (req.query.page !== undefined) {
+      const query = listarProductosQuerySchema.parse(req.query);
+      const resultado = await productosService.listarPaginado(query);
+      res.status(200).json(resultado);
+      return;
+    }
     const productos = await productosService.listar();
     res.status(200).json({ data: productos });
   },

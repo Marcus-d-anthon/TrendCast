@@ -16,6 +16,19 @@ export const productosService = {
     return productosRepository.listar();
   },
 
+  async listarPaginado(params: { page: number; pageSize: number; busqueda?: string; categoriaId?: string }) {
+    const { data, total } = await productosRepository.listarPaginado(params);
+    return {
+      data,
+      meta: {
+        total,
+        page: params.page,
+        pageSize: params.pageSize,
+        totalPaginas: Math.max(1, Math.ceil(total / params.pageSize)),
+      },
+    };
+  },
+
   async obtener(id: string) {
     const producto = await productosRepository.buscarPorId(id);
     if (!producto) {

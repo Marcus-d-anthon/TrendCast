@@ -47,6 +47,18 @@ interface ApiEnvelope<T> {
   error?: { message: string; details?: unknown };
 }
 
+export interface PaginaMeta {
+  total: number;
+  page: number;
+  pageSize: number;
+  totalPaginas: number;
+}
+
+export interface RespuestaPaginada<T> {
+  data: T[];
+  meta: PaginaMeta;
+}
+
 /** Descarga un archivo binario (export CSV/Excel/PDF) autenticado y dispara la descarga en el navegador. */
 export async function apiDownload(path: string, query: QueryParams | undefined, nombreSugerido: string): Promise<void> {
   const token = getToken();
@@ -76,6 +88,28 @@ export async function apiDownload(path: string, query: QueryParams | undefined, 
   enlace.click();
   enlace.remove();
   URL.revokeObjectURL(url);
+}
+
+/** Igual que apiRequest, pero conserva `meta` (paginacion) en vez de devolver solo `data`. */
+export async function apiRequestPaginado<T>(path: string, options: RequestOptions = {}): Promise<RespuestaPaginada<T>> {
+  const token = getToken();
+
+  const res = await fetch(buildPath(path, options.query), {
+    method: options.method ?? 'GET',
+    headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
+  });
+
+  const json: (ApiEnvelope<T[]> & { meta?: PaginaMeta }) | null = await res.json().catch(() => null);
+
+  if (!res.ok) {
+    if (res.status === 401) {
+      clearAuth();
+      onUnauthorized?.();
+    }
+    throw new ApiError(json?.error?.message ?? `Error ${res.status}`, res.status, json?.error?.details);
+  }
+
+  return { data: json?.data ?? [], meta: json?.meta ?? { total: 0, page: 1, pageSize: 10, totalPaginas: 1 } };
 }
 
 export async function apiRequest<T>(path: string, options: RequestOptions = {}): Promise<T> {

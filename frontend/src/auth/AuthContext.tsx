@@ -1,8 +1,11 @@
 import { createContext, useCallback, useEffect, useState, type ReactNode } from 'react';
 import { apiRequest, registerUnauthorizedHandler } from '../api/http-client';
 import { toast } from '../components/ui/toast';
+import { roleLabels } from '../utils/role-labels';
 import { clearAuth, getToken, getUsuario, setAuth } from './token-storage';
 import type { Usuario } from './types';
+
+const formateadorHora = new Intl.DateTimeFormat('es-EC', { hour: '2-digit', minute: '2-digit' });
 
 interface LoginResponse {
   token: string;
@@ -49,6 +52,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setAuth(result.token, result.usuario);
     setUsuario(result.usuario);
     setHasToken(true);
+    toast.success(
+      `Accediste como ${roleLabels[result.usuario.rol]} · ${result.usuario.nombre} · ${formateadorHora.format(new Date())}`,
+    );
   }, []);
 
   return (

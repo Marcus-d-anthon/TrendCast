@@ -37,6 +37,7 @@ enum AccionAuditoria {
   CREATE
   UPDATE
   SOFT_DELETE
+  LOGIN
 }
 
 enum TipoDocumento {
@@ -311,6 +312,9 @@ model Producto {
   @@index([deletedAt])
   @@index([activo])
   @@index([empresaId])
+  // No agrupado, compuesto: cubre "ORDER BY nombre" del listado paginado y
+  // el filtro por categoria+nombre a la vez sin tener que ordenar en memoria.
+  @@index([empresaId, nombre])
   @@map("productos")
 }
 
@@ -391,6 +395,7 @@ model Cliente {
 
   @@unique([empresaId, numeroDocumento])
   @@index([deletedAt])
+  @@index([empresaId, nombre])
   @@map("clientes")
 }
 
@@ -418,6 +423,7 @@ model Proveedor {
 
   @@unique([empresaId, numeroDocumento])
   @@index([deletedAt])
+  @@index([empresaId, razonSocial])
   @@map("proveedores")
 }
 

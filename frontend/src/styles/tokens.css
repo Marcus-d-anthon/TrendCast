@@ -152,6 +152,7 @@
 
   /* ---- Layout ---- */
   --sidebar-width: 15.5rem;
+  --sidebar-width-collapsed: 4.75rem;
   --topbar-height: 3.75rem;
   --content-max-width: 84rem;
 

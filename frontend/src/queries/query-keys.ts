@@ -1,10 +1,12 @@
 import type { ListarMovimientosParams } from '../api/endpoints/movimientos';
+import type { ListarProductosPaginadoParams } from '../api/endpoints/productos';
 import type { PrediccionParams } from '../api/endpoints/prediccion';
 import type { RangoFechas } from '../api/endpoints/reportes';
 import type { Granularidad } from '../api/types/domain';
 
 export const queryKeys = {
   productos: ['productos'] as const,
+  productosPaginado: (params: ListarProductosPaginadoParams) => ['productos', 'paginado', params] as const,
   producto: (id: string) => ['productos', id] as const,
   categorias: ['categorias'] as const,
   marcas: ['marcas'] as const,

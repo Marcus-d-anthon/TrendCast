@@ -4,6 +4,7 @@ import { ApiError } from '../../api/http-client';
 import { Button } from '../../components/ui/Button';
 import { FormField } from '../../components/ui/FormField';
 import { Input } from '../../components/ui/Input';
+import { PasswordInput } from '../../components/ui/PasswordInput';
 import { Modal } from '../../components/ui/Modal';
 import { Select } from '../../components/ui/Select';
 import { toast } from '../../components/ui/toast';
@@ -52,9 +53,8 @@ export function UsuarioFormModal({ onClose }: UsuarioFormModalProps) {
         </FormField>
 
         <FormField label="Contraseña" htmlFor="usr-password" hint="Mínimo 8 caracteres">
-          <Input
+          <PasswordInput
             id="usr-password"
-            type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             minLength={8}

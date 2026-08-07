@@ -232,4 +232,44 @@ describe("Modulo Productos", () => {
       expect(Buffer.isBuffer(res.body) ? res.body.length : res.text.length).toBeGreaterThan(0);
     });
   });
+
+  describe("GET /api/productos?page=... (paginado)", () => {
+    beforeEach(async () => {
+      for (let i = 1; i <= 12; i++) {
+        await request(app)
+          .post("/api/productos")
+          .set("Authorization", `Bearer ${tokenAdmin}`)
+          .send(payloadProducto(fixtures, categoriaId, { sku: `SKU-PAG-${String(i).padStart(2, "0")}`, nombre: `Producto Paginado ${i}` }));
+      }
+    });
+
+    it("sin 'page' devuelve el listado completo sin meta (compatibilidad con selects)", async () => {
+      const res = await request(app).get("/api/productos").set("Authorization", `Bearer ${tokenAdmin}`);
+      expect(res.status).toBe(200);
+      expect(res.body.data).toHaveLength(12);
+      expect(res.body.meta).toBeUndefined();
+    });
+
+    it("con 'page' devuelve 10 filas y metadatos de paginacion", async () => {
+      const res = await request(app).get("/api/productos?page=1").set("Authorization", `Bearer ${tokenAdmin}`);
+      expect(res.status).toBe(200);
+      expect(res.body.data).toHaveLength(10);
+      expect(res.body.meta).toMatchObject({ total: 12, page: 1, pageSize: 10, totalPaginas: 2 });
+    });
+
+    it("la segunda pagina trae el resto de filas", async () => {
+      const res = await request(app).get("/api/productos?page=2").set("Authorization", `Bearer ${tokenAdmin}`);
+      expect(res.status).toBe(200);
+      expect(res.body.data).toHaveLength(2);
+    });
+
+    it("filtra por busqueda de nombre/SKU dentro de la paginacion", async () => {
+      const res = await request(app)
+        .get("/api/productos?page=1&busqueda=Paginado 3")
+        .set("Authorization", `Bearer ${tokenAdmin}`);
+      expect(res.status).toBe(200);
+      expect(res.body.data).toHaveLength(1);
+      expect(res.body.data[0].sku).toBe("SKU-PAG-03");
+    });
+  });
 });

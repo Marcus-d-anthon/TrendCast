@@ -12,4 +12,22 @@ export const authRepository = {
   revocarRefreshToken(id: string) {
     return prisma.refreshToken.update({ where: { id }, data: { revokedAt: new Date() } });
   },
+
+  // Trazabilidad de acceso: entidad "Usuario" + accion LOGIN reutiliza la
+  // misma tabla audit_log que ya registra creaciones/ediciones/bajas, en vez
+  // de una tabla aparte solo para logins -- un unico libro de auditoria es
+  // lo que pidio el usuario ("trazabilidad de todos los movimientos").
+  registrarAcceso(usuarioId: string, rol: string, ip: string | null, userAgent: string | null) {
+    return prisma.auditLog.create({
+      data: {
+        entidad: "Usuario",
+        registroId: usuarioId,
+        accion: "LOGIN",
+        valorNuevo: { rol },
+        usuarioId,
+        ip,
+        userAgent,
+      },
+    });
+  },
 };

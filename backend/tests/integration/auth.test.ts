@@ -1,5 +1,6 @@
 import request from "supertest";
 import { beforeEach, describe, expect, it } from "vitest";
+import { prisma } from "../../src/lib/prisma";
 import { usuariosService } from "../../src/modules/usuarios/UsuariosService";
 import { buildTestApp } from "../helpers/build-app";
 import { limpiarBaseDeDatos } from "../helpers/test-db";
@@ -48,6 +49,24 @@ describe("POST /api/auth/login", () => {
     expect(res.body.data.usuario.permisos).toContain("inventario.ver");
     expect(res.body.data.usuario.permisos).not.toContain("usuarios.eliminar");
     expect(res.body.data.usuario.permisos).not.toContain("compras.crear");
+  });
+
+  it("registra el acceso en audit_log (trazabilidad)", async () => {
+    const res = await request(app)
+      .post("/api/auth/login")
+      .set("User-Agent", "vitest-suite")
+      .send({ email: "admin@tiansi.test", password: "ClaveSegura123" });
+
+    expect(res.status).toBe(200);
+
+    const registro = await prisma.auditLog.findFirst({
+      where: { entidad: "Usuario", registroId: res.body.data.usuario.id, accion: "LOGIN" },
+      orderBy: { fecha: "desc" },
+    });
+    expect(registro).not.toBeNull();
+    expect(registro?.usuarioId).toBe(res.body.data.usuario.id);
+    expect(registro?.userAgent).toBe("vitest-suite");
+    expect((registro?.valorNuevo as { rol: string } | null)?.rol).toBe("ADMIN");
   });
 
   it("rechaza password incorrecta", async () => {

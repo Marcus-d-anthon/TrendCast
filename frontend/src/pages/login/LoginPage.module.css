@@ -167,6 +167,36 @@
   color: var(--color-text);
   font-size: var(--text-base);
   transition: border-color var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out);
+  width: 100%;
+}
+
+.passwordWrap {
+  position: relative;
+  display: flex;
+}
+
+.passwordWrap .input {
+  padding-right: var(--space-10);
+}
+
+.togglePassword {
+  position: absolute;
+  right: var(--space-2);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  color: var(--color-text-secondary);
+  border-radius: var(--radius-sm);
+  transition: color var(--duration-fast) var(--ease-out), background-color var(--duration-fast) var(--ease-out);
+}
+
+.togglePassword:hover {
+  color: var(--color-text);
+  background: var(--color-bg);
 }
 
 .input::placeholder {

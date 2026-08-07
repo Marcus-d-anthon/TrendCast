@@ -1,6 +1,6 @@
 import { Package, Plus, ScanBarcode, Search, Upload } from 'lucide-react';
-import { useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { productosApi } from '../../api/endpoints/productos';
 import type { Producto } from '../../api/types/domain';
 import { usePermiso } from '../../auth/usePermiso';
@@ -12,13 +12,17 @@ import { EmptyState } from '../../components/ui/EmptyState';
 import { ErrorState } from '../../components/ui/ErrorState';
 import { ExportButtons } from '../../components/ui/ExportButtons';
 import exportButtonsStyles from '../../components/ui/ExportButtons.module.css';
+import { FiltersCard } from '../../components/ui/FiltersCard';
+import { FormField } from '../../components/ui/FormField';
 import { Input } from '../../components/ui/Input';
+import { Pagination } from '../../components/ui/Pagination';
 import { Select } from '../../components/ui/Select';
 import { Skeleton } from '../../components/ui/Skeleton';
 import tableStyles from '../../components/ui/Table.module.css';
 import { toast } from '../../components/ui/toast';
+import { useDebouncedValue } from '../../hooks/useDebouncedValue';
 import { useCategorias } from '../../queries/useCategorias';
-import { useProductos } from '../../queries/useProductos';
+import { useProductosPaginado } from '../../queries/useProductos';
 import { formatCurrency, formatNumber } from '../../utils/format';
 import { ImportarProductosModal } from './ImportarProductosModal';
 import { ProductoFormDrawer } from './ProductoFormDrawer';
@@ -38,39 +42,55 @@ function estadoStock(producto: Producto): { label: string; variant: 'success' | 
 export function ProductosListPage() {
   const puedeEscribir = usePermiso('productos.crear');
   const navigate = useNavigate();
+  const [params, setParams] = useSearchParams();
 
-  const productos = useProductos();
+  const busquedaCruda = params.get('q') ?? '';
+  const categoriaId = params.get('categoria') ?? '';
+  const pagina = Number(params.get('pagina') ?? 1);
+  const busqueda = useDebouncedValue(busquedaCruda);
+
   const categorias = useCategorias();
+  const productos = useProductosPaginado({ page: pagina, busqueda: busqueda || undefined, categoriaId: categoriaId || undefined });
 
-  const [busqueda, setBusqueda] = useState('');
-  const [categoriaId, setCategoriaId] = useState('');
   const [creando, setCreando] = useState(false);
   const [importando, setImportando] = useState(false);
   const [escaneando, setEscaneando] = useState(false);
 
-  const filtrados = useMemo(() => {
-    if (!productos.data) return [];
-    const termino = busqueda.trim().toLowerCase();
-    return productos.data.filter((producto) => {
-      const coincideTexto =
-        !termino || producto.nombre.toLowerCase().includes(termino) || producto.sku.toLowerCase().includes(termino);
-      const coincideCategoria = !categoriaId || producto.categoriaId === categoriaId;
-      return coincideTexto && coincideCategoria;
-    });
-  }, [productos.data, busqueda, categoriaId]);
+  function actualizarParam(clave: string, valor: string) {
+    const siguiente = new URLSearchParams(params);
+    if (valor) siguiente.set(clave, valor);
+    else siguiente.delete(clave);
+    if (clave !== 'pagina') siguiente.delete('pagina');
+    setParams(siguiente, { replace: true });
+  }
+
+  const filas = productos.data?.data ?? [];
+  const meta = productos.data?.meta;
 
   return (
     <div>
-      <div className={tableStyles.toolbar}>
-        <div className={tableStyles.filters}>
+      <FiltersCard
+        actions={
+          <Button type="button" variant="secondary" onClick={() => setEscaneando(true)}>
+            <ScanBarcode size={16} aria-hidden="true" /> Escanear
+          </Button>
+        }
+      >
+        <FormField label="Buscar" htmlFor="prod-buscar" hint="Por nombre o SKU, desde 3 caracteres">
           <Input
-            className={tableStyles.searchInput}
-            placeholder="Buscar por nombre o SKU…"
-            value={busqueda}
-            onChange={(e) => setBusqueda(e.target.value)}
+            id="prod-buscar"
+            placeholder="Ej. Omega 3, TS-NUT-003…"
+            value={busquedaCruda}
+            onChange={(e) => actualizarParam('q', e.target.value)}
             aria-label="Buscar productos"
           />
-          <Select value={categoriaId} onChange={(e) => setCategoriaId(e.target.value)} aria-label="Filtrar por categoría">
+        </FormField>
+        <FormField label="Categoría" htmlFor="prod-categoria" hint="Filtra el catálogo por categoría">
+          <Select
+            id="prod-categoria"
+            value={categoriaId}
+            onChange={(e) => actualizarParam('categoria', e.target.value)}
+          >
             <option value="">Todas las categorías</option>
             {categorias.data?.map((categoria) => (
               <option key={categoria.id} value={categoria.id}>
@@ -78,15 +98,12 @@ export function ProductosListPage() {
               </option>
             ))}
           </Select>
-          <Button type="button" variant="secondary" onClick={() => setEscaneando(true)}>
-            <ScanBarcode size={16} aria-hidden="true" /> Escanear
-          </Button>
-        </div>
+        </FormField>
+      </FiltersCard>
+
+      <div className={styles.toolbar}>
+        <ExportButtons className={exportButtonsStyles.noMargin} onExportar={(formato) => productosApi.exportar(formato)} />
         <div className={styles.toolbarActions}>
-          <ExportButtons
-            className={exportButtonsStyles.noMargin}
-            onExportar={(formato) => productosApi.exportar(formato)}
-          />
           {puedeEscribir && (
             <Button type="button" variant="secondary" onClick={() => setImportando(true)}>
               <Upload size={16} aria-hidden="true" /> Importar
@@ -103,17 +120,17 @@ export function ProductosListPage() {
       <Card>
         {productos.isLoading && <Skeleton height="16rem" />}
         {productos.isError && <ErrorState onRetry={() => productos.refetch()} />}
-        {productos.data && filtrados.length === 0 && (
+        {productos.data && filas.length === 0 && (busquedaCruda || categoriaId) && (
           <EmptyState
             icon={Search}
             title="Sin resultados"
             description="Ningún producto coincide con la búsqueda o el filtro aplicado."
           />
         )}
-        {productos.data && productos.data.length === 0 && (
+        {productos.data && filas.length === 0 && !busquedaCruda && !categoriaId && (
           <EmptyState icon={Package} title="Sin productos" description="Crea el primer producto del catálogo." />
         )}
-        {filtrados.length > 0 && (
+        {filas.length > 0 && (
           <div className={tableStyles.tableWrap}>
             <table className={tableStyles.table}>
               <thead>
@@ -128,7 +145,7 @@ export function ProductosListPage() {
                 </tr>
               </thead>
               <tbody>
-                {filtrados.map((producto) => {
+                {filas.map((producto) => {
                   const estado = estadoStock(producto);
                   return (
                     <tr
@@ -163,6 +180,15 @@ export function ProductosListPage() {
             </table>
           </div>
         )}
+
+        {meta && (
+          <Pagination
+            pagina={meta.page}
+            totalPaginas={meta.totalPaginas}
+            totalItems={meta.total}
+            onCambiarPagina={(p) => actualizarParam('pagina', String(p))}
+          />
+        )}
       </Card>
 
       {creando && <ProductoFormDrawer onClose={() => setCreando(false)} />}
@@ -171,14 +197,9 @@ export function ProductosListPage() {
         <BarcodeScannerModal
           onClose={() => setEscaneando(false)}
           onScan={(codigo) => {
-            const producto = productos.data?.find((p) => p.sku.toLowerCase() === codigo.trim().toLowerCase());
             setEscaneando(false);
-            if (producto) {
-              navigate(`/productos/${producto.id}`);
-            } else {
-              setBusqueda(codigo);
-              toast.error(`Ningún producto tiene el SKU "${codigo}"`);
-            }
+            actualizarParam('q', codigo);
+            toast.success(`Buscando SKU "${codigo}"…`);
           }}
         />
       )}

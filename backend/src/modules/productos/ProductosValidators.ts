@@ -37,6 +37,13 @@ export const actualizarProductoSchema = z
     message: "Debe incluir al menos un campo para actualizar",
   });
 
+export const listarProductosQuerySchema = z.object({
+  page: z.coerce.number().int().positive().default(1),
+  pageSize: z.coerce.number().int().positive().max(100).default(10),
+  busqueda: z.string().trim().min(1).optional(),
+  categoriaId: z.uuid().optional(),
+});
+
 export const importarProductosSchema = z.object({
   filas: z.array(crearProductoSchema).min(1, "El archivo no tiene filas para importar").max(500, "Máximo 500 filas por importación"),
 });
@@ -48,3 +55,4 @@ export const exportarProductosQuerySchema = z.object({
 export type CrearProductoInput = z.infer<typeof crearProductoSchema>;
 export type ActualizarProductoInput = z.infer<typeof actualizarProductoSchema>;
 export type ImportarProductosInput = z.infer<typeof importarProductosSchema>;
+export type ListarProductosQuery = z.infer<typeof listarProductosQuerySchema>;

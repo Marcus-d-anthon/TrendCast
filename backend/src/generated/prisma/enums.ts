@@ -33,7 +33,8 @@ export type TipoMovimiento = (typeof TipoMovimiento)[keyof typeof TipoMovimiento
 export const AccionAuditoria = {
   CREATE: 'CREATE',
   UPDATE: 'UPDATE',
-  SOFT_DELETE: 'SOFT_DELETE'
+  SOFT_DELETE: 'SOFT_DELETE',
+  LOGIN: 'LOGIN'
 } as const
 
 export type AccionAuditoria = (typeof AccionAuditoria)[keyof typeof AccionAuditoria]

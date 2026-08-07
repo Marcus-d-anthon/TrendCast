@@ -17,7 +17,7 @@ async function emitirTokens(usuarioId: string, rol: string) {
 }
 
 export const authService = {
-  async login(input: LoginInput) {
+  async login(input: LoginInput, contexto: { ip: string | null; userAgent: string | null }) {
     const usuario = await usuariosRepository.buscarPorEmail(input.email);
 
     // Mensaje generico en ambos casos (usuario inexistente o password
@@ -33,6 +33,11 @@ export const authService = {
 
     const { token, refreshToken } = await emitirTokens(usuario.id, usuario.rol);
     const permisos = await obtenerCodigosPermisoDeRol(usuario.rol);
+
+    // Trazabilidad: se espera (no fire-and-forget) para que quede escrita
+    // antes de responder, pero un fallo aqui nunca debe impedir el login --
+    // por eso el catch silencioso en vez de dejar que el error se propague.
+    await authRepository.registrarAcceso(usuario.id, usuario.rol, contexto.ip, contexto.userAgent).catch(() => undefined);
 
     return {
       token,

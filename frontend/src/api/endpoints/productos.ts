@@ -1,5 +1,13 @@
-import { apiDownload, apiRequest } from '../http-client';
+import { apiDownload, apiRequest, apiRequestPaginado, type RespuestaPaginada } from '../http-client';
 import type { FormatoExport, Producto } from '../types/domain';
+
+export interface ListarProductosPaginadoParams {
+  [key: string]: string | number | boolean | undefined;
+  page: number;
+  pageSize?: number;
+  busqueda?: string;
+  categoriaId?: string;
+}
 
 export interface CrearProductoInput {
   sku: string;
@@ -30,6 +38,8 @@ export interface ImportarProductosResultado {
 
 export const productosApi = {
   listar: () => apiRequest<Producto[]>('/productos'),
+  listarPaginado: (params: ListarProductosPaginadoParams): Promise<RespuestaPaginada<Producto>> =>
+    apiRequestPaginado<Producto>('/productos', { query: params }),
   obtener: (id: string) => apiRequest<Producto>(`/productos/${id}`),
   crear: (input: CrearProductoInput) => apiRequest<Producto>('/productos', { method: 'POST', body: input }),
   actualizar: (id: string, input: ActualizarProductoInput) =>
