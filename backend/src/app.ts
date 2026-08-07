@@ -5,8 +5,8 @@ import pinoHttp from "pino-http";
 import swaggerUi from "swagger-ui-express";
 import { logger } from "./config/logger";
 import { openApiDocument } from "./docs/openapi";
-import { errorHandlerMiddleware } from "./middlewares/error-handler.middleware";
-import { limitadorGeneral } from "./middlewares/rate-limit.middleware";
+import { errorHandlerMiddleware } from "./middlewares/ErrorHandlerMiddleware";
+import { limitadorGeneral } from "./middlewares/RateLimitMiddleware";
 import { apiRouter } from "./routes";
 
 export function createApp(): Express {

@@ -23,7 +23,7 @@ const MODELOS_CON_COLUMNAS_AUDITORIA = new Set([
 // origina (una entrada duplicada no aportaria informacion nueva).
 // MovimientoInventario, Compra y Venta tambien quedan fuera a proposito: su
 // AuditLog se escribe explicitamente dentro de la misma transaccion que la
-// operacion (ver movimientos.repository, compras.repository, ventas.repository),
+// operacion (ver MovimientosRepository, ComprasRepository, VentasRepository),
 // porque las extensiones de query no garantizan visibilidad completa dentro
 // de transacciones interactivas ($transaction) — es una limitacion
 // documentada de Prisma Client Extensions.

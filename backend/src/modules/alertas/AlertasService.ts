@@ -1,8 +1,8 @@
 import { enviarCorreo } from "../../lib/mailer";
 import { NotFoundError } from "../../lib/errors";
 import { prisma } from "../../lib/prisma";
-import { notificacionesRepository } from "../notificaciones/notificaciones.repository";
-import { alertasRepository } from "./alertas.repository";
+import { notificacionesRepository } from "../notificaciones/NotificacionesRepository";
+import { alertasRepository } from "./AlertasRepository";
 
 // Una alerta POR_VENCER se genera cuando a un lote le quedan 30 dias o menos
 // para su fecha de vencimiento.

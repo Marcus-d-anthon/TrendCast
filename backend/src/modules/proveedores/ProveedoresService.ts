@@ -1,6 +1,6 @@
 import { ConflictError, NotFoundError } from "../../lib/errors";
-import { proveedoresRepository } from "./proveedores.repository";
-import type { ActualizarProveedorInput, CrearProveedorInput } from "./proveedores.validators";
+import { proveedoresRepository } from "./ProveedoresRepository";
+import type { ActualizarProveedorInput, CrearProveedorInput } from "./ProveedoresValidators";
 
 export const proveedoresService = {
   listar() {

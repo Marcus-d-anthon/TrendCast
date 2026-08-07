@@ -4,7 +4,7 @@ import {
   calcularRegresionLineal,
   proyectar,
   recomendarReabastecimiento,
-} from "../../src/modules/prediccion/prediccion.math";
+} from "../../src/modules/prediccion/PrediccionMath";
 
 describe("calcularPromedioMovil", () => {
   it("calcula el promedio de los ultimos k periodos", () => {

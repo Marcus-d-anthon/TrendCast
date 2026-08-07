@@ -1,5 +1,6 @@
 import { Pencil, Plus, Tags, Trash2 } from 'lucide-react';
 import { useState } from 'react';
+import { ApiError } from '../../api/http-client';
 import { Badge } from '../../components/ui/Badge';
 import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
@@ -8,6 +9,7 @@ import { EmptyState } from '../../components/ui/EmptyState';
 import { ErrorState } from '../../components/ui/ErrorState';
 import { Skeleton } from '../../components/ui/Skeleton';
 import tableStyles from '../../components/ui/Table.module.css';
+import { toast } from '../../components/ui/toast';
 import { useAuth } from '../../auth/useAuth';
 import { useCategorias, useEliminarCategoria } from '../../queries/useCategorias';
 import type { Categoria } from '../../api/types/domain';
@@ -108,8 +110,13 @@ export function CategoriasPage() {
           loading={eliminar.isPending}
           onClose={() => setPorEliminar(null)}
           onConfirm={async () => {
-            await eliminar.mutateAsync(porEliminar.id);
-            setPorEliminar(null);
+            try {
+              await eliminar.mutateAsync(porEliminar.id);
+              toast.success('Categoría dada de baja');
+              setPorEliminar(null);
+            } catch (err) {
+              toast.error(err instanceof ApiError ? err.message : 'No se pudo dar de baja la categoría');
+            }
           }}
         />
       )}

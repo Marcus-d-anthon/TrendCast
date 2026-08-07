@@ -2,7 +2,7 @@ import { Prisma } from "../../generated/prisma/client";
 import { obtenerEmpresaId } from "../../lib/empresa";
 import { ConflictError } from "../../lib/errors";
 import { prisma } from "../../lib/prisma";
-import type { CrearVentaInput } from "./ventas.validators";
+import type { CrearVentaInput } from "./VentasValidators";
 
 const INCLUDE_RELACIONES = {
   cliente: true,
@@ -56,9 +56,9 @@ export const ventasRepository = {
     });
   },
 
-  // Simetrico a compras.repository.confirmar, con SALIDA en vez de ENTRADA:
+  // Simetrico a ComprasRepository.confirmar, con SALIDA en vez de ENTRADA:
   // por cada linea valida que el stock alcance (mismo criterio que
-  // movimientos.service.calcularSaldoResultante para una SALIDA manual) y
+  // MovimientosService.calcularSaldoResultante para una SALIDA manual) y
   // solo entonces genera el movimiento + actualiza Stock, todo en UNA
   // transaccion atomica.
   async confirmar(ventaId: string, usuarioId: string) {

@@ -3,7 +3,7 @@
   width: var(--sidebar-width);
   flex-shrink: 0;
   height: 100vh;
-  background: var(--pine-900);
+  background: var(--indigo-900);
   color: var(--surface-0);
   display: flex;
   flex-direction: column;
@@ -66,7 +66,7 @@
   font-size: 0.6875rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--pine-500);
+  color: var(--indigo-300);
 }
 
 .nav {
@@ -98,7 +98,7 @@
   composes: navLink;
   background: rgba(251, 252, 250, 0.1);
   color: var(--surface-0);
-  border-left-color: var(--emerald-500);
+  border-left-color: var(--indigo-300);
 }
 
 .navIcon {

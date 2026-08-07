@@ -1,8 +1,8 @@
 import { useState, type FormEvent } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '../../components/ui/Button';
-import { FluxoMark } from '../../components/brand/FluxoMark';
-import { FluxoWordmark } from '../../components/brand/FluxoWordmark';
+import { TrendCastMark } from '../../components/brand/TrendCastMark';
+import { TrendCastWordmark } from '../../components/brand/TrendCastWordmark';
 import { ApiError } from '../../api/http-client';
 import { useAuth } from '../../auth/useAuth';
 import { InventoryIllustration } from './InventoryIllustration';
@@ -49,7 +49,7 @@ export function LoginPage() {
         </div>
 
         <div className={styles.textLayer}>
-          <FluxoWordmark markSize={34} textSize="var(--text-2xl)" className={styles.wordmark} />
+          <TrendCastWordmark markSize={34} textSize="var(--text-2xl)" className={styles.wordmark} />
           <p className={styles.pitch}>
             Sistema de Gestión de Inventarios con Análisis Predictivo: Control de Existencias, Movimientos y
             Proyección de Demanda en un mismo lugar.
@@ -68,7 +68,7 @@ export function LoginPage() {
       <section className={styles.formPanel}>
         <div className={styles.card}>
           <div className={styles.avatar}>
-            <FluxoMark size={64} />
+            <TrendCastMark size={64} />
           </div>
           <h2 className={styles.cardTitle}>Iniciar sesión</h2>
           <p className={styles.cardSubtitle}>Ingresa con tu cuenta para continuar.</p>

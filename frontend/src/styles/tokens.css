@@ -1,24 +1,31 @@
 /*
- * Sistema de diseño — Fluxo
- * Paleta clínica/fresca: menta pálido de fondo, tarjetas blancas puras,
- * texto verde pino oscuro (nunca negro puro), esmeralda para acciones
- * positivas (Guardar, Añadir, stock saludable) y coral solo para lo crítico
- * (stock agotado, eliminar). Soporta tema claro (por defecto) y oscuro,
- * conmutable por el usuario vía [data-theme] en <html> (ver theme/ThemeContext).
+ * Sistema de diseño — TrendCast
+ * Paleta indigo/violeta: la marca ya no se apoya en "verde = producto
+ * natural", sino en un primario indigo-violeta (asociado a analitica,
+ * prediccion y software SaaS moderno — mismo terreno visual que Linear,
+ * Stripe o herramientas de datos) desacoplado de los colores semanticos de
+ * estado. Verde (emerald) queda reservado solo para "positivo/exito"
+ * (ENTRADA, stock saludable), coral solo para lo critico (stock agotado,
+ * eliminar) — son convenciones de estado universales, no la identidad de
+ * marca. Texto siempre con un pelin de tinte frio (nunca negro puro).
+ * Soporta tema claro (por defecto) y oscuro, conmutable por el usuario via
+ * [data-theme] en <html> (ver theme/ThemeContext). Ratios de contraste
+ * verificados con la formula WCAG 2.1 (relative luminance).
  */
 :root {
   /* ---- Paleta base ---- */
-  --pine-900: #1a362b;
-  --pine-700: #234a3b;
-  --pine-500: #3d6b57;
-  --pine-100: #dceee6;
+  --indigo-900: #241e5c;
+  --indigo-700: #4338ca;
+  --indigo-500: #5b4fe0;
+  --indigo-300: #8b7ffb;
+  --indigo-100: #e8e5fc;
 
-  --mint-050: #f0f7f4;
+  --violet-050: #f6f5fc;
   --surface-0: #ffffff;
 
-  --mist-200: #d9eae1;
-  --mist-300: #c3dbce;
-  --stone-500: #55645b;
+  --mist-200: #e3e1f5;
+  --mist-300: #cdcaea;
+  --stone-500: #625e77;
 
   --emerald-500: #2ecc71;
   --emerald-700: #219150;
@@ -37,21 +44,21 @@
   --teal-100: #dceef0;
 
   /* ---- Roles semanticos ---- */
-  --color-bg: var(--mint-050);
+  --color-bg: var(--violet-050);
   --color-surface: var(--surface-0);
   --color-border: var(--mist-200);
   --color-border-strong: var(--mist-300);
-  --color-text: var(--pine-900);
+  --color-text: #1c1b2e;
   --color-text-secondary: var(--stone-500);
-  /* Emerald (#2ECC71) no da suficiente contraste con texto blanco (~2.1:1);
-     el pino oscuro sobre esmeralda si cumple AA (~6.2:1). El coral si
-     funciona con blanco (~3.8:1), de ahi los dos tokens separados. */
-  --color-text-on-primary: var(--pine-900);
+  /* Indigo-500 (#5B4FE0) da 5.77:1 con blanco (AA normal-text) y su hover
+     indigo-700 (#4338CA) da 7.90:1 -- ya no hace falta el rodeo de texto
+     oscuro-sobre-primario que exigia el esmeralda anterior (~2.1:1 con blanco). */
+  --color-text-on-primary: var(--surface-0);
   --color-text-on-danger: var(--surface-0);
 
-  --color-primary: var(--emerald-500);
-  --color-primary-hover: var(--emerald-700);
-  --color-primary-soft: var(--emerald-100);
+  --color-primary: var(--indigo-500);
+  --color-primary-hover: var(--indigo-700);
+  --color-primary-soft: var(--indigo-100);
 
   --color-accent: var(--amber-500);
   --color-accent-text: var(--amber-700);
@@ -125,9 +132,9 @@
   --radius-full: 999px;
 
   /* ---- Sombra (tenidas con tinta, no gris puro) ---- */
-  --shadow-sm: 0 1px 2px rgba(26, 54, 43, 0.06), 0 1px 1px rgba(26, 54, 43, 0.04);
-  --shadow-md: 0 4px 12px rgba(26, 54, 43, 0.08), 0 2px 4px rgba(26, 54, 43, 0.05);
-  --shadow-lg: 0 12px 32px rgba(26, 54, 43, 0.12), 0 4px 10px rgba(26, 54, 43, 0.06);
+  --shadow-sm: 0 1px 2px rgba(28, 27, 46, 0.06), 0 1px 1px rgba(28, 27, 46, 0.04);
+  --shadow-md: 0 4px 12px rgba(28, 27, 46, 0.08), 0 2px 4px rgba(28, 27, 46, 0.05);
+  --shadow-lg: 0 12px 32px rgba(28, 27, 46, 0.12), 0 4px 10px rgba(28, 27, 46, 0.06);
 
   /* ---- Movimiento ---- */
   --duration-fast: 120ms;
@@ -149,10 +156,10 @@
   --content-max-width: 84rem;
 
   /* ---- Graficos ---- */
-  --chart-series-1: #1fa75f;
+  --chart-series-1: var(--indigo-500);
   --chart-series-2: #1b7f95;
   --chart-series-3: #b87424;
-  --chart-series-4: #6b7a70;
+  --chart-series-4: #6f6b85;
   --chart-grid: var(--color-border);
   --chart-surface: var(--color-surface);
 }
@@ -160,20 +167,20 @@
 /* Tema oscuro: por defecto sigue la preferencia del sistema (si el usuario
    no eligio nada explicito via el toggle) y siempre puede forzarse con
    [data-theme] en <html>, que gana en ambas direcciones. El sidebar
-   (Sidebar.module.css) usa --pine-900 crudo a proposito: es una franja
+   (Sidebar.module.css) usa --indigo-900 crudo a proposito: es una franja
    siempre oscura, igual en ambos temas, por eso esos tokens no cambian aqui. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) {
-    --color-bg: #0e1712;
-    --color-surface: #17251e;
-    --color-border: #263b32;
-    --color-border-strong: #34503f;
-    --color-text: #e9f2ed;
-    --color-text-secondary: #9fb3a8;
+    --color-bg: #14132a;
+    --color-surface: #1f1e3d;
+    --color-border: #2e2c52;
+    --color-border-strong: #423f72;
+    --color-text: #ecebfa;
+    --color-text-secondary: #a8a4c4;
 
-    --color-primary: #35d67d;
-    --color-primary-hover: #2bb868;
-    --color-primary-soft: #163a28;
+    --color-primary: #8b7ffb;
+    --color-primary-hover: #a79cff;
+    --color-primary-soft: #2a2657;
     --color-accent: #e3a64e;
     --color-accent-text: #f0c67e;
     --color-accent-soft: #3a2c14;
@@ -190,12 +197,12 @@
     --color-entrada: #35d67d;
     --color-salida: #4fb6c2;
     --color-ajuste: #e3a64e;
-    --color-transferencia: #8fa398;
+    --color-transferencia: #9490b3;
 
-    --chart-series-1: #33b36e;
+    --chart-series-1: #8b7ffb;
     --chart-series-2: #46a6bd;
     --chart-series-3: #d9a254;
-    --chart-series-4: #8fa398;
+    --chart-series-4: #9490b3;
 
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
     --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.35);
@@ -204,16 +211,16 @@
 }
 
 :root[data-theme="dark"] {
-  --color-bg: #0e1712;
-  --color-surface: #17251e;
-  --color-border: #263b32;
-  --color-border-strong: #34503f;
-  --color-text: #e9f2ed;
-  --color-text-secondary: #9fb3a8;
+  --color-bg: #14132a;
+  --color-surface: #1f1e3d;
+  --color-border: #2e2c52;
+  --color-border-strong: #423f72;
+  --color-text: #ecebfa;
+  --color-text-secondary: #a8a4c4;
 
-  --color-primary: #35d67d;
-  --color-primary-hover: #2bb868;
-  --color-primary-soft: #163a28;
+  --color-primary: #8b7ffb;
+  --color-primary-hover: #a79cff;
+  --color-primary-soft: #2a2657;
   --color-accent: #e3a64e;
   --color-accent-text: #f0c67e;
   --color-accent-soft: #3a2c14;
@@ -224,17 +231,18 @@
   --color-danger-text: #f5988d;
   --color-danger-soft: #34201c;
   --color-success: #35d67d;
+  --color-success-text: #8fe6b3;
   --color-success-soft: #163a28;
 
   --color-entrada: #35d67d;
   --color-salida: #4fb6c2;
   --color-ajuste: #e3a64e;
-  --color-transferencia: #8fa398;
+  --color-transferencia: #9490b3;
 
-  --chart-series-1: #33b36e;
+  --chart-series-1: #8b7ffb;
   --chart-series-2: #46a6bd;
   --chart-series-3: #d9a254;
-  --chart-series-4: #8fa398;
+  --chart-series-4: #9490b3;
 
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.35);

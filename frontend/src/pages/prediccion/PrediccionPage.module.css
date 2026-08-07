@@ -77,3 +77,27 @@
   font-size: var(--text-sm);
   opacity: 0.9;
 }
+
+.explanationCard {
+  margin-top: var(--space-6);
+}
+
+.explanationTitle {
+  font-size: var(--text-md);
+  margin-bottom: var(--space-3);
+}
+
+.explanationParagraph {
+  font-size: var(--text-sm);
+  line-height: var(--leading-normal);
+  color: var(--color-text);
+  margin-bottom: var(--space-3);
+}
+
+.explanationLimitations {
+  font-size: var(--text-xs);
+  line-height: var(--leading-normal);
+  color: var(--color-text-secondary);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border);
+}

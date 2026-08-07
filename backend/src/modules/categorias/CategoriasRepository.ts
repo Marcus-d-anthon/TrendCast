@@ -1,6 +1,6 @@
 import { obtenerEmpresaId } from "../../lib/empresa";
 import { prisma } from "../../lib/prisma";
-import type { ActualizarCategoriaInput, CrearCategoriaInput } from "./categorias.validators";
+import type { ActualizarCategoriaInput, CrearCategoriaInput } from "./CategoriasValidators";
 
 export const categoriasRepository = {
   listar() {

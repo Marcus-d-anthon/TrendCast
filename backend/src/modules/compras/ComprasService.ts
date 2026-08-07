@@ -1,9 +1,9 @@
 import { ConflictError, NotFoundError } from "../../lib/errors";
-import { almacenesRepository } from "../almacenes/almacenes.repository";
-import { productosRepository } from "../productos/productos.repository";
-import { proveedoresRepository } from "../proveedores/proveedores.repository";
-import { comprasRepository, type DetalleCalculado } from "./compras.repository";
-import type { CrearCompraInput } from "./compras.validators";
+import { almacenesRepository } from "../almacenes/AlmacenesRepository";
+import { productosRepository } from "../productos/ProductosRepository";
+import { proveedoresRepository } from "../proveedores/ProveedoresRepository";
+import { comprasRepository, type DetalleCalculado } from "./ComprasRepository";
+import type { CrearCompraInput } from "./ComprasValidators";
 
 // Tasa de IVA vigente en Ecuador (misma constante conceptual usada en el
 // calculo ilustrativo de prisma/seed.ts).

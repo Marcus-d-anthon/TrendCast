@@ -1,10 +1,11 @@
 import bcrypt from "bcrypt";
 import { UnauthorizedError } from "../../lib/errors";
 import { firmarToken } from "../../lib/jwt";
+import { obtenerCodigosPermisoDeRol } from "../../lib/permisos-matriz";
 import { calcularExpiracionRefreshToken, generarRefreshToken, hashRefreshToken } from "../../lib/refresh-token";
-import { usuariosRepository } from "../usuarios/usuarios.repository";
-import { authRepository } from "./auth.repository";
-import type { LoginInput } from "./auth.validators";
+import { usuariosRepository } from "../usuarios/UsuariosRepository";
+import { authRepository } from "./AuthRepository";
+import type { LoginInput } from "./AuthValidators";
 
 async function emitirTokens(usuarioId: string, rol: string) {
   const token = firmarToken({ sub: usuarioId, rol });
@@ -31,11 +32,12 @@ export const authService = {
     }
 
     const { token, refreshToken } = await emitirTokens(usuario.id, usuario.rol);
+    const permisos = await obtenerCodigosPermisoDeRol(usuario.rol);
 
     return {
       token,
       refreshToken,
-      usuario: { id: usuario.id, email: usuario.email, nombre: usuario.nombre, rol: usuario.rol },
+      usuario: { id: usuario.id, email: usuario.email, nombre: usuario.nombre, rol: usuario.rol, permisos },
     };
   },
 
@@ -59,11 +61,12 @@ export const authService = {
 
     await authRepository.revocarRefreshToken(registro.id);
     const { token, refreshToken } = await emitirTokens(usuario.id, usuario.rol);
+    const permisos = await obtenerCodigosPermisoDeRol(usuario.rol);
 
     return {
       token,
       refreshToken,
-      usuario: { id: usuario.id, email: usuario.email, nombre: usuario.nombre, rol: usuario.rol },
+      usuario: { id: usuario.id, email: usuario.email, nombre: usuario.nombre, rol: usuario.rol, permisos },
     };
   },
 };

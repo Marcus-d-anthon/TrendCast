@@ -1,5 +1,5 @@
 import { ForbiddenError, NotFoundError } from "../../lib/errors";
-import { notificacionesRepository } from "./notificaciones.repository";
+import { notificacionesRepository } from "./NotificacionesRepository";
 
 export const notificacionesService = {
   listar(usuarioId: string) {

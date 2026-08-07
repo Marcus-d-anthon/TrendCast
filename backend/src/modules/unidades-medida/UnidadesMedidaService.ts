@@ -1,6 +1,6 @@
 import { ConflictError, NotFoundError } from "../../lib/errors";
-import { unidadesMedidaRepository } from "./unidades-medida.repository";
-import type { ActualizarUnidadMedidaInput, CrearUnidadMedidaInput } from "./unidades-medida.validators";
+import { unidadesMedidaRepository } from "./UnidadesMedidaRepository";
+import type { ActualizarUnidadMedidaInput, CrearUnidadMedidaInput } from "./UnidadesMedidaValidators";
 
 export const unidadesMedidaService = {
   listar() {

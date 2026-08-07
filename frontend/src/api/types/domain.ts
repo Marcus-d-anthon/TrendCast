@@ -213,6 +213,28 @@ export interface MovimientosPorPeriodoItem {
   total: number;
 }
 
+export interface CurvaAbcItem {
+  productoId: string;
+  sku: string | null;
+  nombre: string | null;
+  valorTotal: number;
+  porcentajeAcumulado: number;
+  clase: 'A' | 'B' | 'C';
+}
+
+export interface DashboardEjecutivo {
+  valorTotalInventario: number;
+  totalProductos: number;
+  totalUnidades: number;
+  margenBrutoPromedio: number;
+  rotacionInventario: number;
+  ventanaRotacionDias: number;
+  curvaAbc: CurvaAbcItem[];
+  resumenAbc: { A: number; B: number; C: number };
+}
+
+export type FormatoExport = 'csv' | 'excel' | 'pdf';
+
 export type Granularidad = 'diaria' | 'semanal' | 'mensual';
 
 export interface PrediccionHistoricoPunto {

@@ -1,18 +1,18 @@
-import { FluxoMark } from './FluxoMark';
-import styles from './FluxoWordmark.module.css';
+import { TrendCastMark } from './TrendCastMark';
+import styles from './TrendCastWordmark.module.css';
 
-interface FluxoWordmarkProps {
+interface TrendCastWordmarkProps {
   markSize?: number;
   textSize?: string;
   className?: string;
 }
 
-export function FluxoWordmark({ markSize = 28, textSize = 'var(--text-xl)', className }: FluxoWordmarkProps) {
+export function TrendCastWordmark({ markSize = 28, textSize = 'var(--text-xl)', className }: TrendCastWordmarkProps) {
   return (
     <span className={[styles.wordmark, className].filter(Boolean).join(' ')}>
-      <FluxoMark size={markSize} />
+      <TrendCastMark size={markSize} />
       <span className={styles.text} style={{ fontSize: textSize }}>
-        Fluxo
+        TrendCast
       </span>
     </span>
   );

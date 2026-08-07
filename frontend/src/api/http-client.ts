@@ -47,6 +47,37 @@ interface ApiEnvelope<T> {
   error?: { message: string; details?: unknown };
 }
 
+/** Descarga un archivo binario (export CSV/Excel/PDF) autenticado y dispara la descarga en el navegador. */
+export async function apiDownload(path: string, query: QueryParams | undefined, nombreSugerido: string): Promise<void> {
+  const token = getToken();
+  const res = await fetch(buildPath(path, query), {
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+  });
+
+  if (!res.ok) {
+    if (res.status === 401) {
+      clearAuth();
+      onUnauthorized?.();
+    }
+    const json: ApiEnvelope<unknown> | null = await res.json().catch(() => null);
+    throw new ApiError(json?.error?.message ?? `Error ${res.status}`, res.status, json?.error?.details);
+  }
+
+  const disposition = res.headers.get('Content-Disposition') ?? '';
+  const coincidencia = /filename="?([^"]+)"?/.exec(disposition);
+  const nombreArchivo = coincidencia?.[1] ?? nombreSugerido;
+
+  const blob = await res.blob();
+  const url = URL.createObjectURL(blob);
+  const enlace = document.createElement('a');
+  enlace.href = url;
+  enlace.download = nombreArchivo;
+  document.body.appendChild(enlace);
+  enlace.click();
+  enlace.remove();
+  URL.revokeObjectURL(url);
+}
+
 export async function apiRequest<T>(path: string, options: RequestOptions = {}): Promise<T> {
   const token = getToken();
 

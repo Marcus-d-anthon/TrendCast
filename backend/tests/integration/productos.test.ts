@@ -154,4 +154,82 @@ describe("Modulo Productos", () => {
     expect(res.body.data[0].categoria.id).toBe(categoriaId);
     expect(res.body.data[0].stocks[0].cantidad).toBe(0);
   });
+
+  describe("POST /api/productos/importar", () => {
+    it("crea las filas validas y reporta las invalidas fila por fila", async () => {
+      const valida1 = payloadProducto(fixtures, categoriaId, { sku: "SKU-IMPORT-1" });
+      const valida2 = payloadProducto(fixtures, categoriaId, { sku: "SKU-IMPORT-2" });
+      const categoriaInexistente = payloadProducto(fixtures, "00000000-0000-0000-0000-000000000000", {
+        sku: "SKU-IMPORT-3",
+      });
+
+      const res = await request(app)
+        .post("/api/productos/importar")
+        .set("Authorization", `Bearer ${tokenAdmin}`)
+        .send({ filas: [valida1, valida2, categoriaInexistente] });
+
+      expect(res.status).toBe(200);
+      expect(res.body.data.totalFilas).toBe(3);
+      expect(res.body.data.creados).toBe(2);
+      expect(res.body.data.errores).toHaveLength(1);
+      expect(res.body.data.errores[0]).toMatchObject({ fila: 3, sku: "SKU-IMPORT-3" });
+
+      const listado = await request(app).get("/api/productos").set("Authorization", `Bearer ${tokenAdmin}`);
+      expect(listado.body.data.map((p: { sku: string }) => p.sku).sort()).toEqual(["SKU-IMPORT-1", "SKU-IMPORT-2"]);
+    });
+
+    it("rechaza filas duplicadas contra un SKU ya existente sin afectar al resto", async () => {
+      await request(app)
+        .post("/api/productos")
+        .set("Authorization", `Bearer ${tokenAdmin}`)
+        .send(payloadProducto(fixtures, categoriaId, { sku: "SKU-EXISTENTE" }));
+
+      const res = await request(app)
+        .post("/api/productos/importar")
+        .set("Authorization", `Bearer ${tokenAdmin}`)
+        .send({
+          filas: [
+            payloadProducto(fixtures, categoriaId, { sku: "SKU-EXISTENTE" }),
+            payloadProducto(fixtures, categoriaId, { sku: "SKU-NUEVO" }),
+          ],
+        });
+
+      expect(res.status).toBe(200);
+      expect(res.body.data.creados).toBe(1);
+      expect(res.body.data.errores[0].mensaje).toMatch(/ya existe/i);
+    });
+
+    it("rechaza una importacion vacia (400)", async () => {
+      const res = await request(app)
+        .post("/api/productos/importar")
+        .set("Authorization", `Bearer ${tokenAdmin}`)
+        .send({ filas: [] });
+      expect(res.status).toBe(400);
+    });
+
+    it("rechaza la importacion para un rol sin permiso de escritura (403)", async () => {
+      const res = await request(app)
+        .post("/api/productos/importar")
+        .set("Authorization", `Bearer ${tokenOperador}`)
+        .send({ filas: [payloadProducto(fixtures, categoriaId, { sku: "SKU-NO-PERMITIDO" })] });
+      expect(res.status).toBe(403);
+    });
+  });
+
+  describe("GET /api/productos/exportar", () => {
+    it.each(["csv", "excel", "pdf"] as const)("descarga el catalogo en formato %s", async (formato) => {
+      await request(app)
+        .post("/api/productos")
+        .set("Authorization", `Bearer ${tokenAdmin}`)
+        .send(payloadProducto(fixtures, categoriaId, { sku: "SKU-EXPORT" }));
+
+      const res = await request(app)
+        .get(`/api/productos/exportar?formato=${formato}`)
+        .set("Authorization", `Bearer ${tokenAdmin}`);
+
+      expect(res.status).toBe(200);
+      expect(res.headers["content-disposition"]).toContain("attachment");
+      expect(Buffer.isBuffer(res.body) ? res.body.length : res.text.length).toBeGreaterThan(0);
+    });
+  });
 });

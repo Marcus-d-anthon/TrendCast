@@ -1,20 +1,20 @@
 import { Router } from "express";
-import { alertasRouter } from "../modules/alertas/alertas.routes";
-import { almacenesRouter } from "../modules/almacenes/almacenes.routes";
-import { authRouter } from "../modules/auth/auth.routes";
-import { categoriasRouter } from "../modules/categorias/categorias.routes";
-import { clientesRouter } from "../modules/clientes/clientes.routes";
-import { comprasRouter } from "../modules/compras/compras.routes";
-import { marcasRouter } from "../modules/marcas/marcas.routes";
-import { movimientosRouter } from "../modules/movimientos/movimientos.routes";
-import { notificacionesRouter } from "../modules/notificaciones/notificaciones.routes";
-import { prediccionRouter } from "../modules/prediccion/prediccion.routes";
-import { productosRouter } from "../modules/productos/productos.routes";
-import { proveedoresRouter } from "../modules/proveedores/proveedores.routes";
-import { reportesRouter } from "../modules/reportes/reportes.routes";
-import { unidadesMedidaRouter } from "../modules/unidades-medida/unidades-medida.routes";
-import { usuariosRouter } from "../modules/usuarios/usuarios.routes";
-import { ventasRouter } from "../modules/ventas/ventas.routes";
+import { alertasRouter } from "../modules/alertas/AlertasRoutes";
+import { almacenesRouter } from "../modules/almacenes/AlmacenesRoutes";
+import { authRouter } from "../modules/auth/AuthRoutes";
+import { categoriasRouter } from "../modules/categorias/CategoriasRoutes";
+import { clientesRouter } from "../modules/clientes/ClientesRoutes";
+import { comprasRouter } from "../modules/compras/ComprasRoutes";
+import { marcasRouter } from "../modules/marcas/MarcasRoutes";
+import { movimientosRouter } from "../modules/movimientos/MovimientosRoutes";
+import { notificacionesRouter } from "../modules/notificaciones/NotificacionesRoutes";
+import { prediccionRouter } from "../modules/prediccion/PrediccionRoutes";
+import { productosRouter } from "../modules/productos/ProductosRoutes";
+import { proveedoresRouter } from "../modules/proveedores/ProveedoresRoutes";
+import { reportesRouter } from "../modules/reportes/ReportesRoutes";
+import { unidadesMedidaRouter } from "../modules/unidades-medida/UnidadesMedidaRoutes";
+import { usuariosRouter } from "../modules/usuarios/UsuariosRoutes";
+import { ventasRouter } from "../modules/ventas/VentasRoutes";
 
 export const apiRouter = Router();
 

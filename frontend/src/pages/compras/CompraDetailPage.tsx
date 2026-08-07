@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import type { EstadoDocumentoComercial } from '../../api/types/domain';
 import { ApiError } from '../../api/http-client';
-import { useAuth } from '../../auth/useAuth';
+import { usePermiso } from '../../auth/usePermiso';
 import { Badge } from '../../components/ui/Badge';
 import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
@@ -11,6 +11,7 @@ import { ConfirmDialog } from '../../components/ui/ConfirmDialog';
 import { ErrorState } from '../../components/ui/ErrorState';
 import { Skeleton } from '../../components/ui/Skeleton';
 import tableStyles from '../../components/ui/Table.module.css';
+import { toast } from '../../components/ui/toast';
 import { useAnularCompra, useCompra, useConfirmarCompra } from '../../queries/useCompras';
 import { formatCurrency, formatDateTime } from '../../utils/format';
 import styles from '../productos/ProductoDetailPage.module.css';
@@ -29,8 +30,7 @@ const ESTADO_LABEL: Record<EstadoDocumentoComercial, string> = {
 
 export function CompraDetailPage() {
   const { id } = useParams<{ id: string }>();
-  const { usuario } = useAuth();
-  const puedeEditar = usuario?.rol === 'ADMIN' || usuario?.rol === 'SUPERVISOR';
+  const puedeEditar = usePermiso('compras.editar');
 
   const compra = useCompra(id);
   const confirmar = useConfirmarCompra(id ?? '');
@@ -151,6 +151,7 @@ export function CompraDetailPage() {
             setError(null);
             try {
               await confirmar.mutateAsync();
+              toast.success('Compra confirmada: stock actualizado');
               setConfirmando(false);
             } catch (err) {
               setError(err instanceof ApiError ? err.message : 'No se pudo confirmar la compra');
@@ -172,6 +173,7 @@ export function CompraDetailPage() {
             setError(null);
             try {
               await anular.mutateAsync();
+              toast.success('Compra anulada');
               setAnulando(false);
             } catch (err) {
               setError(err instanceof ApiError ? err.message : 'No se pudo anular la compra');

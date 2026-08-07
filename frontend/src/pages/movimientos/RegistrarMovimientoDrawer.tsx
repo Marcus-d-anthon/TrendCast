@@ -6,6 +6,7 @@ import { Drawer } from '../../components/ui/Drawer';
 import { FormField } from '../../components/ui/FormField';
 import { Input } from '../../components/ui/Input';
 import { Select } from '../../components/ui/Select';
+import { toast } from '../../components/ui/toast';
 import { useAlmacenes } from '../../queries/useAlmacenes';
 import { useProductos } from '../../queries/useProductos';
 import { useMovimientos, useRegistrarMovimiento } from '../../queries/useMovimientos';
@@ -58,6 +59,7 @@ export function RegistrarMovimientoDrawer({ productoIdInicial, onClose }: Regist
         motivo: motivo || undefined,
         movimientoOrigenId: esAjuste ? movimientoOrigenId : undefined,
       });
+      toast.success('Movimiento registrado');
       onClose();
     } catch (err) {
       setError(err instanceof ApiError ? err.message : 'No se pudo registrar el movimiento');

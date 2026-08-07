@@ -1,0 +1,12 @@
+.wrap {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-top: var(--space-2);
+}
+
+.canvas {
+  background: #ffffff;
+  border-radius: var(--radius-sm);
+  padding: var(--space-1);
+}

@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
-import { alertasService } from "./alertas.service";
-import { idParamSchema } from "./alertas.validators";
+import { alertasService } from "./AlertasService";
+import { idParamSchema } from "./AlertasValidators";
 
 export const alertasController = {
   async listar(_req: Request, res: Response): Promise<void> {

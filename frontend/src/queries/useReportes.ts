@@ -20,3 +20,7 @@ export function useMovimientosPorPeriodo(params: RangoFechas & { granularidad?: 
     queryFn: () => reportesApi.movimientosPorPeriodo(params),
   });
 }
+
+export function useDashboardEjecutivo() {
+  return useQuery({ queryKey: queryKeys.reportesDashboard, queryFn: reportesApi.dashboard });
+}

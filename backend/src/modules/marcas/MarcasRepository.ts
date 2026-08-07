@@ -1,6 +1,6 @@
 import { obtenerEmpresaId } from "../../lib/empresa";
 import { prisma } from "../../lib/prisma";
-import type { ActualizarMarcaInput, CrearMarcaInput } from "./marcas.validators";
+import type { ActualizarMarcaInput, CrearMarcaInput } from "./MarcasValidators";
 
 export const marcasRepository = {
   listar() {

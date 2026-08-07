@@ -1,7 +1,7 @@
 import { Prisma } from "../../generated/prisma/client";
 import { obtenerEmpresaId } from "../../lib/empresa";
 import { prisma } from "../../lib/prisma";
-import type { CrearCompraInput } from "./compras.validators";
+import type { CrearCompraInput } from "./ComprasValidators";
 
 const INCLUDE_RELACIONES = {
   proveedor: true,
@@ -59,10 +59,10 @@ export const comprasRepository = {
 
   // Ruta critica: confirmar una compra corre en UNA transaccion atomica.
   // Por cada linea genera un MovimientoInventario ENTRADA y actualiza Stock
-  // -- mismo principio que movimientos.repository.registrar, generalizado
+  // -- mismo principio que MovimientosRepository.registrar, generalizado
   // para iterar N lineas en vez de una sola. El AuditLog se escribe
   // explicitamente aqui (no via extension) por la misma razon documentada
-  // en movimientos.repository: las extensiones de query no garantizan
+  // en MovimientosRepository: las extensiones de query no garantizan
   // visibilidad completa dentro de transacciones interactivas.
   async confirmar(compraId: string, usuarioId: string) {
     return prisma.$transaction(async (tx) => {

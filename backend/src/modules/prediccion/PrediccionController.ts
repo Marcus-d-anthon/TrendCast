@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
-import { prediccionService } from "./prediccion.service";
-import { prediccionParamsSchema, prediccionQuerySchema } from "./prediccion.validators";
+import { prediccionService } from "./PrediccionService";
+import { prediccionParamsSchema, prediccionQuerySchema } from "./PrediccionValidators";
 
 export const prediccionController = {
   async generar(req: Request, res: Response): Promise<void> {

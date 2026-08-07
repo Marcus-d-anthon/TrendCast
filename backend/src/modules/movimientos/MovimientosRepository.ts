@@ -1,6 +1,6 @@
 import { Prisma } from "../../generated/prisma/client";
 import { prisma } from "../../lib/prisma";
-import type { ListarMovimientosQuery, RegistrarMovimientoInput } from "./movimientos.validators";
+import type { ListarMovimientosQuery, RegistrarMovimientoInput } from "./MovimientosValidators";
 
 const INCLUDE_RELACIONES = {
   producto: { select: { id: true, sku: true, nombre: true } },

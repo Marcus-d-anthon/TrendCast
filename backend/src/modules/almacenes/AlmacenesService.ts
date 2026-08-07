@@ -1,7 +1,7 @@
 import { ConflictError, NotFoundError } from "../../lib/errors";
-import { productosRepository } from "../productos/productos.repository";
-import { almacenesRepository } from "./almacenes.repository";
-import type { ActualizarAlmacenInput, CrearAlmacenInput, TransferenciaInput } from "./almacenes.validators";
+import { productosRepository } from "../productos/ProductosRepository";
+import { almacenesRepository } from "./AlmacenesRepository";
+import type { ActualizarAlmacenInput, CrearAlmacenInput, TransferenciaInput } from "./AlmacenesValidators";
 
 export const almacenesService = {
   listar() {

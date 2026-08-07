@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
-import { categoriasService } from "./categorias.service";
-import { actualizarCategoriaSchema, crearCategoriaSchema, idParamSchema } from "./categorias.validators";
+import { categoriasService } from "./CategoriasService";
+import { actualizarCategoriaSchema, crearCategoriaSchema, idParamSchema } from "./CategoriasValidators";
 
 export const categoriasController = {
   async listar(_req: Request, res: Response): Promise<void> {

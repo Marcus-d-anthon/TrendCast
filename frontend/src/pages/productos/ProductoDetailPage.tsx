@@ -1,14 +1,17 @@
 import { ArrowLeft, Pencil, TrendingUp, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { useAuth } from '../../auth/useAuth';
+import { usePermiso } from '../../auth/usePermiso';
+import { ApiError } from '../../api/http-client';
 import { Badge } from '../../components/ui/Badge';
+import { BarcodeLabel } from '../../components/ui/BarcodeLabel';
 import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
 import { ConfirmDialog } from '../../components/ui/ConfirmDialog';
 import { EmptyState } from '../../components/ui/EmptyState';
 import { ErrorState } from '../../components/ui/ErrorState';
 import { Skeleton } from '../../components/ui/Skeleton';
+import { toast } from '../../components/ui/toast';
 import { MiniTape } from '../../components/ledger/MiniTape';
 import { useEliminarProducto, useProducto } from '../../queries/useProductos';
 import { useMovimientos } from '../../queries/useMovimientos';
@@ -20,8 +23,7 @@ import styles from './ProductoDetailPage.module.css';
 export function ProductoDetailPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { usuario } = useAuth();
-  const puedeEscribir = usuario?.rol === 'ADMIN' || usuario?.rol === 'SUPERVISOR';
+  const puedeEscribir = usePermiso('productos.editar');
 
   const producto = useProducto(id);
   const movimientos = useMovimientos({ productoId: id });
@@ -117,6 +119,11 @@ export function ProductoDetailPage() {
           <Link to={`/prediccion?producto=${p.id}`} className={styles.predictionLink}>
             <TrendingUp size={16} aria-hidden="true" /> Ver proyección de demanda
           </Link>
+
+          <div className={styles.barcodeSection}>
+            <div className={styles.statLabel}>Código de barras</div>
+            <BarcodeLabel sku={p.sku} nombre={p.nombre} />
+          </div>
         </Card>
 
         <Card>
@@ -142,8 +149,13 @@ export function ProductoDetailPage() {
           loading={eliminar.isPending}
           onClose={() => setConfirmandoBaja(false)}
           onConfirm={async () => {
-            await eliminar.mutateAsync(p.id);
-            navigate('/productos');
+            try {
+              await eliminar.mutateAsync(p.id);
+              toast.success('Producto dado de baja');
+              navigate('/productos');
+            } catch (err) {
+              toast.error(err instanceof ApiError ? err.message : 'No se pudo dar de baja el producto');
+            }
           }}
         />
       )}

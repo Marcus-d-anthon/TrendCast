@@ -1,0 +1,7 @@
+Contraseña para todos: Seed12345!
+Usuarios:
+admin@tiansiecuador.com
+ventas@tiansiecuador.com
+gerencia@tiansiecuador.com
+bodega1@tiansiecuador.com
+supervisor@tiansiecuador.com

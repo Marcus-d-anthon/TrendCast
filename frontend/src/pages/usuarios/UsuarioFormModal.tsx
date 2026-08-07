@@ -6,6 +6,7 @@ import { FormField } from '../../components/ui/FormField';
 import { Input } from '../../components/ui/Input';
 import { Modal } from '../../components/ui/Modal';
 import { Select } from '../../components/ui/Select';
+import { toast } from '../../components/ui/toast';
 import { useCrearUsuario } from '../../queries/useUsuarios';
 
 interface UsuarioFormModalProps {
@@ -26,6 +27,7 @@ export function UsuarioFormModal({ onClose }: UsuarioFormModalProps) {
     setError(null);
     try {
       await crear.mutateAsync({ email, password, nombre, rol });
+      toast.success('Usuario registrado');
       onClose();
     } catch (err) {
       setError(err instanceof ApiError ? err.message : 'No se pudo registrar el usuario');

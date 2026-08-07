@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import { ConflictError } from "../../lib/errors";
-import { usuariosRepository } from "./usuarios.repository";
-import type { CrearUsuarioInput } from "./usuarios.validators";
+import { usuariosRepository } from "./UsuariosRepository";
+import type { CrearUsuarioInput } from "./UsuariosValidators";
 
 const SALT_ROUNDS = 12;
 

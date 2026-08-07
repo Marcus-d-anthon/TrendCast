@@ -5,4 +5,6 @@ export interface Usuario {
   email: string;
   nombre: string;
   rol: Rol;
+  /** Códigos "modulo.accion" (ej. "productos.crear") vigentes para el rol de este usuario. */
+  permisos: string[];
 }

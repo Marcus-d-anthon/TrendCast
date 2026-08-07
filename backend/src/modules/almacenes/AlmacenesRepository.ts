@@ -1,7 +1,7 @@
 import { Prisma } from "../../generated/prisma/client";
 import { obtenerEmpresaId } from "../../lib/empresa";
 import { prisma } from "../../lib/prisma";
-import type { ActualizarAlmacenInput, CrearAlmacenInput } from "./almacenes.validators";
+import type { ActualizarAlmacenInput, CrearAlmacenInput } from "./AlmacenesValidators";
 
 export const almacenesRepository = {
   listar() {
@@ -16,7 +16,7 @@ export const almacenesRepository = {
     return prisma.almacen.findFirst({ where: { nombre, deletedAt: null } });
   },
 
-  // Simetrico a productos.repository.crearConStock: un almacen nuevo debe
+  // Simetrico a ProductosRepository.crearConStock: un almacen nuevo debe
   // nacer con una fila de Stock (cantidad 0) para CADA producto activo ya
   // existente, para que ese almacen quede utilizable de inmediato en
   // movimientos/ventas/compras sin un paso manual adicional.
@@ -46,7 +46,7 @@ export const almacenesRepository = {
     return prisma.stock.findUnique({ where: { productoId_almacenId: { productoId, almacenId } } });
   },
 
-  // Mismo espiritu que movimientos.repository.registrar: leer el stock,
+  // Mismo espiritu que MovimientosRepository.registrar: leer el stock,
   // insertar los movimientos y actualizar ambos saldos corren en UNA sola
   // transaccion atomica. Una transferencia genera DOS filas de tipo
   // TRANSFERENCIA (salida en el origen, entrada en el destino) enlazadas

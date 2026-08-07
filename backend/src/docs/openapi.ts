@@ -355,6 +355,62 @@ export const openApiDocument = {
         },
       },
     },
+    "/productos/exportar": {
+      get: {
+        tags: ["Productos"],
+        summary: "Descarga el catalogo completo en CSV, Excel o PDF",
+        parameters: [{ name: "formato", in: "query", required: true, schema: { type: "string", enum: ["csv", "excel", "pdf"] } }],
+        responses: {
+          200: { description: "Archivo binario (Content-Disposition: attachment)" },
+          400: { $ref: "#/components/responses/DatosInvalidos" },
+          401: { $ref: "#/components/responses/NoAutenticado" },
+        },
+      },
+    },
+    "/productos/importar": {
+      post: {
+        tags: ["Productos"],
+        summary: "Importacion masiva de productos (hasta 500 filas)",
+        description: "Requiere rol ADMIN o SUPERVISOR. Cada fila se valida y crea de forma independiente: una fila invalida no descarta el resto.",
+        requestBody: {
+          required: true,
+          content: {
+            "application/json": {
+              schema: {
+                type: "object",
+                required: ["filas"],
+                properties: { filas: { type: "array", maxItems: 500 } },
+              },
+            },
+          },
+        },
+        responses: {
+          200: {
+            description: "Resumen de la importacion",
+            content: {
+              "application/json": {
+                schema: {
+                  type: "object",
+                  properties: {
+                    data: {
+                      type: "object",
+                      properties: {
+                        totalFilas: { type: "integer" },
+                        creados: { type: "integer" },
+                        errores: { type: "array", items: { type: "object", properties: { fila: { type: "integer" }, sku: { type: "string" }, mensaje: { type: "string" } } } },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          400: { $ref: "#/components/responses/DatosInvalidos" },
+          401: { $ref: "#/components/responses/NoAutenticado" },
+          403: { $ref: "#/components/responses/NoAutorizado" },
+        },
+      },
+    },
     "/productos/{id}": {
       parameters: [{ name: "id", in: "path", required: true, schema: { type: "string", format: "uuid" } }],
       get: {
@@ -472,6 +528,18 @@ export const openApiDocument = {
         responses: { 200: { description: "OK" }, 401: { $ref: "#/components/responses/NoAutenticado" } },
       },
     },
+    "/reportes/existencias/exportar": {
+      get: {
+        tags: ["Reportes"],
+        summary: "Descarga el reporte de existencias en CSV, Excel o PDF",
+        parameters: [{ name: "formato", in: "query", required: true, schema: { type: "string", enum: ["csv", "excel", "pdf"] } }],
+        responses: {
+          200: { description: "Archivo binario (Content-Disposition: attachment)" },
+          400: { $ref: "#/components/responses/DatosInvalidos" },
+          401: { $ref: "#/components/responses/NoAutenticado" },
+        },
+      },
+    },
     "/reportes/rotacion": {
       get: {
         tags: ["Reportes"],
@@ -483,6 +551,22 @@ export const openApiDocument = {
         responses: { 200: { description: "OK" }, 401: { $ref: "#/components/responses/NoAutenticado" } },
       },
     },
+    "/reportes/rotacion/exportar": {
+      get: {
+        tags: ["Reportes"],
+        summary: "Descarga el reporte de rotacion en CSV, Excel o PDF",
+        parameters: [
+          { name: "formato", in: "query", required: true, schema: { type: "string", enum: ["csv", "excel", "pdf"] } },
+          { name: "desde", in: "query", schema: { type: "string", format: "date" } },
+          { name: "hasta", in: "query", schema: { type: "string", format: "date" } },
+        ],
+        responses: {
+          200: { description: "Archivo binario (Content-Disposition: attachment)" },
+          400: { $ref: "#/components/responses/DatosInvalidos" },
+          401: { $ref: "#/components/responses/NoAutenticado" },
+        },
+      },
+    },
     "/reportes/movimientos-por-periodo": {
       get: {
         tags: ["Reportes"],
@@ -492,6 +576,13 @@ export const openApiDocument = {
           { name: "hasta", in: "query", schema: { type: "string", format: "date" } },
           { name: "granularidad", in: "query", schema: { type: "string", enum: ["diaria", "semanal", "mensual"], default: "mensual" } },
         ],
+        responses: { 200: { description: "OK" }, 401: { $ref: "#/components/responses/NoAutenticado" } },
+      },
+    },
+    "/reportes/dashboard": {
+      get: {
+        tags: ["Reportes"],
+        summary: "KPIs ejecutivos: valor de inventario, margen bruto, rotacion (90 dias) y curva ABC",
         responses: { 200: { description: "OK" }, 401: { $ref: "#/components/responses/NoAutenticado" } },
       },
     },

@@ -1,6 +1,6 @@
 import type { Express } from "express";
 import request from "supertest";
-import { usuariosService } from "../../src/modules/usuarios/usuarios.service";
+import { usuariosService } from "../../src/modules/usuarios/UsuariosService";
 
 const PASSWORD = "ClaveSegura123";
 

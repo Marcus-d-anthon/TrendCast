@@ -1,12 +1,12 @@
 import { NotFoundError } from "../../lib/errors";
-import { productosRepository } from "../productos/productos.repository";
+import { productosRepository } from "../productos/ProductosRepository";
 import {
   calcularPromedioMovil,
   calcularRegresionLineal,
   proyectar,
   recomendarReabastecimiento,
-} from "./prediccion.math";
-import { prediccionRepository, type Granularidad } from "./prediccion.repository";
+} from "./PrediccionMath";
+import { prediccionRepository, type Granularidad } from "./PrediccionRepository";
 
 const VENTANA_SMA_DEFECTO = 3;
 

@@ -1,9 +1,15 @@
 import { ConflictError, NotFoundError } from "../../lib/errors";
-import { categoriasRepository } from "../categorias/categorias.repository";
-import { marcasRepository } from "../marcas/marcas.repository";
-import { unidadesMedidaRepository } from "../unidades-medida/unidades-medida.repository";
-import { productosRepository } from "./productos.repository";
-import type { ActualizarProductoInput, CrearProductoInput } from "./productos.validators";
+import { categoriasRepository } from "../categorias/CategoriasRepository";
+import { marcasRepository } from "../marcas/MarcasRepository";
+import { unidadesMedidaRepository } from "../unidades-medida/UnidadesMedidaRepository";
+import { productosRepository } from "./ProductosRepository";
+import type { ActualizarProductoInput, CrearProductoInput } from "./ProductosValidators";
+
+export interface FilaImportacionError {
+  fila: number;
+  sku: string;
+  mensaje: string;
+}
 
 export const productosService = {
   listar() {
@@ -68,5 +74,29 @@ export const productosService = {
   async eliminar(id: string) {
     await this.obtener(id);
     await productosRepository.softDelete(id);
+  },
+
+  // Cada fila se procesa de forma independiente (no en una unica
+  // transaccion): un SKU duplicado o una categoria inexistente en la fila 40
+  // no debe descartar las 39 filas validas que ya se importaron. Reutiliza
+  // crear() para no duplicar las validaciones de negocio (FKs, SKU unico).
+  async importarMasivo(filas: CrearProductoInput[]) {
+    const creados: string[] = [];
+    const errores: FilaImportacionError[] = [];
+
+    for (const [indice, fila] of filas.entries()) {
+      try {
+        const producto = await this.crear(fila);
+        creados.push(producto.id);
+      } catch (err) {
+        errores.push({
+          fila: indice + 1,
+          sku: fila.sku,
+          mensaje: err instanceof Error ? err.message : "Error desconocido al crear el producto",
+        });
+      }
+    }
+
+    return { totalFilas: filas.length, creados: creados.length, errores };
   },
 };

@@ -1,6 +1,6 @@
 import { obtenerEmpresaId } from "../../lib/empresa";
 import { prisma } from "../../lib/prisma";
-import type { ActualizarUnidadMedidaInput, CrearUnidadMedidaInput } from "./unidades-medida.validators";
+import type { ActualizarUnidadMedidaInput, CrearUnidadMedidaInput } from "./UnidadesMedidaValidators";
 
 export const unidadesMedidaRepository = {
   listar() {

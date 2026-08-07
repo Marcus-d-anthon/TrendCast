@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { authMiddleware } from "../../middlewares/auth.middleware";
-import { movimientosController } from "./movimientos.controller";
+import { authMiddleware } from "../../middlewares/AuthMiddleware";
+import { movimientosController } from "./MovimientosController";
 
 export const movimientosRouter = Router();
 

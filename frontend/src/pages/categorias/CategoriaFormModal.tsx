@@ -5,6 +5,7 @@ import { FormField } from '../../components/ui/FormField';
 import { Input } from '../../components/ui/Input';
 import { Modal } from '../../components/ui/Modal';
 import { Textarea } from '../../components/ui/Textarea';
+import { toast } from '../../components/ui/toast';
 import { useActualizarCategoria, useCrearCategoria } from '../../queries/useCategorias';
 import type { Categoria } from '../../api/types/domain';
 
@@ -28,8 +29,10 @@ export function CategoriaFormModal({ categoria, onClose }: CategoriaFormModalPro
     try {
       if (categoria) {
         await actualizar.mutateAsync({ nombre, descripcion: descripcion || undefined });
+        toast.success('Categoría actualizada');
       } else {
         await crear.mutateAsync({ nombre, descripcion: descripcion || undefined });
+        toast.success('Categoría creada');
       }
       onClose();
     } catch (err) {

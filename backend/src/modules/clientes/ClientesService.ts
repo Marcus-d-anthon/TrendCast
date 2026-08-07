@@ -1,6 +1,6 @@
 import { ConflictError, NotFoundError } from "../../lib/errors";
-import { clientesRepository } from "./clientes.repository";
-import type { ActualizarClienteInput, CrearClienteInput } from "./clientes.validators";
+import { clientesRepository } from "./ClientesRepository";
+import type { ActualizarClienteInput, CrearClienteInput } from "./ClientesValidators";
 
 export const clientesService = {
   listar() {

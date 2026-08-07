@@ -1,6 +1,6 @@
 import { obtenerEmpresaId } from "../../lib/empresa";
 import { prisma } from "../../lib/prisma";
-import type { ActualizarProveedorInput, CrearProveedorInput } from "./proveedores.validators";
+import type { ActualizarProveedorInput, CrearProveedorInput } from "./ProveedoresValidators";
 
 export const proveedoresRepository = {
   listar() {

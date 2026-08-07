@@ -80,4 +80,49 @@ describe("Modulo Reportes", () => {
     const res = await request(app).get("/api/reportes/existencias");
     expect(res.status).toBe(401);
   });
+
+  it("GET /api/reportes/dashboard calcula KPIs y curva ABC a partir de datos reales", async () => {
+    const res = await request(app).get("/api/reportes/dashboard").set("Authorization", `Bearer ${tokenAdmin}`);
+
+    expect(res.status).toBe(200);
+    expect(res.body.data.totalProductos).toBe(1);
+    expect(res.body.data.valorTotalInventario).toBe(56);
+    expect(res.body.data.margenBrutoPromedio).toBeCloseTo(0.5, 5); // (4 - 2) / 4
+    expect(res.body.data.curvaAbc).toHaveLength(1);
+    expect(res.body.data.curvaAbc[0]).toMatchObject({ productoId, clase: "A" });
+    expect(res.body.data.resumenAbc).toMatchObject({ A: 1, B: 0, C: 0 });
+  });
+
+  it.each(["csv", "excel", "pdf"] as const)(
+    "GET /api/reportes/existencias/exportar?formato=%s descarga un archivo no vacio",
+    async (formato) => {
+      const res = await request(app)
+        .get(`/api/reportes/existencias/exportar?formato=${formato}`)
+        .set("Authorization", `Bearer ${tokenAdmin}`);
+
+      expect(res.status).toBe(200);
+      expect(res.headers["content-disposition"]).toContain("attachment");
+      expect(Buffer.isBuffer(res.body) ? res.body.length : res.text.length).toBeGreaterThan(0);
+    },
+  );
+
+  it.each(["csv", "excel", "pdf"] as const)(
+    "GET /api/reportes/rotacion/exportar?formato=%s descarga un archivo no vacio",
+    async (formato) => {
+      const res = await request(app)
+        .get(`/api/reportes/rotacion/exportar?formato=${formato}`)
+        .set("Authorization", `Bearer ${tokenAdmin}`);
+
+      expect(res.status).toBe(200);
+      expect(res.headers["content-disposition"]).toContain("attachment");
+      expect(Buffer.isBuffer(res.body) ? res.body.length : res.text.length).toBeGreaterThan(0);
+    },
+  );
+
+  it("rechaza formato de exportacion invalido (400)", async () => {
+    const res = await request(app)
+      .get("/api/reportes/existencias/exportar?formato=doc")
+      .set("Authorization", `Bearer ${tokenAdmin}`);
+    expect(res.status).toBe(400);
+  });
 });

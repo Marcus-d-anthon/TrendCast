@@ -1,6 +1,6 @@
 import { obtenerEmpresaId } from "../../lib/empresa";
 import { prisma } from "../../lib/prisma";
-import type { ActualizarProductoInput, CrearProductoInput } from "./productos.validators";
+import type { ActualizarProductoInput, CrearProductoInput } from "./ProductosValidators";
 
 const INCLUDE_RELACIONES = { categoria: true, marca: true, unidadMedida: true, stocks: { include: { almacen: true } } } as const;
 

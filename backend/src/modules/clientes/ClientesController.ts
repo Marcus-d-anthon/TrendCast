@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
-import { clientesService } from "./clientes.service";
-import { actualizarClienteSchema, crearClienteSchema, idParamSchema } from "./clientes.validators";
+import { clientesService } from "./ClientesService";
+import { actualizarClienteSchema, crearClienteSchema, idParamSchema } from "./ClientesValidators";
 
 export const clientesController = {
   async listar(_req: Request, res: Response): Promise<void> {

@@ -2,7 +2,7 @@ import type { NextFunction, Request, Response } from "express";
 import { runWithUsuarioActual } from "../lib/async-context";
 import { UnauthorizedError } from "../lib/errors";
 import { verificarToken } from "../lib/jwt";
-import { usuariosRepository } from "../modules/usuarios/usuarios.repository";
+import { usuariosRepository } from "../modules/usuarios/UsuariosRepository";
 
 export interface UsuarioRequest {
   id: string;

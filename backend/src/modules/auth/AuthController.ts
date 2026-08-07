@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
-import { authService } from "./auth.service";
-import { loginSchema, refrescarTokenSchema } from "./auth.validators";
+import { authService } from "./AuthService";
+import { loginSchema, refrescarTokenSchema } from "./AuthValidators";
 
 export const authController = {
   async login(req: Request, res: Response): Promise<void> {

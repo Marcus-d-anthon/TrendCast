@@ -1,20 +1,26 @@
-import { Package, Plus, Search } from 'lucide-react';
+import { Package, Plus, ScanBarcode, Search, Upload } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { productosApi } from '../../api/endpoints/productos';
 import type { Producto } from '../../api/types/domain';
-import { useAuth } from '../../auth/useAuth';
+import { usePermiso } from '../../auth/usePermiso';
 import { Badge } from '../../components/ui/Badge';
+import { BarcodeScannerModal } from '../../components/ui/BarcodeScannerModal';
 import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
 import { EmptyState } from '../../components/ui/EmptyState';
 import { ErrorState } from '../../components/ui/ErrorState';
+import { ExportButtons } from '../../components/ui/ExportButtons';
+import exportButtonsStyles from '../../components/ui/ExportButtons.module.css';
 import { Input } from '../../components/ui/Input';
 import { Select } from '../../components/ui/Select';
 import { Skeleton } from '../../components/ui/Skeleton';
 import tableStyles from '../../components/ui/Table.module.css';
+import { toast } from '../../components/ui/toast';
 import { useCategorias } from '../../queries/useCategorias';
 import { useProductos } from '../../queries/useProductos';
 import { formatCurrency, formatNumber } from '../../utils/format';
+import { ImportarProductosModal } from './ImportarProductosModal';
 import { ProductoFormDrawer } from './ProductoFormDrawer';
 import styles from './ProductosListPage.module.css';
 
@@ -30,8 +36,7 @@ function estadoStock(producto: Producto): { label: string; variant: 'success' | 
 }
 
 export function ProductosListPage() {
-  const { usuario } = useAuth();
-  const puedeEscribir = usuario?.rol === 'ADMIN' || usuario?.rol === 'SUPERVISOR';
+  const puedeEscribir = usePermiso('productos.crear');
   const navigate = useNavigate();
 
   const productos = useProductos();
@@ -40,6 +45,8 @@ export function ProductosListPage() {
   const [busqueda, setBusqueda] = useState('');
   const [categoriaId, setCategoriaId] = useState('');
   const [creando, setCreando] = useState(false);
+  const [importando, setImportando] = useState(false);
+  const [escaneando, setEscaneando] = useState(false);
 
   const filtrados = useMemo(() => {
     if (!productos.data) return [];
@@ -71,12 +78,26 @@ export function ProductosListPage() {
               </option>
             ))}
           </Select>
-        </div>
-        {puedeEscribir && (
-          <Button onClick={() => setCreando(true)}>
-            <Plus size={16} aria-hidden="true" /> Nuevo producto
+          <Button type="button" variant="secondary" onClick={() => setEscaneando(true)}>
+            <ScanBarcode size={16} aria-hidden="true" /> Escanear
           </Button>
-        )}
+        </div>
+        <div className={styles.toolbarActions}>
+          <ExportButtons
+            className={exportButtonsStyles.noMargin}
+            onExportar={(formato) => productosApi.exportar(formato)}
+          />
+          {puedeEscribir && (
+            <Button type="button" variant="secondary" onClick={() => setImportando(true)}>
+              <Upload size={16} aria-hidden="true" /> Importar
+            </Button>
+          )}
+          {puedeEscribir && (
+            <Button onClick={() => setCreando(true)}>
+              <Plus size={16} aria-hidden="true" /> Nuevo producto
+            </Button>
+          )}
+        </div>
       </div>
 
       <Card>
@@ -145,6 +166,22 @@ export function ProductosListPage() {
       </Card>
 
       {creando && <ProductoFormDrawer onClose={() => setCreando(false)} />}
+      {importando && <ImportarProductosModal onClose={() => setImportando(false)} />}
+      {escaneando && (
+        <BarcodeScannerModal
+          onClose={() => setEscaneando(false)}
+          onScan={(codigo) => {
+            const producto = productos.data?.find((p) => p.sku.toLowerCase() === codigo.trim().toLowerCase());
+            setEscaneando(false);
+            if (producto) {
+              navigate(`/productos/${producto.id}`);
+            } else {
+              setBusqueda(codigo);
+              toast.error(`Ningún producto tiene el SKU "${codigo}"`);
+            }
+          }}
+        />
+      )}
     </div>
   );
 }

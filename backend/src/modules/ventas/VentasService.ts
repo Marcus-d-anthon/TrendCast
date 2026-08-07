@@ -1,10 +1,10 @@
-import { alertasService } from "../alertas/alertas.service";
+import { alertasService } from "../alertas/AlertasService";
 import { ConflictError, NotFoundError } from "../../lib/errors";
-import { almacenesRepository } from "../almacenes/almacenes.repository";
-import { clientesRepository } from "../clientes/clientes.repository";
-import { productosRepository } from "../productos/productos.repository";
-import { ventasRepository, type DetalleCalculado } from "./ventas.repository";
-import type { CrearVentaInput } from "./ventas.validators";
+import { almacenesRepository } from "../almacenes/AlmacenesRepository";
+import { clientesRepository } from "../clientes/ClientesRepository";
+import { productosRepository } from "../productos/ProductosRepository";
+import { ventasRepository, type DetalleCalculado } from "./VentasRepository";
+import type { CrearVentaInput } from "./VentasValidators";
 
 const IVA_ECUADOR = 0.15;
 

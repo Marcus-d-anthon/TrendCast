@@ -8,7 +8,7 @@ import styles from './Topbar.module.css';
 
 function pageTitle(pathname: string): string {
   const item = navItems.find((entry) => (entry.to === '/' ? pathname === '/' : pathname.startsWith(entry.to)));
-  return item?.label ?? 'Fluxo';
+  return item?.label ?? 'TrendCast';
 }
 
 interface TopbarProps {

@@ -7,6 +7,7 @@ import { FormField } from '../../components/ui/FormField';
 import { Input } from '../../components/ui/Input';
 import { Select } from '../../components/ui/Select';
 import { Textarea } from '../../components/ui/Textarea';
+import { toast } from '../../components/ui/toast';
 import { useCategorias } from '../../queries/useCategorias';
 import { useMarcas } from '../../queries/useMarcas';
 import { useUnidadesMedida } from '../../queries/useUnidadesMedida';
@@ -62,6 +63,7 @@ export function ProductoFormDrawer({ producto, onClose }: ProductoFormDrawerProp
           requiereLote,
           activo,
         });
+        toast.success('Producto actualizado');
       } else {
         await crear.mutateAsync({
           sku,
@@ -75,6 +77,7 @@ export function ProductoFormDrawer({ producto, onClose }: ProductoFormDrawerProp
           stockMinimo: minimo,
           requiereLote,
         });
+        toast.success('Producto creado');
       }
       onClose();
     } catch (err) {

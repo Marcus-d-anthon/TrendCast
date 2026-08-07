@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 
 // Prueba el mecanismo de rate limiting en si mismo (no la instancia real de
 // la app, que se relaja deliberadamente en NODE_ENV=test para no bloquear el
-// resto de la suite -- ver src/middlewares/rate-limit.middleware.ts).
+// resto de la suite -- ver src/middlewares/RateLimitMiddleware.ts).
 function construirAppDePrueba(limit: number) {
   const app = express();
   app.use(rateLimit({ windowMs: 60_000, limit, standardHeaders: true, legacyHeaders: false }));

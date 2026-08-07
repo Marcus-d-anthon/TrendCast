@@ -23,5 +23,6 @@ export const queryKeys = {
   reportesRotacion: (params: RangoFechas) => ['reportes', 'rotacion', params] as const,
   reportesMovimientosPorPeriodo: (params: RangoFechas & { granularidad?: Granularidad }) =>
     ['reportes', 'movimientos-por-periodo', params] as const,
+  reportesDashboard: ['reportes', 'dashboard'] as const,
   usuarios: ['usuarios'] as const,
 };

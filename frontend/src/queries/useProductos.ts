@@ -51,3 +51,14 @@ export function useEliminarProducto() {
     },
   });
 }
+
+export function useImportarProductos() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (filas: CrearProductoInput[]) => productosApi.importar(filas),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.productos });
+      queryClient.invalidateQueries({ queryKey: queryKeys.reportesExistencias });
+    },
+  });
+}

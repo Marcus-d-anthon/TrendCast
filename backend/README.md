@@ -243,7 +243,7 @@ schema.
 
 **3. `movimientos_inventario` es append-only por diseño, no solo por convención.** El Service nunca
 invoca `update`/`delete` sobre este modelo, y una **Prisma Client Extension**
-(`src/extensions/immutable-ledger.extension.ts`) bloquea esas operaciones explícitamente aunque alguien
+(`src/extensions/ImmutableLedgerExtension.ts`) bloquea esas operaciones explícitamente aunque alguien
 las invoque por error — defensa en profundidad. Las correcciones se registran como una nueva fila de tipo
 `AJUSTE` que referencia (vía auto-relación `movimiento_origen_id`) a la fila que corrige.
 
@@ -253,7 +253,7 @@ abierto). Se generaron con `prisma migrate dev --create-only` y se agregaron a m
 antes de aplicar.
 
 **5. Auditoría automática vía Prisma Client Extensions, no `$use` middleware.** `prisma.$use()` está
-deprecado desde Prisma 5; el mecanismo vigente es `$extends` (`src/extensions/audit.extension.ts`),
+deprecado desde Prisma 5; el mecanismo vigente es `$extends` (`src/extensions/AuditExtension.ts`),
 interceptando el componente `query` para todos los modelos. Se detectó una limitación real: las
 extensiones de query no garantizan visibilidad completa dentro de transacciones interactivas
 (`$transaction`). Por eso se usan **dos mecanismos complementarios**:
@@ -261,7 +261,7 @@ extensiones de query no garantizan visibilidad completa dentro de transacciones 
      también completa `created_by`/`updated_by` (y en el caso de `StockActual`, solo esto último — no
      genera su propia fila de `audit_log`, porque el movimiento que la origina ya la documenta).
    - Movimientos de inventario (ruta crítica): el `AuditLog` se inserta **explícitamente dentro del mismo
-     `$transaction`** que crea el movimiento y actualiza el stock (`movimientos.repository.ts`), sin
+     `$transaction`** que crea el movimiento y actualiza el stock (`MovimientosRepository.ts`), sin
      depender del comportamiento de la extensión bajo transacciones.
 
 **6. Prisma ORM 7 (generador `prisma-client`, sin motor Rust).** El generador clásico `prisma-client-js`

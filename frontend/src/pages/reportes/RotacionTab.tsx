@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { reportesApi } from '../../api/endpoints/reportes';
 import { RotationBarChart } from '../../components/charts/RotationBarChart';
 import { Card } from '../../components/ui/Card';
 import { EmptyState } from '../../components/ui/EmptyState';
 import { ErrorState } from '../../components/ui/ErrorState';
+import { ExportButtons } from '../../components/ui/ExportButtons';
 import { Input } from '../../components/ui/Input';
 import { Skeleton } from '../../components/ui/Skeleton';
 import tableStyles from '../../components/ui/Table.module.css';
@@ -17,6 +19,10 @@ export function RotacionTab() {
 
   return (
     <div>
+      <ExportButtons
+        onExportar={(formato) => reportesApi.exportarRotacion(formato, { desde: desde || undefined, hasta: hasta || undefined })}
+      />
+
       <div className={styles.filters}>
         <Input
           type="date"

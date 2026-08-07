@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
-import { marcasService } from "./marcas.service";
-import { actualizarMarcaSchema, crearMarcaSchema, idParamSchema } from "./marcas.validators";
+import { marcasService } from "./MarcasService";
+import { actualizarMarcaSchema, crearMarcaSchema, idParamSchema } from "./MarcasValidators";
 
 export const marcasController = {
   async listar(_req: Request, res: Response): Promise<void> {

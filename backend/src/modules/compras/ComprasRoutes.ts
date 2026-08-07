@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { authMiddleware } from "../../middlewares/auth.middleware";
-import { requirePermission } from "../../middlewares/permission.middleware";
-import { comprasController } from "./compras.controller";
+import { authMiddleware } from "../../middlewares/AuthMiddleware";
+import { requirePermission } from "../../middlewares/PermissionMiddleware";
+import { comprasController } from "./ComprasController";
 
 export const comprasRouter = Router();
 

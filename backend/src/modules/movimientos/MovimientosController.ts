@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
-import { movimientosService } from "./movimientos.service";
-import { listarMovimientosQuerySchema, registrarMovimientoSchema } from "./movimientos.validators";
+import { movimientosService } from "./MovimientosService";
+import { listarMovimientosQuerySchema, registrarMovimientoSchema } from "./MovimientosValidators";
 
 export const movimientosController = {
   async listar(req: Request, res: Response): Promise<void> {

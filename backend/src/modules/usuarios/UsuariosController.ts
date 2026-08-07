@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
-import { usuariosService } from "./usuarios.service";
-import { crearUsuarioSchema } from "./usuarios.validators";
+import { usuariosService } from "./UsuariosService";
+import { crearUsuarioSchema } from "./UsuariosValidators";
 
 export const usuariosController = {
   async listar(_req: Request, res: Response): Promise<void> {

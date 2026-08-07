@@ -37,5 +37,14 @@ export const actualizarProductoSchema = z
     message: "Debe incluir al menos un campo para actualizar",
   });
 
+export const importarProductosSchema = z.object({
+  filas: z.array(crearProductoSchema).min(1, "El archivo no tiene filas para importar").max(500, "Máximo 500 filas por importación"),
+});
+
+export const exportarProductosQuerySchema = z.object({
+  formato: z.enum(["csv", "excel", "pdf"]),
+});
+
 export type CrearProductoInput = z.infer<typeof crearProductoSchema>;
 export type ActualizarProductoInput = z.infer<typeof actualizarProductoSchema>;
+export type ImportarProductosInput = z.infer<typeof importarProductosSchema>;

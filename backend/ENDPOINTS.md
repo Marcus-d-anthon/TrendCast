@@ -9,8 +9,8 @@ sostiene el refresh token devuelto por login (7 días, rota en cada uso vía `/a
 
 | Método | Ruta | Rol requerido | Descripción |
 |---|---|---|---|
-| POST | `/api/auth/login` | público | Login, devuelve JWT de acceso + refresh token |
-| POST | `/api/auth/refresh` | público (requiere refresh token vigente) | Renueva el JWT de acceso, rota el refresh token |
+| POST | `/api/auth/login` | público | Login, devuelve JWT de acceso + refresh token + `usuario.permisos` (códigos "modulo.accion" de la matriz roles_permisos) |
+| POST | `/api/auth/refresh` | público (requiere refresh token vigente) | Renueva el JWT de acceso, rota el refresh token, re-emite `usuario.permisos` |
 | GET | `/api/usuarios` | ADMIN | Listar usuarios activos (sin `passwordHash`) |
 | POST | `/api/usuarios` | ADMIN | Registrar un nuevo usuario |
 | GET | `/api/categorias` | autenticado | Listar categorías activas |
@@ -49,6 +49,8 @@ sostiene el refresh token devuelto por login (7 días, rota en cada uso vía `/a
 | GET | `/api/productos/:id` | autenticado | Obtener producto |
 | PUT | `/api/productos/:id` | ADMIN, SUPERVISOR | Actualizar producto (SKU no editable) |
 | DELETE | `/api/productos/:id` | ADMIN, SUPERVISOR | Baja lógica (soft delete) |
+| GET | `/api/productos/exportar?formato=csv\|excel\|pdf` | autenticado | Descarga el catálogo completo en el formato pedido |
+| POST | `/api/productos/importar` | ADMIN, SUPERVISOR | Importación masiva (hasta 500 filas); cada fila se procesa de forma independiente y se reportan errores fila por fila |
 | GET | `/api/movimientos` | autenticado | Consultar el libro (filtros: `productoId`, `almacenId`, `tipo`, `desde`, `hasta`) |
 | POST | `/api/movimientos` | autenticado | Registrar ENTRADA / SALIDA / AJUSTE en un almacén (transaccional) |
 | GET | `/api/alertas` | autenticado | Productos en o bajo su stock mínimo (sincroniza `Alerta` antes de responder) |
@@ -59,8 +61,11 @@ sostiene el refresh token devuelto por login (7 días, rota en cada uso vía `/a
 | PATCH | `/api/notificaciones/:id/leida` | autenticado (dueño) | Marcar una notificación propia como leída |
 | GET | `/api/prediccion/:productoId` | autenticado | Proyección de demanda (SMA + regresión lineal) + recomendación de reabastecimiento |
 | GET | `/api/reportes/existencias` | autenticado | Resumen de existencias y valor de inventario |
+| GET | `/api/reportes/existencias/exportar?formato=csv\|excel\|pdf` | autenticado | Descarga el reporte de existencias en el formato pedido |
 | GET | `/api/reportes/rotacion` | autenticado | Entradas vs. salidas por producto en un rango de fechas |
+| GET | `/api/reportes/rotacion/exportar?formato=csv\|excel\|pdf` | autenticado | Descarga el reporte de rotación en el formato pedido |
 | GET | `/api/reportes/movimientos-por-periodo` | autenticado | Totales de movimientos agrupados por período y tipo |
+| GET | `/api/reportes/dashboard` | autenticado | KPIs ejecutivos: valor de inventario, margen bruto promedio, rotación (90 días) y curva ABC |
 
 ## Formato de respuesta
 

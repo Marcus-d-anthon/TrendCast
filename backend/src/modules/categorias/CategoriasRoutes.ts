@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { authMiddleware } from "../../middlewares/auth.middleware";
-import { requireRole } from "../../middlewares/roles.middleware";
-import { categoriasController } from "./categorias.controller";
+import { authMiddleware } from "../../middlewares/AuthMiddleware";
+import { requireRole } from "../../middlewares/RolesMiddleware";
+import { categoriasController } from "./CategoriasController";
 
 export const categoriasRouter = Router();
 

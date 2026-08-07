@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import { AppShell } from './components/layout/AppShell';
 import { Skeleton } from './components/ui/Skeleton';
 import { RequireAuth } from './auth/RequireAuth';
-import { RequireRole } from './auth/RequireRole';
+import { RequirePermiso } from './auth/RequirePermiso';
 import { LoginPage } from './pages/login/LoginPage';
 import { DashboardPage } from './pages/dashboard/DashboardPage';
 import { ProductosListPage } from './pages/productos/ProductosListPage';
@@ -45,12 +45,12 @@ export function AppRoutes() {
           <Route path="/categorias" element={<CategoriasPage />} />
           <Route path="/movimientos" element={<MovimientosPage />} />
 
-          <Route element={<RequireRole roles={['ADMIN', 'SUPERVISOR', 'GERENCIA']} />}>
+          <Route element={<RequirePermiso permiso="compras.ver" />}>
             <Route path="/compras" element={<ComprasListPage />} />
             <Route path="/compras/:id" element={<CompraDetailPage />} />
           </Route>
 
-          <Route element={<RequireRole roles={['ADMIN', 'SUPERVISOR', 'VENTAS', 'GERENCIA']} />}>
+          <Route element={<RequirePermiso permiso="ventas.ver" />}>
             <Route path="/ventas" element={<VentasListPage />} />
             <Route path="/ventas/:id" element={<VentaDetailPage />} />
           </Route>
@@ -73,7 +73,7 @@ export function AppRoutes() {
             }
           />
 
-          <Route element={<RequireRole roles={['ADMIN']} />}>
+          <Route element={<RequirePermiso permiso="usuarios.ver" />}>
             <Route path="/usuarios" element={<UsuariosPage />} />
           </Route>
         </Route>

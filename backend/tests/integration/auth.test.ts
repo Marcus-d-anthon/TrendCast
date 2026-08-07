@@ -1,6 +1,6 @@
 import request from "supertest";
 import { beforeEach, describe, expect, it } from "vitest";
-import { usuariosService } from "../../src/modules/usuarios/usuarios.service";
+import { usuariosService } from "../../src/modules/usuarios/UsuariosService";
 import { buildTestApp } from "../helpers/build-app";
 import { limpiarBaseDeDatos } from "../helpers/test-db";
 
@@ -27,6 +27,27 @@ describe("POST /api/auth/login", () => {
     expect(typeof res.body.data.refreshToken).toBe("string");
     expect(res.body.data.usuario.rol).toBe("ADMIN");
     expect(res.body.data.usuario.email).toBe("admin@tiansi.test");
+    expect(Array.isArray(res.body.data.usuario.permisos)).toBe(true);
+    expect(res.body.data.usuario.permisos).toContain("productos.crear");
+    expect(res.body.data.usuario.permisos).toContain("usuarios.eliminar");
+  });
+
+  it("un rol no-ADMIN recibe solo los permisos de su matriz (no la lista completa)", async () => {
+    await usuariosService.crear({
+      email: "bodega@tiansi.test",
+      password: "ClaveSegura123",
+      nombre: "Bodega Test",
+      rol: "BODEGA",
+    });
+
+    const res = await request(app)
+      .post("/api/auth/login")
+      .send({ email: "bodega@tiansi.test", password: "ClaveSegura123" });
+
+    expect(res.status).toBe(200);
+    expect(res.body.data.usuario.permisos).toContain("inventario.ver");
+    expect(res.body.data.usuario.permisos).not.toContain("usuarios.eliminar");
+    expect(res.body.data.usuario.permisos).not.toContain("compras.crear");
   });
 
   it("rechaza password incorrecta", async () => {
@@ -75,6 +96,7 @@ describe("POST /api/auth/refresh", () => {
     expect(typeof res.body.data.token).toBe("string");
     expect(typeof res.body.data.refreshToken).toBe("string");
     expect(res.body.data.refreshToken).not.toBe(refreshTokenOriginal);
+    expect(res.body.data.usuario.permisos).toContain("productos.crear");
   });
 
   it("rechaza un refresh token ya usado (rotacion, 401)", async () => {

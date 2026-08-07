@@ -1,10 +1,12 @@
 import { useSearchParams } from 'react-router-dom';
+import { DashboardTab } from './DashboardTab';
 import { ExistenciasTab } from './ExistenciasTab';
 import { MovimientosPorPeriodoTab } from './MovimientosPorPeriodoTab';
 import { RotacionTab } from './RotacionTab';
 import styles from './ReportesPage.module.css';
 
 const TABS = [
+  { value: 'dashboard', label: 'Dashboard ejecutivo' },
   { value: 'existencias', label: 'Existencias' },
   { value: 'rotacion', label: 'Rotación' },
   { value: 'periodo', label: 'Movimientos por período' },
@@ -14,7 +16,7 @@ type TabValue = (typeof TABS)[number]['value'];
 
 export function ReportesPage() {
   const [params, setParams] = useSearchParams();
-  const tab = (params.get('tab') as TabValue) ?? 'existencias';
+  const tab = (params.get('tab') as TabValue) ?? 'dashboard';
 
   return (
     <div>
@@ -33,6 +35,7 @@ export function ReportesPage() {
         ))}
       </div>
 
+      {tab === 'dashboard' && <DashboardTab />}
       {tab === 'existencias' && <ExistenciasTab />}
       {tab === 'rotacion' && <RotacionTab />}
       {tab === 'periodo' && <MovimientosPorPeriodoTab />}

@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
-import { almacenesService } from "./almacenes.service";
-import { actualizarAlmacenSchema, crearAlmacenSchema, idParamSchema, transferenciaSchema } from "./almacenes.validators";
+import { almacenesService } from "./AlmacenesService";
+import { actualizarAlmacenSchema, crearAlmacenSchema, idParamSchema, transferenciaSchema } from "./AlmacenesValidators";
 
 export const almacenesController = {
   async listar(_req: Request, res: Response): Promise<void> {

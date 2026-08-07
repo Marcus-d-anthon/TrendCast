@@ -7,6 +7,7 @@ import { Drawer } from '../../components/ui/Drawer';
 import { FormField } from '../../components/ui/FormField';
 import { Input } from '../../components/ui/Input';
 import { Select } from '../../components/ui/Select';
+import { toast } from '../../components/ui/toast';
 import { useAlmacenes } from '../../queries/useAlmacenes';
 import { useClientes } from '../../queries/useClientes';
 import { useProductos } from '../../queries/useProductos';
@@ -79,6 +80,7 @@ export function VentaFormDrawer({ onClose }: VentaFormDrawerProps) {
           precioUnitario: Number(l.precioUnitario),
         })),
       });
+      toast.success('Venta registrada como borrador');
       onClose();
       navigate(`/ventas/${venta.id}`);
     } catch (err) {

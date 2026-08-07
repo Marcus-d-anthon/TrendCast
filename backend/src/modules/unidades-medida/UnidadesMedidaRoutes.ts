@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { authMiddleware } from "../../middlewares/auth.middleware";
-import { requirePermission } from "../../middlewares/permission.middleware";
-import { unidadesMedidaController } from "./unidades-medida.controller";
+import { authMiddleware } from "../../middlewares/AuthMiddleware";
+import { requirePermission } from "../../middlewares/PermissionMiddleware";
+import { unidadesMedidaController } from "./UnidadesMedidaController";
 
 export const unidadesMedidaRouter = Router();
 

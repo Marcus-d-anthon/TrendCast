@@ -2,7 +2,7 @@ import { Plus, Receipt } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { EstadoDocumentoComercial } from '../../api/types/domain';
-import { useAuth } from '../../auth/useAuth';
+import { usePermiso } from '../../auth/usePermiso';
 import { Badge } from '../../components/ui/Badge';
 import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
@@ -27,8 +27,7 @@ const ESTADO_LABEL: Record<EstadoDocumentoComercial, string> = {
 };
 
 export function VentasListPage() {
-  const { usuario } = useAuth();
-  const puedeCrear = usuario?.rol === 'ADMIN' || usuario?.rol === 'SUPERVISOR' || usuario?.rol === 'VENTAS';
+  const puedeCrear = usePermiso('ventas.crear');
   const navigate = useNavigate();
 
   const ventas = useVentas();

@@ -5,7 +5,9 @@ import styles from './InventoryIllustration.module.css';
  * referencia): una estantería de bodega con cajas, una pantalla flotante de
  * predicción y formas decorativas, todo con animación continua y sutil vía
  * CSS (translate/rotate en bucle), respetando prefers-reduced-motion.
- * Colores retintados a la paleta Fluxo (pino / esmeralda / teal / ámbar).
+ * Colores retintados a la paleta TrendCast (indigo/violeta como color de
+ * marca, esmeralda y teal como acentos de variedad, ambar para el punto de
+ * atencion del grafico predictivo).
  */
 export function InventoryIllustration() {
   return (
@@ -17,8 +19,8 @@ export function InventoryIllustration() {
     >
       <defs>
         <linearGradient id="shelf" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#3d6b57" />
-          <stop offset="100%" stopColor="#1a362b" />
+          <stop offset="0%" stopColor="#4338ca" />
+          <stop offset="100%" stopColor="#241e5c" />
         </linearGradient>
         <linearGradient id="boxA" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0%" stopColor="#3ee08c" />
@@ -29,16 +31,16 @@ export function InventoryIllustration() {
           <stop offset="100%" stopColor="#145f69" />
         </linearGradient>
         <linearGradient id="screenGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#234a3b" />
-          <stop offset="100%" stopColor="#152922" />
+          <stop offset="0%" stopColor="#332b7a" />
+          <stop offset="100%" stopColor="#1c1848" />
         </linearGradient>
       </defs>
 
       {/* Base / estanteria isometrica */}
       <g transform="translate(40,180)">
         <polygon points="0,60 180,0 360,60 180,120" fill="url(#shelf)" opacity="0.9" />
-        <polygon points="0,60 0,110 180,170 180,120" fill="#152922" />
-        <polygon points="360,60 360,110 180,170 180,120" fill="#0f201a" />
+        <polygon points="0,60 0,110 180,170 180,120" fill="#1c1848" />
+        <polygon points="360,60 360,110 180,170 180,120" fill="#15123a" />
       </g>
 
       {/* Cajas flotantes con animacion de vaiven */}
@@ -68,11 +70,11 @@ export function InventoryIllustration() {
 
       {/* Pantalla flotante con mini-grafico de prediccion */}
       <g className={styles.floatMed} transform="translate(150,20)">
-        <rect x="0" y="0" width="190" height="120" rx="14" fill="url(#screenGrad)" stroke="#3d6b57" strokeOpacity="0.6" />
+        <rect x="0" y="0" width="190" height="120" rx="14" fill="url(#screenGrad)" stroke="#8b7ffb" strokeOpacity="0.5" />
         <polyline
           points="16,90 50,70 84,78 118,45 152,55 174,28"
           fill="none"
-          stroke="#3ee08c"
+          stroke="#8b7ffb"
           strokeWidth="3"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -80,7 +82,7 @@ export function InventoryIllustration() {
         <polyline
           points="16,90 50,70 84,78 118,45 152,55 174,28"
           fill="none"
-          stroke="#3ee08c"
+          stroke="#8b7ffb"
           strokeOpacity="0.25"
           strokeWidth="10"
           strokeLinecap="round"
@@ -91,13 +93,13 @@ export function InventoryIllustration() {
 
       {/* Formas decorativas: rotan lentamente */}
       <g className={styles.spinSlow} transform="translate(60,60)">
-        <polygon points="0,-14 12,7 -12,7" fill="none" stroke="#3ee08c" strokeWidth="3" />
+        <polygon points="0,-14 12,7 -12,7" fill="none" stroke="#8b7ffb" strokeWidth="3" />
       </g>
       <g className={styles.spinReverse} transform="translate(400,90)">
         <circle r="10" fill="none" stroke="#d98c1f" strokeWidth="3" />
       </g>
       <g className={styles.floatFast} transform="translate(410,220)">
-        <rect x="-8" y="-8" width="16" height="16" rx="4" fill="#3d6b57" opacity="0.8" />
+        <rect x="-8" y="-8" width="16" height="16" rx="4" fill="#8b7ffb" opacity="0.8" />
       </g>
       <g className={styles.floatSlow} transform="translate(30,290)">
         <circle r="7" fill="#3ee08c" opacity="0.8" />

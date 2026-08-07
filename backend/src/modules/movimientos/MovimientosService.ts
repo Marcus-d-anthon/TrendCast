@@ -1,7 +1,7 @@
 import { ConflictError, NotFoundError } from "../../lib/errors";
-import { productosRepository } from "../productos/productos.repository";
-import { movimientosRepository } from "./movimientos.repository";
-import type { ListarMovimientosQuery, RegistrarMovimientoInput } from "./movimientos.validators";
+import { productosRepository } from "../productos/ProductosRepository";
+import { movimientosRepository } from "./MovimientosRepository";
+import type { ListarMovimientosQuery, RegistrarMovimientoInput } from "./MovimientosValidators";
 
 export const movimientosService = {
   listar(filtros: ListarMovimientosQuery) {

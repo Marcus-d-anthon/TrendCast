@@ -1,3 +1,9 @@
+.toolbarActions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
 .skuCell {
   font-family: var(--font-mono);
   font-size: var(--text-xs);

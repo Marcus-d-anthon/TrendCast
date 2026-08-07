@@ -38,6 +38,18 @@ export const MATRIZ_PERMISOS_POR_ROL: Record<Exclude<RolUsuario, "ADMIN">, strin
   GERENCIA: MODULOS_PERMISOS.filter((m) => m !== "usuarios").map((m) => `${m}.ver`),
 };
 
+// Lee la matriz roles_permisos ya sembrada (no MATRIZ_PERMISOS_POR_ROL
+// directamente): asi el frontend siempre ve el permiso real vigente en la
+// base de datos, incluso si en el futuro se edita fila por fila desde un
+// panel de administracion en vez de solo por el seed.
+export async function obtenerCodigosPermisoDeRol(rol: RolUsuario): Promise<string[]> {
+  const filas = await prisma.rolPermiso.findMany({
+    where: { rol },
+    include: { permiso: true },
+  });
+  return filas.map((fila) => fila.permiso.codigo);
+}
+
 // Idempotente (upsert): segura de llamar tanto en un seed que corre una vez
 // como en un helper de pruebas que se invoca antes de cada test.
 export async function sembrarPermisos(): Promise<void> {

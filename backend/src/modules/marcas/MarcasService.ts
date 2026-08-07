@@ -1,6 +1,6 @@
 import { ConflictError, NotFoundError } from "../../lib/errors";
-import { marcasRepository } from "./marcas.repository";
-import type { ActualizarMarcaInput, CrearMarcaInput } from "./marcas.validators";
+import { marcasRepository } from "./MarcasRepository";
+import type { ActualizarMarcaInput, CrearMarcaInput } from "./MarcasValidators";
 
 export const marcasService = {
   listar() {

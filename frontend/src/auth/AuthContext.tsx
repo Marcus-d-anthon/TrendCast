@@ -1,5 +1,6 @@
 import { createContext, useCallback, useEffect, useState, type ReactNode } from 'react';
 import { apiRequest, registerUnauthorizedHandler } from '../api/http-client';
+import { toast } from '../components/ui/toast';
 import { clearAuth, getToken, getUsuario, setAuth } from './token-storage';
 import type { Usuario } from './types';
 
@@ -31,7 +32,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
-    registerUnauthorizedHandler(logout);
+    // Distinto del boton "Cerrar sesion": esto dispara cuando el token expira
+    // o se revoca a mitad de sesion, asi que si merece avisar por que se
+    // volvio a la pantalla de login.
+    registerUnauthorizedHandler(() => {
+      logout();
+      toast.error('Tu sesión expiró. Inicia sesión de nuevo.');
+    });
   }, [logout]);
 
   const login = useCallback(async (email: string, password: string) => {

@@ -1,5 +1,5 @@
 import { useSearchParams } from 'react-router-dom';
-import type { Granularidad } from '../../api/types/domain';
+import type { Granularidad, PrediccionResultado } from '../../api/types/domain';
 import { DemandForecastChart } from '../../components/charts/DemandForecastChart';
 import { Card } from '../../components/ui/Card';
 import { EmptyState } from '../../components/ui/EmptyState';
@@ -10,6 +10,46 @@ import { usePrediccion } from '../../queries/usePrediccion';
 import { useProductos } from '../../queries/useProductos';
 import { formatNumber } from '../../utils/format';
 import styles from './PrediccionPage.module.css';
+
+const GRANULARIDAD_LABEL: Record<Granularidad, string> = { diaria: 'día', semanal: 'semana', mensual: 'mes' };
+const GRANULARIDAD_LABEL_PLURAL: Record<Granularidad, string> = { diaria: 'días', semanal: 'semanas', mensual: 'meses' };
+
+// Traduce los dos métodos estadísticos (SMA + regresión lineal, ver
+// prediccion.math.ts en el backend) a una explicación en lenguaje natural:
+// qué pasó, por qué la proyección es la que es, y qué tan de acuerdo están
+// los dos métodos entre sí. Es la respuesta directa a la observación de los
+// pares ciegos de "profundizar el análisis predictivo... explicando
+// limitaciones e indicadores de precisión" -- sin inventar un modelo nuevo.
+function construirExplicacion(data: PrediccionResultado) {
+  const unidad = GRANULARIDAD_LABEL[data.granularidad];
+  const periodosConDatos = data.historico.length;
+  const promedioHistorico =
+    periodosConDatos > 0 ? data.historico.reduce((suma, p) => suma + p.demanda, 0) / periodosConDatos : 0;
+
+  const pendiente = data.regresionLineal.pendienteB;
+  const umbralTendencia = Math.max(0.5, promedioHistorico * 0.05);
+  const tendencia = pendiente > umbralTendencia ? 'ascendente' : pendiente < -umbralTendencia ? 'descendente' : 'estable';
+
+  const proySma = data.promedioMovil.proyeccionProximoPeriodo;
+  const proyReg = data.regresionLineal.proyeccionProximoPeriodo;
+  const diferenciaRelativa = promedioHistorico > 0 ? Math.abs(proySma - proyReg) / promedioHistorico : 0;
+  const metodosCoinciden = diferenciaRelativa < 0.15;
+
+  const faltante = Math.max(0, data.recomendacionReabastecimiento);
+
+  return {
+    queOcurrio: `En los últimos ${periodosConDatos} ${periodosConDatos === 1 ? unidad : GRANULARIDAD_LABEL_PLURAL[data.granularidad]} con salidas registradas, la demanda promedio fue de ${formatNumber(Math.round(promedioHistorico))} unidades por ${unidad}, con una tendencia ${tendencia} (pendiente de ${pendiente >= 0 ? '+' : ''}${pendiente.toFixed(2)} unidades por ${unidad} según la regresión lineal).`,
+    queProyecta: metodosCoinciden
+      ? `El promedio móvil y la regresión lineal coinciden razonablemente (${formatNumber(Math.round(proySma))} y ${formatNumber(Math.round(proyReg))} unidades respectivamente), lo que da mayor confianza a la proyección para el siguiente ${unidad}.`
+      : `El promedio móvil (${formatNumber(Math.round(proySma))} unidades) y la regresión lineal (${formatNumber(Math.round(proyReg))} unidades) difieren de forma notable, lo que indica que la demanda reciente se está apartando del comportamiento histórico promedio; conviene priorizar la regresión lineal si la tendencia ${tendencia} se mantiene, o el promedio móvil si se espera que la demanda vuelva a estabilizarse.`,
+    queRecomienda:
+      faltante > 0
+        ? `Con un stock actual de ${formatNumber(data.stockActual)} unidades y un mínimo configurado de ${formatNumber(data.stockMinimo)}, el sistema recomienda reponer ${formatNumber(faltante)} unidades para cubrir la demanda proyectada sin caer por debajo del mínimo.`
+        : `El stock actual (${formatNumber(data.stockActual)} unidades) cubre la demanda proyectada y el mínimo configurado (${formatNumber(data.stockMinimo)}), por lo que no se recomienda reposición inmediata.`,
+    limitaciones:
+      'Esta proyección usa promedio móvil simple y regresión lineal sobre el historial real de salidas del producto: no incorpora estacionalidad, promociones ni eventos externos, y su precisión mejora cuantos más períodos de historial existan. Es una estimación de apoyo a la decisión, no una predicción garantizada.',
+  };
+}
 
 const GRANULARIDADES: { value: Granularidad; label: string }[] = [
   { value: 'mensual', label: 'Mensual' },
@@ -130,6 +170,32 @@ export function PrediccionPage() {
             </Card>
           </div>
         </div>
+      )}
+
+      {productoId && prediccion.data && prediccion.data.historico.length > 0 && (
+        <Card className={styles.explanationCard}>
+          <h3 className={styles.explanationTitle}>¿Cómo se calculó esta proyección?</h3>
+          {(() => {
+            const exp = construirExplicacion(prediccion.data);
+            return (
+              <>
+                <p className={styles.explanationParagraph}>
+                  <strong>Qué ocurrió: </strong>
+                  {exp.queOcurrio}
+                </p>
+                <p className={styles.explanationParagraph}>
+                  <strong>Qué proyecta el sistema: </strong>
+                  {exp.queProyecta}
+                </p>
+                <p className={styles.explanationParagraph}>
+                  <strong>Qué recomienda: </strong>
+                  {exp.queRecomienda}
+                </p>
+                <p className={styles.explanationLimitations}>{exp.limitaciones}</p>
+              </>
+            );
+          })()}
+        </Card>
       )}
     </div>
   );

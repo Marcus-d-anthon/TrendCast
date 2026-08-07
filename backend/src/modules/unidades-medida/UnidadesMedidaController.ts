@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
-import { unidadesMedidaService } from "./unidades-medida.service";
-import { actualizarUnidadMedidaSchema, crearUnidadMedidaSchema, idParamSchema } from "./unidades-medida.validators";
+import { unidadesMedidaService } from "./UnidadesMedidaService";
+import { actualizarUnidadMedidaSchema, crearUnidadMedidaSchema, idParamSchema } from "./UnidadesMedidaValidators";
 
 export const unidadesMedidaController = {
   async listar(_req: Request, res: Response): Promise<void> {

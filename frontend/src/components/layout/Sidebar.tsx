@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../auth/useAuth';
-import { FluxoMark } from '../brand/FluxoMark';
+import { TrendCastMark } from '../brand/TrendCastMark';
 import { navItems } from './nav-items';
 import styles from './Sidebar.module.css';
 
@@ -11,14 +11,14 @@ interface SidebarProps {
 
 function SidebarNav({ onNavigate }: { onNavigate: () => void }) {
   const { usuario } = useAuth();
-  const visibleItems = navItems.filter((item) => !item.roles || (usuario && item.roles.includes(usuario.rol)));
+  const visibleItems = navItems.filter((item) => !item.permiso || usuario?.permisos.includes(item.permiso));
 
   return (
     <>
       <div className={styles.brand}>
         <div className={styles.brandRow}>
-          <FluxoMark size={26} />
-          <span className={styles.brandMark}>Fluxo</span>
+          <TrendCastMark size={26} />
+          <span className={styles.brandMark}>TrendCast</span>
         </div>
         <span className={styles.brandTag}>Gestión de Inventarios</span>
       </div>

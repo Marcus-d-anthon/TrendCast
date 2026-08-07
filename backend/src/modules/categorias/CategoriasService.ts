@@ -1,6 +1,6 @@
 import { ConflictError, NotFoundError } from "../../lib/errors";
-import { categoriasRepository } from "./categorias.repository";
-import type { ActualizarCategoriaInput, CrearCategoriaInput } from "./categorias.validators";
+import { categoriasRepository } from "./CategoriasRepository";
+import type { ActualizarCategoriaInput, CrearCategoriaInput } from "./CategoriasValidators";
 
 export const categoriasService = {
   listar() {

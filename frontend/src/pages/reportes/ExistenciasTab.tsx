@@ -1,6 +1,8 @@
+import { reportesApi } from '../../api/endpoints/reportes';
 import { CategoryValueChart } from '../../components/charts/CategoryValueChart';
 import { Card } from '../../components/ui/Card';
 import { ErrorState } from '../../components/ui/ErrorState';
+import { ExportButtons } from '../../components/ui/ExportButtons';
 import { Skeleton } from '../../components/ui/Skeleton';
 import tableStyles from '../../components/ui/Table.module.css';
 import { useExistencias } from '../../queries/useReportes';
@@ -17,6 +19,8 @@ export function ExistenciasTab() {
 
   return (
     <div>
+      <ExportButtons onExportar={(formato) => reportesApi.exportarExistencias(formato)} />
+
       <div className={styles.kpiGrid}>
         <Card>
           <div className={styles.kpiLabel}>Productos activos</div>

@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { authMiddleware } from "../../middlewares/auth.middleware";
-import { requirePermission } from "../../middlewares/permission.middleware";
-import { almacenesController } from "./almacenes.controller";
+import { authMiddleware } from "../../middlewares/AuthMiddleware";
+import { requirePermission } from "../../middlewares/PermissionMiddleware";
+import { almacenesController } from "./AlmacenesController";
 
 export const almacenesRouter = Router();
 

@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
-import { notificacionesService } from "./notificaciones.service";
-import { idParamSchema } from "./notificaciones.validators";
+import { notificacionesService } from "./NotificacionesService";
+import { idParamSchema } from "./NotificacionesValidators";
 
 export const notificacionesController = {
   async listar(req: Request, res: Response): Promise<void> {

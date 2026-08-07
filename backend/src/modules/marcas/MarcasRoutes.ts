@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { authMiddleware } from "../../middlewares/auth.middleware";
-import { requirePermission } from "../../middlewares/permission.middleware";
-import { marcasController } from "./marcas.controller";
+import { authMiddleware } from "../../middlewares/AuthMiddleware";
+import { requirePermission } from "../../middlewares/PermissionMiddleware";
+import { marcasController } from "./MarcasController";
 
 export const marcasRouter = Router();
 
