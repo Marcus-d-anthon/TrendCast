@@ -10,3 +10,5 @@ src/generated/prisma
 
 # Logs
 *.log
+credenciales.txt
+.claude/
