@@ -219,6 +219,40 @@ export type IntWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedIntFilter<$PrismaModel>
 }
 
+export type EnumTipoSolicitudFilter<$PrismaModel = never> = {
+  equals?: $Enums.TipoSolicitud | Prisma.EnumTipoSolicitudFieldRefInput<$PrismaModel>
+  in?: $Enums.TipoSolicitud[] | Prisma.ListEnumTipoSolicitudFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TipoSolicitud[] | Prisma.ListEnumTipoSolicitudFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTipoSolicitudFilter<$PrismaModel> | $Enums.TipoSolicitud
+}
+
+export type EnumEstadoSolicitudFilter<$PrismaModel = never> = {
+  equals?: $Enums.EstadoSolicitud | Prisma.EnumEstadoSolicitudFieldRefInput<$PrismaModel>
+  in?: $Enums.EstadoSolicitud[] | Prisma.ListEnumEstadoSolicitudFieldRefInput<$PrismaModel>
+  notIn?: $Enums.EstadoSolicitud[] | Prisma.ListEnumEstadoSolicitudFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumEstadoSolicitudFilter<$PrismaModel> | $Enums.EstadoSolicitud
+}
+
+export type EnumTipoSolicitudWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.TipoSolicitud | Prisma.EnumTipoSolicitudFieldRefInput<$PrismaModel>
+  in?: $Enums.TipoSolicitud[] | Prisma.ListEnumTipoSolicitudFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TipoSolicitud[] | Prisma.ListEnumTipoSolicitudFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTipoSolicitudWithAggregatesFilter<$PrismaModel> | $Enums.TipoSolicitud
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumTipoSolicitudFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumTipoSolicitudFilter<$PrismaModel>
+}
+
+export type EnumEstadoSolicitudWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.EstadoSolicitud | Prisma.EnumEstadoSolicitudFieldRefInput<$PrismaModel>
+  in?: $Enums.EstadoSolicitud[] | Prisma.ListEnumEstadoSolicitudFieldRefInput<$PrismaModel>
+  notIn?: $Enums.EstadoSolicitud[] | Prisma.ListEnumEstadoSolicitudFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumEstadoSolicitudWithAggregatesFilter<$PrismaModel> | $Enums.EstadoSolicitud
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumEstadoSolicitudFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumEstadoSolicitudFilter<$PrismaModel>
+}
+
 export type EnumTipoDocumentoFilter<$PrismaModel = never> = {
   equals?: $Enums.TipoDocumento | Prisma.EnumTipoDocumentoFieldRefInput<$PrismaModel>
   in?: $Enums.TipoDocumento[] | Prisma.ListEnumTipoDocumentoFieldRefInput<$PrismaModel>
@@ -588,6 +622,40 @@ export type NestedFloatFilter<$PrismaModel = never> = {
   gt?: number | Prisma.FloatFieldRefInput<$PrismaModel>
   gte?: number | Prisma.FloatFieldRefInput<$PrismaModel>
   not?: Prisma.NestedFloatFilter<$PrismaModel> | number
+}
+
+export type NestedEnumTipoSolicitudFilter<$PrismaModel = never> = {
+  equals?: $Enums.TipoSolicitud | Prisma.EnumTipoSolicitudFieldRefInput<$PrismaModel>
+  in?: $Enums.TipoSolicitud[] | Prisma.ListEnumTipoSolicitudFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TipoSolicitud[] | Prisma.ListEnumTipoSolicitudFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTipoSolicitudFilter<$PrismaModel> | $Enums.TipoSolicitud
+}
+
+export type NestedEnumEstadoSolicitudFilter<$PrismaModel = never> = {
+  equals?: $Enums.EstadoSolicitud | Prisma.EnumEstadoSolicitudFieldRefInput<$PrismaModel>
+  in?: $Enums.EstadoSolicitud[] | Prisma.ListEnumEstadoSolicitudFieldRefInput<$PrismaModel>
+  notIn?: $Enums.EstadoSolicitud[] | Prisma.ListEnumEstadoSolicitudFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumEstadoSolicitudFilter<$PrismaModel> | $Enums.EstadoSolicitud
+}
+
+export type NestedEnumTipoSolicitudWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.TipoSolicitud | Prisma.EnumTipoSolicitudFieldRefInput<$PrismaModel>
+  in?: $Enums.TipoSolicitud[] | Prisma.ListEnumTipoSolicitudFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TipoSolicitud[] | Prisma.ListEnumTipoSolicitudFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTipoSolicitudWithAggregatesFilter<$PrismaModel> | $Enums.TipoSolicitud
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumTipoSolicitudFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumTipoSolicitudFilter<$PrismaModel>
+}
+
+export type NestedEnumEstadoSolicitudWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.EstadoSolicitud | Prisma.EnumEstadoSolicitudFieldRefInput<$PrismaModel>
+  in?: $Enums.EstadoSolicitud[] | Prisma.ListEnumEstadoSolicitudFieldRefInput<$PrismaModel>
+  notIn?: $Enums.EstadoSolicitud[] | Prisma.ListEnumEstadoSolicitudFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumEstadoSolicitudWithAggregatesFilter<$PrismaModel> | $Enums.EstadoSolicitud
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumEstadoSolicitudFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumEstadoSolicitudFilter<$PrismaModel>
 }
 
 export type NestedEnumTipoDocumentoFilter<$PrismaModel = never> = {

@@ -10,6 +10,7 @@ import {
 } from 'recharts';
 import type { PrediccionResultado } from '../../api/types/domain';
 import { formatNumber, formatPeriodo } from '../../utils/format';
+import { ChartLimitNote, MAX_PUNTOS_GRAFICO } from './ChartLimitNote';
 import styles from './DemandForecastChart.module.css';
 
 interface ChartPoint {
@@ -23,18 +24,21 @@ interface DemandForecastChartProps {
   prediccion: PrediccionResultado;
 }
 
-function construirDatos(prediccion: PrediccionResultado): ChartPoint[] {
+function construirDatos(prediccion: PrediccionResultado): { puntos: ChartPoint[]; totalHistorico: number } {
   const { historico, regresionLineal, granularidad } = prediccion;
 
-  const puntos: ChartPoint[] = historico.map((punto, indice) => ({
+  // El indice usado para la recta de tendencia (x = indice+1) es el del
+  // historico COMPLETO, no del recorte que se muestra: se calcula sobre todo
+  // el arreglo y recien despues se corta a los ultimos N puntos, para que la
+  // pendiente no cambie solo por mostrar menos barras.
+  const todosLosPuntos: ChartPoint[] = historico.map((punto, indice) => ({
     etiqueta: formatPeriodo(punto.periodo, granularidad),
     demanda: punto.demanda,
-    // x = indice+1, misma indexacion 1..n que usa el backend para ajustar la
-    // regresion (ver prediccion.math.ts): reconstruye la misma recta aqui.
     tendencia: regresionLineal.interceptoA + regresionLineal.pendienteB * (indice + 1),
     esProyeccion: false,
   }));
 
+  const puntos = todosLosPuntos.slice(-(MAX_PUNTOS_GRAFICO - 1));
   puntos.push({
     etiqueta: 'Proyección',
     demanda: null,
@@ -42,7 +46,7 @@ function construirDatos(prediccion: PrediccionResultado): ChartPoint[] {
     esProyeccion: true,
   });
 
-  return puntos;
+  return { puntos, totalHistorico: historico.length };
 }
 
 function TooltipContenido({ active, payload, label }: any) {
@@ -89,13 +93,13 @@ function PuntoTendencia(props: any) {
 }
 
 export function DemandForecastChart({ prediccion }: DemandForecastChartProps) {
-  const datos = construirDatos(prediccion);
+  const { puntos, totalHistorico } = construirDatos(prediccion);
 
   return (
     <div>
       <div className={styles.wrap}>
         <ResponsiveContainer width="100%" height="100%">
-          <ComposedChart data={datos} margin={{ top: 16, right: 16, left: 0, bottom: 0 }}>
+          <ComposedChart data={puntos} margin={{ top: 16, right: 16, left: 0, bottom: 0 }}>
             <CartesianGrid stroke="var(--chart-grid)" vertical={false} />
             <XAxis
               dataKey="etiqueta"
@@ -122,6 +126,7 @@ export function DemandForecastChart({ prediccion }: DemandForecastChartProps) {
           </ComposedChart>
         </ResponsiveContainer>
       </div>
+      <ChartLimitNote total={totalHistorico} mostrados={puntos.length - 1} />
       <div className={styles.legend}>
         <span className={styles.legendItem}>
           <span className={styles.legendSwatch} style={{ background: 'var(--chart-series-1)' }} /> Demanda histórica

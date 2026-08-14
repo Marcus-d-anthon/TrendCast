@@ -135,4 +135,21 @@ describe("Modulo Compras", () => {
     expect(res.body.data[0].proveedor.id).toBe(proveedorId);
     expect(res.body.data[0].detalle).toHaveLength(1);
   });
+
+  it("GET /api/compras?page=1&estado=BORRADOR pagina y filtra por estado", async () => {
+    for (let i = 0; i < 3; i++) {
+      await request(app).post("/api/compras").set("Authorization", `Bearer ${tokenAdmin}`).send(payloadCompra());
+    }
+    const confirmada = await request(app).post("/api/compras").set("Authorization", `Bearer ${tokenAdmin}`).send(payloadCompra());
+    await request(app).post(`/api/compras/${confirmada.body.data.id}/confirmar`).set("Authorization", `Bearer ${tokenAdmin}`);
+
+    const res = await request(app)
+      .get("/api/compras?page=1&pageSize=10&estado=BORRADOR")
+      .set("Authorization", `Bearer ${tokenAdmin}`);
+
+    expect(res.status).toBe(200);
+    expect(res.body.data).toHaveLength(3);
+    expect(res.body.meta).toMatchObject({ total: 3, page: 1, totalPaginas: 1 });
+    expect(res.body.data.every((c: { estado: string }) => c.estado === "BORRADOR")).toBe(true);
+  });
 });

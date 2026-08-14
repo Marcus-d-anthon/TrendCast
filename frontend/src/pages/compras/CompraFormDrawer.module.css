@@ -9,10 +9,58 @@
 
 .linea {
   display: grid;
-  grid-template-columns: 2fr 0.7fr 0.9fr 1fr auto;
+  grid-template-columns: 1.6fr 0.85fr 1.05fr 1fr auto;
   gap: var(--space-2);
   align-items: center;
   margin-bottom: var(--space-2);
+}
+
+/* Suficiente ancho para 4 digitos (cantidad) o 4 digitos + 2 decimales
+   (precio, ej. "9999.99") sin que el numero quede apretado o cortado. */
+.cantidadInput {
+  min-width: 4.5rem;
+}
+
+.precioInput {
+  min-width: 5.5rem;
+  background: var(--color-surface-muted);
+  color: var(--color-text-secondary);
+  cursor: not-allowed;
+}
+
+@media (max-width: 640px) {
+  .linea {
+    grid-template-columns: 1fr 1fr auto;
+    grid-template-areas:
+      'producto producto producto'
+      'cantidad precio quitar'
+      'subtotal subtotal subtotal';
+    row-gap: var(--space-1);
+    padding-bottom: var(--space-3);
+    margin-bottom: var(--space-3);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .linea > select {
+    grid-area: producto;
+  }
+
+  .linea > input:nth-of-type(1) {
+    grid-area: cantidad;
+  }
+
+  .linea > input:nth-of-type(2) {
+    grid-area: precio;
+  }
+
+  .lineaSubtotal {
+    grid-area: subtotal;
+    text-align: left;
+  }
+
+  .removeLinea {
+    grid-area: quitar;
+  }
 }
 
 .lineaSubtotal {

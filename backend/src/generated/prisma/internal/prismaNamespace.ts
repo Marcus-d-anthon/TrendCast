@@ -402,11 +402,13 @@ export const ModelName = {
   Permiso: 'Permiso',
   RolPermiso: 'RolPermiso',
   RefreshToken: 'RefreshToken',
+  CodigoRecuperacion2FA: 'CodigoRecuperacion2FA',
   Marca: 'Marca',
   UnidadMedida: 'UnidadMedida',
   Categoria: 'Categoria',
   Almacen: 'Almacen',
   Producto: 'Producto',
+  Solicitud: 'Solicitud',
   Stock: 'Stock',
   Lote: 'Lote',
   Cliente: 'Cliente',
@@ -418,7 +420,8 @@ export const ModelName = {
   MovimientoInventario: 'MovimientoInventario',
   Alerta: 'Alerta',
   Notificacion: 'Notificacion',
-  AuditLog: 'AuditLog'
+  AuditLog: 'AuditLog',
+  ErrorLog: 'ErrorLog'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -434,7 +437,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "empresa" | "usuario" | "permiso" | "rolPermiso" | "refreshToken" | "marca" | "unidadMedida" | "categoria" | "almacen" | "producto" | "stock" | "lote" | "cliente" | "proveedor" | "compra" | "detalleCompra" | "venta" | "detalleVenta" | "movimientoInventario" | "alerta" | "notificacion" | "auditLog"
+    modelProps: "empresa" | "usuario" | "permiso" | "rolPermiso" | "refreshToken" | "codigoRecuperacion2FA" | "marca" | "unidadMedida" | "categoria" | "almacen" | "producto" | "solicitud" | "stock" | "lote" | "cliente" | "proveedor" | "compra" | "detalleCompra" | "venta" | "detalleVenta" | "movimientoInventario" | "alerta" | "notificacion" | "auditLog" | "errorLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -808,6 +811,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    CodigoRecuperacion2FA: {
+      payload: Prisma.$CodigoRecuperacion2FAPayload<ExtArgs>
+      fields: Prisma.CodigoRecuperacion2FAFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CodigoRecuperacion2FAFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CodigoRecuperacion2FAPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CodigoRecuperacion2FAFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CodigoRecuperacion2FAPayload>
+        }
+        findFirst: {
+          args: Prisma.CodigoRecuperacion2FAFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CodigoRecuperacion2FAPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CodigoRecuperacion2FAFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CodigoRecuperacion2FAPayload>
+        }
+        findMany: {
+          args: Prisma.CodigoRecuperacion2FAFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CodigoRecuperacion2FAPayload>[]
+        }
+        create: {
+          args: Prisma.CodigoRecuperacion2FACreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CodigoRecuperacion2FAPayload>
+        }
+        createMany: {
+          args: Prisma.CodigoRecuperacion2FACreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CodigoRecuperacion2FACreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CodigoRecuperacion2FAPayload>[]
+        }
+        delete: {
+          args: Prisma.CodigoRecuperacion2FADeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CodigoRecuperacion2FAPayload>
+        }
+        update: {
+          args: Prisma.CodigoRecuperacion2FAUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CodigoRecuperacion2FAPayload>
+        }
+        deleteMany: {
+          args: Prisma.CodigoRecuperacion2FADeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CodigoRecuperacion2FAUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CodigoRecuperacion2FAUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CodigoRecuperacion2FAPayload>[]
+        }
+        upsert: {
+          args: Prisma.CodigoRecuperacion2FAUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CodigoRecuperacion2FAPayload>
+        }
+        aggregate: {
+          args: Prisma.CodigoRecuperacion2FAAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCodigoRecuperacion2FA>
+        }
+        groupBy: {
+          args: Prisma.CodigoRecuperacion2FAGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CodigoRecuperacion2FAGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CodigoRecuperacion2FACountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CodigoRecuperacion2FACountAggregateOutputType> | number
+        }
+      }
+    }
     Marca: {
       payload: Prisma.$MarcaPayload<ExtArgs>
       fields: Prisma.MarcaFieldRefs
@@ -1175,6 +1252,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.ProductoCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.ProductoCountAggregateOutputType> | number
+        }
+      }
+    }
+    Solicitud: {
+      payload: Prisma.$SolicitudPayload<ExtArgs>
+      fields: Prisma.SolicitudFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SolicitudFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SolicitudPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SolicitudFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SolicitudPayload>
+        }
+        findFirst: {
+          args: Prisma.SolicitudFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SolicitudPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SolicitudFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SolicitudPayload>
+        }
+        findMany: {
+          args: Prisma.SolicitudFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SolicitudPayload>[]
+        }
+        create: {
+          args: Prisma.SolicitudCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SolicitudPayload>
+        }
+        createMany: {
+          args: Prisma.SolicitudCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SolicitudCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SolicitudPayload>[]
+        }
+        delete: {
+          args: Prisma.SolicitudDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SolicitudPayload>
+        }
+        update: {
+          args: Prisma.SolicitudUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SolicitudPayload>
+        }
+        deleteMany: {
+          args: Prisma.SolicitudDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SolicitudUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SolicitudUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SolicitudPayload>[]
+        }
+        upsert: {
+          args: Prisma.SolicitudUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SolicitudPayload>
+        }
+        aggregate: {
+          args: Prisma.SolicitudAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSolicitud>
+        }
+        groupBy: {
+          args: Prisma.SolicitudGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SolicitudGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SolicitudCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SolicitudCountAggregateOutputType> | number
         }
       }
     }
@@ -2066,6 +2217,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ErrorLog: {
+      payload: Prisma.$ErrorLogPayload<ExtArgs>
+      fields: Prisma.ErrorLogFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ErrorLogFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ErrorLogPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ErrorLogFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ErrorLogPayload>
+        }
+        findFirst: {
+          args: Prisma.ErrorLogFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ErrorLogPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ErrorLogFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ErrorLogPayload>
+        }
+        findMany: {
+          args: Prisma.ErrorLogFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ErrorLogPayload>[]
+        }
+        create: {
+          args: Prisma.ErrorLogCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ErrorLogPayload>
+        }
+        createMany: {
+          args: Prisma.ErrorLogCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ErrorLogCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ErrorLogPayload>[]
+        }
+        delete: {
+          args: Prisma.ErrorLogDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ErrorLogPayload>
+        }
+        update: {
+          args: Prisma.ErrorLogUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ErrorLogPayload>
+        }
+        deleteMany: {
+          args: Prisma.ErrorLogDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ErrorLogUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ErrorLogUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ErrorLogPayload>[]
+        }
+        upsert: {
+          args: Prisma.ErrorLogUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ErrorLogPayload>
+        }
+        aggregate: {
+          args: Prisma.ErrorLogAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateErrorLog>
+        }
+        groupBy: {
+          args: Prisma.ErrorLogGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ErrorLogGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ErrorLogCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ErrorLogCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -2125,7 +2350,10 @@ export const UsuarioScalarFieldEnum = {
   nombre: 'nombre',
   rol: 'rol',
   activo: 'activo',
+  totpSecret: 'totpSecret',
+  totpHabilitado: 'totpHabilitado',
   empresaId: 'empresaId',
+  almacenId: 'almacenId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   createdBy: 'createdBy',
@@ -2166,6 +2394,18 @@ export const RefreshTokenScalarFieldEnum = {
 } as const
 
 export type RefreshTokenScalarFieldEnum = (typeof RefreshTokenScalarFieldEnum)[keyof typeof RefreshTokenScalarFieldEnum]
+
+
+export const CodigoRecuperacion2FAScalarFieldEnum = {
+  id: 'id',
+  codigoHash: 'codigoHash',
+  usado: 'usado',
+  usadoEn: 'usadoEn',
+  createdAt: 'createdAt',
+  usuarioId: 'usuarioId'
+} as const
+
+export type CodigoRecuperacion2FAScalarFieldEnum = (typeof CodigoRecuperacion2FAScalarFieldEnum)[keyof typeof CodigoRecuperacion2FAScalarFieldEnum]
 
 
 export const MarcaScalarFieldEnum = {
@@ -2255,6 +2495,28 @@ export const ProductoScalarFieldEnum = {
 export type ProductoScalarFieldEnum = (typeof ProductoScalarFieldEnum)[keyof typeof ProductoScalarFieldEnum]
 
 
+export const SolicitudScalarFieldEnum = {
+  id: 'id',
+  numero: 'numero',
+  tipo: 'tipo',
+  estado: 'estado',
+  cantidad: 'cantidad',
+  comentario: 'comentario',
+  productoId: 'productoId',
+  almacenId: 'almacenId',
+  solicitanteId: 'solicitanteId',
+  aprobadorId: 'aprobadorId',
+  fechaAprobacion: 'fechaAprobacion',
+  motivoRechazo: 'motivoRechazo',
+  efectuadorId: 'efectuadorId',
+  fechaEfectuacion: 'fechaEfectuacion',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SolicitudScalarFieldEnum = (typeof SolicitudScalarFieldEnum)[keyof typeof SolicitudScalarFieldEnum]
+
+
 export const StockScalarFieldEnum = {
   id: 'id',
   cantidad: 'cantidad',
@@ -2287,6 +2549,7 @@ export type LoteScalarFieldEnum = (typeof LoteScalarFieldEnum)[keyof typeof Lote
 
 export const ClienteScalarFieldEnum = {
   id: 'id',
+  codigo: 'codigo',
   tipoDocumento: 'tipoDocumento',
   numeroDocumento: 'numeroDocumento',
   nombre: 'nombre',
@@ -2307,6 +2570,7 @@ export type ClienteScalarFieldEnum = (typeof ClienteScalarFieldEnum)[keyof typeo
 
 export const ProveedorScalarFieldEnum = {
   id: 'id',
+  codigo: 'codigo',
   tipoDocumento: 'tipoDocumento',
   numeroDocumento: 'numeroDocumento',
   razonSocial: 'razonSocial',
@@ -2401,6 +2665,7 @@ export const MovimientoInventarioScalarFieldEnum = {
   movimientoOrigenId: 'movimientoOrigenId',
   compraId: 'compraId',
   ventaId: 'ventaId',
+  solicitudId: 'solicitudId',
   fecha: 'fecha',
   createdAt: 'createdAt'
 } as const
@@ -2450,6 +2715,25 @@ export const AuditLogScalarFieldEnum = {
 } as const
 
 export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
+
+
+export const ErrorLogScalarFieldEnum = {
+  id: 'id',
+  mensaje: 'mensaje',
+  ruta: 'ruta',
+  metodo: 'metodo',
+  statusCode: 'statusCode',
+  categoria: 'categoria',
+  stackTrace: 'stackTrace',
+  usuarioId: 'usuarioId',
+  empresaId: 'empresaId',
+  ip: 'ip',
+  userAgent: 'userAgent',
+  traceId: 'traceId',
+  fecha: 'fecha'
+} as const
+
+export type ErrorLogScalarFieldEnum = (typeof ErrorLogScalarFieldEnum)[keyof typeof ErrorLogScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -2573,6 +2857,34 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Int[]'
  */
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
+ * Reference to a field of type 'TipoSolicitud'
+ */
+export type EnumTipoSolicitudFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoSolicitud'>
+    
+
+
+/**
+ * Reference to a field of type 'TipoSolicitud[]'
+ */
+export type ListEnumTipoSolicitudFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoSolicitud[]'>
+    
+
+
+/**
+ * Reference to a field of type 'EstadoSolicitud'
+ */
+export type EnumEstadoSolicitudFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EstadoSolicitud'>
+    
+
+
+/**
+ * Reference to a field of type 'EstadoSolicitud[]'
+ */
+export type ListEnumEstadoSolicitudFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EstadoSolicitud[]'>
     
 
 
@@ -2843,11 +3155,13 @@ export type GlobalOmitConfig = {
   permiso?: Prisma.PermisoOmit
   rolPermiso?: Prisma.RolPermisoOmit
   refreshToken?: Prisma.RefreshTokenOmit
+  codigoRecuperacion2FA?: Prisma.CodigoRecuperacion2FAOmit
   marca?: Prisma.MarcaOmit
   unidadMedida?: Prisma.UnidadMedidaOmit
   categoria?: Prisma.CategoriaOmit
   almacen?: Prisma.AlmacenOmit
   producto?: Prisma.ProductoOmit
+  solicitud?: Prisma.SolicitudOmit
   stock?: Prisma.StockOmit
   lote?: Prisma.LoteOmit
   cliente?: Prisma.ClienteOmit
@@ -2860,6 +3174,7 @@ export type GlobalOmitConfig = {
   alerta?: Prisma.AlertaOmit
   notificacion?: Prisma.NotificacionOmit
   auditLog?: Prisma.AuditLogOmit
+  errorLog?: Prisma.ErrorLogOmit
 }
 
 /* Types for Logging */

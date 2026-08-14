@@ -1,9 +1,10 @@
-import { Package, Plus, ScanBarcode, Search, Upload } from 'lucide-react';
+import { Package, Plus, ScanBarcode, Search, Upload, Warehouse } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { productosApi } from '../../api/endpoints/productos';
 import type { Producto } from '../../api/types/domain';
 import { usePermiso } from '../../auth/usePermiso';
+import { useAuth } from '../../auth/useAuth';
 import { Badge } from '../../components/ui/Badge';
 import { BarcodeScannerModal } from '../../components/ui/BarcodeScannerModal';
 import { Button } from '../../components/ui/Button';
@@ -24,7 +25,6 @@ import { useDebouncedValue } from '../../hooks/useDebouncedValue';
 import { useCategorias } from '../../queries/useCategorias';
 import { useProductosPaginado } from '../../queries/useProductos';
 import { formatCurrency, formatNumber } from '../../utils/format';
-import { ImportarProductosModal } from './ImportarProductosModal';
 import { ProductoFormDrawer } from './ProductoFormDrawer';
 import styles from './ProductosListPage.module.css';
 
@@ -32,14 +32,22 @@ export function stockTotal(producto: Producto): number {
   return producto.stocks?.reduce((suma, stock) => suma + stock.cantidad, 0) ?? 0;
 }
 
-function estadoStock(producto: Producto): { label: string; variant: 'success' | 'warning' | 'danger' } {
-  const cantidad = stockTotal(producto);
+// Cantidad de UN almacen puntual, no el agregado de la empresa: un operador
+// de Bodega solo debe ver lo que fisicamente tiene enfrente en su propio
+// almacen, no un total que mezcla existencias de otras bodegas.
+function stockEnAlmacen(producto: Producto, almacenId: string): number {
+  return producto.stocks?.find((stock) => stock.almacenId === almacenId)?.cantidad ?? 0;
+}
+
+function estadoStock(cantidad: number, stockMinimo: number): { label: string; variant: 'success' | 'warning' | 'danger' } {
   if (cantidad <= 0) return { label: 'Sin stock', variant: 'danger' };
-  if (cantidad <= producto.stockMinimo) return { label: 'Bajo mínimo', variant: 'warning' };
+  if (cantidad <= stockMinimo) return { label: 'Bajo mínimo', variant: 'warning' };
   return { label: 'Saludable', variant: 'success' };
 }
 
 export function ProductosListPage() {
+  const { usuario } = useAuth();
+  const sinAlmacenAsignado = usuario?.rol === 'BODEGA' && !usuario.almacenId;
   const puedeEscribir = usePermiso('productos.crear');
   const navigate = useNavigate();
   const [params, setParams] = useSearchParams();
@@ -50,11 +58,25 @@ export function ProductosListPage() {
   const busqueda = useDebouncedValue(busquedaCruda);
 
   const categorias = useCategorias();
-  const productos = useProductosPaginado({ page: pagina, busqueda: busqueda || undefined, categoriaId: categoriaId || undefined });
+  const productos = useProductosPaginado(
+    { page: pagina, busqueda: busqueda || undefined, categoriaId: categoriaId || undefined },
+    { enabled: !sinAlmacenAsignado }
+  );
 
   const [creando, setCreando] = useState(false);
-  const [importando, setImportando] = useState(false);
   const [escaneando, setEscaneando] = useState(false);
+
+  if (sinAlmacenAsignado) {
+    return (
+      <Card>
+        <EmptyState
+          icon={Warehouse}
+          title="Sin almacén asignado"
+          description={`Estimado "${usuario?.nombre ?? 'operador'}", aún no cuenta con un almacén asignado. Por favor contáctese con su administrador.`}
+        />
+      </Card>
+    );
+  }
 
   function actualizarParam(clave: string, valor: string) {
     const siguiente = new URLSearchParams(params);
@@ -105,8 +127,8 @@ export function ProductosListPage() {
         <ExportButtons className={exportButtonsStyles.noMargin} onExportar={(formato) => productosApi.exportar(formato)} />
         <div className={styles.toolbarActions}>
           {puedeEscribir && (
-            <Button type="button" variant="secondary" onClick={() => setImportando(true)}>
-              <Upload size={16} aria-hidden="true" /> Importar
+            <Button type="button" variant="secondary" onClick={() => navigate('/productos/carga-masiva')}>
+              <Upload size={16} aria-hidden="true" /> Carga masiva
             </Button>
           )}
           {puedeEscribir && (
@@ -139,14 +161,18 @@ export function ProductosListPage() {
                   <th>Producto</th>
                   <th>Categoría</th>
                   <th>Marca</th>
-                  <th style={{ textAlign: 'right' }}>Stock</th>
+                  <th style={{ textAlign: 'right' }}>{usuario?.rol === 'BODEGA' ? 'Stock en tu almacén' : 'Stock'}</th>
                   <th style={{ textAlign: 'right' }}>Precio venta</th>
                   <th>Estado</th>
                 </tr>
               </thead>
               <tbody>
                 {filas.map((producto) => {
-                  const estado = estadoStock(producto);
+                  const cantidad =
+                    usuario?.rol === 'BODEGA' && usuario.almacenId
+                      ? stockEnAlmacen(producto, usuario.almacenId)
+                      : stockTotal(producto);
+                  const estado = estadoStock(cantidad, producto.stockMinimo);
                   return (
                     <tr
                       key={producto.id}
@@ -167,7 +193,7 @@ export function ProductosListPage() {
                       <td>{producto.categoria?.nombre ?? '—'}</td>
                       <td>{producto.marca?.nombre ?? '—'}</td>
                       <td className={styles.numericCell}>
-                        {formatNumber(stockTotal(producto))} / {formatNumber(producto.stockMinimo)}
+                        {formatNumber(cantidad)} / {formatNumber(producto.stockMinimo)}
                       </td>
                       <td className={styles.numericCell}>{formatCurrency(Number(producto.precioVenta))}</td>
                       <td>
@@ -192,7 +218,6 @@ export function ProductosListPage() {
       </Card>
 
       {creando && <ProductoFormDrawer onClose={() => setCreando(false)} />}
-      {importando && <ImportarProductosModal onClose={() => setImportando(false)} />}
       {escaneando && (
         <BarcodeScannerModal
           onClose={() => setEscaneando(false)}

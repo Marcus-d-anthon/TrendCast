@@ -8,10 +8,15 @@ import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
 import { EmptyState } from '../../components/ui/EmptyState';
 import { ErrorState } from '../../components/ui/ErrorState';
+import { FiltersCard } from '../../components/ui/FiltersCard';
+import { FormField } from '../../components/ui/FormField';
+import { Input } from '../../components/ui/Input';
+import { Pagination } from '../../components/ui/Pagination';
+import { Select } from '../../components/ui/Select';
 import { Skeleton } from '../../components/ui/Skeleton';
 import tableStyles from '../../components/ui/Table.module.css';
-import { useCompras } from '../../queries/useCompras';
-import { formatCurrency, formatDate } from '../../utils/format';
+import { useComprasPaginado } from '../../queries/useCompras';
+import { formatCurrency, formatDate, rangoFechasDefecto } from '../../utils/format';
 import { CompraFormDrawer } from './CompraFormDrawer';
 
 const ESTADO_VARIANT: Record<EstadoDocumentoComercial, 'success' | 'warning' | 'danger'> = {
@@ -26,15 +31,54 @@ const ESTADO_LABEL: Record<EstadoDocumentoComercial, string> = {
   ANULADA: 'Anulada',
 };
 
+const RANGO_DEFECTO = rangoFechasDefecto();
+
 export function ComprasListPage() {
   const puedeCrear = usePermiso('compras.crear');
   const navigate = useNavigate();
 
-  const compras = useCompras();
+  const [estado, setEstado] = useState<EstadoDocumentoComercial | ''>('');
+  const [desde, setDesde] = useState(RANGO_DEFECTO.desde);
+  const [hasta, setHasta] = useState(RANGO_DEFECTO.hasta);
+  const [pagina, setPagina] = useState(1);
   const [creando, setCreando] = useState(false);
+
+  const compras = useComprasPaginado({
+    page: pagina,
+    estado: estado || undefined,
+    desde: desde ? `${desde}T00:00:00` : undefined,
+    hasta: hasta ? `${hasta}T23:59:59` : undefined,
+  });
+
+  function conFiltro<T>(setter: (v: T) => void) {
+    return (v: T) => {
+      setPagina(1);
+      setter(v);
+    };
+  }
+
+  const filas = compras.data?.data ?? [];
+  const meta = compras.data?.meta;
 
   return (
     <div>
+      <FiltersCard>
+        <FormField label="Estado" htmlFor="com-estado" hint="Borrador, confirmada o anulada">
+          <Select id="com-estado" value={estado} onChange={(e) => conFiltro(setEstado)(e.target.value as EstadoDocumentoComercial | '')}>
+            <option value="">Todos los estados</option>
+            <option value="BORRADOR">Borrador</option>
+            <option value="CONFIRMADA">Confirmada</option>
+            <option value="ANULADA">Anulada</option>
+          </Select>
+        </FormField>
+        <FormField label="Fecha inicio" htmlFor="com-desde" hint="Por defecto, 2 días atrás">
+          <Input id="com-desde" type="date" value={desde} onChange={(e) => conFiltro(setDesde)(e.target.value)} />
+        </FormField>
+        <FormField label="Fecha fin" htmlFor="com-hasta" hint="Por defecto, hoy">
+          <Input id="com-hasta" type="date" value={hasta} onChange={(e) => conFiltro(setHasta)(e.target.value)} />
+        </FormField>
+      </FiltersCard>
+
       <div className={tableStyles.toolbar}>
         <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)' }}>
           Órdenes de compra a proveedores. Confirmar una compra genera el ingreso real de stock.
@@ -49,10 +93,14 @@ export function ComprasListPage() {
       <Card>
         {compras.isLoading && <Skeleton height="16rem" />}
         {compras.isError && <ErrorState onRetry={() => compras.refetch()} />}
-        {compras.data && compras.data.length === 0 && (
-          <EmptyState icon={ShoppingCart} title="Sin compras" description="Registra la primera orden de compra." />
+        {compras.data && filas.length === 0 && (
+          <EmptyState
+            icon={ShoppingCart}
+            title="Sin compras"
+            description="Ninguna compra coincide con los filtros aplicados."
+          />
         )}
-        {compras.data && compras.data.length > 0 && (
+        {filas.length > 0 && (
           <div className={tableStyles.tableWrap}>
             <table className={tableStyles.table}>
               <thead>
@@ -66,7 +114,7 @@ export function ComprasListPage() {
                 </tr>
               </thead>
               <tbody>
-                {compras.data.map((compra) => (
+                {filas.map((compra) => (
                   <tr
                     key={compra.id}
                     className={tableStyles.clickable}
@@ -96,6 +144,15 @@ export function ComprasListPage() {
               </tbody>
             </table>
           </div>
+        )}
+
+        {meta && (
+          <Pagination
+            pagina={meta.page}
+            totalPaginas={meta.totalPaginas}
+            totalItems={meta.total}
+            onCambiarPagina={setPagina}
+          />
         )}
       </Card>
 

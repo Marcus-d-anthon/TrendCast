@@ -24,6 +24,19 @@ enum RolUsuario {
   BODEGA
   VENTAS
   GERENCIA
+  SUPERUSUARIO
+}
+
+enum EstadoSolicitud {
+  PENDIENTE
+  APROBADA
+  RECHAZADA
+  EFECTUADA
+}
+
+enum TipoSolicitud {
+  REABASTECIMIENTO
+  VENTA_ESPECIAL
 }
 
 enum TipoMovimiento {
@@ -65,35 +78,27 @@ enum CanalNotificacion {
   EMAIL
 }
 
-// ──────────────────────────────
-// EMPRESA
-// Preparacion para multi-tenant: el esquema ya segmenta por empresa_id en
-// las tablas de negocio, pero el sistema opera hoy con una sola empresa
-// sembrada (TIANSHI). No existe todavia flujo de alta de nuevas empresas ni
-// aislamiento de datos activo -- ver docs/tesis para el detalle de alcance.
-// ──────────────────────────────
-
 model Empresa {
-  id             String  @id @default(uuid())
-  ruc            String  @unique
-  razonSocial    String  @map("razon_social")
+  id              String  @id @default(uuid())
+  ruc             String  @unique
+  razonSocial     String  @map("razon_social")
   nombreComercial String? @map("nombre_comercial")
-  activo         Boolean @default(true)
+  activo          Boolean @default(true)
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  usuarios   Usuario[]
-  marcas     Marca[]
-  unidades   UnidadMedida[]
-  almacenes  Almacen[]
-  categorias Categoria[]
-  productos  Producto[]
-  clientes   Cliente[]
+  usuarios    Usuario[]
+  marcas      Marca[]
+  unidades    UnidadMedida[]
+  almacenes   Almacen[]
+  categorias  Categoria[]
+  productos   Producto[]
+  clientes    Cliente[]
   proveedores Proveedor[]
-  compras    Compra[]
-  ventas     Venta[]
-  alertas    Alerta[]
+  compras     Compra[]
+  ventas      Venta[]
+  alertas     Alerta[]
 
   @@map("empresas")
 }
@@ -110,8 +115,21 @@ model Usuario {
   rol          RolUsuario @default(BODEGA)
   activo       Boolean    @default(true)
 
+  // 2FA opcional (TOTP): el secreto solo se marca "listo para usar" cuando
+  // totpHabilitado es true (verificar2fa lo confirma con un codigo real
+  // antes de activarlo) -- mientras tanto un secreto generado pero no
+  // confirmado no afecta el login.
+  totpSecret     String? @map("totp_secret")
+  totpHabilitado Boolean @default(false) @map("totp_habilitado")
+
   empresaId String  @map("empresa_id")
   empresa   Empresa @relation(fields: [empresaId], references: [id], onDelete: Restrict)
+
+  // Solo tiene sentido para rol BODEGA (un bodeguero queda atado a un unico
+  // almacen); se valida en la capa de aplicacion, no aqui, para no acoplar
+  // el esquema a reglas de negocio que pueden cambiar.
+  almacenId String?  @map("almacen_id")
+  almacen   Almacen? @relation(fields: [almacenId], references: [id], onDelete: SetNull)
 
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime  @updatedAt @map("updated_at")
@@ -119,15 +137,20 @@ model Usuario {
   updatedBy String?   @map("updated_by") // FK logica -> usuarios.id
   deletedAt DateTime? @map("deleted_at")
 
-  movimientosRegistrados MovimientoInventario[] @relation("MovimientoRegistradoPor")
+  movimientosRegistrados MovimientoInventario[]  @relation("MovimientoRegistradoPor")
   refreshTokens          RefreshToken[]
+  codigosRecuperacion2fa CodigoRecuperacion2FA[]
   notificaciones         Notificacion[]
   comprasRegistradas     Compra[]                @relation("CompraRegistradaPor")
   ventasRegistradas      Venta[]                 @relation("VentaRegistradaPor")
+  solicitudesCreadas     Solicitud[]             @relation("SolicitudSolicitante")
+  solicitudesAprobadas   Solicitud[]             @relation("SolicitudAprobador")
+  solicitudesEfectuadas  Solicitud[]             @relation("SolicitudEfectuador")
 
   @@index([rol])
   @@index([deletedAt])
   @@index([empresaId])
+  @@index([almacenId])
   @@map("usuarios")
 }
 
@@ -169,6 +192,24 @@ model RefreshToken {
 
   @@index([usuarioId])
   @@map("refresh_tokens")
+}
+
+// Codigos de un solo uso para cuando el usuario pierde acceso a su app de
+// TOTP -- mismo principio que RefreshToken: solo se persiste el hash
+// (sha256), el codigo en claro se muestra una unica vez al generarlos y
+// nunca se puede recuperar despues.
+model CodigoRecuperacion2FA {
+  id         String    @id @default(uuid())
+  codigoHash String    @unique @map("codigo_hash")
+  usado      Boolean   @default(false)
+  usadoEn    DateTime? @map("usado_en")
+  createdAt  DateTime  @default(now()) @map("created_at")
+
+  usuarioId String  @map("usuario_id")
+  usuario   Usuario @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+
+  @@index([usuarioId])
+  @@map("codigos_recuperacion_2fa")
 }
 
 // ──────────────────────────────
@@ -256,11 +297,13 @@ model Almacen {
   updatedBy String?   @map("updated_by")
   deletedAt DateTime? @map("deleted_at")
 
-  stocks              Stock[]
-  lotes                Lote[]
-  movimientos          MovimientoInventario[]
-  compras              Compra[]
-  ventas               Venta[]
+  stocks      Stock[]
+  lotes       Lote[]
+  movimientos MovimientoInventario[]
+  compras     Compra[]
+  ventas      Venta[]
+  usuarios    Usuario[]
+  solicitudes Solicitud[]
 
   @@unique([empresaId, nombre])
   @@index([deletedAt])
@@ -272,15 +315,15 @@ model Almacen {
 // ──────────────────────────────
 
 model Producto {
-  id            String  @id @default(uuid())
-  sku           String  @unique
-  nombre        String
-  descripcion   String?
-  precioCompra  Decimal @map("precio_compra") @db.Decimal(10, 2)
-  precioVenta   Decimal @map("precio_venta") @db.Decimal(10, 2)
-  stockMinimo   Int     @default(0) @map("stock_minimo")
-  requiereLote  Boolean @default(false) @map("requiere_lote")
-  activo        Boolean @default(true)
+  id           String  @id @default(uuid())
+  sku          String  @unique
+  nombre       String
+  descripcion  String?
+  precioCompra Decimal @map("precio_compra") @db.Decimal(10, 2)
+  precioVenta  Decimal @map("precio_venta") @db.Decimal(10, 2)
+  stockMinimo  Int     @default(0) @map("stock_minimo")
+  requiereLote Boolean @default(false) @map("requiere_lote")
+  activo       Boolean @default(true)
 
   empresaId String  @map("empresa_id")
   empresa   Empresa @relation(fields: [empresaId], references: [id], onDelete: Restrict)
@@ -300,11 +343,12 @@ model Producto {
   updatedBy String?   @map("updated_by")
   deletedAt DateTime? @map("deleted_at")
 
-  stocks           Stock[]
-  lotes            Lote[]
-  movimientos      MovimientoInventario[]
-  detallesCompra   DetalleCompra[]
-  detallesVenta    DetalleVenta[]
+  stocks         Stock[]
+  lotes          Lote[]
+  movimientos    MovimientoInventario[]
+  detallesCompra DetalleCompra[]
+  detallesVenta  DetalleVenta[]
+  solicitudes    Solicitud[]
 
   @@index([categoriaId])
   @@index([marcaId])
@@ -316,6 +360,61 @@ model Producto {
   // el filtro por categoria+nombre a la vez sin tener que ordenar en memoria.
   @@index([empresaId, nombre])
   @@map("productos")
+}
+
+// ──────────────────────────────
+// SOLICITUDES (workflow Bodega solicita -> Gerencia aprueba -> Supervisor
+// efectua). Alcance intencionalmente acotado: por ahora solo se puede crear
+// y listar; el resto de la maquina de estados (aprobar/rechazar/efectuar) se
+// agrego despues, en los campos de aprobador/efectuador de abajo.
+// ──────────────────────────────
+
+model Solicitud {
+  id         String          @id @default(uuid())
+  // Codigo legible tipo "SOL-2026-0001". Sin @unique: Solicitud no tiene una
+  // columna empresa_id propia (se accede via producto.empresaId, ver
+  // "listar"/"buscarPorId" mas abajo), asi que una restriccion unica global
+  // chocaria entre dos empresas distintas cuyo secuencial coincide -- se
+  // confirmo en la practica durante el backfill de este campo. Queda como
+  // indice simple; la unicidad real la garantiza el generador secuencial
+  // por empresa en el service, no la base de datos.
+  numero     String?         @map("numero")
+  tipo       TipoSolicitud
+  estado     EstadoSolicitud @default(PENDIENTE)
+  cantidad   Int
+  comentario String?
+
+  productoId String   @map("producto_id")
+  producto   Producto @relation(fields: [productoId], references: [id], onDelete: Restrict)
+
+  almacenId String  @map("almacen_id")
+  almacen   Almacen @relation(fields: [almacenId], references: [id], onDelete: Restrict)
+
+  solicitanteId String  @map("solicitante_id")
+  solicitante   Usuario @relation("SolicitudSolicitante", fields: [solicitanteId], references: [id], onDelete: Restrict)
+
+  // Gerencia aprueba o rechaza (PENDIENTE -> APROBADA/RECHAZADA); Supervisor
+  // efectua (APROBADA -> EFECTUADA), lo que genera el MovimientoInventario
+  // real -- ver relacion mas abajo.
+  aprobadorId     String?   @map("aprobador_id")
+  aprobador       Usuario?  @relation("SolicitudAprobador", fields: [aprobadorId], references: [id], onDelete: Restrict)
+  fechaAprobacion DateTime? @map("fecha_aprobacion")
+  motivoRechazo   String?   @map("motivo_rechazo")
+
+  efectuadorId     String?   @map("efectuador_id")
+  efectuador       Usuario?  @relation("SolicitudEfectuador", fields: [efectuadorId], references: [id], onDelete: Restrict)
+  fechaEfectuacion DateTime? @map("fecha_efectuacion")
+
+  movimientos MovimientoInventario[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@index([estado])
+  @@index([solicitanteId])
+  @@index([almacenId])
+  @@index([numero])
+  @@map("solicitudes")
 }
 
 // ──────────────────────────────
@@ -374,6 +473,11 @@ model Lote {
 
 model Cliente {
   id              String        @id @default(uuid())
+  // Codigo legible tipo "CLI-000123". Nullable (backfill de filas
+  // existentes), siempre generado por el service en crear(). Unico POR
+  // EMPRESA (@@unique mas abajo, mismo patron que numeroDocumento) -- no
+  // global, para no chocar con el secuencial de otra empresa.
+  codigo          String?
   tipoDocumento   TipoDocumento @map("tipo_documento")
   numeroDocumento String        @map("numero_documento")
   nombre          String
@@ -394,21 +498,25 @@ model Cliente {
   ventas Venta[]
 
   @@unique([empresaId, numeroDocumento])
+  @@unique([empresaId, codigo])
   @@index([deletedAt])
   @@index([empresaId, nombre])
   @@map("clientes")
 }
 
 model Proveedor {
-  id               String        @id @default(uuid())
-  tipoDocumento    TipoDocumento @map("tipo_documento")
-  numeroDocumento  String        @map("numero_documento")
-  razonSocial      String        @map("razon_social")
-  nombreComercial  String?       @map("nombre_comercial")
-  email            String?
-  telefono         String?
-  direccion        String?
-  activo           Boolean       @default(true)
+  id              String        @id @default(uuid())
+  // Codigo legible tipo "PRV-000045" -- unico POR EMPRESA, mismo criterio
+  // que Cliente.codigo.
+  codigo          String?
+  tipoDocumento   TipoDocumento @map("tipo_documento")
+  numeroDocumento String        @map("numero_documento")
+  razonSocial     String        @map("razon_social")
+  nombreComercial String?       @map("nombre_comercial")
+  email           String?
+  telefono        String?
+  direccion       String?
+  activo          Boolean       @default(true)
 
   empresaId String  @map("empresa_id")
   empresa   Empresa @relation(fields: [empresaId], references: [id], onDelete: Restrict)
@@ -422,6 +530,7 @@ model Proveedor {
   compras Compra[]
 
   @@unique([empresaId, numeroDocumento])
+  @@unique([empresaId, codigo])
   @@index([deletedAt])
   @@index([empresaId, razonSocial])
   @@map("proveedores")
@@ -577,6 +686,9 @@ model MovimientoInventario {
   ventaId String? @map("venta_id")
   venta   Venta?  @relation(fields: [ventaId], references: [id], onDelete: Restrict)
 
+  solicitudId String?    @map("solicitud_id")
+  solicitud   Solicitud? @relation(fields: [solicitudId], references: [id], onDelete: Restrict)
+
   fecha     DateTime @default(now()) // fecha de negocio del movimiento
   createdAt DateTime @default(now()) @map("created_at") // marca de sistema
 
@@ -586,6 +698,7 @@ model MovimientoInventario {
   @@index([tipo])
   @@index([movimientoOrigenId])
   @@index([compraId])
+  @@index([solicitudId])
   @@index([ventaId])
   @@map("movimientos_inventario")
 }
@@ -652,4 +765,31 @@ model AuditLog {
   @@index([fecha])
   @@index([usuarioId])
   @@map("audit_log")
+}
+
+// Registro persistente de excepciones no controladas (500) -- lo que el
+// cliente recibe SIEMPRE es el mensaje generico de ErrorHandlerMiddleware,
+// esto es solo para diagnostico interno. Visible unicamente para
+// SUPERUSUARIO (ver ErroresRoutes.ts) -- mismo criterio "cross-tenant, un
+// unico rol" que AdminRoutes.ts.
+model ErrorLog {
+  id         String  @id @default(uuid())
+  mensaje    String
+  ruta       String
+  metodo     String
+  statusCode Int     @map("status_code")
+  categoria  String? // nombre de la clase del error (ej. "ConflictError", "TypeError")
+  stackTrace String? @map("stack_trace") @db.Text
+
+  usuarioId String? @map("usuario_id") // FK logica -> usuarios.id
+  empresaId String? @map("empresa_id") // FK logica -> empresas.id
+  ip        String?
+  userAgent String? @map("user_agent")
+  traceId   String  @map("trace_id") // req.id de pino-http, correlaciona con los logs de consola
+
+  fecha DateTime @default(now())
+
+  @@index([fecha])
+  @@index([statusCode])
+  @@map("error_log")
 }

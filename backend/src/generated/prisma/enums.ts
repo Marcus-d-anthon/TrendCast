@@ -14,10 +14,29 @@ export const RolUsuario = {
   SUPERVISOR: 'SUPERVISOR',
   BODEGA: 'BODEGA',
   VENTAS: 'VENTAS',
-  GERENCIA: 'GERENCIA'
+  GERENCIA: 'GERENCIA',
+  SUPERUSUARIO: 'SUPERUSUARIO'
 } as const
 
 export type RolUsuario = (typeof RolUsuario)[keyof typeof RolUsuario]
+
+
+export const EstadoSolicitud = {
+  PENDIENTE: 'PENDIENTE',
+  APROBADA: 'APROBADA',
+  RECHAZADA: 'RECHAZADA',
+  EFECTUADA: 'EFECTUADA'
+} as const
+
+export type EstadoSolicitud = (typeof EstadoSolicitud)[keyof typeof EstadoSolicitud]
+
+
+export const TipoSolicitud = {
+  REABASTECIMIENTO: 'REABASTECIMIENTO',
+  VENTA_ESPECIAL: 'VENTA_ESPECIAL'
+} as const
+
+export type TipoSolicitud = (typeof TipoSolicitud)[keyof typeof TipoSolicitud]
 
 
 export const TipoMovimiento = {

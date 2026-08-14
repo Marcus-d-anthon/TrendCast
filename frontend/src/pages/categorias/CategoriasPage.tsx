@@ -7,6 +7,7 @@ import { Card } from '../../components/ui/Card';
 import { ConfirmDialog } from '../../components/ui/ConfirmDialog';
 import { EmptyState } from '../../components/ui/EmptyState';
 import { ErrorState } from '../../components/ui/ErrorState';
+import { paginar, Pagination } from '../../components/ui/Pagination';
 import { Skeleton } from '../../components/ui/Skeleton';
 import tableStyles from '../../components/ui/Table.module.css';
 import { toast } from '../../components/ui/toast';
@@ -26,6 +27,11 @@ export function CategoriasPage() {
   const [editando, setEditando] = useState<Categoria | undefined | null>(null);
   const [creando, setCreando] = useState(false);
   const [porEliminar, setPorEliminar] = useState<Categoria | null>(null);
+  const [pagina, setPagina] = useState(1);
+
+  const total = categorias.data?.length ?? 0;
+  const totalPaginas = Math.max(1, Math.ceil(total / 10));
+  const filas = categorias.data ? paginar(categorias.data, pagina) : [];
 
   return (
     <div className={styles.page}>
@@ -48,7 +54,7 @@ export function CategoriasPage() {
             description="Crea la primera categoría para poder registrar productos."
           />
         )}
-        {categorias.data && categorias.data.length > 0 && (
+        {filas.length > 0 && (
           <div className={tableStyles.tableWrap}>
             <table className={tableStyles.table}>
               <thead>
@@ -60,7 +66,7 @@ export function CategoriasPage() {
                 </tr>
               </thead>
               <tbody>
-                {categorias.data.map((categoria) => (
+                {filas.map((categoria) => (
                   <tr key={categoria.id}>
                     <td>{categoria.nombre}</td>
                     <td>{categoria.descripcion || '—'}</td>
@@ -96,6 +102,10 @@ export function CategoriasPage() {
               </tbody>
             </table>
           </div>
+        )}
+
+        {total > 10 && (
+          <Pagination pagina={pagina} totalPaginas={totalPaginas} totalItems={total} onCambiarPagina={setPagina} />
         )}
       </Card>
 

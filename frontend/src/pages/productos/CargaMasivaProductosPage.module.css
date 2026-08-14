@@ -1,3 +1,26 @@
+.volver {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-4);
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.volver:hover {
+  color: var(--color-text);
+}
+
+.titulo {
+  margin-bottom: var(--space-5);
+}
+
+.sectionGap {
+  margin-bottom: var(--space-5);
+}
+
 .hint {
   font-size: var(--text-sm);
   color: var(--color-text-secondary);
@@ -34,29 +57,21 @@
 
 .summaryRow {
   display: flex;
-  gap: var(--space-4);
-  margin-bottom: var(--space-3);
-  font-size: var(--text-sm);
-}
-
-.summaryOk,
-.summaryError {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-1);
-}
-
-.summaryOk {
-  color: var(--color-success-text);
-}
-
-.summaryError {
-  color: var(--color-danger-text);
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+  flex-wrap: wrap;
 }
 
 .previewTable {
-  max-height: 18rem;
+  max-height: 24rem;
   overflow-y: auto;
+}
+
+/* Von Restorff: una fila con error se distingue del resto por color de
+   fondo, no solo por el texto -- se detecta de un vistazo sin leer cada
+   celda. */
+.filaError {
+  background: var(--color-danger-soft);
 }
 
 .cellOk {
@@ -65,6 +80,7 @@
 
 .cellError {
   color: var(--color-danger-text);
+  font-weight: var(--weight-medium);
 }
 
 .actions {

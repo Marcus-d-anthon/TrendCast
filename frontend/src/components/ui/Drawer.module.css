@@ -80,3 +80,9 @@
     animation: none;
   }
 }
+
+@media (max-width: 640px) {
+  .panel {
+    padding: var(--space-4);
+  }
+}

@@ -56,11 +56,13 @@ export const ModelName = {
   Permiso: 'Permiso',
   RolPermiso: 'RolPermiso',
   RefreshToken: 'RefreshToken',
+  CodigoRecuperacion2FA: 'CodigoRecuperacion2FA',
   Marca: 'Marca',
   UnidadMedida: 'UnidadMedida',
   Categoria: 'Categoria',
   Almacen: 'Almacen',
   Producto: 'Producto',
+  Solicitud: 'Solicitud',
   Stock: 'Stock',
   Lote: 'Lote',
   Cliente: 'Cliente',
@@ -72,7 +74,8 @@ export const ModelName = {
   MovimientoInventario: 'MovimientoInventario',
   Alerta: 'Alerta',
   Notificacion: 'Notificacion',
-  AuditLog: 'AuditLog'
+  AuditLog: 'AuditLog',
+  ErrorLog: 'ErrorLog'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -111,7 +114,10 @@ export const UsuarioScalarFieldEnum = {
   nombre: 'nombre',
   rol: 'rol',
   activo: 'activo',
+  totpSecret: 'totpSecret',
+  totpHabilitado: 'totpHabilitado',
   empresaId: 'empresaId',
+  almacenId: 'almacenId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   createdBy: 'createdBy',
@@ -152,6 +158,18 @@ export const RefreshTokenScalarFieldEnum = {
 } as const
 
 export type RefreshTokenScalarFieldEnum = (typeof RefreshTokenScalarFieldEnum)[keyof typeof RefreshTokenScalarFieldEnum]
+
+
+export const CodigoRecuperacion2FAScalarFieldEnum = {
+  id: 'id',
+  codigoHash: 'codigoHash',
+  usado: 'usado',
+  usadoEn: 'usadoEn',
+  createdAt: 'createdAt',
+  usuarioId: 'usuarioId'
+} as const
+
+export type CodigoRecuperacion2FAScalarFieldEnum = (typeof CodigoRecuperacion2FAScalarFieldEnum)[keyof typeof CodigoRecuperacion2FAScalarFieldEnum]
 
 
 export const MarcaScalarFieldEnum = {
@@ -241,6 +259,28 @@ export const ProductoScalarFieldEnum = {
 export type ProductoScalarFieldEnum = (typeof ProductoScalarFieldEnum)[keyof typeof ProductoScalarFieldEnum]
 
 
+export const SolicitudScalarFieldEnum = {
+  id: 'id',
+  numero: 'numero',
+  tipo: 'tipo',
+  estado: 'estado',
+  cantidad: 'cantidad',
+  comentario: 'comentario',
+  productoId: 'productoId',
+  almacenId: 'almacenId',
+  solicitanteId: 'solicitanteId',
+  aprobadorId: 'aprobadorId',
+  fechaAprobacion: 'fechaAprobacion',
+  motivoRechazo: 'motivoRechazo',
+  efectuadorId: 'efectuadorId',
+  fechaEfectuacion: 'fechaEfectuacion',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SolicitudScalarFieldEnum = (typeof SolicitudScalarFieldEnum)[keyof typeof SolicitudScalarFieldEnum]
+
+
 export const StockScalarFieldEnum = {
   id: 'id',
   cantidad: 'cantidad',
@@ -273,6 +313,7 @@ export type LoteScalarFieldEnum = (typeof LoteScalarFieldEnum)[keyof typeof Lote
 
 export const ClienteScalarFieldEnum = {
   id: 'id',
+  codigo: 'codigo',
   tipoDocumento: 'tipoDocumento',
   numeroDocumento: 'numeroDocumento',
   nombre: 'nombre',
@@ -293,6 +334,7 @@ export type ClienteScalarFieldEnum = (typeof ClienteScalarFieldEnum)[keyof typeo
 
 export const ProveedorScalarFieldEnum = {
   id: 'id',
+  codigo: 'codigo',
   tipoDocumento: 'tipoDocumento',
   numeroDocumento: 'numeroDocumento',
   razonSocial: 'razonSocial',
@@ -387,6 +429,7 @@ export const MovimientoInventarioScalarFieldEnum = {
   movimientoOrigenId: 'movimientoOrigenId',
   compraId: 'compraId',
   ventaId: 'ventaId',
+  solicitudId: 'solicitudId',
   fecha: 'fecha',
   createdAt: 'createdAt'
 } as const
@@ -436,6 +479,25 @@ export const AuditLogScalarFieldEnum = {
 } as const
 
 export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
+
+
+export const ErrorLogScalarFieldEnum = {
+  id: 'id',
+  mensaje: 'mensaje',
+  ruta: 'ruta',
+  metodo: 'metodo',
+  statusCode: 'statusCode',
+  categoria: 'categoria',
+  stackTrace: 'stackTrace',
+  usuarioId: 'usuarioId',
+  empresaId: 'empresaId',
+  ip: 'ip',
+  userAgent: 'userAgent',
+  traceId: 'traceId',
+  fecha: 'fecha'
+} as const
+
+export type ErrorLogScalarFieldEnum = (typeof ErrorLogScalarFieldEnum)[keyof typeof ErrorLogScalarFieldEnum]
 
 
 export const SortOrder = {

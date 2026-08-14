@@ -1,13 +1,27 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   movimientosApi,
   type ListarMovimientosParams,
+  type ListarMovimientosPaginadoParams,
   type RegistrarMovimientoInput,
 } from '../api/endpoints/movimientos';
 import { queryKeys } from './query-keys';
 
-export function useMovimientos(params: ListarMovimientosParams = {}) {
-  return useQuery({ queryKey: queryKeys.movimientos(params), queryFn: () => movimientosApi.listar(params) });
+export function useMovimientos(params: ListarMovimientosParams = {}, opciones: { enabled?: boolean } = {}) {
+  return useQuery({
+    queryKey: queryKeys.movimientos(params),
+    queryFn: () => movimientosApi.listar(params),
+    enabled: opciones.enabled ?? true,
+  });
+}
+
+export function useMovimientosPaginado(params: ListarMovimientosPaginadoParams, opciones: { enabled?: boolean } = {}) {
+  return useQuery({
+    queryKey: queryKeys.movimientosPaginado(params),
+    queryFn: () => movimientosApi.listarPaginado(params),
+    placeholderData: keepPreviousData,
+    enabled: opciones.enabled ?? true,
+  });
 }
 
 export function useRegistrarMovimiento() {

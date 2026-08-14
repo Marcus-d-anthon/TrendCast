@@ -1,11 +1,15 @@
+import { Boxes, LineChart, PackageCheck, Repeat } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
 import type { Granularidad, PrediccionResultado } from '../../api/types/domain';
 import { DemandForecastChart } from '../../components/charts/DemandForecastChart';
 import { Card } from '../../components/ui/Card';
 import { EmptyState } from '../../components/ui/EmptyState';
 import { ErrorState } from '../../components/ui/ErrorState';
+import { SearchSelect } from '../../components/ui/SearchSelect';
 import { Select } from '../../components/ui/Select';
 import { Skeleton } from '../../components/ui/Skeleton';
+import { KpiCard } from '../reportes/KpiCard';
+import kpiStyles from '../reportes/ReportesPage.module.css';
 import { usePrediccion } from '../../queries/usePrediccion';
 import { useProductos } from '../../queries/useProductos';
 import { formatNumber } from '../../utils/format';
@@ -76,19 +80,15 @@ export function PrediccionPage() {
   return (
     <div>
       <div className={styles.controls}>
-        <Select
-          className={styles.controlInput}
-          value={productoId}
-          onChange={(e) => actualizarParam('producto', e.target.value)}
-          aria-label="Producto"
-        >
-          <option value="">Selecciona un producto</option>
-          {productos.data?.map((p) => (
-            <option key={p.id} value={p.id}>
-              {p.sku} · {p.nombre}
-            </option>
-          ))}
-        </Select>
+        <div className={styles.controlInput}>
+          <SearchSelect
+            options={(productos.data ?? []).map((p) => ({ value: p.id, label: `${p.sku} · ${p.nombre}`, busqueda: p.sku }))}
+            value={productoId}
+            onChange={(valor) => actualizarParam('producto', valor)}
+            placeholder="Busca por nombre o SKU…"
+            ariaLabel="Producto"
+          />
+        </div>
         <Select
           className={styles.narrowInput}
           value={granularidad}
@@ -125,8 +125,8 @@ export function PrediccionPage() {
       {productoId && prediccion.isError && <ErrorState onRetry={() => prediccion.refetch()} />}
 
       {productoId && prediccion.data && (
-        <div className={styles.grid}>
-          <Card>
+        <div className={styles.stack}>
+          <Card className={styles.chartCard}>
             <h2 style={{ marginBottom: 'var(--space-1)' }}>{prediccion.data.nombre}</h2>
             <p style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--text-xs)', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-4)' }}>
               {prediccion.data.sku}
@@ -138,36 +138,34 @@ export function PrediccionPage() {
             )}
           </Card>
 
-          <div>
-            <div className={styles.recommendationCard}>
-              <div className={styles.recommendationLabel}>Recomendación de reabastecimiento</div>
-              <div className={styles.recommendationValue}>{formatNumber(prediccion.data.recomendacionReabastecimiento)} unidades</div>
-              <div className={styles.recommendationHint}>
-                Cubre la demanda proyectada + stock mínimo, descontando el stock actual.
-              </div>
-            </div>
-
-            <Card className={styles.statCard}>
-              <div className={styles.statLabel}>Promedio móvil (ventana {prediccion.data.promedioMovil.ventana})</div>
-              <div className={styles.statValue}>{formatNumber(Math.round(prediccion.data.promedioMovil.proyeccionProximoPeriodo))}</div>
-              <div className={styles.statHint}>Proyección del próximo período por promedio simple</div>
-            </Card>
-
-            <Card className={styles.statCard}>
-              <div className={styles.statLabel}>Regresión lineal</div>
-              <div className={styles.statValue}>{formatNumber(Math.round(prediccion.data.regresionLineal.proyeccionProximoPeriodo))}</div>
-              <div className={styles.statHint}>
-                Pendiente {prediccion.data.regresionLineal.pendienteB >= 0 ? '+' : ''}
-                {prediccion.data.regresionLineal.pendienteB.toFixed(2)} por período
-              </div>
-            </Card>
-
-            <Card className={styles.statCard}>
-              <div className={styles.statLabel}>Stock actual vs. mínimo</div>
-              <div className={styles.statValue}>
-                {formatNumber(prediccion.data.stockActual)} / {formatNumber(prediccion.data.stockMinimo)}
-              </div>
-            </Card>
+          <div className={kpiStyles.kpiGrid}>
+            <KpiCard
+              icon={Boxes}
+              label="Recomendación de reabastecimiento"
+              value={`${formatNumber(prediccion.data.recomendacionReabastecimiento)} u.`}
+              hint="Cubre la demanda proyectada + stock mínimo, descontando el stock actual"
+              acento="primary"
+            />
+            <KpiCard
+              icon={Repeat}
+              label={`Promedio móvil (ventana ${prediccion.data.promedioMovil.ventana})`}
+              value={formatNumber(Math.round(prediccion.data.promedioMovil.proyeccionProximoPeriodo))}
+              hint="Proyección del próximo período por promedio simple"
+              acento="info"
+            />
+            <KpiCard
+              icon={LineChart}
+              label="Regresión lineal"
+              value={formatNumber(Math.round(prediccion.data.regresionLineal.proyeccionProximoPeriodo))}
+              hint={`Pendiente ${prediccion.data.regresionLineal.pendienteB >= 0 ? '+' : ''}${prediccion.data.regresionLineal.pendienteB.toFixed(2)} por período`}
+              acento="warning"
+            />
+            <KpiCard
+              icon={PackageCheck}
+              label="Stock actual vs. mínimo"
+              value={`${formatNumber(prediccion.data.stockActual)} / ${formatNumber(prediccion.data.stockMinimo)}`}
+              acento="success"
+            />
           </div>
         </div>
       )}

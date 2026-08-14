@@ -1,3 +1,4 @@
+import { CalendarRange, LayoutDashboard, Package, Repeat } from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
 import { DashboardTab } from './DashboardTab';
 import { ExistenciasTab } from './ExistenciasTab';
@@ -6,10 +7,10 @@ import { RotacionTab } from './RotacionTab';
 import styles from './ReportesPage.module.css';
 
 const TABS = [
-  { value: 'dashboard', label: 'Dashboard ejecutivo' },
-  { value: 'existencias', label: 'Existencias' },
-  { value: 'rotacion', label: 'Rotación' },
-  { value: 'periodo', label: 'Movimientos por período' },
+  { value: 'dashboard', label: 'Dashboard ejecutivo', icon: LayoutDashboard },
+  { value: 'existencias', label: 'Existencias', icon: Package },
+  { value: 'rotacion', label: 'Rotación', icon: Repeat },
+  { value: 'periodo', label: 'Movimientos por período', icon: CalendarRange },
 ] as const;
 
 type TabValue = (typeof TABS)[number]['value'];
@@ -30,6 +31,7 @@ export function ReportesPage() {
             className={tab === t.value ? styles.tabActive : styles.tab}
             onClick={() => setParams({ tab: t.value }, { replace: true })}
           >
+            <t.icon size={16} aria-hidden="true" />
             {t.label}
           </button>
         ))}

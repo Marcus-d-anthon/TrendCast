@@ -136,4 +136,21 @@ describe("Modulo Ventas", () => {
     expect(res.body.data[0].cliente.id).toBe(clienteId);
     expect(res.body.data[0].detalle).toHaveLength(1);
   });
+
+  it("GET /api/ventas?page=1&estado=BORRADOR pagina y filtra por estado", async () => {
+    for (let i = 0; i < 3; i++) {
+      await request(app).post("/api/ventas").set("Authorization", `Bearer ${tokenAdmin}`).send(payloadVenta());
+    }
+    const confirmada = await request(app).post("/api/ventas").set("Authorization", `Bearer ${tokenAdmin}`).send(payloadVenta());
+    await request(app).post(`/api/ventas/${confirmada.body.data.id}/confirmar`).set("Authorization", `Bearer ${tokenAdmin}`);
+
+    const res = await request(app)
+      .get("/api/ventas?page=1&pageSize=10&estado=BORRADOR")
+      .set("Authorization", `Bearer ${tokenAdmin}`);
+
+    expect(res.status).toBe(200);
+    expect(res.body.data).toHaveLength(3);
+    expect(res.body.meta).toMatchObject({ total: 3, page: 1, totalPaginas: 1 });
+    expect(res.body.data.every((v: { estado: string }) => v.estado === "BORRADOR")).toBe(true);
+  });
 });

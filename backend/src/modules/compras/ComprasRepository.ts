@@ -1,5 +1,5 @@
 import { Prisma } from "../../generated/prisma/client";
-import { obtenerEmpresaId } from "../../lib/empresa";
+import { obtenerEmpresaActiva } from "../../lib/async-context";
 import { prisma } from "../../lib/prisma";
 import type { CrearCompraInput } from "./ComprasValidators";
 
@@ -17,20 +17,55 @@ export interface DetalleCalculado {
   subtotal: number;
 }
 
+export interface ListarComprasParams {
+  page: number;
+  pageSize: number;
+  estado?: "BORRADOR" | "CONFIRMADA" | "ANULADA";
+  desde?: Date;
+  hasta?: Date;
+}
+
 export const comprasRepository = {
   listar() {
-    return prisma.compra.findMany({ orderBy: { fecha: "desc" }, include: INCLUDE_RELACIONES });
+    return prisma.compra.findMany({
+      where: { empresaId: obtenerEmpresaActiva() },
+      orderBy: { fecha: "desc" },
+      include: INCLUDE_RELACIONES,
+    });
+  },
+
+  async listarPaginado({ page, pageSize, estado, desde, hasta }: ListarComprasParams) {
+    const where: Prisma.CompraWhereInput = {
+      empresaId: obtenerEmpresaActiva(),
+      ...(estado ? { estado } : {}),
+      ...(desde || hasta ? { fecha: { gte: desde, lte: hasta } } : {}),
+    };
+
+    const [data, total] = await Promise.all([
+      prisma.compra.findMany({
+        where,
+        orderBy: { fecha: "desc" },
+        include: INCLUDE_RELACIONES,
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+      }),
+      prisma.compra.count({ where }),
+    ]);
+
+    return { data, total };
   },
 
   buscarPorId(id: string) {
-    return prisma.compra.findUnique({ where: { id }, include: INCLUDE_RELACIONES });
+    return prisma.compra.findFirst({ where: { id, empresaId: obtenerEmpresaActiva() }, include: INCLUDE_RELACIONES });
   },
 
-  // Numero de documento secuencial por año (COM-2026-0001, ...). No hay
-  // concurrencia alta esperada en este sistema; suficiente para el alcance.
+  // Numero de documento secuencial por año Y por empresa (COM-2026-0001,
+  // ...) -- sin el filtro de empresa, dos empresas activas colisionarian o
+  // saltarian numeros entre si. No hay concurrencia alta esperada en este
+  // sistema; suficiente para el alcance.
   async generarNumero(): Promise<string> {
     const anio = new Date().getFullYear();
-    const total = await prisma.compra.count();
+    const total = await prisma.compra.count({ where: { empresaId: obtenerEmpresaActiva() } });
     return `COM-${anio}-${String(total + 1).padStart(4, "0")}`;
   },
 
@@ -39,7 +74,7 @@ export const comprasRepository = {
     input: CrearCompraInput,
     totales: { subtotal: number; impuesto: number; total: number; detalle: DetalleCalculado[] }
   ) {
-    const empresaId = await obtenerEmpresaId();
+    const empresaId = obtenerEmpresaActiva();
     const numero = await this.generarNumero();
     return prisma.compra.create({
       data: {

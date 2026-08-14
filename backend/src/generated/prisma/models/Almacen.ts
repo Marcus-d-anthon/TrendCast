@@ -228,6 +228,8 @@ export type AlmacenWhereInput = {
   movimientos?: Prisma.MovimientoInventarioListRelationFilter
   compras?: Prisma.CompraListRelationFilter
   ventas?: Prisma.VentaListRelationFilter
+  usuarios?: Prisma.UsuarioListRelationFilter
+  solicitudes?: Prisma.SolicitudListRelationFilter
 }
 
 export type AlmacenOrderByWithRelationInput = {
@@ -247,6 +249,8 @@ export type AlmacenOrderByWithRelationInput = {
   movimientos?: Prisma.MovimientoInventarioOrderByRelationAggregateInput
   compras?: Prisma.CompraOrderByRelationAggregateInput
   ventas?: Prisma.VentaOrderByRelationAggregateInput
+  usuarios?: Prisma.UsuarioOrderByRelationAggregateInput
+  solicitudes?: Prisma.SolicitudOrderByRelationAggregateInput
 }
 
 export type AlmacenWhereUniqueInput = Prisma.AtLeast<{
@@ -270,6 +274,8 @@ export type AlmacenWhereUniqueInput = Prisma.AtLeast<{
   movimientos?: Prisma.MovimientoInventarioListRelationFilter
   compras?: Prisma.CompraListRelationFilter
   ventas?: Prisma.VentaListRelationFilter
+  usuarios?: Prisma.UsuarioListRelationFilter
+  solicitudes?: Prisma.SolicitudListRelationFilter
 }, "id" | "empresaId_nombre">
 
 export type AlmacenOrderByWithAggregationInput = {
@@ -320,6 +326,8 @@ export type AlmacenCreateInput = {
   movimientos?: Prisma.MovimientoInventarioCreateNestedManyWithoutAlmacenInput
   compras?: Prisma.CompraCreateNestedManyWithoutAlmacenInput
   ventas?: Prisma.VentaCreateNestedManyWithoutAlmacenInput
+  usuarios?: Prisma.UsuarioCreateNestedManyWithoutAlmacenInput
+  solicitudes?: Prisma.SolicitudCreateNestedManyWithoutAlmacenInput
 }
 
 export type AlmacenUncheckedCreateInput = {
@@ -338,6 +346,8 @@ export type AlmacenUncheckedCreateInput = {
   movimientos?: Prisma.MovimientoInventarioUncheckedCreateNestedManyWithoutAlmacenInput
   compras?: Prisma.CompraUncheckedCreateNestedManyWithoutAlmacenInput
   ventas?: Prisma.VentaUncheckedCreateNestedManyWithoutAlmacenInput
+  usuarios?: Prisma.UsuarioUncheckedCreateNestedManyWithoutAlmacenInput
+  solicitudes?: Prisma.SolicitudUncheckedCreateNestedManyWithoutAlmacenInput
 }
 
 export type AlmacenUpdateInput = {
@@ -356,6 +366,8 @@ export type AlmacenUpdateInput = {
   movimientos?: Prisma.MovimientoInventarioUpdateManyWithoutAlmacenNestedInput
   compras?: Prisma.CompraUpdateManyWithoutAlmacenNestedInput
   ventas?: Prisma.VentaUpdateManyWithoutAlmacenNestedInput
+  usuarios?: Prisma.UsuarioUpdateManyWithoutAlmacenNestedInput
+  solicitudes?: Prisma.SolicitudUpdateManyWithoutAlmacenNestedInput
 }
 
 export type AlmacenUncheckedUpdateInput = {
@@ -374,6 +386,8 @@ export type AlmacenUncheckedUpdateInput = {
   movimientos?: Prisma.MovimientoInventarioUncheckedUpdateManyWithoutAlmacenNestedInput
   compras?: Prisma.CompraUncheckedUpdateManyWithoutAlmacenNestedInput
   ventas?: Prisma.VentaUncheckedUpdateManyWithoutAlmacenNestedInput
+  usuarios?: Prisma.UsuarioUncheckedUpdateManyWithoutAlmacenNestedInput
+  solicitudes?: Prisma.SolicitudUncheckedUpdateManyWithoutAlmacenNestedInput
 }
 
 export type AlmacenCreateManyInput = {
@@ -422,6 +436,11 @@ export type AlmacenListRelationFilter = {
 
 export type AlmacenOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type AlmacenNullableScalarRelationFilter = {
+  is?: Prisma.AlmacenWhereInput | null
+  isNot?: Prisma.AlmacenWhereInput | null
 }
 
 export type AlmacenEmpresaIdNombreCompoundUniqueInput = {
@@ -515,6 +534,36 @@ export type AlmacenUncheckedUpdateManyWithoutEmpresaNestedInput = {
   deleteMany?: Prisma.AlmacenScalarWhereInput | Prisma.AlmacenScalarWhereInput[]
 }
 
+export type AlmacenCreateNestedOneWithoutUsuariosInput = {
+  create?: Prisma.XOR<Prisma.AlmacenCreateWithoutUsuariosInput, Prisma.AlmacenUncheckedCreateWithoutUsuariosInput>
+  connectOrCreate?: Prisma.AlmacenCreateOrConnectWithoutUsuariosInput
+  connect?: Prisma.AlmacenWhereUniqueInput
+}
+
+export type AlmacenUpdateOneWithoutUsuariosNestedInput = {
+  create?: Prisma.XOR<Prisma.AlmacenCreateWithoutUsuariosInput, Prisma.AlmacenUncheckedCreateWithoutUsuariosInput>
+  connectOrCreate?: Prisma.AlmacenCreateOrConnectWithoutUsuariosInput
+  upsert?: Prisma.AlmacenUpsertWithoutUsuariosInput
+  disconnect?: Prisma.AlmacenWhereInput | boolean
+  delete?: Prisma.AlmacenWhereInput | boolean
+  connect?: Prisma.AlmacenWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AlmacenUpdateToOneWithWhereWithoutUsuariosInput, Prisma.AlmacenUpdateWithoutUsuariosInput>, Prisma.AlmacenUncheckedUpdateWithoutUsuariosInput>
+}
+
+export type AlmacenCreateNestedOneWithoutSolicitudesInput = {
+  create?: Prisma.XOR<Prisma.AlmacenCreateWithoutSolicitudesInput, Prisma.AlmacenUncheckedCreateWithoutSolicitudesInput>
+  connectOrCreate?: Prisma.AlmacenCreateOrConnectWithoutSolicitudesInput
+  connect?: Prisma.AlmacenWhereUniqueInput
+}
+
+export type AlmacenUpdateOneRequiredWithoutSolicitudesNestedInput = {
+  create?: Prisma.XOR<Prisma.AlmacenCreateWithoutSolicitudesInput, Prisma.AlmacenUncheckedCreateWithoutSolicitudesInput>
+  connectOrCreate?: Prisma.AlmacenCreateOrConnectWithoutSolicitudesInput
+  upsert?: Prisma.AlmacenUpsertWithoutSolicitudesInput
+  connect?: Prisma.AlmacenWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.AlmacenUpdateToOneWithWhereWithoutSolicitudesInput, Prisma.AlmacenUpdateWithoutSolicitudesInput>, Prisma.AlmacenUncheckedUpdateWithoutSolicitudesInput>
+}
+
 export type AlmacenCreateNestedOneWithoutStocksInput = {
   create?: Prisma.XOR<Prisma.AlmacenCreateWithoutStocksInput, Prisma.AlmacenUncheckedCreateWithoutStocksInput>
   connectOrCreate?: Prisma.AlmacenCreateOrConnectWithoutStocksInput
@@ -600,6 +649,8 @@ export type AlmacenCreateWithoutEmpresaInput = {
   movimientos?: Prisma.MovimientoInventarioCreateNestedManyWithoutAlmacenInput
   compras?: Prisma.CompraCreateNestedManyWithoutAlmacenInput
   ventas?: Prisma.VentaCreateNestedManyWithoutAlmacenInput
+  usuarios?: Prisma.UsuarioCreateNestedManyWithoutAlmacenInput
+  solicitudes?: Prisma.SolicitudCreateNestedManyWithoutAlmacenInput
 }
 
 export type AlmacenUncheckedCreateWithoutEmpresaInput = {
@@ -617,6 +668,8 @@ export type AlmacenUncheckedCreateWithoutEmpresaInput = {
   movimientos?: Prisma.MovimientoInventarioUncheckedCreateNestedManyWithoutAlmacenInput
   compras?: Prisma.CompraUncheckedCreateNestedManyWithoutAlmacenInput
   ventas?: Prisma.VentaUncheckedCreateNestedManyWithoutAlmacenInput
+  usuarios?: Prisma.UsuarioUncheckedCreateNestedManyWithoutAlmacenInput
+  solicitudes?: Prisma.SolicitudUncheckedCreateNestedManyWithoutAlmacenInput
 }
 
 export type AlmacenCreateOrConnectWithoutEmpresaInput = {
@@ -661,6 +714,190 @@ export type AlmacenScalarWhereInput = {
   deletedAt?: Prisma.DateTimeNullableFilter<"Almacen"> | Date | string | null
 }
 
+export type AlmacenCreateWithoutUsuariosInput = {
+  id?: string
+  nombre: string
+  direccion?: string | null
+  activo?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdBy?: string | null
+  updatedBy?: string | null
+  deletedAt?: Date | string | null
+  empresa: Prisma.EmpresaCreateNestedOneWithoutAlmacenesInput
+  stocks?: Prisma.StockCreateNestedManyWithoutAlmacenInput
+  lotes?: Prisma.LoteCreateNestedManyWithoutAlmacenInput
+  movimientos?: Prisma.MovimientoInventarioCreateNestedManyWithoutAlmacenInput
+  compras?: Prisma.CompraCreateNestedManyWithoutAlmacenInput
+  ventas?: Prisma.VentaCreateNestedManyWithoutAlmacenInput
+  solicitudes?: Prisma.SolicitudCreateNestedManyWithoutAlmacenInput
+}
+
+export type AlmacenUncheckedCreateWithoutUsuariosInput = {
+  id?: string
+  nombre: string
+  direccion?: string | null
+  activo?: boolean
+  empresaId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdBy?: string | null
+  updatedBy?: string | null
+  deletedAt?: Date | string | null
+  stocks?: Prisma.StockUncheckedCreateNestedManyWithoutAlmacenInput
+  lotes?: Prisma.LoteUncheckedCreateNestedManyWithoutAlmacenInput
+  movimientos?: Prisma.MovimientoInventarioUncheckedCreateNestedManyWithoutAlmacenInput
+  compras?: Prisma.CompraUncheckedCreateNestedManyWithoutAlmacenInput
+  ventas?: Prisma.VentaUncheckedCreateNestedManyWithoutAlmacenInput
+  solicitudes?: Prisma.SolicitudUncheckedCreateNestedManyWithoutAlmacenInput
+}
+
+export type AlmacenCreateOrConnectWithoutUsuariosInput = {
+  where: Prisma.AlmacenWhereUniqueInput
+  create: Prisma.XOR<Prisma.AlmacenCreateWithoutUsuariosInput, Prisma.AlmacenUncheckedCreateWithoutUsuariosInput>
+}
+
+export type AlmacenUpsertWithoutUsuariosInput = {
+  update: Prisma.XOR<Prisma.AlmacenUpdateWithoutUsuariosInput, Prisma.AlmacenUncheckedUpdateWithoutUsuariosInput>
+  create: Prisma.XOR<Prisma.AlmacenCreateWithoutUsuariosInput, Prisma.AlmacenUncheckedCreateWithoutUsuariosInput>
+  where?: Prisma.AlmacenWhereInput
+}
+
+export type AlmacenUpdateToOneWithWhereWithoutUsuariosInput = {
+  where?: Prisma.AlmacenWhereInput
+  data: Prisma.XOR<Prisma.AlmacenUpdateWithoutUsuariosInput, Prisma.AlmacenUncheckedUpdateWithoutUsuariosInput>
+}
+
+export type AlmacenUpdateWithoutUsuariosInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  direccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  empresa?: Prisma.EmpresaUpdateOneRequiredWithoutAlmacenesNestedInput
+  stocks?: Prisma.StockUpdateManyWithoutAlmacenNestedInput
+  lotes?: Prisma.LoteUpdateManyWithoutAlmacenNestedInput
+  movimientos?: Prisma.MovimientoInventarioUpdateManyWithoutAlmacenNestedInput
+  compras?: Prisma.CompraUpdateManyWithoutAlmacenNestedInput
+  ventas?: Prisma.VentaUpdateManyWithoutAlmacenNestedInput
+  solicitudes?: Prisma.SolicitudUpdateManyWithoutAlmacenNestedInput
+}
+
+export type AlmacenUncheckedUpdateWithoutUsuariosInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  direccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  empresaId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  stocks?: Prisma.StockUncheckedUpdateManyWithoutAlmacenNestedInput
+  lotes?: Prisma.LoteUncheckedUpdateManyWithoutAlmacenNestedInput
+  movimientos?: Prisma.MovimientoInventarioUncheckedUpdateManyWithoutAlmacenNestedInput
+  compras?: Prisma.CompraUncheckedUpdateManyWithoutAlmacenNestedInput
+  ventas?: Prisma.VentaUncheckedUpdateManyWithoutAlmacenNestedInput
+  solicitudes?: Prisma.SolicitudUncheckedUpdateManyWithoutAlmacenNestedInput
+}
+
+export type AlmacenCreateWithoutSolicitudesInput = {
+  id?: string
+  nombre: string
+  direccion?: string | null
+  activo?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdBy?: string | null
+  updatedBy?: string | null
+  deletedAt?: Date | string | null
+  empresa: Prisma.EmpresaCreateNestedOneWithoutAlmacenesInput
+  stocks?: Prisma.StockCreateNestedManyWithoutAlmacenInput
+  lotes?: Prisma.LoteCreateNestedManyWithoutAlmacenInput
+  movimientos?: Prisma.MovimientoInventarioCreateNestedManyWithoutAlmacenInput
+  compras?: Prisma.CompraCreateNestedManyWithoutAlmacenInput
+  ventas?: Prisma.VentaCreateNestedManyWithoutAlmacenInput
+  usuarios?: Prisma.UsuarioCreateNestedManyWithoutAlmacenInput
+}
+
+export type AlmacenUncheckedCreateWithoutSolicitudesInput = {
+  id?: string
+  nombre: string
+  direccion?: string | null
+  activo?: boolean
+  empresaId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdBy?: string | null
+  updatedBy?: string | null
+  deletedAt?: Date | string | null
+  stocks?: Prisma.StockUncheckedCreateNestedManyWithoutAlmacenInput
+  lotes?: Prisma.LoteUncheckedCreateNestedManyWithoutAlmacenInput
+  movimientos?: Prisma.MovimientoInventarioUncheckedCreateNestedManyWithoutAlmacenInput
+  compras?: Prisma.CompraUncheckedCreateNestedManyWithoutAlmacenInput
+  ventas?: Prisma.VentaUncheckedCreateNestedManyWithoutAlmacenInput
+  usuarios?: Prisma.UsuarioUncheckedCreateNestedManyWithoutAlmacenInput
+}
+
+export type AlmacenCreateOrConnectWithoutSolicitudesInput = {
+  where: Prisma.AlmacenWhereUniqueInput
+  create: Prisma.XOR<Prisma.AlmacenCreateWithoutSolicitudesInput, Prisma.AlmacenUncheckedCreateWithoutSolicitudesInput>
+}
+
+export type AlmacenUpsertWithoutSolicitudesInput = {
+  update: Prisma.XOR<Prisma.AlmacenUpdateWithoutSolicitudesInput, Prisma.AlmacenUncheckedUpdateWithoutSolicitudesInput>
+  create: Prisma.XOR<Prisma.AlmacenCreateWithoutSolicitudesInput, Prisma.AlmacenUncheckedCreateWithoutSolicitudesInput>
+  where?: Prisma.AlmacenWhereInput
+}
+
+export type AlmacenUpdateToOneWithWhereWithoutSolicitudesInput = {
+  where?: Prisma.AlmacenWhereInput
+  data: Prisma.XOR<Prisma.AlmacenUpdateWithoutSolicitudesInput, Prisma.AlmacenUncheckedUpdateWithoutSolicitudesInput>
+}
+
+export type AlmacenUpdateWithoutSolicitudesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  direccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  empresa?: Prisma.EmpresaUpdateOneRequiredWithoutAlmacenesNestedInput
+  stocks?: Prisma.StockUpdateManyWithoutAlmacenNestedInput
+  lotes?: Prisma.LoteUpdateManyWithoutAlmacenNestedInput
+  movimientos?: Prisma.MovimientoInventarioUpdateManyWithoutAlmacenNestedInput
+  compras?: Prisma.CompraUpdateManyWithoutAlmacenNestedInput
+  ventas?: Prisma.VentaUpdateManyWithoutAlmacenNestedInput
+  usuarios?: Prisma.UsuarioUpdateManyWithoutAlmacenNestedInput
+}
+
+export type AlmacenUncheckedUpdateWithoutSolicitudesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  direccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  empresaId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  stocks?: Prisma.StockUncheckedUpdateManyWithoutAlmacenNestedInput
+  lotes?: Prisma.LoteUncheckedUpdateManyWithoutAlmacenNestedInput
+  movimientos?: Prisma.MovimientoInventarioUncheckedUpdateManyWithoutAlmacenNestedInput
+  compras?: Prisma.CompraUncheckedUpdateManyWithoutAlmacenNestedInput
+  ventas?: Prisma.VentaUncheckedUpdateManyWithoutAlmacenNestedInput
+  usuarios?: Prisma.UsuarioUncheckedUpdateManyWithoutAlmacenNestedInput
+}
+
 export type AlmacenCreateWithoutStocksInput = {
   id?: string
   nombre: string
@@ -676,6 +913,8 @@ export type AlmacenCreateWithoutStocksInput = {
   movimientos?: Prisma.MovimientoInventarioCreateNestedManyWithoutAlmacenInput
   compras?: Prisma.CompraCreateNestedManyWithoutAlmacenInput
   ventas?: Prisma.VentaCreateNestedManyWithoutAlmacenInput
+  usuarios?: Prisma.UsuarioCreateNestedManyWithoutAlmacenInput
+  solicitudes?: Prisma.SolicitudCreateNestedManyWithoutAlmacenInput
 }
 
 export type AlmacenUncheckedCreateWithoutStocksInput = {
@@ -693,6 +932,8 @@ export type AlmacenUncheckedCreateWithoutStocksInput = {
   movimientos?: Prisma.MovimientoInventarioUncheckedCreateNestedManyWithoutAlmacenInput
   compras?: Prisma.CompraUncheckedCreateNestedManyWithoutAlmacenInput
   ventas?: Prisma.VentaUncheckedCreateNestedManyWithoutAlmacenInput
+  usuarios?: Prisma.UsuarioUncheckedCreateNestedManyWithoutAlmacenInput
+  solicitudes?: Prisma.SolicitudUncheckedCreateNestedManyWithoutAlmacenInput
 }
 
 export type AlmacenCreateOrConnectWithoutStocksInput = {
@@ -726,6 +967,8 @@ export type AlmacenUpdateWithoutStocksInput = {
   movimientos?: Prisma.MovimientoInventarioUpdateManyWithoutAlmacenNestedInput
   compras?: Prisma.CompraUpdateManyWithoutAlmacenNestedInput
   ventas?: Prisma.VentaUpdateManyWithoutAlmacenNestedInput
+  usuarios?: Prisma.UsuarioUpdateManyWithoutAlmacenNestedInput
+  solicitudes?: Prisma.SolicitudUpdateManyWithoutAlmacenNestedInput
 }
 
 export type AlmacenUncheckedUpdateWithoutStocksInput = {
@@ -743,6 +986,8 @@ export type AlmacenUncheckedUpdateWithoutStocksInput = {
   movimientos?: Prisma.MovimientoInventarioUncheckedUpdateManyWithoutAlmacenNestedInput
   compras?: Prisma.CompraUncheckedUpdateManyWithoutAlmacenNestedInput
   ventas?: Prisma.VentaUncheckedUpdateManyWithoutAlmacenNestedInput
+  usuarios?: Prisma.UsuarioUncheckedUpdateManyWithoutAlmacenNestedInput
+  solicitudes?: Prisma.SolicitudUncheckedUpdateManyWithoutAlmacenNestedInput
 }
 
 export type AlmacenCreateWithoutLotesInput = {
@@ -760,6 +1005,8 @@ export type AlmacenCreateWithoutLotesInput = {
   movimientos?: Prisma.MovimientoInventarioCreateNestedManyWithoutAlmacenInput
   compras?: Prisma.CompraCreateNestedManyWithoutAlmacenInput
   ventas?: Prisma.VentaCreateNestedManyWithoutAlmacenInput
+  usuarios?: Prisma.UsuarioCreateNestedManyWithoutAlmacenInput
+  solicitudes?: Prisma.SolicitudCreateNestedManyWithoutAlmacenInput
 }
 
 export type AlmacenUncheckedCreateWithoutLotesInput = {
@@ -777,6 +1024,8 @@ export type AlmacenUncheckedCreateWithoutLotesInput = {
   movimientos?: Prisma.MovimientoInventarioUncheckedCreateNestedManyWithoutAlmacenInput
   compras?: Prisma.CompraUncheckedCreateNestedManyWithoutAlmacenInput
   ventas?: Prisma.VentaUncheckedCreateNestedManyWithoutAlmacenInput
+  usuarios?: Prisma.UsuarioUncheckedCreateNestedManyWithoutAlmacenInput
+  solicitudes?: Prisma.SolicitudUncheckedCreateNestedManyWithoutAlmacenInput
 }
 
 export type AlmacenCreateOrConnectWithoutLotesInput = {
@@ -810,6 +1059,8 @@ export type AlmacenUpdateWithoutLotesInput = {
   movimientos?: Prisma.MovimientoInventarioUpdateManyWithoutAlmacenNestedInput
   compras?: Prisma.CompraUpdateManyWithoutAlmacenNestedInput
   ventas?: Prisma.VentaUpdateManyWithoutAlmacenNestedInput
+  usuarios?: Prisma.UsuarioUpdateManyWithoutAlmacenNestedInput
+  solicitudes?: Prisma.SolicitudUpdateManyWithoutAlmacenNestedInput
 }
 
 export type AlmacenUncheckedUpdateWithoutLotesInput = {
@@ -827,6 +1078,8 @@ export type AlmacenUncheckedUpdateWithoutLotesInput = {
   movimientos?: Prisma.MovimientoInventarioUncheckedUpdateManyWithoutAlmacenNestedInput
   compras?: Prisma.CompraUncheckedUpdateManyWithoutAlmacenNestedInput
   ventas?: Prisma.VentaUncheckedUpdateManyWithoutAlmacenNestedInput
+  usuarios?: Prisma.UsuarioUncheckedUpdateManyWithoutAlmacenNestedInput
+  solicitudes?: Prisma.SolicitudUncheckedUpdateManyWithoutAlmacenNestedInput
 }
 
 export type AlmacenCreateWithoutComprasInput = {
@@ -844,6 +1097,8 @@ export type AlmacenCreateWithoutComprasInput = {
   lotes?: Prisma.LoteCreateNestedManyWithoutAlmacenInput
   movimientos?: Prisma.MovimientoInventarioCreateNestedManyWithoutAlmacenInput
   ventas?: Prisma.VentaCreateNestedManyWithoutAlmacenInput
+  usuarios?: Prisma.UsuarioCreateNestedManyWithoutAlmacenInput
+  solicitudes?: Prisma.SolicitudCreateNestedManyWithoutAlmacenInput
 }
 
 export type AlmacenUncheckedCreateWithoutComprasInput = {
@@ -861,6 +1116,8 @@ export type AlmacenUncheckedCreateWithoutComprasInput = {
   lotes?: Prisma.LoteUncheckedCreateNestedManyWithoutAlmacenInput
   movimientos?: Prisma.MovimientoInventarioUncheckedCreateNestedManyWithoutAlmacenInput
   ventas?: Prisma.VentaUncheckedCreateNestedManyWithoutAlmacenInput
+  usuarios?: Prisma.UsuarioUncheckedCreateNestedManyWithoutAlmacenInput
+  solicitudes?: Prisma.SolicitudUncheckedCreateNestedManyWithoutAlmacenInput
 }
 
 export type AlmacenCreateOrConnectWithoutComprasInput = {
@@ -894,6 +1151,8 @@ export type AlmacenUpdateWithoutComprasInput = {
   lotes?: Prisma.LoteUpdateManyWithoutAlmacenNestedInput
   movimientos?: Prisma.MovimientoInventarioUpdateManyWithoutAlmacenNestedInput
   ventas?: Prisma.VentaUpdateManyWithoutAlmacenNestedInput
+  usuarios?: Prisma.UsuarioUpdateManyWithoutAlmacenNestedInput
+  solicitudes?: Prisma.SolicitudUpdateManyWithoutAlmacenNestedInput
 }
 
 export type AlmacenUncheckedUpdateWithoutComprasInput = {
@@ -911,6 +1170,8 @@ export type AlmacenUncheckedUpdateWithoutComprasInput = {
   lotes?: Prisma.LoteUncheckedUpdateManyWithoutAlmacenNestedInput
   movimientos?: Prisma.MovimientoInventarioUncheckedUpdateManyWithoutAlmacenNestedInput
   ventas?: Prisma.VentaUncheckedUpdateManyWithoutAlmacenNestedInput
+  usuarios?: Prisma.UsuarioUncheckedUpdateManyWithoutAlmacenNestedInput
+  solicitudes?: Prisma.SolicitudUncheckedUpdateManyWithoutAlmacenNestedInput
 }
 
 export type AlmacenCreateWithoutVentasInput = {
@@ -928,6 +1189,8 @@ export type AlmacenCreateWithoutVentasInput = {
   lotes?: Prisma.LoteCreateNestedManyWithoutAlmacenInput
   movimientos?: Prisma.MovimientoInventarioCreateNestedManyWithoutAlmacenInput
   compras?: Prisma.CompraCreateNestedManyWithoutAlmacenInput
+  usuarios?: Prisma.UsuarioCreateNestedManyWithoutAlmacenInput
+  solicitudes?: Prisma.SolicitudCreateNestedManyWithoutAlmacenInput
 }
 
 export type AlmacenUncheckedCreateWithoutVentasInput = {
@@ -945,6 +1208,8 @@ export type AlmacenUncheckedCreateWithoutVentasInput = {
   lotes?: Prisma.LoteUncheckedCreateNestedManyWithoutAlmacenInput
   movimientos?: Prisma.MovimientoInventarioUncheckedCreateNestedManyWithoutAlmacenInput
   compras?: Prisma.CompraUncheckedCreateNestedManyWithoutAlmacenInput
+  usuarios?: Prisma.UsuarioUncheckedCreateNestedManyWithoutAlmacenInput
+  solicitudes?: Prisma.SolicitudUncheckedCreateNestedManyWithoutAlmacenInput
 }
 
 export type AlmacenCreateOrConnectWithoutVentasInput = {
@@ -978,6 +1243,8 @@ export type AlmacenUpdateWithoutVentasInput = {
   lotes?: Prisma.LoteUpdateManyWithoutAlmacenNestedInput
   movimientos?: Prisma.MovimientoInventarioUpdateManyWithoutAlmacenNestedInput
   compras?: Prisma.CompraUpdateManyWithoutAlmacenNestedInput
+  usuarios?: Prisma.UsuarioUpdateManyWithoutAlmacenNestedInput
+  solicitudes?: Prisma.SolicitudUpdateManyWithoutAlmacenNestedInput
 }
 
 export type AlmacenUncheckedUpdateWithoutVentasInput = {
@@ -995,6 +1262,8 @@ export type AlmacenUncheckedUpdateWithoutVentasInput = {
   lotes?: Prisma.LoteUncheckedUpdateManyWithoutAlmacenNestedInput
   movimientos?: Prisma.MovimientoInventarioUncheckedUpdateManyWithoutAlmacenNestedInput
   compras?: Prisma.CompraUncheckedUpdateManyWithoutAlmacenNestedInput
+  usuarios?: Prisma.UsuarioUncheckedUpdateManyWithoutAlmacenNestedInput
+  solicitudes?: Prisma.SolicitudUncheckedUpdateManyWithoutAlmacenNestedInput
 }
 
 export type AlmacenCreateWithoutMovimientosInput = {
@@ -1012,6 +1281,8 @@ export type AlmacenCreateWithoutMovimientosInput = {
   lotes?: Prisma.LoteCreateNestedManyWithoutAlmacenInput
   compras?: Prisma.CompraCreateNestedManyWithoutAlmacenInput
   ventas?: Prisma.VentaCreateNestedManyWithoutAlmacenInput
+  usuarios?: Prisma.UsuarioCreateNestedManyWithoutAlmacenInput
+  solicitudes?: Prisma.SolicitudCreateNestedManyWithoutAlmacenInput
 }
 
 export type AlmacenUncheckedCreateWithoutMovimientosInput = {
@@ -1029,6 +1300,8 @@ export type AlmacenUncheckedCreateWithoutMovimientosInput = {
   lotes?: Prisma.LoteUncheckedCreateNestedManyWithoutAlmacenInput
   compras?: Prisma.CompraUncheckedCreateNestedManyWithoutAlmacenInput
   ventas?: Prisma.VentaUncheckedCreateNestedManyWithoutAlmacenInput
+  usuarios?: Prisma.UsuarioUncheckedCreateNestedManyWithoutAlmacenInput
+  solicitudes?: Prisma.SolicitudUncheckedCreateNestedManyWithoutAlmacenInput
 }
 
 export type AlmacenCreateOrConnectWithoutMovimientosInput = {
@@ -1062,6 +1335,8 @@ export type AlmacenUpdateWithoutMovimientosInput = {
   lotes?: Prisma.LoteUpdateManyWithoutAlmacenNestedInput
   compras?: Prisma.CompraUpdateManyWithoutAlmacenNestedInput
   ventas?: Prisma.VentaUpdateManyWithoutAlmacenNestedInput
+  usuarios?: Prisma.UsuarioUpdateManyWithoutAlmacenNestedInput
+  solicitudes?: Prisma.SolicitudUpdateManyWithoutAlmacenNestedInput
 }
 
 export type AlmacenUncheckedUpdateWithoutMovimientosInput = {
@@ -1079,6 +1354,8 @@ export type AlmacenUncheckedUpdateWithoutMovimientosInput = {
   lotes?: Prisma.LoteUncheckedUpdateManyWithoutAlmacenNestedInput
   compras?: Prisma.CompraUncheckedUpdateManyWithoutAlmacenNestedInput
   ventas?: Prisma.VentaUncheckedUpdateManyWithoutAlmacenNestedInput
+  usuarios?: Prisma.UsuarioUncheckedUpdateManyWithoutAlmacenNestedInput
+  solicitudes?: Prisma.SolicitudUncheckedUpdateManyWithoutAlmacenNestedInput
 }
 
 export type AlmacenCreateManyEmpresaInput = {
@@ -1108,6 +1385,8 @@ export type AlmacenUpdateWithoutEmpresaInput = {
   movimientos?: Prisma.MovimientoInventarioUpdateManyWithoutAlmacenNestedInput
   compras?: Prisma.CompraUpdateManyWithoutAlmacenNestedInput
   ventas?: Prisma.VentaUpdateManyWithoutAlmacenNestedInput
+  usuarios?: Prisma.UsuarioUpdateManyWithoutAlmacenNestedInput
+  solicitudes?: Prisma.SolicitudUpdateManyWithoutAlmacenNestedInput
 }
 
 export type AlmacenUncheckedUpdateWithoutEmpresaInput = {
@@ -1125,6 +1404,8 @@ export type AlmacenUncheckedUpdateWithoutEmpresaInput = {
   movimientos?: Prisma.MovimientoInventarioUncheckedUpdateManyWithoutAlmacenNestedInput
   compras?: Prisma.CompraUncheckedUpdateManyWithoutAlmacenNestedInput
   ventas?: Prisma.VentaUncheckedUpdateManyWithoutAlmacenNestedInput
+  usuarios?: Prisma.UsuarioUncheckedUpdateManyWithoutAlmacenNestedInput
+  solicitudes?: Prisma.SolicitudUncheckedUpdateManyWithoutAlmacenNestedInput
 }
 
 export type AlmacenUncheckedUpdateManyWithoutEmpresaInput = {
@@ -1150,6 +1431,8 @@ export type AlmacenCountOutputType = {
   movimientos: number
   compras: number
   ventas: number
+  usuarios: number
+  solicitudes: number
 }
 
 export type AlmacenCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1158,6 +1441,8 @@ export type AlmacenCountOutputTypeSelect<ExtArgs extends runtime.Types.Extension
   movimientos?: boolean | AlmacenCountOutputTypeCountMovimientosArgs
   compras?: boolean | AlmacenCountOutputTypeCountComprasArgs
   ventas?: boolean | AlmacenCountOutputTypeCountVentasArgs
+  usuarios?: boolean | AlmacenCountOutputTypeCountUsuariosArgs
+  solicitudes?: boolean | AlmacenCountOutputTypeCountSolicitudesArgs
 }
 
 /**
@@ -1205,6 +1490,20 @@ export type AlmacenCountOutputTypeCountVentasArgs<ExtArgs extends runtime.Types.
   where?: Prisma.VentaWhereInput
 }
 
+/**
+ * AlmacenCountOutputType without action
+ */
+export type AlmacenCountOutputTypeCountUsuariosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UsuarioWhereInput
+}
+
+/**
+ * AlmacenCountOutputType without action
+ */
+export type AlmacenCountOutputTypeCountSolicitudesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SolicitudWhereInput
+}
+
 
 export type AlmacenSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1223,6 +1522,8 @@ export type AlmacenSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   movimientos?: boolean | Prisma.Almacen$movimientosArgs<ExtArgs>
   compras?: boolean | Prisma.Almacen$comprasArgs<ExtArgs>
   ventas?: boolean | Prisma.Almacen$ventasArgs<ExtArgs>
+  usuarios?: boolean | Prisma.Almacen$usuariosArgs<ExtArgs>
+  solicitudes?: boolean | Prisma.Almacen$solicitudesArgs<ExtArgs>
   _count?: boolean | Prisma.AlmacenCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["almacen"]>
 
@@ -1275,6 +1576,8 @@ export type AlmacenInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   movimientos?: boolean | Prisma.Almacen$movimientosArgs<ExtArgs>
   compras?: boolean | Prisma.Almacen$comprasArgs<ExtArgs>
   ventas?: boolean | Prisma.Almacen$ventasArgs<ExtArgs>
+  usuarios?: boolean | Prisma.Almacen$usuariosArgs<ExtArgs>
+  solicitudes?: boolean | Prisma.Almacen$solicitudesArgs<ExtArgs>
   _count?: boolean | Prisma.AlmacenCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type AlmacenIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1293,6 +1596,8 @@ export type $AlmacenPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     movimientos: Prisma.$MovimientoInventarioPayload<ExtArgs>[]
     compras: Prisma.$CompraPayload<ExtArgs>[]
     ventas: Prisma.$VentaPayload<ExtArgs>[]
+    usuarios: Prisma.$UsuarioPayload<ExtArgs>[]
+    solicitudes: Prisma.$SolicitudPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1705,6 +2010,8 @@ export interface Prisma__AlmacenClient<T, Null = never, ExtArgs extends runtime.
   movimientos<T extends Prisma.Almacen$movimientosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Almacen$movimientosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MovimientoInventarioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   compras<T extends Prisma.Almacen$comprasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Almacen$comprasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CompraPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   ventas<T extends Prisma.Almacen$ventasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Almacen$ventasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VentaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  usuarios<T extends Prisma.Almacen$usuariosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Almacen$usuariosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  solicitudes<T extends Prisma.Almacen$solicitudesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Almacen$solicitudesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SolicitudPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2262,6 +2569,54 @@ export type Almacen$ventasArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.VentaScalarFieldEnum | Prisma.VentaScalarFieldEnum[]
+}
+
+/**
+ * Almacen.usuarios
+ */
+export type Almacen$usuariosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Usuario
+   */
+  select?: Prisma.UsuarioSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Usuario
+   */
+  omit?: Prisma.UsuarioOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UsuarioInclude<ExtArgs> | null
+  where?: Prisma.UsuarioWhereInput
+  orderBy?: Prisma.UsuarioOrderByWithRelationInput | Prisma.UsuarioOrderByWithRelationInput[]
+  cursor?: Prisma.UsuarioWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UsuarioScalarFieldEnum | Prisma.UsuarioScalarFieldEnum[]
+}
+
+/**
+ * Almacen.solicitudes
+ */
+export type Almacen$solicitudesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Solicitud
+   */
+  select?: Prisma.SolicitudSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Solicitud
+   */
+  omit?: Prisma.SolicitudOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SolicitudInclude<ExtArgs> | null
+  where?: Prisma.SolicitudWhereInput
+  orderBy?: Prisma.SolicitudOrderByWithRelationInput | Prisma.SolicitudOrderByWithRelationInput[]
+  cursor?: Prisma.SolicitudWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SolicitudScalarFieldEnum | Prisma.SolicitudScalarFieldEnum[]
 }
 
 /**

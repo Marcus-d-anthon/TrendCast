@@ -36,6 +36,8 @@ export const listarMovimientosQuerySchema = z.object({
   tipo: z.enum(TipoMovimiento).optional(),
   desde: z.coerce.date().optional(),
   hasta: z.coerce.date().optional(),
+  page: z.coerce.number().int().positive().optional(),
+  pageSize: z.coerce.number().int().positive().max(100).default(10),
 });
 
 export type RegistrarMovimientoInput = z.infer<typeof registrarMovimientoSchema>;

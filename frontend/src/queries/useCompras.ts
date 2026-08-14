@@ -1,9 +1,17 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { comprasApi, type CrearCompraInput } from '../api/endpoints/compras';
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { comprasApi, type CrearCompraInput, type ListarComprasPaginadoParams } from '../api/endpoints/compras';
 import { queryKeys } from './query-keys';
 
 export function useCompras() {
   return useQuery({ queryKey: queryKeys.compras, queryFn: comprasApi.listar });
+}
+
+export function useComprasPaginado(params: ListarComprasPaginadoParams) {
+  return useQuery({
+    queryKey: queryKeys.comprasPaginado(params),
+    queryFn: () => comprasApi.listarPaginado(params),
+    placeholderData: keepPreviousData,
+  });
 }
 
 export function useCompra(id: string | undefined) {

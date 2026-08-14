@@ -25,9 +25,9 @@ export function AppShell() {
 
   return (
     <div className={styles.shell}>
-      <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} colapsado={colapsado} onToggleColapsado={toggleColapsado} />
+      <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} colapsado={colapsado} />
       <div className={styles.main}>
-        <Topbar onMenuClick={() => setSidebarOpen((prev) => !prev)} />
+        <Topbar onMenuClick={() => setSidebarOpen((prev) => !prev)} colapsado={colapsado} onToggleColapsado={toggleColapsado} />
         <main className={styles.content}>
           <Outlet />
         </main>

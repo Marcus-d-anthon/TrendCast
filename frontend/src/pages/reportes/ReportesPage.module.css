@@ -1,17 +1,22 @@
 .tabs {
   display: flex;
+  flex-wrap: wrap;
   gap: var(--space-2);
   border-bottom: 1px solid var(--color-border);
   margin-bottom: var(--space-6);
 }
 
 .tab {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
   padding: var(--space-3) var(--space-4);
   font-size: var(--text-sm);
   font-weight: var(--weight-medium);
   color: var(--color-text-secondary);
   border-bottom: 2px solid transparent;
   margin-bottom: -1px;
+  white-space: nowrap;
 }
 
 .tab:hover {
@@ -32,31 +37,20 @@
   margin-bottom: var(--space-6);
 }
 
-.kpiLabel {
-  font-size: var(--text-xs);
-  font-weight: var(--weight-semibold);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--color-text-secondary);
-}
-
-.kpiValue {
-  margin-top: var(--space-2);
-  font-family: var(--font-mono);
-  font-size: var(--text-xl);
-}
-
-.filters {
-  display: flex;
-  gap: var(--space-3);
-  margin-bottom: var(--space-5);
-  flex-wrap: wrap;
-}
-
-.filterInput {
-  min-width: 10rem;
-}
-
 .sectionGap {
   margin-top: var(--space-6);
+}
+
+.abcBar {
+  display: flex;
+  height: 0.625rem;
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin-bottom: var(--space-5);
+  background: var(--color-bg);
+}
+
+.abcSegment {
+  min-width: 0.625rem;
+  transition: flex-grow var(--duration-base) var(--ease-out);
 }

@@ -1,5 +1,5 @@
-import { apiRequest } from '../http-client';
-import type { Compra } from '../types/domain';
+import { apiRequest, apiRequestPaginado, type RespuestaPaginada } from '../http-client';
+import type { Compra, EstadoDocumentoComercial } from '../types/domain';
 
 export interface DetalleCompraInput {
   productoId: string;
@@ -13,8 +13,19 @@ export interface CrearCompraInput {
   detalle: DetalleCompraInput[];
 }
 
+export interface ListarComprasPaginadoParams {
+  [key: string]: string | number | boolean | undefined;
+  page: number;
+  pageSize?: number;
+  estado?: EstadoDocumentoComercial;
+  desde?: string;
+  hasta?: string;
+}
+
 export const comprasApi = {
   listar: () => apiRequest<Compra[]>('/compras'),
+  listarPaginado: (params: ListarComprasPaginadoParams): Promise<RespuestaPaginada<Compra>> =>
+    apiRequestPaginado<Compra>('/compras', { query: params }),
   obtener: (id: string) => apiRequest<Compra>(`/compras/${id}`),
   crear: (input: CrearCompraInput) => apiRequest<Compra>('/compras', { method: 'POST', body: input }),
   confirmar: (id: string) => apiRequest<Compra>(`/compras/${id}/confirmar`, { method: 'POST' }),

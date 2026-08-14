@@ -32,9 +32,6 @@ export interface StockPorAlmacen {
   almacen?: Almacen;
 }
 
-// precioCompra/precioVenta viajan como string: son Decimal de Prisma, que
-// serializa a string en JSON para no perder precisión. Se convierten con
-// Number(...) en el punto de uso (formatCurrency, cálculos de línea).
 export interface Producto {
   id: string;
   sku: string;
@@ -58,6 +55,7 @@ export type TipoDocumento = 'CEDULA' | 'RUC' | 'PASAPORTE';
 
 export interface Cliente {
   id: string;
+  codigo: string | null;
   tipoDocumento: TipoDocumento;
   numeroDocumento: string;
   nombre: string;
@@ -69,6 +67,7 @@ export interface Cliente {
 
 export interface Proveedor {
   id: string;
+  codigo: string | null;
   tipoDocumento: TipoDocumento;
   numeroDocumento: string;
   razonSocial: string;
@@ -259,6 +258,29 @@ export interface Usuario {
   id: string;
   email: string;
   nombre: string;
-  rol: 'ADMIN' | 'SUPERVISOR' | 'BODEGA' | 'VENTAS' | 'GERENCIA';
+  rol: 'ADMIN' | 'SUPERVISOR' | 'BODEGA' | 'VENTAS' | 'GERENCIA' | 'SUPERUSUARIO';
   activo: boolean;
+  almacenId?: string | null;
+}
+
+export type TipoSolicitud = 'REABASTECIMIENTO' | 'VENTA_ESPECIAL';
+export type EstadoSolicitud = 'PENDIENTE' | 'APROBADA' | 'RECHAZADA' | 'EFECTUADA';
+
+export interface Solicitud {
+  id: string;
+  numero: string | null;
+  tipo: TipoSolicitud;
+  estado: EstadoSolicitud;
+  cantidad: number;
+  comentario: string | null;
+  producto: { id: string; sku: string; nombre: string };
+  almacen: { id: string; nombre: string };
+  solicitante: { id: string; nombre: string; email: string };
+  aprobador: { id: string; nombre: string; email: string } | null;
+  fechaAprobacion: string | null;
+  motivoRechazo: string | null;
+  efectuador: { id: string; nombre: string; email: string } | null;
+  fechaEfectuacion: string | null;
+  createdAt: string;
+  updatedAt: string;
 }

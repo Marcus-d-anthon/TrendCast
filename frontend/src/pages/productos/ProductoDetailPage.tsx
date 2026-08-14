@@ -2,6 +2,7 @@ import { ArrowLeft, Pencil, TrendingUp, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { usePermiso } from '../../auth/usePermiso';
+import { useAuth } from '../../auth/useAuth';
 import { ApiError } from '../../api/http-client';
 import { Badge } from '../../components/ui/Badge';
 import { BarcodeLabel } from '../../components/ui/BarcodeLabel';
@@ -12,6 +13,7 @@ import { EmptyState } from '../../components/ui/EmptyState';
 import { ErrorState } from '../../components/ui/ErrorState';
 import { Skeleton } from '../../components/ui/Skeleton';
 import { toast } from '../../components/ui/toast';
+import { AuditoriaHistorial } from '../../components/auditoria/AuditoriaHistorial';
 import { MiniTape } from '../../components/ledger/MiniTape';
 import { useEliminarProducto, useProducto } from '../../queries/useProductos';
 import { useMovimientos } from '../../queries/useMovimientos';
@@ -23,7 +25,11 @@ import styles from './ProductoDetailPage.module.css';
 export function ProductoDetailPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const { usuario } = useAuth();
   const puedeEscribir = usePermiso('productos.editar');
+  // El visor de auditoria es un panel de supervision (mismo criterio que el
+  // backend, ver AuditoriaRoutes.ts): no depende de la matriz de permisos.
+  const puedeVerAuditoria = usuario?.rol === 'ADMIN' || usuario?.rol === 'SUPERVISOR' || usuario?.rol === 'SUPERUSUARIO';
 
   const producto = useProducto(id);
   const movimientos = useMovimientos({ productoId: id });
@@ -137,6 +143,13 @@ export function ProductoDetailPage() {
             <MiniTape movimientos={movimientos.data.slice(0, 10)} />
           )}
         </Card>
+
+        {puedeVerAuditoria && (
+          <Card>
+            <h2 className={styles.sectionTitle}>Historial de auditoría</h2>
+            <AuditoriaHistorial entidad="Producto" registroId={p.id} />
+          </Card>
+        )}
       </div>
 
       {editando && <ProductoFormDrawer producto={p} onClose={() => setEditando(false)} />}

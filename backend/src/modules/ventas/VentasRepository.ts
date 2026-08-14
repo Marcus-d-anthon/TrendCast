@@ -1,5 +1,5 @@
 import { Prisma } from "../../generated/prisma/client";
-import { obtenerEmpresaId } from "../../lib/empresa";
+import { obtenerEmpresaActiva } from "../../lib/async-context";
 import { ConflictError } from "../../lib/errors";
 import { prisma } from "../../lib/prisma";
 import type { CrearVentaInput } from "./VentasValidators";
@@ -18,18 +18,53 @@ export interface DetalleCalculado {
   subtotal: number;
 }
 
+export interface ListarVentasParams {
+  page: number;
+  pageSize: number;
+  estado?: "BORRADOR" | "CONFIRMADA" | "ANULADA";
+  desde?: Date;
+  hasta?: Date;
+}
+
 export const ventasRepository = {
   listar() {
-    return prisma.venta.findMany({ orderBy: { fecha: "desc" }, include: INCLUDE_RELACIONES });
+    return prisma.venta.findMany({
+      where: { empresaId: obtenerEmpresaActiva() },
+      orderBy: { fecha: "desc" },
+      include: INCLUDE_RELACIONES,
+    });
+  },
+
+  async listarPaginado({ page, pageSize, estado, desde, hasta }: ListarVentasParams) {
+    const where: Prisma.VentaWhereInput = {
+      empresaId: obtenerEmpresaActiva(),
+      ...(estado ? { estado } : {}),
+      ...(desde || hasta ? { fecha: { gte: desde, lte: hasta } } : {}),
+    };
+
+    const [data, total] = await Promise.all([
+      prisma.venta.findMany({
+        where,
+        orderBy: { fecha: "desc" },
+        include: INCLUDE_RELACIONES,
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+      }),
+      prisma.venta.count({ where }),
+    ]);
+
+    return { data, total };
   },
 
   buscarPorId(id: string) {
-    return prisma.venta.findUnique({ where: { id }, include: INCLUDE_RELACIONES });
+    return prisma.venta.findFirst({ where: { id, empresaId: obtenerEmpresaActiva() }, include: INCLUDE_RELACIONES });
   },
 
+  // Numero secuencial por año Y por empresa -- ver comentario equivalente en
+  // ComprasRepository.generarNumero.
   async generarNumero(): Promise<string> {
     const anio = new Date().getFullYear();
-    const total = await prisma.venta.count();
+    const total = await prisma.venta.count({ where: { empresaId: obtenerEmpresaActiva() } });
     return `VEN-${anio}-${String(total + 1).padStart(4, "0")}`;
   },
 
@@ -38,7 +73,7 @@ export const ventasRepository = {
     input: CrearVentaInput,
     totales: { subtotal: number; impuesto: number; total: number; detalle: DetalleCalculado[] }
   ) {
-    const empresaId = await obtenerEmpresaId();
+    const empresaId = obtenerEmpresaActiva();
     const numero = await this.generarNumero();
     return prisma.venta.create({
       data: {

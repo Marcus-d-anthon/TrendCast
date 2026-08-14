@@ -61,16 +61,16 @@ export const productosController = {
     const productos = await productosService.listar();
 
     const tabla: TablaExport = {
-      titulo: "Catalogo de productos",
+      titulo: "Catálogo de productos",
       columnas: [
         { header: "SKU", key: "sku", ancho: 16 },
         { header: "Producto", key: "nombre", ancho: 32 },
-        { header: "Categoria", key: "categoria", ancho: 20 },
+        { header: "Categoría", key: "categoria", ancho: 26 },
         { header: "Marca", key: "marca", ancho: 18 },
         { header: "Unidad", key: "unidad", ancho: 12 },
         { header: "Precio compra", key: "precioCompra", ancho: 16 },
         { header: "Precio venta", key: "precioVenta", ancho: 16 },
-        { header: "Stock minimo", key: "stockMinimo", ancho: 14 },
+        { header: "Stock mínimo", key: "stockMinimo", ancho: 14 },
         { header: "Stock actual", key: "stockActual", ancho: 14 },
         { header: "Estado", key: "estado", ancho: 12 },
       ],

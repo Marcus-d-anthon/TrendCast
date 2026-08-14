@@ -3,14 +3,22 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { prisma } from "../../src/lib/prisma";
 import { usuariosService } from "../../src/modules/usuarios/UsuariosService";
 import { buildTestApp } from "../helpers/build-app";
+import { conEmpresaDePruebas } from "../helpers/empresa-context";
 import { limpiarBaseDeDatos } from "../helpers/test-db";
 
 const app = buildTestApp();
 
+// Este archivo crea usuarios llamando directo a usuariosService.crear (sin
+// pasar por HTTP), asi que necesita su propio contexto de "empresa activa"
+// -- ver tests/helpers/empresa-context.ts.
+function crearUsuario(input: Parameters<typeof usuariosService.crear>[0]) {
+  return conEmpresaDePruebas(() => usuariosService.crear(input));
+}
+
 describe("POST /api/auth/login", () => {
   beforeEach(async () => {
     await limpiarBaseDeDatos();
-    await usuariosService.crear({
+    await crearUsuario({
       email: "admin@tiansi.test",
       password: "ClaveSegura123",
       nombre: "Admin Test",
@@ -34,7 +42,7 @@ describe("POST /api/auth/login", () => {
   });
 
   it("un rol no-ADMIN recibe solo los permisos de su matriz (no la lista completa)", async () => {
-    await usuariosService.crear({
+    await crearUsuario({
       email: "bodega@tiansi.test",
       password: "ClaveSegura123",
       nombre: "Bodega Test",
@@ -95,7 +103,7 @@ describe("POST /api/auth/login", () => {
 describe("POST /api/auth/refresh", () => {
   beforeEach(async () => {
     await limpiarBaseDeDatos();
-    await usuariosService.crear({
+    await crearUsuario({
       email: "admin@tiansi.test",
       password: "ClaveSegura123",
       nombre: "Admin Test",
@@ -147,7 +155,7 @@ describe("Autenticacion y autorizacion por rol en rutas protegidas", () => {
   });
 
   it("rechaza una ruta protegida con rol incorrecto (403)", async () => {
-    await usuariosService.crear({
+    await crearUsuario({
       email: "bodega@tiansi.test",
       password: "ClaveSegura123",
       nombre: "Bodega Test",
@@ -167,7 +175,7 @@ describe("Autenticacion y autorizacion por rol en rutas protegidas", () => {
   });
 
   it("permite registrar un usuario cuando el rol es ADMIN (201)", async () => {
-    await usuariosService.crear({
+    await crearUsuario({
       email: "admin2@tiansi.test",
       password: "ClaveSegura123",
       nombre: "Admin2",
@@ -181,7 +189,10 @@ describe("Autenticacion y autorizacion por rol en rutas protegidas", () => {
     const res = await request(app)
       .post("/api/usuarios")
       .set("Authorization", `Bearer ${token}`)
-      .send({ email: "nuevo2@tiansi.test", password: "ClaveSegura123", nombre: "Nuevo2", rol: "BODEGA" });
+      // VENTAS y no BODEGA a proposito: BODEGA ahora requiere almacenId (ver
+      // UsuariosValidators.ts), y esta prueba solo verifica el camino feliz
+      // de registro por un ADMIN, no las reglas de asignacion de almacen.
+      .send({ email: "nuevo2@tiansi.test", password: "ClaveSegura123", nombre: "Nuevo2", rol: "VENTAS" });
 
     expect(res.status).toBe(201);
     expect(res.body.data.email).toBe("nuevo2@tiansi.test");
@@ -195,13 +206,13 @@ describe("GET /api/usuarios", () => {
   });
 
   it("permite a ADMIN listar usuarios sin exponer passwordHash", async () => {
-    await usuariosService.crear({
+    await crearUsuario({
       email: "admin3@tiansi.test",
       password: "ClaveSegura123",
       nombre: "Admin3",
       rol: "ADMIN",
     });
-    await usuariosService.crear({
+    await crearUsuario({
       email: "bodega3@tiansi.test",
       password: "ClaveSegura123",
       nombre: "Bodega3",
@@ -220,7 +231,7 @@ describe("GET /api/usuarios", () => {
   });
 
   it("rechaza listar usuarios con rol distinto de ADMIN (403)", async () => {
-    await usuariosService.crear({
+    await crearUsuario({
       email: "supervisor3@tiansi.test",
       password: "ClaveSegura123",
       nombre: "Supervisor3",

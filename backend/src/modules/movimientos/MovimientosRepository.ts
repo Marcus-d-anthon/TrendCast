@@ -1,4 +1,5 @@
 import { Prisma } from "../../generated/prisma/client";
+import { obtenerEmpresaActiva } from "../../lib/async-context";
 import { prisma } from "../../lib/prisma";
 import type { ListarMovimientosQuery, RegistrarMovimientoInput } from "./MovimientosValidators";
 
@@ -12,6 +13,9 @@ export const movimientosRepository = {
     return prisma.movimientoInventario.findUnique({ where: { id } });
   },
 
+  // MovimientoInventario no tiene columna empresa_id propia (solo llega a
+  // producto/almacen/usuario) -- se acota via la relacion a producto, unica
+  // forma de que la empresa activa filtre esta tabla.
   listar(filtros: ListarMovimientosQuery) {
     return prisma.movimientoInventario.findMany({
       where: {
@@ -22,10 +26,34 @@ export const movimientosRepository = {
           gte: filtros.desde,
           lte: filtros.hasta,
         },
+        producto: { empresaId: obtenerEmpresaActiva() },
       },
       orderBy: { fecha: "desc" },
       include: INCLUDE_RELACIONES,
     });
+  },
+
+  async listarPaginado(filtros: ListarMovimientosQuery, page: number, pageSize: number) {
+    const where: Prisma.MovimientoInventarioWhereInput = {
+      productoId: filtros.productoId,
+      almacenId: filtros.almacenId,
+      tipo: filtros.tipo,
+      fecha: { gte: filtros.desde, lte: filtros.hasta },
+      producto: { empresaId: obtenerEmpresaActiva() },
+    };
+
+    const [data, total] = await Promise.all([
+      prisma.movimientoInventario.findMany({
+        where,
+        orderBy: { fecha: "desc" },
+        include: INCLUDE_RELACIONES,
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+      }),
+      prisma.movimientoInventario.count({ where }),
+    ]);
+
+    return { data, total };
   },
 
   // Ruta critica: leer el stock actual, insertar el movimiento, actualizar

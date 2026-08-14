@@ -26,6 +26,7 @@ export type AggregateProveedor = {
 
 export type ProveedorMinAggregateOutputType = {
   id: string | null
+  codigo: string | null
   tipoDocumento: $Enums.TipoDocumento | null
   numeroDocumento: string | null
   razonSocial: string | null
@@ -44,6 +45,7 @@ export type ProveedorMinAggregateOutputType = {
 
 export type ProveedorMaxAggregateOutputType = {
   id: string | null
+  codigo: string | null
   tipoDocumento: $Enums.TipoDocumento | null
   numeroDocumento: string | null
   razonSocial: string | null
@@ -62,6 +64,7 @@ export type ProveedorMaxAggregateOutputType = {
 
 export type ProveedorCountAggregateOutputType = {
   id: number
+  codigo: number
   tipoDocumento: number
   numeroDocumento: number
   razonSocial: number
@@ -82,6 +85,7 @@ export type ProveedorCountAggregateOutputType = {
 
 export type ProveedorMinAggregateInputType = {
   id?: true
+  codigo?: true
   tipoDocumento?: true
   numeroDocumento?: true
   razonSocial?: true
@@ -100,6 +104,7 @@ export type ProveedorMinAggregateInputType = {
 
 export type ProveedorMaxAggregateInputType = {
   id?: true
+  codigo?: true
   tipoDocumento?: true
   numeroDocumento?: true
   razonSocial?: true
@@ -118,6 +123,7 @@ export type ProveedorMaxAggregateInputType = {
 
 export type ProveedorCountAggregateInputType = {
   id?: true
+  codigo?: true
   tipoDocumento?: true
   numeroDocumento?: true
   razonSocial?: true
@@ -209,6 +215,7 @@ export type ProveedorGroupByArgs<ExtArgs extends runtime.Types.Extensions.Intern
 
 export type ProveedorGroupByOutputType = {
   id: string
+  codigo: string | null
   tipoDocumento: $Enums.TipoDocumento
   numeroDocumento: string
   razonSocial: string
@@ -248,6 +255,7 @@ export type ProveedorWhereInput = {
   OR?: Prisma.ProveedorWhereInput[]
   NOT?: Prisma.ProveedorWhereInput | Prisma.ProveedorWhereInput[]
   id?: Prisma.StringFilter<"Proveedor"> | string
+  codigo?: Prisma.StringNullableFilter<"Proveedor"> | string | null
   tipoDocumento?: Prisma.EnumTipoDocumentoFilter<"Proveedor"> | $Enums.TipoDocumento
   numeroDocumento?: Prisma.StringFilter<"Proveedor"> | string
   razonSocial?: Prisma.StringFilter<"Proveedor"> | string
@@ -268,6 +276,7 @@ export type ProveedorWhereInput = {
 
 export type ProveedorOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  codigo?: Prisma.SortOrderInput | Prisma.SortOrder
   tipoDocumento?: Prisma.SortOrder
   numeroDocumento?: Prisma.SortOrder
   razonSocial?: Prisma.SortOrder
@@ -289,9 +298,11 @@ export type ProveedorOrderByWithRelationInput = {
 export type ProveedorWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   empresaId_numeroDocumento?: Prisma.ProveedorEmpresaIdNumeroDocumentoCompoundUniqueInput
+  empresaId_codigo?: Prisma.ProveedorEmpresaIdCodigoCompoundUniqueInput
   AND?: Prisma.ProveedorWhereInput | Prisma.ProveedorWhereInput[]
   OR?: Prisma.ProveedorWhereInput[]
   NOT?: Prisma.ProveedorWhereInput | Prisma.ProveedorWhereInput[]
+  codigo?: Prisma.StringNullableFilter<"Proveedor"> | string | null
   tipoDocumento?: Prisma.EnumTipoDocumentoFilter<"Proveedor"> | $Enums.TipoDocumento
   numeroDocumento?: Prisma.StringFilter<"Proveedor"> | string
   razonSocial?: Prisma.StringFilter<"Proveedor"> | string
@@ -308,10 +319,11 @@ export type ProveedorWhereUniqueInput = Prisma.AtLeast<{
   deletedAt?: Prisma.DateTimeNullableFilter<"Proveedor"> | Date | string | null
   empresa?: Prisma.XOR<Prisma.EmpresaScalarRelationFilter, Prisma.EmpresaWhereInput>
   compras?: Prisma.CompraListRelationFilter
-}, "id" | "empresaId_numeroDocumento">
+}, "id" | "empresaId_numeroDocumento" | "empresaId_codigo">
 
 export type ProveedorOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  codigo?: Prisma.SortOrderInput | Prisma.SortOrder
   tipoDocumento?: Prisma.SortOrder
   numeroDocumento?: Prisma.SortOrder
   razonSocial?: Prisma.SortOrder
@@ -336,6 +348,7 @@ export type ProveedorScalarWhereWithAggregatesInput = {
   OR?: Prisma.ProveedorScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ProveedorScalarWhereWithAggregatesInput | Prisma.ProveedorScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Proveedor"> | string
+  codigo?: Prisma.StringNullableWithAggregatesFilter<"Proveedor"> | string | null
   tipoDocumento?: Prisma.EnumTipoDocumentoWithAggregatesFilter<"Proveedor"> | $Enums.TipoDocumento
   numeroDocumento?: Prisma.StringWithAggregatesFilter<"Proveedor"> | string
   razonSocial?: Prisma.StringWithAggregatesFilter<"Proveedor"> | string
@@ -354,6 +367,7 @@ export type ProveedorScalarWhereWithAggregatesInput = {
 
 export type ProveedorCreateInput = {
   id?: string
+  codigo?: string | null
   tipoDocumento: $Enums.TipoDocumento
   numeroDocumento: string
   razonSocial: string
@@ -373,6 +387,7 @@ export type ProveedorCreateInput = {
 
 export type ProveedorUncheckedCreateInput = {
   id?: string
+  codigo?: string | null
   tipoDocumento: $Enums.TipoDocumento
   numeroDocumento: string
   razonSocial: string
@@ -392,6 +407,7 @@ export type ProveedorUncheckedCreateInput = {
 
 export type ProveedorUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  codigo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tipoDocumento?: Prisma.EnumTipoDocumentoFieldUpdateOperationsInput | $Enums.TipoDocumento
   numeroDocumento?: Prisma.StringFieldUpdateOperationsInput | string
   razonSocial?: Prisma.StringFieldUpdateOperationsInput | string
@@ -411,6 +427,7 @@ export type ProveedorUpdateInput = {
 
 export type ProveedorUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  codigo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tipoDocumento?: Prisma.EnumTipoDocumentoFieldUpdateOperationsInput | $Enums.TipoDocumento
   numeroDocumento?: Prisma.StringFieldUpdateOperationsInput | string
   razonSocial?: Prisma.StringFieldUpdateOperationsInput | string
@@ -430,6 +447,7 @@ export type ProveedorUncheckedUpdateInput = {
 
 export type ProveedorCreateManyInput = {
   id?: string
+  codigo?: string | null
   tipoDocumento: $Enums.TipoDocumento
   numeroDocumento: string
   razonSocial: string
@@ -448,6 +466,7 @@ export type ProveedorCreateManyInput = {
 
 export type ProveedorUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  codigo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tipoDocumento?: Prisma.EnumTipoDocumentoFieldUpdateOperationsInput | $Enums.TipoDocumento
   numeroDocumento?: Prisma.StringFieldUpdateOperationsInput | string
   razonSocial?: Prisma.StringFieldUpdateOperationsInput | string
@@ -465,6 +484,7 @@ export type ProveedorUpdateManyMutationInput = {
 
 export type ProveedorUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  codigo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tipoDocumento?: Prisma.EnumTipoDocumentoFieldUpdateOperationsInput | $Enums.TipoDocumento
   numeroDocumento?: Prisma.StringFieldUpdateOperationsInput | string
   razonSocial?: Prisma.StringFieldUpdateOperationsInput | string
@@ -496,8 +516,14 @@ export type ProveedorEmpresaIdNumeroDocumentoCompoundUniqueInput = {
   numeroDocumento: string
 }
 
+export type ProveedorEmpresaIdCodigoCompoundUniqueInput = {
+  empresaId: string
+  codigo: string
+}
+
 export type ProveedorCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  codigo?: Prisma.SortOrder
   tipoDocumento?: Prisma.SortOrder
   numeroDocumento?: Prisma.SortOrder
   razonSocial?: Prisma.SortOrder
@@ -516,6 +542,7 @@ export type ProveedorCountOrderByAggregateInput = {
 
 export type ProveedorMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  codigo?: Prisma.SortOrder
   tipoDocumento?: Prisma.SortOrder
   numeroDocumento?: Prisma.SortOrder
   razonSocial?: Prisma.SortOrder
@@ -534,6 +561,7 @@ export type ProveedorMaxOrderByAggregateInput = {
 
 export type ProveedorMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  codigo?: Prisma.SortOrder
   tipoDocumento?: Prisma.SortOrder
   numeroDocumento?: Prisma.SortOrder
   razonSocial?: Prisma.SortOrder
@@ -613,6 +641,7 @@ export type ProveedorUpdateOneRequiredWithoutComprasNestedInput = {
 
 export type ProveedorCreateWithoutEmpresaInput = {
   id?: string
+  codigo?: string | null
   tipoDocumento: $Enums.TipoDocumento
   numeroDocumento: string
   razonSocial: string
@@ -631,6 +660,7 @@ export type ProveedorCreateWithoutEmpresaInput = {
 
 export type ProveedorUncheckedCreateWithoutEmpresaInput = {
   id?: string
+  codigo?: string | null
   tipoDocumento: $Enums.TipoDocumento
   numeroDocumento: string
   razonSocial: string
@@ -678,6 +708,7 @@ export type ProveedorScalarWhereInput = {
   OR?: Prisma.ProveedorScalarWhereInput[]
   NOT?: Prisma.ProveedorScalarWhereInput | Prisma.ProveedorScalarWhereInput[]
   id?: Prisma.StringFilter<"Proveedor"> | string
+  codigo?: Prisma.StringNullableFilter<"Proveedor"> | string | null
   tipoDocumento?: Prisma.EnumTipoDocumentoFilter<"Proveedor"> | $Enums.TipoDocumento
   numeroDocumento?: Prisma.StringFilter<"Proveedor"> | string
   razonSocial?: Prisma.StringFilter<"Proveedor"> | string
@@ -696,6 +727,7 @@ export type ProveedorScalarWhereInput = {
 
 export type ProveedorCreateWithoutComprasInput = {
   id?: string
+  codigo?: string | null
   tipoDocumento: $Enums.TipoDocumento
   numeroDocumento: string
   razonSocial: string
@@ -714,6 +746,7 @@ export type ProveedorCreateWithoutComprasInput = {
 
 export type ProveedorUncheckedCreateWithoutComprasInput = {
   id?: string
+  codigo?: string | null
   tipoDocumento: $Enums.TipoDocumento
   numeroDocumento: string
   razonSocial: string
@@ -748,6 +781,7 @@ export type ProveedorUpdateToOneWithWhereWithoutComprasInput = {
 
 export type ProveedorUpdateWithoutComprasInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  codigo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tipoDocumento?: Prisma.EnumTipoDocumentoFieldUpdateOperationsInput | $Enums.TipoDocumento
   numeroDocumento?: Prisma.StringFieldUpdateOperationsInput | string
   razonSocial?: Prisma.StringFieldUpdateOperationsInput | string
@@ -766,6 +800,7 @@ export type ProveedorUpdateWithoutComprasInput = {
 
 export type ProveedorUncheckedUpdateWithoutComprasInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  codigo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tipoDocumento?: Prisma.EnumTipoDocumentoFieldUpdateOperationsInput | $Enums.TipoDocumento
   numeroDocumento?: Prisma.StringFieldUpdateOperationsInput | string
   razonSocial?: Prisma.StringFieldUpdateOperationsInput | string
@@ -784,6 +819,7 @@ export type ProveedorUncheckedUpdateWithoutComprasInput = {
 
 export type ProveedorCreateManyEmpresaInput = {
   id?: string
+  codigo?: string | null
   tipoDocumento: $Enums.TipoDocumento
   numeroDocumento: string
   razonSocial: string
@@ -801,6 +837,7 @@ export type ProveedorCreateManyEmpresaInput = {
 
 export type ProveedorUpdateWithoutEmpresaInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  codigo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tipoDocumento?: Prisma.EnumTipoDocumentoFieldUpdateOperationsInput | $Enums.TipoDocumento
   numeroDocumento?: Prisma.StringFieldUpdateOperationsInput | string
   razonSocial?: Prisma.StringFieldUpdateOperationsInput | string
@@ -819,6 +856,7 @@ export type ProveedorUpdateWithoutEmpresaInput = {
 
 export type ProveedorUncheckedUpdateWithoutEmpresaInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  codigo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tipoDocumento?: Prisma.EnumTipoDocumentoFieldUpdateOperationsInput | $Enums.TipoDocumento
   numeroDocumento?: Prisma.StringFieldUpdateOperationsInput | string
   razonSocial?: Prisma.StringFieldUpdateOperationsInput | string
@@ -837,6 +875,7 @@ export type ProveedorUncheckedUpdateWithoutEmpresaInput = {
 
 export type ProveedorUncheckedUpdateManyWithoutEmpresaInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  codigo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tipoDocumento?: Prisma.EnumTipoDocumentoFieldUpdateOperationsInput | $Enums.TipoDocumento
   numeroDocumento?: Prisma.StringFieldUpdateOperationsInput | string
   razonSocial?: Prisma.StringFieldUpdateOperationsInput | string
@@ -885,6 +924,7 @@ export type ProveedorCountOutputTypeCountComprasArgs<ExtArgs extends runtime.Typ
 
 export type ProveedorSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  codigo?: boolean
   tipoDocumento?: boolean
   numeroDocumento?: boolean
   razonSocial?: boolean
@@ -906,6 +946,7 @@ export type ProveedorSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
 
 export type ProveedorSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  codigo?: boolean
   tipoDocumento?: boolean
   numeroDocumento?: boolean
   razonSocial?: boolean
@@ -925,6 +966,7 @@ export type ProveedorSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
 
 export type ProveedorSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  codigo?: boolean
   tipoDocumento?: boolean
   numeroDocumento?: boolean
   razonSocial?: boolean
@@ -944,6 +986,7 @@ export type ProveedorSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
 
 export type ProveedorSelectScalar = {
   id?: boolean
+  codigo?: boolean
   tipoDocumento?: boolean
   numeroDocumento?: boolean
   razonSocial?: boolean
@@ -960,7 +1003,7 @@ export type ProveedorSelectScalar = {
   deletedAt?: boolean
 }
 
-export type ProveedorOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tipoDocumento" | "numeroDocumento" | "razonSocial" | "nombreComercial" | "email" | "telefono" | "direccion" | "activo" | "empresaId" | "createdAt" | "updatedAt" | "createdBy" | "updatedBy" | "deletedAt", ExtArgs["result"]["proveedor"]>
+export type ProveedorOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "codigo" | "tipoDocumento" | "numeroDocumento" | "razonSocial" | "nombreComercial" | "email" | "telefono" | "direccion" | "activo" | "empresaId" | "createdAt" | "updatedAt" | "createdBy" | "updatedBy" | "deletedAt", ExtArgs["result"]["proveedor"]>
 export type ProveedorInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   empresa?: boolean | Prisma.EmpresaDefaultArgs<ExtArgs>
   compras?: boolean | Prisma.Proveedor$comprasArgs<ExtArgs>
@@ -981,6 +1024,7 @@ export type $ProveedorPayload<ExtArgs extends runtime.Types.Extensions.InternalA
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    codigo: string | null
     tipoDocumento: $Enums.TipoDocumento
     numeroDocumento: string
     razonSocial: string
@@ -1421,6 +1465,7 @@ export interface Prisma__ProveedorClient<T, Null = never, ExtArgs extends runtim
  */
 export interface ProveedorFieldRefs {
   readonly id: Prisma.FieldRef<"Proveedor", 'String'>
+  readonly codigo: Prisma.FieldRef<"Proveedor", 'String'>
   readonly tipoDocumento: Prisma.FieldRef<"Proveedor", 'TipoDocumento'>
   readonly numeroDocumento: Prisma.FieldRef<"Proveedor", 'String'>
   readonly razonSocial: Prisma.FieldRef<"Proveedor", 'String'>

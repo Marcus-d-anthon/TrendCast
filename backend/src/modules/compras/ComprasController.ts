@@ -1,9 +1,15 @@
 import type { Request, Response } from "express";
 import { comprasService } from "./ComprasService";
-import { crearCompraSchema, idParamSchema } from "./ComprasValidators";
+import { crearCompraSchema, idParamSchema, listarComprasQuerySchema } from "./ComprasValidators";
 
 export const comprasController = {
-  async listar(_req: Request, res: Response): Promise<void> {
+  async listar(req: Request, res: Response): Promise<void> {
+    if (req.query.page !== undefined) {
+      const query = listarComprasQuerySchema.parse(req.query);
+      const resultado = await comprasService.listarPaginado(query);
+      res.status(200).json(resultado);
+      return;
+    }
     const compras = await comprasService.listar();
     res.status(200).json({ data: compras });
   },

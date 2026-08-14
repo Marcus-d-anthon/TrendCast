@@ -20,4 +20,15 @@ describe("Cabeceras de seguridad HTTP (helmet + cors)", () => {
     expect(res.status).toBe(200);
     expect(res.headers["access-control-allow-origin"]).toBeDefined();
   });
+
+  it("aplica un CSP explicito (no solo los defaults de Helmet)", async () => {
+    const res = await request(app).get("/health");
+
+    const csp = res.headers["content-security-policy"];
+    expect(csp).toBeDefined();
+    expect(csp).toContain("default-src 'self'");
+    expect(csp).toContain("object-src 'none'");
+    expect(csp).toContain("frame-ancestors 'none'");
+    expect(res.headers["strict-transport-security"]).toContain("max-age=31536000");
+  });
 });

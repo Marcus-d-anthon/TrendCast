@@ -6,6 +6,7 @@ export const roleLabels: Record<Rol, string> = {
   BODEGA: 'Bodega',
   VENTAS: 'Ventas',
   GERENCIA: 'Gerencia',
+  SUPERUSUARIO: 'Super Admin',
 };
 
 export function initials(nombre: string): string {

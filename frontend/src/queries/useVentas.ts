@@ -1,9 +1,17 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { ventasApi, type CrearVentaInput } from '../api/endpoints/ventas';
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { ventasApi, type CrearVentaInput, type ListarVentasPaginadoParams } from '../api/endpoints/ventas';
 import { queryKeys } from './query-keys';
 
 export function useVentas() {
   return useQuery({ queryKey: queryKeys.ventas, queryFn: ventasApi.listar });
+}
+
+export function useVentasPaginado(params: ListarVentasPaginadoParams) {
+  return useQuery({
+    queryKey: queryKeys.ventasPaginado(params),
+    queryFn: () => ventasApi.listarPaginado(params),
+    placeholderData: keepPreviousData,
+  });
 }
 
 export function useVenta(id: string | undefined) {

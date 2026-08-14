@@ -14,11 +14,12 @@ export function useProductos() {
 // keepPreviousData: al cambiar de pagina o escribir en el buscador, la tabla
 // se queda mostrando los resultados anteriores (sin parpadear a un estado de
 // carga vacio) hasta que llega la respuesta nueva.
-export function useProductosPaginado(params: ListarProductosPaginadoParams) {
+export function useProductosPaginado(params: ListarProductosPaginadoParams, opciones: { enabled?: boolean } = {}) {
   return useQuery({
     queryKey: queryKeys.productosPaginado(params),
     queryFn: () => productosApi.listarPaginado(params),
     placeholderData: keepPreviousData,
+    enabled: opciones.enabled ?? true,
   });
 }
 

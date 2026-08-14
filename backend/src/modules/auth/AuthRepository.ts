@@ -30,4 +30,34 @@ export const authRepository = {
       },
     });
   },
+
+  // Secreto guardado pero totpHabilitado sigue en false hasta que
+  // verificar2fa confirme un codigo real -- asi un QR generado y nunca
+  // escaneado no deja la cuenta en un estado raro.
+  guardarSecretoTotpPendiente(usuarioId: string, secret: string) {
+    return prisma.usuario.update({ where: { id: usuarioId }, data: { totpSecret: secret } });
+  },
+
+  habilitarTotp(usuarioId: string) {
+    return prisma.usuario.update({ where: { id: usuarioId }, data: { totpHabilitado: true } });
+  },
+
+  desactivarTotp(usuarioId: string) {
+    return prisma.$transaction([
+      prisma.usuario.update({ where: { id: usuarioId }, data: { totpSecret: null, totpHabilitado: false } }),
+      prisma.codigoRecuperacion2FA.deleteMany({ where: { usuarioId } }),
+    ]);
+  },
+
+  crearCodigosRecuperacion(usuarioId: string, hashes: string[]) {
+    return prisma.codigoRecuperacion2FA.createMany({ data: hashes.map((codigoHash) => ({ usuarioId, codigoHash })) });
+  },
+
+  buscarCodigoRecuperacionNoUsado(usuarioId: string, codigoHash: string) {
+    return prisma.codigoRecuperacion2FA.findFirst({ where: { usuarioId, codigoHash, usado: false } });
+  },
+
+  marcarCodigoRecuperacionUsado(id: string) {
+    return prisma.codigoRecuperacion2FA.update({ where: { id }, data: { usado: true, usadoEn: new Date() } });
+  },
 };

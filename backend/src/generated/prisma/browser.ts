@@ -43,6 +43,11 @@ export type RolPermiso = Prisma.RolPermisoModel
  */
 export type RefreshToken = Prisma.RefreshTokenModel
 /**
+ * Model CodigoRecuperacion2FA
+ * 
+ */
+export type CodigoRecuperacion2FA = Prisma.CodigoRecuperacion2FAModel
+/**
  * Model Marca
  * 
  */
@@ -67,6 +72,11 @@ export type Almacen = Prisma.AlmacenModel
  * 
  */
 export type Producto = Prisma.ProductoModel
+/**
+ * Model Solicitud
+ * 
+ */
+export type Solicitud = Prisma.SolicitudModel
 /**
  * Model Stock
  * 
@@ -127,3 +137,8 @@ export type Notificacion = Prisma.NotificacionModel
  * 
  */
 export type AuditLog = Prisma.AuditLogModel
+/**
+ * Model ErrorLog
+ * 
+ */
+export type ErrorLog = Prisma.ErrorLogModel

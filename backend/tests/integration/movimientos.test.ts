@@ -243,4 +243,24 @@ describe("Modulo Movimientos", () => {
     expect(res.body.data).toHaveLength(1);
     expect(res.body.data[0].productoId).toBe(productoA.id);
   });
+
+  it("GET /api/movimientos?page=1 pagina 10 por pagina con metadatos", async () => {
+    const producto = await crearProducto(tokenAdmin, fixtures);
+    for (let i = 0; i < 12; i++) {
+      await request(app)
+        .post("/api/movimientos")
+        .set("Authorization", `Bearer ${tokenAdmin}`)
+        .send({ productoId: producto.id, almacenId: fixtures.almacenId, tipo: "ENTRADA", cantidad: 1 });
+    }
+
+    const sinPaginar = await request(app).get("/api/movimientos").set("Authorization", `Bearer ${tokenAdmin}`);
+    expect(sinPaginar.body.meta).toBeUndefined();
+
+    const pagina1 = await request(app).get("/api/movimientos?page=1").set("Authorization", `Bearer ${tokenAdmin}`);
+    expect(pagina1.body.data).toHaveLength(10);
+    expect(pagina1.body.meta).toMatchObject({ total: 12, page: 1, totalPaginas: 2 });
+
+    const pagina2 = await request(app).get("/api/movimientos?page=2").set("Authorization", `Bearer ${tokenAdmin}`);
+    expect(pagina2.body.data).toHaveLength(2);
+  });
 });

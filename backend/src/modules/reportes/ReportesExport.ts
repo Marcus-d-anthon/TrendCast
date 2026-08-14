@@ -75,13 +75,13 @@ export async function generarExcel(tabla: TablaExport): Promise<Buffer> {
   hoja.mergeCells("A1:B3");
   if (existsSync(LOGO_PATH)) {
     const imageId = workbook.addImage({ filename: LOGO_PATH, extension: "png" });
-    hoja.addImage(imageId, { tl: { col: 0, row: 0 }, ext: { width: 145, height: 40 } });
+    hoja.addImage(imageId, { tl: { col: 0.15, row: 0.15 }, ext: { width: 200, height: 55 } });
   }
   hoja.getCell(`C1`).value = tabla.titulo;
   hoja.getCell(`C1`).font = { bold: true, size: 14, color: { argb: `FF${MARCA.indigo900.slice(1)}` } };
   hoja.getCell(`C2`).value = `Generado el ${new Date().toLocaleString("es-EC")}`;
   hoja.getCell(`C2`).font = { size: 9, italic: true, color: { argb: `FF${MARCA.piedra.slice(1)}` } };
-  hoja.getRow(1).height = 20;
+  hoja.getRow(1).height = 34;
   hoja.getRow(3).height = 8;
 
   const filaEncabezado = 4;
@@ -121,6 +121,19 @@ export function generarPdf(tabla: TablaExport): Promise<Buffer> {
 
     const anchoDisponible = doc.page.width - doc.page.margins.left - doc.page.margins.right;
 
+    // Anchos proporcionales por columna (antes se dividia el ancho en partes
+    // iguales sin importar cuanto texto tenia cada columna, lo que apretaba
+    // "Producto"/"Categoria" y desperdiciaba espacio en columnas cortas como
+    // "SKU" o "Estado").
+    const sumaAnchos = tabla.columnas.reduce((suma, c) => suma + (c.ancho ?? 22), 0);
+    const anchosColumna = tabla.columnas.map((c) => ((c.ancho ?? 22) / sumaAnchos) * anchoDisponible);
+    const posicionesColumna = anchosColumna.reduce<number[]>((acc, ancho, i) => {
+      acc.push(i === 0 ? doc.page.margins.left : acc[i - 1] + anchosColumna[i - 1]);
+      return acc;
+    }, []);
+
+    const ALTURA_FILA_MINIMA = 16;
+
     function dibujarEncabezadoPagina() {
       if (existsSync(LOGO_PATH)) {
         doc.image(LOGO_PATH, doc.page.margins.left, doc.page.margins.top, { width: 108 });
@@ -142,54 +155,61 @@ export function generarPdf(tabla: TablaExport): Promise<Buffer> {
       return doc.page.margins.top + 54;
     }
 
-    const anchoColumna = anchoDisponible / tabla.columnas.length;
+    const FONT_SIZE = 9;
 
-    function dibujarFila(valores: string[], y: number, opciones: { negrita?: boolean; banda?: boolean } = {}) {
+    function alturaFila(valores: string[]): number {
+      doc.font("Helvetica").fontSize(FONT_SIZE);
+      const alturas = valores.map((valor, i) => doc.heightOfString(valor, { width: anchosColumna[i] - 6 }));
+      return Math.max(ALTURA_FILA_MINIMA, ...alturas.map((h) => h + 6));
+    }
+
+    function dibujarFila(valores: string[], y: number, altura: number, opciones: { negrita?: boolean; banda?: boolean } = {}) {
       if (opciones.banda) {
-        doc.rect(doc.page.margins.left, y - 3, anchoDisponible, 15).fill(MARCA.bandaAlterna);
+        doc.rect(doc.page.margins.left, y - 3, anchoDisponible, altura).fill(MARCA.bandaAlterna);
       }
-      doc.font(opciones.negrita ? "Helvetica-Bold" : "Helvetica").fontSize(8).fillColor(opciones.negrita ? "#FFFFFF" : MARCA.tinta);
+      doc.font(opciones.negrita ? "Helvetica-Bold" : "Helvetica").fontSize(FONT_SIZE).fillColor(opciones.negrita ? "#FFFFFF" : MARCA.tinta);
       valores.forEach((valor, i) => {
-        doc.text(valor, doc.page.margins.left + i * anchoColumna + 3, y, { width: anchoColumna - 6 });
+        doc.text(valor, posicionesColumna[i] + 4, y, { width: anchosColumna[i] - 8 });
       });
     }
 
     function dibujarEncabezadoTabla(y: number) {
-      doc.rect(doc.page.margins.left, y - 3, anchoDisponible, 16).fill(MARCA.indigo700);
-      dibujarFila(
-        tabla.columnas.map((c) => c.header),
-        y,
-        { negrita: true },
-      );
-      return y + 18;
+      const encabezados = tabla.columnas.map((c) => c.header);
+      const altura = alturaFila(encabezados);
+      doc.rect(doc.page.margins.left, y - 3, anchoDisponible, altura).fill(MARCA.indigo700);
+      dibujarFila(encabezados, y, altura, { negrita: true });
+      return y + altura + 4;
     }
 
     let y = dibujarEncabezadoPagina();
     y = dibujarEncabezadoTabla(y);
 
     tabla.filas.forEach((fila, indice) => {
-      if (y > doc.page.height - doc.page.margins.bottom - 24) {
+      const valores = tabla.columnas.map((c) => formatearCelda(fila[c.key]));
+      const altura = alturaFila(valores);
+
+      if (y + altura > doc.page.height - doc.page.margins.bottom) {
         doc.addPage({ margin: 40, size: "A4", layout: "landscape" });
         y = dibujarEncabezadoPagina();
         y = dibujarEncabezadoTabla(y);
       }
-      dibujarFila(
-        tabla.columnas.map((c) => formatearCelda(fila[c.key])),
-        y,
-        { banda: indice % 2 === 1 },
-      );
-      y += 15;
+      dibujarFila(valores, y, altura, { banda: indice % 2 === 1 });
+      y += altura + 3;
     });
 
     // Pie de pagina con numeracion, agregado al final sobre todas las
     // paginas ya renderizadas (bufferPages: true permite volver atras).
+    // IMPORTANTE: debe quedar DENTRO del margen inferior, nunca debajo -- un
+    // y por debajo de `page.height - margins.bottom` hace que pdfkit crea
+    // que el texto no cabe y agregue una pagina en blanco extra solo para el
+    // pie de pagina (el bug original que dejaba una hoja "huerfana" al final).
     const totalPaginas = doc.bufferedPageRange().count;
     for (let i = 0; i < totalPaginas; i++) {
       doc.switchToPage(i);
       doc
         .fontSize(7)
         .fillColor(MARCA.piedra)
-        .text(`TrendCast · Página ${i + 1} de ${totalPaginas}`, doc.page.margins.left, doc.page.height - doc.page.margins.bottom + 8, {
+        .text(`TrendCast · Página ${i + 1} de ${totalPaginas}`, doc.page.margins.left, doc.page.height - doc.page.margins.bottom - 12, {
           width: anchoDisponible,
           align: "center",
         });

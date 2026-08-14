@@ -1,0 +1,18 @@
+.titulo {
+  margin-bottom: var(--space-2);
+}
+
+.subtitulo {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-6);
+}
+
+.tituloSeccion {
+  font-size: var(--text-md);
+  margin-bottom: var(--space-4);
+}
+
+.sectionGap {
+  margin-bottom: var(--space-5);
+}

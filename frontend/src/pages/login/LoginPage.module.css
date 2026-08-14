@@ -33,31 +33,6 @@
   }
 }
 
-/* La ilustracion vive DEBAJO del texto (z-index 0 vs 1): antes flotaba por
-   encima y tapaba el mensaje. Ahora es un elemento de fondo discreto. */
-.illustrationLayer {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
-  pointer-events: none;
-}
-
-.illustration {
-  width: 60%;
-  max-width: 28rem;
-  margin: 0 -2% -4% 0;
-  opacity: 0.5;
-}
-
-@media (max-width: 900px) {
-  .illustrationLayer {
-    display: none;
-  }
-}
-
 .textLayer {
   position: relative;
   z-index: 1;
@@ -213,6 +188,22 @@
 .submit {
   margin-top: var(--space-2);
   width: 100%;
+}
+
+.backLink {
+  width: 100%;
+  margin-top: var(--space-2);
+  padding: var(--space-2);
+  text-align: center;
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  background: transparent;
+  border-radius: var(--radius-sm);
+}
+
+.backLink:hover {
+  color: var(--color-text);
+  background: var(--color-bg);
 }
 
 .error {

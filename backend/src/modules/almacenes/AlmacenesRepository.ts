@@ -1,19 +1,19 @@
 import { Prisma } from "../../generated/prisma/client";
-import { obtenerEmpresaId } from "../../lib/empresa";
+import { obtenerEmpresaActiva } from "../../lib/async-context";
 import { prisma } from "../../lib/prisma";
 import type { ActualizarAlmacenInput, CrearAlmacenInput } from "./AlmacenesValidators";
 
 export const almacenesRepository = {
   listar() {
-    return prisma.almacen.findMany({ where: { deletedAt: null }, orderBy: { nombre: "asc" } });
+    return prisma.almacen.findMany({ where: { deletedAt: null, empresaId: obtenerEmpresaActiva() }, orderBy: { nombre: "asc" } });
   },
 
   buscarPorId(id: string) {
-    return prisma.almacen.findFirst({ where: { id, deletedAt: null } });
+    return prisma.almacen.findFirst({ where: { id, deletedAt: null, empresaId: obtenerEmpresaActiva() } });
   },
 
   buscarPorNombre(nombre: string) {
-    return prisma.almacen.findFirst({ where: { nombre, deletedAt: null } });
+    return prisma.almacen.findFirst({ where: { nombre, deletedAt: null, empresaId: obtenerEmpresaActiva() } });
   },
 
   // Simetrico a ProductosRepository.crearConStock: un almacen nuevo debe
@@ -21,7 +21,7 @@ export const almacenesRepository = {
   // existente, para que ese almacen quede utilizable de inmediato en
   // movimientos/ventas/compras sin un paso manual adicional.
   async crearConStock(data: CrearAlmacenInput) {
-    const empresaId = await obtenerEmpresaId();
+    const empresaId = obtenerEmpresaActiva();
     return prisma.$transaction(async (tx) => {
       const almacen = await tx.almacen.create({ data: { ...data, empresaId } });
       const productos = await tx.producto.findMany({ where: { empresaId, activo: true, deletedAt: null } });
@@ -34,12 +34,14 @@ export const almacenesRepository = {
     });
   },
 
+  // empresaId en el where es defensa en profundidad -- ver el comentario
+  // equivalente en ProductosRepository.actualizar.
   actualizar(id: string, data: ActualizarAlmacenInput) {
-    return prisma.almacen.update({ where: { id }, data });
+    return prisma.almacen.update({ where: { id, empresaId: obtenerEmpresaActiva() }, data });
   },
 
   softDelete(id: string) {
-    return prisma.almacen.update({ where: { id }, data: { deletedAt: new Date() } });
+    return prisma.almacen.update({ where: { id, empresaId: obtenerEmpresaActiva() }, data: { deletedAt: new Date() } });
   },
 
   buscarStock(productoId: string, almacenId: string) {

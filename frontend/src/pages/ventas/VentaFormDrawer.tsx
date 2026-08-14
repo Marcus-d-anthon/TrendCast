@@ -157,17 +157,17 @@ export function VentaFormDrawer({ onClose }: VentaFormDrawerProps) {
                 onChange={(e) => actualizarLinea(index, { cantidad: e.target.value })}
                 aria-label={`Cantidad línea ${index + 1}`}
                 placeholder="Cant."
+                className={styles.cantidadInput}
                 required
               />
               <Input
-                type="number"
-                min={0}
-                step="0.01"
-                value={linea.precioUnitario}
-                onChange={(e) => actualizarLinea(index, { precioUnitario: e.target.value })}
-                aria-label={`Precio unitario línea ${index + 1}`}
+                type="text"
+                value={linea.precioUnitario ? formatCurrency(Number(linea.precioUnitario)) : ''}
+                aria-label={`Precio unitario línea ${index + 1} (según el producto, no editable)`}
                 placeholder="Precio"
-                required
+                readOnly
+                tabIndex={-1}
+                className={styles.precioInput}
               />
               <span className={styles.lineaSubtotal}>
                 {formatCurrency(Number(linea.cantidad || 0) * Number(linea.precioUnitario || 0))}

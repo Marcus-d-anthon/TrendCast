@@ -28,6 +28,10 @@
   border-color: var(--color-primary);
 }
 
+.control[aria-invalid='true'] {
+  border-color: var(--color-danger);
+}
+
 .control:disabled {
   opacity: 0.6;
   cursor: not-allowed;

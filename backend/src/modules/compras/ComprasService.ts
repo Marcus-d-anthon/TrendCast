@@ -2,7 +2,7 @@ import { ConflictError, NotFoundError } from "../../lib/errors";
 import { almacenesRepository } from "../almacenes/AlmacenesRepository";
 import { productosRepository } from "../productos/ProductosRepository";
 import { proveedoresRepository } from "../proveedores/ProveedoresRepository";
-import { comprasRepository, type DetalleCalculado } from "./ComprasRepository";
+import { comprasRepository, type DetalleCalculado, type ListarComprasParams } from "./ComprasRepository";
 import type { CrearCompraInput } from "./ComprasValidators";
 
 // Tasa de IVA vigente en Ecuador (misma constante conceptual usada en el
@@ -12,6 +12,14 @@ const IVA_ECUADOR = 0.15;
 export const comprasService = {
   listar() {
     return comprasRepository.listar();
+  },
+
+  async listarPaginado(params: ListarComprasParams) {
+    const { data, total } = await comprasRepository.listarPaginado(params);
+    return {
+      data,
+      meta: { total, page: params.page, pageSize: params.pageSize, totalPaginas: Math.max(1, Math.ceil(total / params.pageSize)) },
+    };
   },
 
   async obtener(id: string) {

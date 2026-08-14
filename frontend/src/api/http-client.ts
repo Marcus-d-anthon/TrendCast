@@ -1,3 +1,4 @@
+import { getEmpresaVista } from '../auth/empresa-vista';
 import { clearAuth, getToken } from '../auth/token-storage';
 
 const BASE_URL = (import.meta.env.VITE_API_BASE_URL as string | undefined) ?? '/api';
@@ -25,7 +26,7 @@ export function registerUnauthorizedHandler(handler: UnauthorizedHandler): void 
 export type QueryParams = Record<string, string | number | boolean | undefined>;
 
 interface RequestOptions {
-  method?: 'GET' | 'POST' | 'PUT' | 'DELETE';
+  method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
   body?: unknown;
   query?: QueryParams;
 }
@@ -47,6 +48,31 @@ interface ApiEnvelope<T> {
   error?: { message: string; details?: unknown };
 }
 
+// Cabeceras comunes a toda request autenticada: el token siempre, y
+// X-Empresa-Vista solo si hay una empresa elegida en el selector (el
+// backend la honra unicamente para SUPERUSUARIO, ver AuthMiddleware.ts --
+// para cualquier otro rol este header no tiene efecto alguno).
+function authHeaders(): Record<string, string> {
+  const token = getToken();
+  const empresaVista = getEmpresaVista();
+  return {
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    ...(empresaVista ? { 'X-Empresa-Vista': empresaVista } : {}),
+  };
+}
+
+// El aviso global "tu sesion expiro" solo tiene sentido cuando la request
+// rechazada llevaba un token (una sesion real que el servidor invalido a
+// mitad de camino). Un 401 en una request SIN token -- login con password
+// incorrecta, o el paso de codigo TOTP durante el login -- es un rechazo de
+// credenciales normal, no una sesion que expira; ese caso ya lo muestra el
+// propio formulario con su mensaje especifico (ver LoginPage.tsx), asi que
+// aqui NO debe dispararse el logout global ni el toast generico.
+function manejar401(huboToken: boolean): void {
+  clearAuth();
+  if (huboToken) onUnauthorized?.();
+}
+
 export interface PaginaMeta {
   total: number;
   page: number;
@@ -61,15 +87,14 @@ export interface RespuestaPaginada<T> {
 
 /** Descarga un archivo binario (export CSV/Excel/PDF) autenticado y dispara la descarga en el navegador. */
 export async function apiDownload(path: string, query: QueryParams | undefined, nombreSugerido: string): Promise<void> {
-  const token = getToken();
+  const huboToken = getToken() !== null;
   const res = await fetch(buildPath(path, query), {
-    headers: token ? { Authorization: `Bearer ${token}` } : {},
+    headers: authHeaders(),
   });
 
   if (!res.ok) {
     if (res.status === 401) {
-      clearAuth();
-      onUnauthorized?.();
+      manejar401(huboToken);
     }
     const json: ApiEnvelope<unknown> | null = await res.json().catch(() => null);
     throw new ApiError(json?.error?.message ?? `Error ${res.status}`, res.status, json?.error?.details);
@@ -92,19 +117,17 @@ export async function apiDownload(path: string, query: QueryParams | undefined, 
 
 /** Igual que apiRequest, pero conserva `meta` (paginacion) en vez de devolver solo `data`. */
 export async function apiRequestPaginado<T>(path: string, options: RequestOptions = {}): Promise<RespuestaPaginada<T>> {
-  const token = getToken();
-
+  const huboToken = getToken() !== null;
   const res = await fetch(buildPath(path, options.query), {
     method: options.method ?? 'GET',
-    headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
+    headers: { 'Content-Type': 'application/json', ...authHeaders() },
   });
 
   const json: (ApiEnvelope<T[]> & { meta?: PaginaMeta }) | null = await res.json().catch(() => null);
 
   if (!res.ok) {
     if (res.status === 401) {
-      clearAuth();
-      onUnauthorized?.();
+      manejar401(huboToken);
     }
     throw new ApiError(json?.error?.message ?? `Error ${res.status}`, res.status, json?.error?.details);
   }
@@ -113,13 +136,12 @@ export async function apiRequestPaginado<T>(path: string, options: RequestOption
 }
 
 export async function apiRequest<T>(path: string, options: RequestOptions = {}): Promise<T> {
-  const token = getToken();
-
+  const huboToken = getToken() !== null;
   const res = await fetch(buildPath(path, options.query), {
     method: options.method ?? 'GET',
     headers: {
       'Content-Type': 'application/json',
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      ...authHeaders(),
     },
     body: options.body !== undefined ? JSON.stringify(options.body) : undefined,
   });
@@ -132,8 +154,7 @@ export async function apiRequest<T>(path: string, options: RequestOptions = {}):
 
   if (!res.ok) {
     if (res.status === 401) {
-      clearAuth();
-      onUnauthorized?.();
+      manejar401(huboToken);
     }
     throw new ApiError(json?.error?.message ?? `Error ${res.status}`, res.status, json?.error?.details);
   }

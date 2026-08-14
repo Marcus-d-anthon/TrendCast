@@ -35,3 +35,22 @@ export function formatPeriodo(value: string, granularidad: Granularidad): string
   }
   return formatDate(date);
 }
+
+function fechaInput(date: Date): string {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+}
+
+/**
+ * Rango de fechas por defecto para filtros: hoy y 2 dias atras, en formato
+ * YYYY-MM-DD para inputs `<input type="date">` -- evita que un filtro sin
+ * acotar termine trayendo el historico completo desde el servidor.
+ */
+export function rangoFechasDefecto(): { desde: string; hasta: string } {
+  const hoy = new Date();
+  const dosDiasAtras = new Date(hoy);
+  dosDiasAtras.setDate(hoy.getDate() - 2);
+  return { desde: fechaInput(dosDiasAtras), hasta: fechaInput(hoy) };
+}

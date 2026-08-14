@@ -1,4 +1,3 @@
-import { ChevronsLeft, ChevronsRight } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../auth/useAuth';
 import { TrendCastMark } from '../brand/TrendCastMark';
@@ -9,17 +8,16 @@ interface SidebarProps {
   open: boolean;
   onClose: () => void;
   colapsado: boolean;
-  onToggleColapsado: () => void;
 }
 
-function SidebarNav({ onNavigate, colapsado, onToggleColapsado, mostrarToggle }: {
-  onNavigate: () => void;
-  colapsado: boolean;
-  onToggleColapsado: () => void;
-  mostrarToggle: boolean;
-}) {
+function SidebarNav({ onNavigate, colapsado }: { onNavigate: () => void; colapsado: boolean }) {
   const { usuario } = useAuth();
-  const visibleItems = navItems.filter((item) => !item.permiso || usuario?.permisos.includes(item.permiso));
+  const visibleItems = navItems.filter((item) => {
+    const tienePermiso = !item.permiso || Boolean(usuario?.permisos.includes(item.permiso));
+    const tieneRol = !item.rolesExtra || Boolean(usuario && item.rolesExtra.includes(usuario.rol));
+    const noOculto = !item.ocultarPara || !usuario || !item.ocultarPara.includes(usuario.rol);
+    return tienePermiso && tieneRol && noOculto;
+  });
 
   return (
     <>
@@ -43,21 +41,10 @@ function SidebarNav({ onNavigate, colapsado, onToggleColapsado, mostrarToggle }:
           >
             <item.icon size={colapsado ? 22 : 18} className={styles.navIcon} aria-hidden="true" />
             {!colapsado && item.label}
+            {!colapsado && item.badge && <span className={styles.navBadge}>{item.badge}</span>}
           </NavLink>
         ))}
       </nav>
-
-      {mostrarToggle && (
-        <button
-          type="button"
-          className={styles.collapseToggle}
-          onClick={onToggleColapsado}
-          aria-label={colapsado ? 'Expandir menú lateral' : 'Colapsar menú lateral'}
-        >
-          {colapsado ? <ChevronsRight size={18} aria-hidden="true" /> : <ChevronsLeft size={18} aria-hidden="true" />}
-          {!colapsado && <span>Colapsar</span>}
-        </button>
-      )}
     </>
   );
 }
@@ -68,19 +55,20 @@ function SidebarNav({ onNavigate, colapsado, onToggleColapsado, mostrarToggle }:
 // para que el estado abierto/cerrado no dependa de ninguna cascada de
 // especificidad. El colapso a solo-iconos es exclusivo de escritorio: en
 // movil la sidebar ya se oculta por completo entre navegaciones, asi que un
-// segundo modo "angosto" no aporta nada ahi.
-export function Sidebar({ open, onClose, colapsado, onToggleColapsado }: SidebarProps) {
+// segundo modo "angosto" no aporta nada ahi. El boton que dispara el colapso
+// vive en el Topbar (junto al nombre de la vista), no aqui.
+export function Sidebar({ open, onClose, colapsado }: SidebarProps) {
   return (
     <>
       <aside className={[styles.sidebarDesktop, colapsado ? styles.colapsado : ''].filter(Boolean).join(' ')}>
-        <SidebarNav onNavigate={onClose} colapsado={colapsado} onToggleColapsado={onToggleColapsado} mostrarToggle />
+        <SidebarNav onNavigate={onClose} colapsado={colapsado} />
       </aside>
 
       {open && (
         <>
           <div className={styles.backdrop} onClick={onClose} aria-hidden="true" />
           <aside className={styles.sidebarMobile}>
-            <SidebarNav onNavigate={onClose} colapsado={false} onToggleColapsado={onToggleColapsado} mostrarToggle={false} />
+            <SidebarNav onNavigate={onClose} colapsado={false} />
           </aside>
         </>
       )}

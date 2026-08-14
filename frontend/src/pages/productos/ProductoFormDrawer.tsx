@@ -33,7 +33,6 @@ export function ProductoFormDrawer({ producto, onClose }: ProductoFormDrawerProp
   const [precioCompra, setPrecioCompra] = useState(String(producto?.precioCompra ?? ''));
   const [precioVenta, setPrecioVenta] = useState(String(producto?.precioVenta ?? ''));
   const [stockMinimo, setStockMinimo] = useState(String(producto?.stockMinimo ?? 0));
-  const [requiereLote, setRequiereLote] = useState(producto?.requiereLote ?? false);
   const [activo, setActivo] = useState(producto?.activo ?? true);
   const [error, setError] = useState<string | null>(null);
 
@@ -60,7 +59,6 @@ export function ProductoFormDrawer({ producto, onClose }: ProductoFormDrawerProp
           precioCompra: compra,
           precioVenta: venta,
           stockMinimo: minimo,
-          requiereLote,
           activo,
         });
         toast.success('Producto actualizado');
@@ -75,7 +73,6 @@ export function ProductoFormDrawer({ producto, onClose }: ProductoFormDrawerProp
           precioCompra: compra,
           precioVenta: venta,
           stockMinimo: minimo,
-          requiereLote,
         });
         toast.success('Producto creado');
       }
@@ -189,19 +186,6 @@ export function ProductoFormDrawer({ producto, onClose }: ProductoFormDrawerProp
             onChange={(e) => setStockMinimo(e.target.value)}
             required
           />
-        </FormField>
-
-        <FormField label="Requiere lote" htmlFor="prod-requiere-lote" hint="Activa el control de lotes y fecha de vencimiento">
-          <label style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
-            <input
-              id="prod-requiere-lote"
-              type="checkbox"
-              checked={requiereLote}
-              onChange={(e) => setRequiereLote(e.target.checked)}
-              style={{ accentColor: 'var(--color-primary)' }}
-            />
-            Este producto se controla por lote
-          </label>
         </FormField>
 
         {esEdicion && (

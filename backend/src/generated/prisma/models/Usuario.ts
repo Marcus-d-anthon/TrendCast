@@ -31,7 +31,10 @@ export type UsuarioMinAggregateOutputType = {
   nombre: string | null
   rol: $Enums.RolUsuario | null
   activo: boolean | null
+  totpSecret: string | null
+  totpHabilitado: boolean | null
   empresaId: string | null
+  almacenId: string | null
   createdAt: Date | null
   updatedAt: Date | null
   createdBy: string | null
@@ -46,7 +49,10 @@ export type UsuarioMaxAggregateOutputType = {
   nombre: string | null
   rol: $Enums.RolUsuario | null
   activo: boolean | null
+  totpSecret: string | null
+  totpHabilitado: boolean | null
   empresaId: string | null
+  almacenId: string | null
   createdAt: Date | null
   updatedAt: Date | null
   createdBy: string | null
@@ -61,7 +67,10 @@ export type UsuarioCountAggregateOutputType = {
   nombre: number
   rol: number
   activo: number
+  totpSecret: number
+  totpHabilitado: number
   empresaId: number
+  almacenId: number
   createdAt: number
   updatedAt: number
   createdBy: number
@@ -78,7 +87,10 @@ export type UsuarioMinAggregateInputType = {
   nombre?: true
   rol?: true
   activo?: true
+  totpSecret?: true
+  totpHabilitado?: true
   empresaId?: true
+  almacenId?: true
   createdAt?: true
   updatedAt?: true
   createdBy?: true
@@ -93,7 +105,10 @@ export type UsuarioMaxAggregateInputType = {
   nombre?: true
   rol?: true
   activo?: true
+  totpSecret?: true
+  totpHabilitado?: true
   empresaId?: true
+  almacenId?: true
   createdAt?: true
   updatedAt?: true
   createdBy?: true
@@ -108,7 +123,10 @@ export type UsuarioCountAggregateInputType = {
   nombre?: true
   rol?: true
   activo?: true
+  totpSecret?: true
+  totpHabilitado?: true
   empresaId?: true
+  almacenId?: true
   createdAt?: true
   updatedAt?: true
   createdBy?: true
@@ -196,7 +214,10 @@ export type UsuarioGroupByOutputType = {
   nombre: string
   rol: $Enums.RolUsuario
   activo: boolean
+  totpSecret: string | null
+  totpHabilitado: boolean
   empresaId: string
+  almacenId: string | null
   createdAt: Date
   updatedAt: Date
   createdBy: string | null
@@ -232,18 +253,26 @@ export type UsuarioWhereInput = {
   nombre?: Prisma.StringFilter<"Usuario"> | string
   rol?: Prisma.EnumRolUsuarioFilter<"Usuario"> | $Enums.RolUsuario
   activo?: Prisma.BoolFilter<"Usuario"> | boolean
+  totpSecret?: Prisma.StringNullableFilter<"Usuario"> | string | null
+  totpHabilitado?: Prisma.BoolFilter<"Usuario"> | boolean
   empresaId?: Prisma.StringFilter<"Usuario"> | string
+  almacenId?: Prisma.StringNullableFilter<"Usuario"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Usuario"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Usuario"> | Date | string
   createdBy?: Prisma.StringNullableFilter<"Usuario"> | string | null
   updatedBy?: Prisma.StringNullableFilter<"Usuario"> | string | null
   deletedAt?: Prisma.DateTimeNullableFilter<"Usuario"> | Date | string | null
   empresa?: Prisma.XOR<Prisma.EmpresaScalarRelationFilter, Prisma.EmpresaWhereInput>
+  almacen?: Prisma.XOR<Prisma.AlmacenNullableScalarRelationFilter, Prisma.AlmacenWhereInput> | null
   movimientosRegistrados?: Prisma.MovimientoInventarioListRelationFilter
   refreshTokens?: Prisma.RefreshTokenListRelationFilter
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FAListRelationFilter
   notificaciones?: Prisma.NotificacionListRelationFilter
   comprasRegistradas?: Prisma.CompraListRelationFilter
   ventasRegistradas?: Prisma.VentaListRelationFilter
+  solicitudesCreadas?: Prisma.SolicitudListRelationFilter
+  solicitudesAprobadas?: Prisma.SolicitudListRelationFilter
+  solicitudesEfectuadas?: Prisma.SolicitudListRelationFilter
 }
 
 export type UsuarioOrderByWithRelationInput = {
@@ -253,18 +282,26 @@ export type UsuarioOrderByWithRelationInput = {
   nombre?: Prisma.SortOrder
   rol?: Prisma.SortOrder
   activo?: Prisma.SortOrder
+  totpSecret?: Prisma.SortOrderInput | Prisma.SortOrder
+  totpHabilitado?: Prisma.SortOrder
   empresaId?: Prisma.SortOrder
+  almacenId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrderInput | Prisma.SortOrder
   updatedBy?: Prisma.SortOrderInput | Prisma.SortOrder
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   empresa?: Prisma.EmpresaOrderByWithRelationInput
+  almacen?: Prisma.AlmacenOrderByWithRelationInput
   movimientosRegistrados?: Prisma.MovimientoInventarioOrderByRelationAggregateInput
   refreshTokens?: Prisma.RefreshTokenOrderByRelationAggregateInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FAOrderByRelationAggregateInput
   notificaciones?: Prisma.NotificacionOrderByRelationAggregateInput
   comprasRegistradas?: Prisma.CompraOrderByRelationAggregateInput
   ventasRegistradas?: Prisma.VentaOrderByRelationAggregateInput
+  solicitudesCreadas?: Prisma.SolicitudOrderByRelationAggregateInput
+  solicitudesAprobadas?: Prisma.SolicitudOrderByRelationAggregateInput
+  solicitudesEfectuadas?: Prisma.SolicitudOrderByRelationAggregateInput
 }
 
 export type UsuarioWhereUniqueInput = Prisma.AtLeast<{
@@ -277,18 +314,26 @@ export type UsuarioWhereUniqueInput = Prisma.AtLeast<{
   nombre?: Prisma.StringFilter<"Usuario"> | string
   rol?: Prisma.EnumRolUsuarioFilter<"Usuario"> | $Enums.RolUsuario
   activo?: Prisma.BoolFilter<"Usuario"> | boolean
+  totpSecret?: Prisma.StringNullableFilter<"Usuario"> | string | null
+  totpHabilitado?: Prisma.BoolFilter<"Usuario"> | boolean
   empresaId?: Prisma.StringFilter<"Usuario"> | string
+  almacenId?: Prisma.StringNullableFilter<"Usuario"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Usuario"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Usuario"> | Date | string
   createdBy?: Prisma.StringNullableFilter<"Usuario"> | string | null
   updatedBy?: Prisma.StringNullableFilter<"Usuario"> | string | null
   deletedAt?: Prisma.DateTimeNullableFilter<"Usuario"> | Date | string | null
   empresa?: Prisma.XOR<Prisma.EmpresaScalarRelationFilter, Prisma.EmpresaWhereInput>
+  almacen?: Prisma.XOR<Prisma.AlmacenNullableScalarRelationFilter, Prisma.AlmacenWhereInput> | null
   movimientosRegistrados?: Prisma.MovimientoInventarioListRelationFilter
   refreshTokens?: Prisma.RefreshTokenListRelationFilter
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FAListRelationFilter
   notificaciones?: Prisma.NotificacionListRelationFilter
   comprasRegistradas?: Prisma.CompraListRelationFilter
   ventasRegistradas?: Prisma.VentaListRelationFilter
+  solicitudesCreadas?: Prisma.SolicitudListRelationFilter
+  solicitudesAprobadas?: Prisma.SolicitudListRelationFilter
+  solicitudesEfectuadas?: Prisma.SolicitudListRelationFilter
 }, "id" | "email">
 
 export type UsuarioOrderByWithAggregationInput = {
@@ -298,7 +343,10 @@ export type UsuarioOrderByWithAggregationInput = {
   nombre?: Prisma.SortOrder
   rol?: Prisma.SortOrder
   activo?: Prisma.SortOrder
+  totpSecret?: Prisma.SortOrderInput | Prisma.SortOrder
+  totpHabilitado?: Prisma.SortOrder
   empresaId?: Prisma.SortOrder
+  almacenId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -319,7 +367,10 @@ export type UsuarioScalarWhereWithAggregatesInput = {
   nombre?: Prisma.StringWithAggregatesFilter<"Usuario"> | string
   rol?: Prisma.EnumRolUsuarioWithAggregatesFilter<"Usuario"> | $Enums.RolUsuario
   activo?: Prisma.BoolWithAggregatesFilter<"Usuario"> | boolean
+  totpSecret?: Prisma.StringNullableWithAggregatesFilter<"Usuario"> | string | null
+  totpHabilitado?: Prisma.BoolWithAggregatesFilter<"Usuario"> | boolean
   empresaId?: Prisma.StringWithAggregatesFilter<"Usuario"> | string
+  almacenId?: Prisma.StringNullableWithAggregatesFilter<"Usuario"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Usuario"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Usuario"> | Date | string
   createdBy?: Prisma.StringNullableWithAggregatesFilter<"Usuario"> | string | null
@@ -334,17 +385,24 @@ export type UsuarioCreateInput = {
   nombre: string
   rol?: $Enums.RolUsuario
   activo?: boolean
+  totpSecret?: string | null
+  totpHabilitado?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   createdBy?: string | null
   updatedBy?: string | null
   deletedAt?: Date | string | null
   empresa: Prisma.EmpresaCreateNestedOneWithoutUsuariosInput
+  almacen?: Prisma.AlmacenCreateNestedOneWithoutUsuariosInput
   movimientosRegistrados?: Prisma.MovimientoInventarioCreateNestedManyWithoutUsuarioInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUsuarioInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FACreateNestedManyWithoutUsuarioInput
   notificaciones?: Prisma.NotificacionCreateNestedManyWithoutUsuarioInput
   comprasRegistradas?: Prisma.CompraCreateNestedManyWithoutUsuarioInput
   ventasRegistradas?: Prisma.VentaCreateNestedManyWithoutUsuarioInput
+  solicitudesCreadas?: Prisma.SolicitudCreateNestedManyWithoutSolicitanteInput
+  solicitudesAprobadas?: Prisma.SolicitudCreateNestedManyWithoutAprobadorInput
+  solicitudesEfectuadas?: Prisma.SolicitudCreateNestedManyWithoutEfectuadorInput
 }
 
 export type UsuarioUncheckedCreateInput = {
@@ -354,7 +412,10 @@ export type UsuarioUncheckedCreateInput = {
   nombre: string
   rol?: $Enums.RolUsuario
   activo?: boolean
+  totpSecret?: string | null
+  totpHabilitado?: boolean
   empresaId: string
+  almacenId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdBy?: string | null
@@ -362,9 +423,13 @@ export type UsuarioUncheckedCreateInput = {
   deletedAt?: Date | string | null
   movimientosRegistrados?: Prisma.MovimientoInventarioUncheckedCreateNestedManyWithoutUsuarioInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUsuarioInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FAUncheckedCreateNestedManyWithoutUsuarioInput
   notificaciones?: Prisma.NotificacionUncheckedCreateNestedManyWithoutUsuarioInput
   comprasRegistradas?: Prisma.CompraUncheckedCreateNestedManyWithoutUsuarioInput
   ventasRegistradas?: Prisma.VentaUncheckedCreateNestedManyWithoutUsuarioInput
+  solicitudesCreadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutSolicitanteInput
+  solicitudesAprobadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutAprobadorInput
+  solicitudesEfectuadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutEfectuadorInput
 }
 
 export type UsuarioUpdateInput = {
@@ -374,17 +439,24 @@ export type UsuarioUpdateInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   rol?: Prisma.EnumRolUsuarioFieldUpdateOperationsInput | $Enums.RolUsuario
   activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  totpSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpHabilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   empresa?: Prisma.EmpresaUpdateOneRequiredWithoutUsuariosNestedInput
+  almacen?: Prisma.AlmacenUpdateOneWithoutUsuariosNestedInput
   movimientosRegistrados?: Prisma.MovimientoInventarioUpdateManyWithoutUsuarioNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUsuarioNestedInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FAUpdateManyWithoutUsuarioNestedInput
   notificaciones?: Prisma.NotificacionUpdateManyWithoutUsuarioNestedInput
   comprasRegistradas?: Prisma.CompraUpdateManyWithoutUsuarioNestedInput
   ventasRegistradas?: Prisma.VentaUpdateManyWithoutUsuarioNestedInput
+  solicitudesCreadas?: Prisma.SolicitudUpdateManyWithoutSolicitanteNestedInput
+  solicitudesAprobadas?: Prisma.SolicitudUpdateManyWithoutAprobadorNestedInput
+  solicitudesEfectuadas?: Prisma.SolicitudUpdateManyWithoutEfectuadorNestedInput
 }
 
 export type UsuarioUncheckedUpdateInput = {
@@ -394,7 +466,10 @@ export type UsuarioUncheckedUpdateInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   rol?: Prisma.EnumRolUsuarioFieldUpdateOperationsInput | $Enums.RolUsuario
   activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  totpSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpHabilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   empresaId?: Prisma.StringFieldUpdateOperationsInput | string
+  almacenId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -402,9 +477,13 @@ export type UsuarioUncheckedUpdateInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   movimientosRegistrados?: Prisma.MovimientoInventarioUncheckedUpdateManyWithoutUsuarioNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUsuarioNestedInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FAUncheckedUpdateManyWithoutUsuarioNestedInput
   notificaciones?: Prisma.NotificacionUncheckedUpdateManyWithoutUsuarioNestedInput
   comprasRegistradas?: Prisma.CompraUncheckedUpdateManyWithoutUsuarioNestedInput
   ventasRegistradas?: Prisma.VentaUncheckedUpdateManyWithoutUsuarioNestedInput
+  solicitudesCreadas?: Prisma.SolicitudUncheckedUpdateManyWithoutSolicitanteNestedInput
+  solicitudesAprobadas?: Prisma.SolicitudUncheckedUpdateManyWithoutAprobadorNestedInput
+  solicitudesEfectuadas?: Prisma.SolicitudUncheckedUpdateManyWithoutEfectuadorNestedInput
 }
 
 export type UsuarioCreateManyInput = {
@@ -414,7 +493,10 @@ export type UsuarioCreateManyInput = {
   nombre: string
   rol?: $Enums.RolUsuario
   activo?: boolean
+  totpSecret?: string | null
+  totpHabilitado?: boolean
   empresaId: string
+  almacenId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdBy?: string | null
@@ -429,6 +511,8 @@ export type UsuarioUpdateManyMutationInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   rol?: Prisma.EnumRolUsuarioFieldUpdateOperationsInput | $Enums.RolUsuario
   activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  totpSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpHabilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -443,7 +527,10 @@ export type UsuarioUncheckedUpdateManyInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   rol?: Prisma.EnumRolUsuarioFieldUpdateOperationsInput | $Enums.RolUsuario
   activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  totpSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpHabilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   empresaId?: Prisma.StringFieldUpdateOperationsInput | string
+  almacenId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -468,7 +555,10 @@ export type UsuarioCountOrderByAggregateInput = {
   nombre?: Prisma.SortOrder
   rol?: Prisma.SortOrder
   activo?: Prisma.SortOrder
+  totpSecret?: Prisma.SortOrder
+  totpHabilitado?: Prisma.SortOrder
   empresaId?: Prisma.SortOrder
+  almacenId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -483,7 +573,10 @@ export type UsuarioMaxOrderByAggregateInput = {
   nombre?: Prisma.SortOrder
   rol?: Prisma.SortOrder
   activo?: Prisma.SortOrder
+  totpSecret?: Prisma.SortOrder
+  totpHabilitado?: Prisma.SortOrder
   empresaId?: Prisma.SortOrder
+  almacenId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -498,7 +591,10 @@ export type UsuarioMinOrderByAggregateInput = {
   nombre?: Prisma.SortOrder
   rol?: Prisma.SortOrder
   activo?: Prisma.SortOrder
+  totpSecret?: Prisma.SortOrder
+  totpHabilitado?: Prisma.SortOrder
   empresaId?: Prisma.SortOrder
+  almacenId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   createdBy?: Prisma.SortOrder
@@ -509,6 +605,11 @@ export type UsuarioMinOrderByAggregateInput = {
 export type UsuarioScalarRelationFilter = {
   is?: Prisma.UsuarioWhereInput
   isNot?: Prisma.UsuarioWhereInput
+}
+
+export type UsuarioNullableScalarRelationFilter = {
+  is?: Prisma.UsuarioWhereInput | null
+  isNot?: Prisma.UsuarioWhereInput | null
 }
 
 export type UsuarioCreateNestedManyWithoutEmpresaInput = {
@@ -575,6 +676,108 @@ export type UsuarioUpdateOneRequiredWithoutRefreshTokensNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UsuarioUpdateToOneWithWhereWithoutRefreshTokensInput, Prisma.UsuarioUpdateWithoutRefreshTokensInput>, Prisma.UsuarioUncheckedUpdateWithoutRefreshTokensInput>
 }
 
+export type UsuarioCreateNestedOneWithoutCodigosRecuperacion2faInput = {
+  create?: Prisma.XOR<Prisma.UsuarioCreateWithoutCodigosRecuperacion2faInput, Prisma.UsuarioUncheckedCreateWithoutCodigosRecuperacion2faInput>
+  connectOrCreate?: Prisma.UsuarioCreateOrConnectWithoutCodigosRecuperacion2faInput
+  connect?: Prisma.UsuarioWhereUniqueInput
+}
+
+export type UsuarioUpdateOneRequiredWithoutCodigosRecuperacion2faNestedInput = {
+  create?: Prisma.XOR<Prisma.UsuarioCreateWithoutCodigosRecuperacion2faInput, Prisma.UsuarioUncheckedCreateWithoutCodigosRecuperacion2faInput>
+  connectOrCreate?: Prisma.UsuarioCreateOrConnectWithoutCodigosRecuperacion2faInput
+  upsert?: Prisma.UsuarioUpsertWithoutCodigosRecuperacion2faInput
+  connect?: Prisma.UsuarioWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UsuarioUpdateToOneWithWhereWithoutCodigosRecuperacion2faInput, Prisma.UsuarioUpdateWithoutCodigosRecuperacion2faInput>, Prisma.UsuarioUncheckedUpdateWithoutCodigosRecuperacion2faInput>
+}
+
+export type UsuarioCreateNestedManyWithoutAlmacenInput = {
+  create?: Prisma.XOR<Prisma.UsuarioCreateWithoutAlmacenInput, Prisma.UsuarioUncheckedCreateWithoutAlmacenInput> | Prisma.UsuarioCreateWithoutAlmacenInput[] | Prisma.UsuarioUncheckedCreateWithoutAlmacenInput[]
+  connectOrCreate?: Prisma.UsuarioCreateOrConnectWithoutAlmacenInput | Prisma.UsuarioCreateOrConnectWithoutAlmacenInput[]
+  createMany?: Prisma.UsuarioCreateManyAlmacenInputEnvelope
+  connect?: Prisma.UsuarioWhereUniqueInput | Prisma.UsuarioWhereUniqueInput[]
+}
+
+export type UsuarioUncheckedCreateNestedManyWithoutAlmacenInput = {
+  create?: Prisma.XOR<Prisma.UsuarioCreateWithoutAlmacenInput, Prisma.UsuarioUncheckedCreateWithoutAlmacenInput> | Prisma.UsuarioCreateWithoutAlmacenInput[] | Prisma.UsuarioUncheckedCreateWithoutAlmacenInput[]
+  connectOrCreate?: Prisma.UsuarioCreateOrConnectWithoutAlmacenInput | Prisma.UsuarioCreateOrConnectWithoutAlmacenInput[]
+  createMany?: Prisma.UsuarioCreateManyAlmacenInputEnvelope
+  connect?: Prisma.UsuarioWhereUniqueInput | Prisma.UsuarioWhereUniqueInput[]
+}
+
+export type UsuarioUpdateManyWithoutAlmacenNestedInput = {
+  create?: Prisma.XOR<Prisma.UsuarioCreateWithoutAlmacenInput, Prisma.UsuarioUncheckedCreateWithoutAlmacenInput> | Prisma.UsuarioCreateWithoutAlmacenInput[] | Prisma.UsuarioUncheckedCreateWithoutAlmacenInput[]
+  connectOrCreate?: Prisma.UsuarioCreateOrConnectWithoutAlmacenInput | Prisma.UsuarioCreateOrConnectWithoutAlmacenInput[]
+  upsert?: Prisma.UsuarioUpsertWithWhereUniqueWithoutAlmacenInput | Prisma.UsuarioUpsertWithWhereUniqueWithoutAlmacenInput[]
+  createMany?: Prisma.UsuarioCreateManyAlmacenInputEnvelope
+  set?: Prisma.UsuarioWhereUniqueInput | Prisma.UsuarioWhereUniqueInput[]
+  disconnect?: Prisma.UsuarioWhereUniqueInput | Prisma.UsuarioWhereUniqueInput[]
+  delete?: Prisma.UsuarioWhereUniqueInput | Prisma.UsuarioWhereUniqueInput[]
+  connect?: Prisma.UsuarioWhereUniqueInput | Prisma.UsuarioWhereUniqueInput[]
+  update?: Prisma.UsuarioUpdateWithWhereUniqueWithoutAlmacenInput | Prisma.UsuarioUpdateWithWhereUniqueWithoutAlmacenInput[]
+  updateMany?: Prisma.UsuarioUpdateManyWithWhereWithoutAlmacenInput | Prisma.UsuarioUpdateManyWithWhereWithoutAlmacenInput[]
+  deleteMany?: Prisma.UsuarioScalarWhereInput | Prisma.UsuarioScalarWhereInput[]
+}
+
+export type UsuarioUncheckedUpdateManyWithoutAlmacenNestedInput = {
+  create?: Prisma.XOR<Prisma.UsuarioCreateWithoutAlmacenInput, Prisma.UsuarioUncheckedCreateWithoutAlmacenInput> | Prisma.UsuarioCreateWithoutAlmacenInput[] | Prisma.UsuarioUncheckedCreateWithoutAlmacenInput[]
+  connectOrCreate?: Prisma.UsuarioCreateOrConnectWithoutAlmacenInput | Prisma.UsuarioCreateOrConnectWithoutAlmacenInput[]
+  upsert?: Prisma.UsuarioUpsertWithWhereUniqueWithoutAlmacenInput | Prisma.UsuarioUpsertWithWhereUniqueWithoutAlmacenInput[]
+  createMany?: Prisma.UsuarioCreateManyAlmacenInputEnvelope
+  set?: Prisma.UsuarioWhereUniqueInput | Prisma.UsuarioWhereUniqueInput[]
+  disconnect?: Prisma.UsuarioWhereUniqueInput | Prisma.UsuarioWhereUniqueInput[]
+  delete?: Prisma.UsuarioWhereUniqueInput | Prisma.UsuarioWhereUniqueInput[]
+  connect?: Prisma.UsuarioWhereUniqueInput | Prisma.UsuarioWhereUniqueInput[]
+  update?: Prisma.UsuarioUpdateWithWhereUniqueWithoutAlmacenInput | Prisma.UsuarioUpdateWithWhereUniqueWithoutAlmacenInput[]
+  updateMany?: Prisma.UsuarioUpdateManyWithWhereWithoutAlmacenInput | Prisma.UsuarioUpdateManyWithWhereWithoutAlmacenInput[]
+  deleteMany?: Prisma.UsuarioScalarWhereInput | Prisma.UsuarioScalarWhereInput[]
+}
+
+export type UsuarioCreateNestedOneWithoutSolicitudesCreadasInput = {
+  create?: Prisma.XOR<Prisma.UsuarioCreateWithoutSolicitudesCreadasInput, Prisma.UsuarioUncheckedCreateWithoutSolicitudesCreadasInput>
+  connectOrCreate?: Prisma.UsuarioCreateOrConnectWithoutSolicitudesCreadasInput
+  connect?: Prisma.UsuarioWhereUniqueInput
+}
+
+export type UsuarioCreateNestedOneWithoutSolicitudesAprobadasInput = {
+  create?: Prisma.XOR<Prisma.UsuarioCreateWithoutSolicitudesAprobadasInput, Prisma.UsuarioUncheckedCreateWithoutSolicitudesAprobadasInput>
+  connectOrCreate?: Prisma.UsuarioCreateOrConnectWithoutSolicitudesAprobadasInput
+  connect?: Prisma.UsuarioWhereUniqueInput
+}
+
+export type UsuarioCreateNestedOneWithoutSolicitudesEfectuadasInput = {
+  create?: Prisma.XOR<Prisma.UsuarioCreateWithoutSolicitudesEfectuadasInput, Prisma.UsuarioUncheckedCreateWithoutSolicitudesEfectuadasInput>
+  connectOrCreate?: Prisma.UsuarioCreateOrConnectWithoutSolicitudesEfectuadasInput
+  connect?: Prisma.UsuarioWhereUniqueInput
+}
+
+export type UsuarioUpdateOneRequiredWithoutSolicitudesCreadasNestedInput = {
+  create?: Prisma.XOR<Prisma.UsuarioCreateWithoutSolicitudesCreadasInput, Prisma.UsuarioUncheckedCreateWithoutSolicitudesCreadasInput>
+  connectOrCreate?: Prisma.UsuarioCreateOrConnectWithoutSolicitudesCreadasInput
+  upsert?: Prisma.UsuarioUpsertWithoutSolicitudesCreadasInput
+  connect?: Prisma.UsuarioWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UsuarioUpdateToOneWithWhereWithoutSolicitudesCreadasInput, Prisma.UsuarioUpdateWithoutSolicitudesCreadasInput>, Prisma.UsuarioUncheckedUpdateWithoutSolicitudesCreadasInput>
+}
+
+export type UsuarioUpdateOneWithoutSolicitudesAprobadasNestedInput = {
+  create?: Prisma.XOR<Prisma.UsuarioCreateWithoutSolicitudesAprobadasInput, Prisma.UsuarioUncheckedCreateWithoutSolicitudesAprobadasInput>
+  connectOrCreate?: Prisma.UsuarioCreateOrConnectWithoutSolicitudesAprobadasInput
+  upsert?: Prisma.UsuarioUpsertWithoutSolicitudesAprobadasInput
+  disconnect?: Prisma.UsuarioWhereInput | boolean
+  delete?: Prisma.UsuarioWhereInput | boolean
+  connect?: Prisma.UsuarioWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UsuarioUpdateToOneWithWhereWithoutSolicitudesAprobadasInput, Prisma.UsuarioUpdateWithoutSolicitudesAprobadasInput>, Prisma.UsuarioUncheckedUpdateWithoutSolicitudesAprobadasInput>
+}
+
+export type UsuarioUpdateOneWithoutSolicitudesEfectuadasNestedInput = {
+  create?: Prisma.XOR<Prisma.UsuarioCreateWithoutSolicitudesEfectuadasInput, Prisma.UsuarioUncheckedCreateWithoutSolicitudesEfectuadasInput>
+  connectOrCreate?: Prisma.UsuarioCreateOrConnectWithoutSolicitudesEfectuadasInput
+  upsert?: Prisma.UsuarioUpsertWithoutSolicitudesEfectuadasInput
+  disconnect?: Prisma.UsuarioWhereInput | boolean
+  delete?: Prisma.UsuarioWhereInput | boolean
+  connect?: Prisma.UsuarioWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UsuarioUpdateToOneWithWhereWithoutSolicitudesEfectuadasInput, Prisma.UsuarioUpdateWithoutSolicitudesEfectuadasInput>, Prisma.UsuarioUncheckedUpdateWithoutSolicitudesEfectuadasInput>
+}
+
 export type UsuarioCreateNestedOneWithoutComprasRegistradasInput = {
   create?: Prisma.XOR<Prisma.UsuarioCreateWithoutComprasRegistradasInput, Prisma.UsuarioUncheckedCreateWithoutComprasRegistradasInput>
   connectOrCreate?: Prisma.UsuarioCreateOrConnectWithoutComprasRegistradasInput
@@ -638,16 +841,23 @@ export type UsuarioCreateWithoutEmpresaInput = {
   nombre: string
   rol?: $Enums.RolUsuario
   activo?: boolean
+  totpSecret?: string | null
+  totpHabilitado?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   createdBy?: string | null
   updatedBy?: string | null
   deletedAt?: Date | string | null
+  almacen?: Prisma.AlmacenCreateNestedOneWithoutUsuariosInput
   movimientosRegistrados?: Prisma.MovimientoInventarioCreateNestedManyWithoutUsuarioInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUsuarioInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FACreateNestedManyWithoutUsuarioInput
   notificaciones?: Prisma.NotificacionCreateNestedManyWithoutUsuarioInput
   comprasRegistradas?: Prisma.CompraCreateNestedManyWithoutUsuarioInput
   ventasRegistradas?: Prisma.VentaCreateNestedManyWithoutUsuarioInput
+  solicitudesCreadas?: Prisma.SolicitudCreateNestedManyWithoutSolicitanteInput
+  solicitudesAprobadas?: Prisma.SolicitudCreateNestedManyWithoutAprobadorInput
+  solicitudesEfectuadas?: Prisma.SolicitudCreateNestedManyWithoutEfectuadorInput
 }
 
 export type UsuarioUncheckedCreateWithoutEmpresaInput = {
@@ -657,6 +867,9 @@ export type UsuarioUncheckedCreateWithoutEmpresaInput = {
   nombre: string
   rol?: $Enums.RolUsuario
   activo?: boolean
+  totpSecret?: string | null
+  totpHabilitado?: boolean
+  almacenId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdBy?: string | null
@@ -664,9 +877,13 @@ export type UsuarioUncheckedCreateWithoutEmpresaInput = {
   deletedAt?: Date | string | null
   movimientosRegistrados?: Prisma.MovimientoInventarioUncheckedCreateNestedManyWithoutUsuarioInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUsuarioInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FAUncheckedCreateNestedManyWithoutUsuarioInput
   notificaciones?: Prisma.NotificacionUncheckedCreateNestedManyWithoutUsuarioInput
   comprasRegistradas?: Prisma.CompraUncheckedCreateNestedManyWithoutUsuarioInput
   ventasRegistradas?: Prisma.VentaUncheckedCreateNestedManyWithoutUsuarioInput
+  solicitudesCreadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutSolicitanteInput
+  solicitudesAprobadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutAprobadorInput
+  solicitudesEfectuadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutEfectuadorInput
 }
 
 export type UsuarioCreateOrConnectWithoutEmpresaInput = {
@@ -705,7 +922,10 @@ export type UsuarioScalarWhereInput = {
   nombre?: Prisma.StringFilter<"Usuario"> | string
   rol?: Prisma.EnumRolUsuarioFilter<"Usuario"> | $Enums.RolUsuario
   activo?: Prisma.BoolFilter<"Usuario"> | boolean
+  totpSecret?: Prisma.StringNullableFilter<"Usuario"> | string | null
+  totpHabilitado?: Prisma.BoolFilter<"Usuario"> | boolean
   empresaId?: Prisma.StringFilter<"Usuario"> | string
+  almacenId?: Prisma.StringNullableFilter<"Usuario"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Usuario"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Usuario"> | Date | string
   createdBy?: Prisma.StringNullableFilter<"Usuario"> | string | null
@@ -720,16 +940,23 @@ export type UsuarioCreateWithoutRefreshTokensInput = {
   nombre: string
   rol?: $Enums.RolUsuario
   activo?: boolean
+  totpSecret?: string | null
+  totpHabilitado?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   createdBy?: string | null
   updatedBy?: string | null
   deletedAt?: Date | string | null
   empresa: Prisma.EmpresaCreateNestedOneWithoutUsuariosInput
+  almacen?: Prisma.AlmacenCreateNestedOneWithoutUsuariosInput
   movimientosRegistrados?: Prisma.MovimientoInventarioCreateNestedManyWithoutUsuarioInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FACreateNestedManyWithoutUsuarioInput
   notificaciones?: Prisma.NotificacionCreateNestedManyWithoutUsuarioInput
   comprasRegistradas?: Prisma.CompraCreateNestedManyWithoutUsuarioInput
   ventasRegistradas?: Prisma.VentaCreateNestedManyWithoutUsuarioInput
+  solicitudesCreadas?: Prisma.SolicitudCreateNestedManyWithoutSolicitanteInput
+  solicitudesAprobadas?: Prisma.SolicitudCreateNestedManyWithoutAprobadorInput
+  solicitudesEfectuadas?: Prisma.SolicitudCreateNestedManyWithoutEfectuadorInput
 }
 
 export type UsuarioUncheckedCreateWithoutRefreshTokensInput = {
@@ -739,16 +966,23 @@ export type UsuarioUncheckedCreateWithoutRefreshTokensInput = {
   nombre: string
   rol?: $Enums.RolUsuario
   activo?: boolean
+  totpSecret?: string | null
+  totpHabilitado?: boolean
   empresaId: string
+  almacenId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdBy?: string | null
   updatedBy?: string | null
   deletedAt?: Date | string | null
   movimientosRegistrados?: Prisma.MovimientoInventarioUncheckedCreateNestedManyWithoutUsuarioInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FAUncheckedCreateNestedManyWithoutUsuarioInput
   notificaciones?: Prisma.NotificacionUncheckedCreateNestedManyWithoutUsuarioInput
   comprasRegistradas?: Prisma.CompraUncheckedCreateNestedManyWithoutUsuarioInput
   ventasRegistradas?: Prisma.VentaUncheckedCreateNestedManyWithoutUsuarioInput
+  solicitudesCreadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutSolicitanteInput
+  solicitudesAprobadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutAprobadorInput
+  solicitudesEfectuadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutEfectuadorInput
 }
 
 export type UsuarioCreateOrConnectWithoutRefreshTokensInput = {
@@ -774,16 +1008,23 @@ export type UsuarioUpdateWithoutRefreshTokensInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   rol?: Prisma.EnumRolUsuarioFieldUpdateOperationsInput | $Enums.RolUsuario
   activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  totpSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpHabilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   empresa?: Prisma.EmpresaUpdateOneRequiredWithoutUsuariosNestedInput
+  almacen?: Prisma.AlmacenUpdateOneWithoutUsuariosNestedInput
   movimientosRegistrados?: Prisma.MovimientoInventarioUpdateManyWithoutUsuarioNestedInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FAUpdateManyWithoutUsuarioNestedInput
   notificaciones?: Prisma.NotificacionUpdateManyWithoutUsuarioNestedInput
   comprasRegistradas?: Prisma.CompraUpdateManyWithoutUsuarioNestedInput
   ventasRegistradas?: Prisma.VentaUpdateManyWithoutUsuarioNestedInput
+  solicitudesCreadas?: Prisma.SolicitudUpdateManyWithoutSolicitanteNestedInput
+  solicitudesAprobadas?: Prisma.SolicitudUpdateManyWithoutAprobadorNestedInput
+  solicitudesEfectuadas?: Prisma.SolicitudUpdateManyWithoutEfectuadorNestedInput
 }
 
 export type UsuarioUncheckedUpdateWithoutRefreshTokensInput = {
@@ -793,16 +1034,581 @@ export type UsuarioUncheckedUpdateWithoutRefreshTokensInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   rol?: Prisma.EnumRolUsuarioFieldUpdateOperationsInput | $Enums.RolUsuario
   activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  totpSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpHabilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   empresaId?: Prisma.StringFieldUpdateOperationsInput | string
+  almacenId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   movimientosRegistrados?: Prisma.MovimientoInventarioUncheckedUpdateManyWithoutUsuarioNestedInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FAUncheckedUpdateManyWithoutUsuarioNestedInput
   notificaciones?: Prisma.NotificacionUncheckedUpdateManyWithoutUsuarioNestedInput
   comprasRegistradas?: Prisma.CompraUncheckedUpdateManyWithoutUsuarioNestedInput
   ventasRegistradas?: Prisma.VentaUncheckedUpdateManyWithoutUsuarioNestedInput
+  solicitudesCreadas?: Prisma.SolicitudUncheckedUpdateManyWithoutSolicitanteNestedInput
+  solicitudesAprobadas?: Prisma.SolicitudUncheckedUpdateManyWithoutAprobadorNestedInput
+  solicitudesEfectuadas?: Prisma.SolicitudUncheckedUpdateManyWithoutEfectuadorNestedInput
+}
+
+export type UsuarioCreateWithoutCodigosRecuperacion2faInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  nombre: string
+  rol?: $Enums.RolUsuario
+  activo?: boolean
+  totpSecret?: string | null
+  totpHabilitado?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdBy?: string | null
+  updatedBy?: string | null
+  deletedAt?: Date | string | null
+  empresa: Prisma.EmpresaCreateNestedOneWithoutUsuariosInput
+  almacen?: Prisma.AlmacenCreateNestedOneWithoutUsuariosInput
+  movimientosRegistrados?: Prisma.MovimientoInventarioCreateNestedManyWithoutUsuarioInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUsuarioInput
+  notificaciones?: Prisma.NotificacionCreateNestedManyWithoutUsuarioInput
+  comprasRegistradas?: Prisma.CompraCreateNestedManyWithoutUsuarioInput
+  ventasRegistradas?: Prisma.VentaCreateNestedManyWithoutUsuarioInput
+  solicitudesCreadas?: Prisma.SolicitudCreateNestedManyWithoutSolicitanteInput
+  solicitudesAprobadas?: Prisma.SolicitudCreateNestedManyWithoutAprobadorInput
+  solicitudesEfectuadas?: Prisma.SolicitudCreateNestedManyWithoutEfectuadorInput
+}
+
+export type UsuarioUncheckedCreateWithoutCodigosRecuperacion2faInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  nombre: string
+  rol?: $Enums.RolUsuario
+  activo?: boolean
+  totpSecret?: string | null
+  totpHabilitado?: boolean
+  empresaId: string
+  almacenId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdBy?: string | null
+  updatedBy?: string | null
+  deletedAt?: Date | string | null
+  movimientosRegistrados?: Prisma.MovimientoInventarioUncheckedCreateNestedManyWithoutUsuarioInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUsuarioInput
+  notificaciones?: Prisma.NotificacionUncheckedCreateNestedManyWithoutUsuarioInput
+  comprasRegistradas?: Prisma.CompraUncheckedCreateNestedManyWithoutUsuarioInput
+  ventasRegistradas?: Prisma.VentaUncheckedCreateNestedManyWithoutUsuarioInput
+  solicitudesCreadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutSolicitanteInput
+  solicitudesAprobadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutAprobadorInput
+  solicitudesEfectuadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutEfectuadorInput
+}
+
+export type UsuarioCreateOrConnectWithoutCodigosRecuperacion2faInput = {
+  where: Prisma.UsuarioWhereUniqueInput
+  create: Prisma.XOR<Prisma.UsuarioCreateWithoutCodigosRecuperacion2faInput, Prisma.UsuarioUncheckedCreateWithoutCodigosRecuperacion2faInput>
+}
+
+export type UsuarioUpsertWithoutCodigosRecuperacion2faInput = {
+  update: Prisma.XOR<Prisma.UsuarioUpdateWithoutCodigosRecuperacion2faInput, Prisma.UsuarioUncheckedUpdateWithoutCodigosRecuperacion2faInput>
+  create: Prisma.XOR<Prisma.UsuarioCreateWithoutCodigosRecuperacion2faInput, Prisma.UsuarioUncheckedCreateWithoutCodigosRecuperacion2faInput>
+  where?: Prisma.UsuarioWhereInput
+}
+
+export type UsuarioUpdateToOneWithWhereWithoutCodigosRecuperacion2faInput = {
+  where?: Prisma.UsuarioWhereInput
+  data: Prisma.XOR<Prisma.UsuarioUpdateWithoutCodigosRecuperacion2faInput, Prisma.UsuarioUncheckedUpdateWithoutCodigosRecuperacion2faInput>
+}
+
+export type UsuarioUpdateWithoutCodigosRecuperacion2faInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  rol?: Prisma.EnumRolUsuarioFieldUpdateOperationsInput | $Enums.RolUsuario
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  totpSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpHabilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  empresa?: Prisma.EmpresaUpdateOneRequiredWithoutUsuariosNestedInput
+  almacen?: Prisma.AlmacenUpdateOneWithoutUsuariosNestedInput
+  movimientosRegistrados?: Prisma.MovimientoInventarioUpdateManyWithoutUsuarioNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUsuarioNestedInput
+  notificaciones?: Prisma.NotificacionUpdateManyWithoutUsuarioNestedInput
+  comprasRegistradas?: Prisma.CompraUpdateManyWithoutUsuarioNestedInput
+  ventasRegistradas?: Prisma.VentaUpdateManyWithoutUsuarioNestedInput
+  solicitudesCreadas?: Prisma.SolicitudUpdateManyWithoutSolicitanteNestedInput
+  solicitudesAprobadas?: Prisma.SolicitudUpdateManyWithoutAprobadorNestedInput
+  solicitudesEfectuadas?: Prisma.SolicitudUpdateManyWithoutEfectuadorNestedInput
+}
+
+export type UsuarioUncheckedUpdateWithoutCodigosRecuperacion2faInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  rol?: Prisma.EnumRolUsuarioFieldUpdateOperationsInput | $Enums.RolUsuario
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  totpSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpHabilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  empresaId?: Prisma.StringFieldUpdateOperationsInput | string
+  almacenId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  movimientosRegistrados?: Prisma.MovimientoInventarioUncheckedUpdateManyWithoutUsuarioNestedInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUsuarioNestedInput
+  notificaciones?: Prisma.NotificacionUncheckedUpdateManyWithoutUsuarioNestedInput
+  comprasRegistradas?: Prisma.CompraUncheckedUpdateManyWithoutUsuarioNestedInput
+  ventasRegistradas?: Prisma.VentaUncheckedUpdateManyWithoutUsuarioNestedInput
+  solicitudesCreadas?: Prisma.SolicitudUncheckedUpdateManyWithoutSolicitanteNestedInput
+  solicitudesAprobadas?: Prisma.SolicitudUncheckedUpdateManyWithoutAprobadorNestedInput
+  solicitudesEfectuadas?: Prisma.SolicitudUncheckedUpdateManyWithoutEfectuadorNestedInput
+}
+
+export type UsuarioCreateWithoutAlmacenInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  nombre: string
+  rol?: $Enums.RolUsuario
+  activo?: boolean
+  totpSecret?: string | null
+  totpHabilitado?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdBy?: string | null
+  updatedBy?: string | null
+  deletedAt?: Date | string | null
+  empresa: Prisma.EmpresaCreateNestedOneWithoutUsuariosInput
+  movimientosRegistrados?: Prisma.MovimientoInventarioCreateNestedManyWithoutUsuarioInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUsuarioInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FACreateNestedManyWithoutUsuarioInput
+  notificaciones?: Prisma.NotificacionCreateNestedManyWithoutUsuarioInput
+  comprasRegistradas?: Prisma.CompraCreateNestedManyWithoutUsuarioInput
+  ventasRegistradas?: Prisma.VentaCreateNestedManyWithoutUsuarioInput
+  solicitudesCreadas?: Prisma.SolicitudCreateNestedManyWithoutSolicitanteInput
+  solicitudesAprobadas?: Prisma.SolicitudCreateNestedManyWithoutAprobadorInput
+  solicitudesEfectuadas?: Prisma.SolicitudCreateNestedManyWithoutEfectuadorInput
+}
+
+export type UsuarioUncheckedCreateWithoutAlmacenInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  nombre: string
+  rol?: $Enums.RolUsuario
+  activo?: boolean
+  totpSecret?: string | null
+  totpHabilitado?: boolean
+  empresaId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdBy?: string | null
+  updatedBy?: string | null
+  deletedAt?: Date | string | null
+  movimientosRegistrados?: Prisma.MovimientoInventarioUncheckedCreateNestedManyWithoutUsuarioInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUsuarioInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FAUncheckedCreateNestedManyWithoutUsuarioInput
+  notificaciones?: Prisma.NotificacionUncheckedCreateNestedManyWithoutUsuarioInput
+  comprasRegistradas?: Prisma.CompraUncheckedCreateNestedManyWithoutUsuarioInput
+  ventasRegistradas?: Prisma.VentaUncheckedCreateNestedManyWithoutUsuarioInput
+  solicitudesCreadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutSolicitanteInput
+  solicitudesAprobadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutAprobadorInput
+  solicitudesEfectuadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutEfectuadorInput
+}
+
+export type UsuarioCreateOrConnectWithoutAlmacenInput = {
+  where: Prisma.UsuarioWhereUniqueInput
+  create: Prisma.XOR<Prisma.UsuarioCreateWithoutAlmacenInput, Prisma.UsuarioUncheckedCreateWithoutAlmacenInput>
+}
+
+export type UsuarioCreateManyAlmacenInputEnvelope = {
+  data: Prisma.UsuarioCreateManyAlmacenInput | Prisma.UsuarioCreateManyAlmacenInput[]
+  skipDuplicates?: boolean
+}
+
+export type UsuarioUpsertWithWhereUniqueWithoutAlmacenInput = {
+  where: Prisma.UsuarioWhereUniqueInput
+  update: Prisma.XOR<Prisma.UsuarioUpdateWithoutAlmacenInput, Prisma.UsuarioUncheckedUpdateWithoutAlmacenInput>
+  create: Prisma.XOR<Prisma.UsuarioCreateWithoutAlmacenInput, Prisma.UsuarioUncheckedCreateWithoutAlmacenInput>
+}
+
+export type UsuarioUpdateWithWhereUniqueWithoutAlmacenInput = {
+  where: Prisma.UsuarioWhereUniqueInput
+  data: Prisma.XOR<Prisma.UsuarioUpdateWithoutAlmacenInput, Prisma.UsuarioUncheckedUpdateWithoutAlmacenInput>
+}
+
+export type UsuarioUpdateManyWithWhereWithoutAlmacenInput = {
+  where: Prisma.UsuarioScalarWhereInput
+  data: Prisma.XOR<Prisma.UsuarioUpdateManyMutationInput, Prisma.UsuarioUncheckedUpdateManyWithoutAlmacenInput>
+}
+
+export type UsuarioCreateWithoutSolicitudesCreadasInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  nombre: string
+  rol?: $Enums.RolUsuario
+  activo?: boolean
+  totpSecret?: string | null
+  totpHabilitado?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdBy?: string | null
+  updatedBy?: string | null
+  deletedAt?: Date | string | null
+  empresa: Prisma.EmpresaCreateNestedOneWithoutUsuariosInput
+  almacen?: Prisma.AlmacenCreateNestedOneWithoutUsuariosInput
+  movimientosRegistrados?: Prisma.MovimientoInventarioCreateNestedManyWithoutUsuarioInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUsuarioInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FACreateNestedManyWithoutUsuarioInput
+  notificaciones?: Prisma.NotificacionCreateNestedManyWithoutUsuarioInput
+  comprasRegistradas?: Prisma.CompraCreateNestedManyWithoutUsuarioInput
+  ventasRegistradas?: Prisma.VentaCreateNestedManyWithoutUsuarioInput
+  solicitudesAprobadas?: Prisma.SolicitudCreateNestedManyWithoutAprobadorInput
+  solicitudesEfectuadas?: Prisma.SolicitudCreateNestedManyWithoutEfectuadorInput
+}
+
+export type UsuarioUncheckedCreateWithoutSolicitudesCreadasInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  nombre: string
+  rol?: $Enums.RolUsuario
+  activo?: boolean
+  totpSecret?: string | null
+  totpHabilitado?: boolean
+  empresaId: string
+  almacenId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdBy?: string | null
+  updatedBy?: string | null
+  deletedAt?: Date | string | null
+  movimientosRegistrados?: Prisma.MovimientoInventarioUncheckedCreateNestedManyWithoutUsuarioInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUsuarioInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FAUncheckedCreateNestedManyWithoutUsuarioInput
+  notificaciones?: Prisma.NotificacionUncheckedCreateNestedManyWithoutUsuarioInput
+  comprasRegistradas?: Prisma.CompraUncheckedCreateNestedManyWithoutUsuarioInput
+  ventasRegistradas?: Prisma.VentaUncheckedCreateNestedManyWithoutUsuarioInput
+  solicitudesAprobadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutAprobadorInput
+  solicitudesEfectuadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutEfectuadorInput
+}
+
+export type UsuarioCreateOrConnectWithoutSolicitudesCreadasInput = {
+  where: Prisma.UsuarioWhereUniqueInput
+  create: Prisma.XOR<Prisma.UsuarioCreateWithoutSolicitudesCreadasInput, Prisma.UsuarioUncheckedCreateWithoutSolicitudesCreadasInput>
+}
+
+export type UsuarioCreateWithoutSolicitudesAprobadasInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  nombre: string
+  rol?: $Enums.RolUsuario
+  activo?: boolean
+  totpSecret?: string | null
+  totpHabilitado?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdBy?: string | null
+  updatedBy?: string | null
+  deletedAt?: Date | string | null
+  empresa: Prisma.EmpresaCreateNestedOneWithoutUsuariosInput
+  almacen?: Prisma.AlmacenCreateNestedOneWithoutUsuariosInput
+  movimientosRegistrados?: Prisma.MovimientoInventarioCreateNestedManyWithoutUsuarioInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUsuarioInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FACreateNestedManyWithoutUsuarioInput
+  notificaciones?: Prisma.NotificacionCreateNestedManyWithoutUsuarioInput
+  comprasRegistradas?: Prisma.CompraCreateNestedManyWithoutUsuarioInput
+  ventasRegistradas?: Prisma.VentaCreateNestedManyWithoutUsuarioInput
+  solicitudesCreadas?: Prisma.SolicitudCreateNestedManyWithoutSolicitanteInput
+  solicitudesEfectuadas?: Prisma.SolicitudCreateNestedManyWithoutEfectuadorInput
+}
+
+export type UsuarioUncheckedCreateWithoutSolicitudesAprobadasInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  nombre: string
+  rol?: $Enums.RolUsuario
+  activo?: boolean
+  totpSecret?: string | null
+  totpHabilitado?: boolean
+  empresaId: string
+  almacenId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdBy?: string | null
+  updatedBy?: string | null
+  deletedAt?: Date | string | null
+  movimientosRegistrados?: Prisma.MovimientoInventarioUncheckedCreateNestedManyWithoutUsuarioInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUsuarioInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FAUncheckedCreateNestedManyWithoutUsuarioInput
+  notificaciones?: Prisma.NotificacionUncheckedCreateNestedManyWithoutUsuarioInput
+  comprasRegistradas?: Prisma.CompraUncheckedCreateNestedManyWithoutUsuarioInput
+  ventasRegistradas?: Prisma.VentaUncheckedCreateNestedManyWithoutUsuarioInput
+  solicitudesCreadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutSolicitanteInput
+  solicitudesEfectuadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutEfectuadorInput
+}
+
+export type UsuarioCreateOrConnectWithoutSolicitudesAprobadasInput = {
+  where: Prisma.UsuarioWhereUniqueInput
+  create: Prisma.XOR<Prisma.UsuarioCreateWithoutSolicitudesAprobadasInput, Prisma.UsuarioUncheckedCreateWithoutSolicitudesAprobadasInput>
+}
+
+export type UsuarioCreateWithoutSolicitudesEfectuadasInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  nombre: string
+  rol?: $Enums.RolUsuario
+  activo?: boolean
+  totpSecret?: string | null
+  totpHabilitado?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdBy?: string | null
+  updatedBy?: string | null
+  deletedAt?: Date | string | null
+  empresa: Prisma.EmpresaCreateNestedOneWithoutUsuariosInput
+  almacen?: Prisma.AlmacenCreateNestedOneWithoutUsuariosInput
+  movimientosRegistrados?: Prisma.MovimientoInventarioCreateNestedManyWithoutUsuarioInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUsuarioInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FACreateNestedManyWithoutUsuarioInput
+  notificaciones?: Prisma.NotificacionCreateNestedManyWithoutUsuarioInput
+  comprasRegistradas?: Prisma.CompraCreateNestedManyWithoutUsuarioInput
+  ventasRegistradas?: Prisma.VentaCreateNestedManyWithoutUsuarioInput
+  solicitudesCreadas?: Prisma.SolicitudCreateNestedManyWithoutSolicitanteInput
+  solicitudesAprobadas?: Prisma.SolicitudCreateNestedManyWithoutAprobadorInput
+}
+
+export type UsuarioUncheckedCreateWithoutSolicitudesEfectuadasInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  nombre: string
+  rol?: $Enums.RolUsuario
+  activo?: boolean
+  totpSecret?: string | null
+  totpHabilitado?: boolean
+  empresaId: string
+  almacenId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdBy?: string | null
+  updatedBy?: string | null
+  deletedAt?: Date | string | null
+  movimientosRegistrados?: Prisma.MovimientoInventarioUncheckedCreateNestedManyWithoutUsuarioInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUsuarioInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FAUncheckedCreateNestedManyWithoutUsuarioInput
+  notificaciones?: Prisma.NotificacionUncheckedCreateNestedManyWithoutUsuarioInput
+  comprasRegistradas?: Prisma.CompraUncheckedCreateNestedManyWithoutUsuarioInput
+  ventasRegistradas?: Prisma.VentaUncheckedCreateNestedManyWithoutUsuarioInput
+  solicitudesCreadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutSolicitanteInput
+  solicitudesAprobadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutAprobadorInput
+}
+
+export type UsuarioCreateOrConnectWithoutSolicitudesEfectuadasInput = {
+  where: Prisma.UsuarioWhereUniqueInput
+  create: Prisma.XOR<Prisma.UsuarioCreateWithoutSolicitudesEfectuadasInput, Prisma.UsuarioUncheckedCreateWithoutSolicitudesEfectuadasInput>
+}
+
+export type UsuarioUpsertWithoutSolicitudesCreadasInput = {
+  update: Prisma.XOR<Prisma.UsuarioUpdateWithoutSolicitudesCreadasInput, Prisma.UsuarioUncheckedUpdateWithoutSolicitudesCreadasInput>
+  create: Prisma.XOR<Prisma.UsuarioCreateWithoutSolicitudesCreadasInput, Prisma.UsuarioUncheckedCreateWithoutSolicitudesCreadasInput>
+  where?: Prisma.UsuarioWhereInput
+}
+
+export type UsuarioUpdateToOneWithWhereWithoutSolicitudesCreadasInput = {
+  where?: Prisma.UsuarioWhereInput
+  data: Prisma.XOR<Prisma.UsuarioUpdateWithoutSolicitudesCreadasInput, Prisma.UsuarioUncheckedUpdateWithoutSolicitudesCreadasInput>
+}
+
+export type UsuarioUpdateWithoutSolicitudesCreadasInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  rol?: Prisma.EnumRolUsuarioFieldUpdateOperationsInput | $Enums.RolUsuario
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  totpSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpHabilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  empresa?: Prisma.EmpresaUpdateOneRequiredWithoutUsuariosNestedInput
+  almacen?: Prisma.AlmacenUpdateOneWithoutUsuariosNestedInput
+  movimientosRegistrados?: Prisma.MovimientoInventarioUpdateManyWithoutUsuarioNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUsuarioNestedInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FAUpdateManyWithoutUsuarioNestedInput
+  notificaciones?: Prisma.NotificacionUpdateManyWithoutUsuarioNestedInput
+  comprasRegistradas?: Prisma.CompraUpdateManyWithoutUsuarioNestedInput
+  ventasRegistradas?: Prisma.VentaUpdateManyWithoutUsuarioNestedInput
+  solicitudesAprobadas?: Prisma.SolicitudUpdateManyWithoutAprobadorNestedInput
+  solicitudesEfectuadas?: Prisma.SolicitudUpdateManyWithoutEfectuadorNestedInput
+}
+
+export type UsuarioUncheckedUpdateWithoutSolicitudesCreadasInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  rol?: Prisma.EnumRolUsuarioFieldUpdateOperationsInput | $Enums.RolUsuario
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  totpSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpHabilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  empresaId?: Prisma.StringFieldUpdateOperationsInput | string
+  almacenId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  movimientosRegistrados?: Prisma.MovimientoInventarioUncheckedUpdateManyWithoutUsuarioNestedInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUsuarioNestedInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FAUncheckedUpdateManyWithoutUsuarioNestedInput
+  notificaciones?: Prisma.NotificacionUncheckedUpdateManyWithoutUsuarioNestedInput
+  comprasRegistradas?: Prisma.CompraUncheckedUpdateManyWithoutUsuarioNestedInput
+  ventasRegistradas?: Prisma.VentaUncheckedUpdateManyWithoutUsuarioNestedInput
+  solicitudesAprobadas?: Prisma.SolicitudUncheckedUpdateManyWithoutAprobadorNestedInput
+  solicitudesEfectuadas?: Prisma.SolicitudUncheckedUpdateManyWithoutEfectuadorNestedInput
+}
+
+export type UsuarioUpsertWithoutSolicitudesAprobadasInput = {
+  update: Prisma.XOR<Prisma.UsuarioUpdateWithoutSolicitudesAprobadasInput, Prisma.UsuarioUncheckedUpdateWithoutSolicitudesAprobadasInput>
+  create: Prisma.XOR<Prisma.UsuarioCreateWithoutSolicitudesAprobadasInput, Prisma.UsuarioUncheckedCreateWithoutSolicitudesAprobadasInput>
+  where?: Prisma.UsuarioWhereInput
+}
+
+export type UsuarioUpdateToOneWithWhereWithoutSolicitudesAprobadasInput = {
+  where?: Prisma.UsuarioWhereInput
+  data: Prisma.XOR<Prisma.UsuarioUpdateWithoutSolicitudesAprobadasInput, Prisma.UsuarioUncheckedUpdateWithoutSolicitudesAprobadasInput>
+}
+
+export type UsuarioUpdateWithoutSolicitudesAprobadasInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  rol?: Prisma.EnumRolUsuarioFieldUpdateOperationsInput | $Enums.RolUsuario
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  totpSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpHabilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  empresa?: Prisma.EmpresaUpdateOneRequiredWithoutUsuariosNestedInput
+  almacen?: Prisma.AlmacenUpdateOneWithoutUsuariosNestedInput
+  movimientosRegistrados?: Prisma.MovimientoInventarioUpdateManyWithoutUsuarioNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUsuarioNestedInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FAUpdateManyWithoutUsuarioNestedInput
+  notificaciones?: Prisma.NotificacionUpdateManyWithoutUsuarioNestedInput
+  comprasRegistradas?: Prisma.CompraUpdateManyWithoutUsuarioNestedInput
+  ventasRegistradas?: Prisma.VentaUpdateManyWithoutUsuarioNestedInput
+  solicitudesCreadas?: Prisma.SolicitudUpdateManyWithoutSolicitanteNestedInput
+  solicitudesEfectuadas?: Prisma.SolicitudUpdateManyWithoutEfectuadorNestedInput
+}
+
+export type UsuarioUncheckedUpdateWithoutSolicitudesAprobadasInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  rol?: Prisma.EnumRolUsuarioFieldUpdateOperationsInput | $Enums.RolUsuario
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  totpSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpHabilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  empresaId?: Prisma.StringFieldUpdateOperationsInput | string
+  almacenId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  movimientosRegistrados?: Prisma.MovimientoInventarioUncheckedUpdateManyWithoutUsuarioNestedInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUsuarioNestedInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FAUncheckedUpdateManyWithoutUsuarioNestedInput
+  notificaciones?: Prisma.NotificacionUncheckedUpdateManyWithoutUsuarioNestedInput
+  comprasRegistradas?: Prisma.CompraUncheckedUpdateManyWithoutUsuarioNestedInput
+  ventasRegistradas?: Prisma.VentaUncheckedUpdateManyWithoutUsuarioNestedInput
+  solicitudesCreadas?: Prisma.SolicitudUncheckedUpdateManyWithoutSolicitanteNestedInput
+  solicitudesEfectuadas?: Prisma.SolicitudUncheckedUpdateManyWithoutEfectuadorNestedInput
+}
+
+export type UsuarioUpsertWithoutSolicitudesEfectuadasInput = {
+  update: Prisma.XOR<Prisma.UsuarioUpdateWithoutSolicitudesEfectuadasInput, Prisma.UsuarioUncheckedUpdateWithoutSolicitudesEfectuadasInput>
+  create: Prisma.XOR<Prisma.UsuarioCreateWithoutSolicitudesEfectuadasInput, Prisma.UsuarioUncheckedCreateWithoutSolicitudesEfectuadasInput>
+  where?: Prisma.UsuarioWhereInput
+}
+
+export type UsuarioUpdateToOneWithWhereWithoutSolicitudesEfectuadasInput = {
+  where?: Prisma.UsuarioWhereInput
+  data: Prisma.XOR<Prisma.UsuarioUpdateWithoutSolicitudesEfectuadasInput, Prisma.UsuarioUncheckedUpdateWithoutSolicitudesEfectuadasInput>
+}
+
+export type UsuarioUpdateWithoutSolicitudesEfectuadasInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  rol?: Prisma.EnumRolUsuarioFieldUpdateOperationsInput | $Enums.RolUsuario
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  totpSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpHabilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  empresa?: Prisma.EmpresaUpdateOneRequiredWithoutUsuariosNestedInput
+  almacen?: Prisma.AlmacenUpdateOneWithoutUsuariosNestedInput
+  movimientosRegistrados?: Prisma.MovimientoInventarioUpdateManyWithoutUsuarioNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUsuarioNestedInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FAUpdateManyWithoutUsuarioNestedInput
+  notificaciones?: Prisma.NotificacionUpdateManyWithoutUsuarioNestedInput
+  comprasRegistradas?: Prisma.CompraUpdateManyWithoutUsuarioNestedInput
+  ventasRegistradas?: Prisma.VentaUpdateManyWithoutUsuarioNestedInput
+  solicitudesCreadas?: Prisma.SolicitudUpdateManyWithoutSolicitanteNestedInput
+  solicitudesAprobadas?: Prisma.SolicitudUpdateManyWithoutAprobadorNestedInput
+}
+
+export type UsuarioUncheckedUpdateWithoutSolicitudesEfectuadasInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  rol?: Prisma.EnumRolUsuarioFieldUpdateOperationsInput | $Enums.RolUsuario
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  totpSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpHabilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  empresaId?: Prisma.StringFieldUpdateOperationsInput | string
+  almacenId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  movimientosRegistrados?: Prisma.MovimientoInventarioUncheckedUpdateManyWithoutUsuarioNestedInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUsuarioNestedInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FAUncheckedUpdateManyWithoutUsuarioNestedInput
+  notificaciones?: Prisma.NotificacionUncheckedUpdateManyWithoutUsuarioNestedInput
+  comprasRegistradas?: Prisma.CompraUncheckedUpdateManyWithoutUsuarioNestedInput
+  ventasRegistradas?: Prisma.VentaUncheckedUpdateManyWithoutUsuarioNestedInput
+  solicitudesCreadas?: Prisma.SolicitudUncheckedUpdateManyWithoutSolicitanteNestedInput
+  solicitudesAprobadas?: Prisma.SolicitudUncheckedUpdateManyWithoutAprobadorNestedInput
 }
 
 export type UsuarioCreateWithoutComprasRegistradasInput = {
@@ -812,16 +1618,23 @@ export type UsuarioCreateWithoutComprasRegistradasInput = {
   nombre: string
   rol?: $Enums.RolUsuario
   activo?: boolean
+  totpSecret?: string | null
+  totpHabilitado?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   createdBy?: string | null
   updatedBy?: string | null
   deletedAt?: Date | string | null
   empresa: Prisma.EmpresaCreateNestedOneWithoutUsuariosInput
+  almacen?: Prisma.AlmacenCreateNestedOneWithoutUsuariosInput
   movimientosRegistrados?: Prisma.MovimientoInventarioCreateNestedManyWithoutUsuarioInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUsuarioInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FACreateNestedManyWithoutUsuarioInput
   notificaciones?: Prisma.NotificacionCreateNestedManyWithoutUsuarioInput
   ventasRegistradas?: Prisma.VentaCreateNestedManyWithoutUsuarioInput
+  solicitudesCreadas?: Prisma.SolicitudCreateNestedManyWithoutSolicitanteInput
+  solicitudesAprobadas?: Prisma.SolicitudCreateNestedManyWithoutAprobadorInput
+  solicitudesEfectuadas?: Prisma.SolicitudCreateNestedManyWithoutEfectuadorInput
 }
 
 export type UsuarioUncheckedCreateWithoutComprasRegistradasInput = {
@@ -831,7 +1644,10 @@ export type UsuarioUncheckedCreateWithoutComprasRegistradasInput = {
   nombre: string
   rol?: $Enums.RolUsuario
   activo?: boolean
+  totpSecret?: string | null
+  totpHabilitado?: boolean
   empresaId: string
+  almacenId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdBy?: string | null
@@ -839,8 +1655,12 @@ export type UsuarioUncheckedCreateWithoutComprasRegistradasInput = {
   deletedAt?: Date | string | null
   movimientosRegistrados?: Prisma.MovimientoInventarioUncheckedCreateNestedManyWithoutUsuarioInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUsuarioInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FAUncheckedCreateNestedManyWithoutUsuarioInput
   notificaciones?: Prisma.NotificacionUncheckedCreateNestedManyWithoutUsuarioInput
   ventasRegistradas?: Prisma.VentaUncheckedCreateNestedManyWithoutUsuarioInput
+  solicitudesCreadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutSolicitanteInput
+  solicitudesAprobadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutAprobadorInput
+  solicitudesEfectuadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutEfectuadorInput
 }
 
 export type UsuarioCreateOrConnectWithoutComprasRegistradasInput = {
@@ -866,16 +1686,23 @@ export type UsuarioUpdateWithoutComprasRegistradasInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   rol?: Prisma.EnumRolUsuarioFieldUpdateOperationsInput | $Enums.RolUsuario
   activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  totpSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpHabilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   empresa?: Prisma.EmpresaUpdateOneRequiredWithoutUsuariosNestedInput
+  almacen?: Prisma.AlmacenUpdateOneWithoutUsuariosNestedInput
   movimientosRegistrados?: Prisma.MovimientoInventarioUpdateManyWithoutUsuarioNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUsuarioNestedInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FAUpdateManyWithoutUsuarioNestedInput
   notificaciones?: Prisma.NotificacionUpdateManyWithoutUsuarioNestedInput
   ventasRegistradas?: Prisma.VentaUpdateManyWithoutUsuarioNestedInput
+  solicitudesCreadas?: Prisma.SolicitudUpdateManyWithoutSolicitanteNestedInput
+  solicitudesAprobadas?: Prisma.SolicitudUpdateManyWithoutAprobadorNestedInput
+  solicitudesEfectuadas?: Prisma.SolicitudUpdateManyWithoutEfectuadorNestedInput
 }
 
 export type UsuarioUncheckedUpdateWithoutComprasRegistradasInput = {
@@ -885,7 +1712,10 @@ export type UsuarioUncheckedUpdateWithoutComprasRegistradasInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   rol?: Prisma.EnumRolUsuarioFieldUpdateOperationsInput | $Enums.RolUsuario
   activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  totpSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpHabilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   empresaId?: Prisma.StringFieldUpdateOperationsInput | string
+  almacenId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -893,8 +1723,12 @@ export type UsuarioUncheckedUpdateWithoutComprasRegistradasInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   movimientosRegistrados?: Prisma.MovimientoInventarioUncheckedUpdateManyWithoutUsuarioNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUsuarioNestedInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FAUncheckedUpdateManyWithoutUsuarioNestedInput
   notificaciones?: Prisma.NotificacionUncheckedUpdateManyWithoutUsuarioNestedInput
   ventasRegistradas?: Prisma.VentaUncheckedUpdateManyWithoutUsuarioNestedInput
+  solicitudesCreadas?: Prisma.SolicitudUncheckedUpdateManyWithoutSolicitanteNestedInput
+  solicitudesAprobadas?: Prisma.SolicitudUncheckedUpdateManyWithoutAprobadorNestedInput
+  solicitudesEfectuadas?: Prisma.SolicitudUncheckedUpdateManyWithoutEfectuadorNestedInput
 }
 
 export type UsuarioCreateWithoutVentasRegistradasInput = {
@@ -904,16 +1738,23 @@ export type UsuarioCreateWithoutVentasRegistradasInput = {
   nombre: string
   rol?: $Enums.RolUsuario
   activo?: boolean
+  totpSecret?: string | null
+  totpHabilitado?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   createdBy?: string | null
   updatedBy?: string | null
   deletedAt?: Date | string | null
   empresa: Prisma.EmpresaCreateNestedOneWithoutUsuariosInput
+  almacen?: Prisma.AlmacenCreateNestedOneWithoutUsuariosInput
   movimientosRegistrados?: Prisma.MovimientoInventarioCreateNestedManyWithoutUsuarioInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUsuarioInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FACreateNestedManyWithoutUsuarioInput
   notificaciones?: Prisma.NotificacionCreateNestedManyWithoutUsuarioInput
   comprasRegistradas?: Prisma.CompraCreateNestedManyWithoutUsuarioInput
+  solicitudesCreadas?: Prisma.SolicitudCreateNestedManyWithoutSolicitanteInput
+  solicitudesAprobadas?: Prisma.SolicitudCreateNestedManyWithoutAprobadorInput
+  solicitudesEfectuadas?: Prisma.SolicitudCreateNestedManyWithoutEfectuadorInput
 }
 
 export type UsuarioUncheckedCreateWithoutVentasRegistradasInput = {
@@ -923,7 +1764,10 @@ export type UsuarioUncheckedCreateWithoutVentasRegistradasInput = {
   nombre: string
   rol?: $Enums.RolUsuario
   activo?: boolean
+  totpSecret?: string | null
+  totpHabilitado?: boolean
   empresaId: string
+  almacenId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdBy?: string | null
@@ -931,8 +1775,12 @@ export type UsuarioUncheckedCreateWithoutVentasRegistradasInput = {
   deletedAt?: Date | string | null
   movimientosRegistrados?: Prisma.MovimientoInventarioUncheckedCreateNestedManyWithoutUsuarioInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUsuarioInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FAUncheckedCreateNestedManyWithoutUsuarioInput
   notificaciones?: Prisma.NotificacionUncheckedCreateNestedManyWithoutUsuarioInput
   comprasRegistradas?: Prisma.CompraUncheckedCreateNestedManyWithoutUsuarioInput
+  solicitudesCreadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutSolicitanteInput
+  solicitudesAprobadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutAprobadorInput
+  solicitudesEfectuadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutEfectuadorInput
 }
 
 export type UsuarioCreateOrConnectWithoutVentasRegistradasInput = {
@@ -958,16 +1806,23 @@ export type UsuarioUpdateWithoutVentasRegistradasInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   rol?: Prisma.EnumRolUsuarioFieldUpdateOperationsInput | $Enums.RolUsuario
   activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  totpSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpHabilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   empresa?: Prisma.EmpresaUpdateOneRequiredWithoutUsuariosNestedInput
+  almacen?: Prisma.AlmacenUpdateOneWithoutUsuariosNestedInput
   movimientosRegistrados?: Prisma.MovimientoInventarioUpdateManyWithoutUsuarioNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUsuarioNestedInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FAUpdateManyWithoutUsuarioNestedInput
   notificaciones?: Prisma.NotificacionUpdateManyWithoutUsuarioNestedInput
   comprasRegistradas?: Prisma.CompraUpdateManyWithoutUsuarioNestedInput
+  solicitudesCreadas?: Prisma.SolicitudUpdateManyWithoutSolicitanteNestedInput
+  solicitudesAprobadas?: Prisma.SolicitudUpdateManyWithoutAprobadorNestedInput
+  solicitudesEfectuadas?: Prisma.SolicitudUpdateManyWithoutEfectuadorNestedInput
 }
 
 export type UsuarioUncheckedUpdateWithoutVentasRegistradasInput = {
@@ -977,7 +1832,10 @@ export type UsuarioUncheckedUpdateWithoutVentasRegistradasInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   rol?: Prisma.EnumRolUsuarioFieldUpdateOperationsInput | $Enums.RolUsuario
   activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  totpSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpHabilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   empresaId?: Prisma.StringFieldUpdateOperationsInput | string
+  almacenId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -985,8 +1843,12 @@ export type UsuarioUncheckedUpdateWithoutVentasRegistradasInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   movimientosRegistrados?: Prisma.MovimientoInventarioUncheckedUpdateManyWithoutUsuarioNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUsuarioNestedInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FAUncheckedUpdateManyWithoutUsuarioNestedInput
   notificaciones?: Prisma.NotificacionUncheckedUpdateManyWithoutUsuarioNestedInput
   comprasRegistradas?: Prisma.CompraUncheckedUpdateManyWithoutUsuarioNestedInput
+  solicitudesCreadas?: Prisma.SolicitudUncheckedUpdateManyWithoutSolicitanteNestedInput
+  solicitudesAprobadas?: Prisma.SolicitudUncheckedUpdateManyWithoutAprobadorNestedInput
+  solicitudesEfectuadas?: Prisma.SolicitudUncheckedUpdateManyWithoutEfectuadorNestedInput
 }
 
 export type UsuarioCreateWithoutMovimientosRegistradosInput = {
@@ -996,16 +1858,23 @@ export type UsuarioCreateWithoutMovimientosRegistradosInput = {
   nombre: string
   rol?: $Enums.RolUsuario
   activo?: boolean
+  totpSecret?: string | null
+  totpHabilitado?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   createdBy?: string | null
   updatedBy?: string | null
   deletedAt?: Date | string | null
   empresa: Prisma.EmpresaCreateNestedOneWithoutUsuariosInput
+  almacen?: Prisma.AlmacenCreateNestedOneWithoutUsuariosInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUsuarioInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FACreateNestedManyWithoutUsuarioInput
   notificaciones?: Prisma.NotificacionCreateNestedManyWithoutUsuarioInput
   comprasRegistradas?: Prisma.CompraCreateNestedManyWithoutUsuarioInput
   ventasRegistradas?: Prisma.VentaCreateNestedManyWithoutUsuarioInput
+  solicitudesCreadas?: Prisma.SolicitudCreateNestedManyWithoutSolicitanteInput
+  solicitudesAprobadas?: Prisma.SolicitudCreateNestedManyWithoutAprobadorInput
+  solicitudesEfectuadas?: Prisma.SolicitudCreateNestedManyWithoutEfectuadorInput
 }
 
 export type UsuarioUncheckedCreateWithoutMovimientosRegistradosInput = {
@@ -1015,16 +1884,23 @@ export type UsuarioUncheckedCreateWithoutMovimientosRegistradosInput = {
   nombre: string
   rol?: $Enums.RolUsuario
   activo?: boolean
+  totpSecret?: string | null
+  totpHabilitado?: boolean
   empresaId: string
+  almacenId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdBy?: string | null
   updatedBy?: string | null
   deletedAt?: Date | string | null
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUsuarioInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FAUncheckedCreateNestedManyWithoutUsuarioInput
   notificaciones?: Prisma.NotificacionUncheckedCreateNestedManyWithoutUsuarioInput
   comprasRegistradas?: Prisma.CompraUncheckedCreateNestedManyWithoutUsuarioInput
   ventasRegistradas?: Prisma.VentaUncheckedCreateNestedManyWithoutUsuarioInput
+  solicitudesCreadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutSolicitanteInput
+  solicitudesAprobadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutAprobadorInput
+  solicitudesEfectuadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutEfectuadorInput
 }
 
 export type UsuarioCreateOrConnectWithoutMovimientosRegistradosInput = {
@@ -1050,16 +1926,23 @@ export type UsuarioUpdateWithoutMovimientosRegistradosInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   rol?: Prisma.EnumRolUsuarioFieldUpdateOperationsInput | $Enums.RolUsuario
   activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  totpSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpHabilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   empresa?: Prisma.EmpresaUpdateOneRequiredWithoutUsuariosNestedInput
+  almacen?: Prisma.AlmacenUpdateOneWithoutUsuariosNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUsuarioNestedInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FAUpdateManyWithoutUsuarioNestedInput
   notificaciones?: Prisma.NotificacionUpdateManyWithoutUsuarioNestedInput
   comprasRegistradas?: Prisma.CompraUpdateManyWithoutUsuarioNestedInput
   ventasRegistradas?: Prisma.VentaUpdateManyWithoutUsuarioNestedInput
+  solicitudesCreadas?: Prisma.SolicitudUpdateManyWithoutSolicitanteNestedInput
+  solicitudesAprobadas?: Prisma.SolicitudUpdateManyWithoutAprobadorNestedInput
+  solicitudesEfectuadas?: Prisma.SolicitudUpdateManyWithoutEfectuadorNestedInput
 }
 
 export type UsuarioUncheckedUpdateWithoutMovimientosRegistradosInput = {
@@ -1069,16 +1952,23 @@ export type UsuarioUncheckedUpdateWithoutMovimientosRegistradosInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   rol?: Prisma.EnumRolUsuarioFieldUpdateOperationsInput | $Enums.RolUsuario
   activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  totpSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpHabilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   empresaId?: Prisma.StringFieldUpdateOperationsInput | string
+  almacenId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUsuarioNestedInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FAUncheckedUpdateManyWithoutUsuarioNestedInput
   notificaciones?: Prisma.NotificacionUncheckedUpdateManyWithoutUsuarioNestedInput
   comprasRegistradas?: Prisma.CompraUncheckedUpdateManyWithoutUsuarioNestedInput
   ventasRegistradas?: Prisma.VentaUncheckedUpdateManyWithoutUsuarioNestedInput
+  solicitudesCreadas?: Prisma.SolicitudUncheckedUpdateManyWithoutSolicitanteNestedInput
+  solicitudesAprobadas?: Prisma.SolicitudUncheckedUpdateManyWithoutAprobadorNestedInput
+  solicitudesEfectuadas?: Prisma.SolicitudUncheckedUpdateManyWithoutEfectuadorNestedInput
 }
 
 export type UsuarioCreateWithoutNotificacionesInput = {
@@ -1088,16 +1978,23 @@ export type UsuarioCreateWithoutNotificacionesInput = {
   nombre: string
   rol?: $Enums.RolUsuario
   activo?: boolean
+  totpSecret?: string | null
+  totpHabilitado?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   createdBy?: string | null
   updatedBy?: string | null
   deletedAt?: Date | string | null
   empresa: Prisma.EmpresaCreateNestedOneWithoutUsuariosInput
+  almacen?: Prisma.AlmacenCreateNestedOneWithoutUsuariosInput
   movimientosRegistrados?: Prisma.MovimientoInventarioCreateNestedManyWithoutUsuarioInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUsuarioInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FACreateNestedManyWithoutUsuarioInput
   comprasRegistradas?: Prisma.CompraCreateNestedManyWithoutUsuarioInput
   ventasRegistradas?: Prisma.VentaCreateNestedManyWithoutUsuarioInput
+  solicitudesCreadas?: Prisma.SolicitudCreateNestedManyWithoutSolicitanteInput
+  solicitudesAprobadas?: Prisma.SolicitudCreateNestedManyWithoutAprobadorInput
+  solicitudesEfectuadas?: Prisma.SolicitudCreateNestedManyWithoutEfectuadorInput
 }
 
 export type UsuarioUncheckedCreateWithoutNotificacionesInput = {
@@ -1107,7 +2004,10 @@ export type UsuarioUncheckedCreateWithoutNotificacionesInput = {
   nombre: string
   rol?: $Enums.RolUsuario
   activo?: boolean
+  totpSecret?: string | null
+  totpHabilitado?: boolean
   empresaId: string
+  almacenId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdBy?: string | null
@@ -1115,8 +2015,12 @@ export type UsuarioUncheckedCreateWithoutNotificacionesInput = {
   deletedAt?: Date | string | null
   movimientosRegistrados?: Prisma.MovimientoInventarioUncheckedCreateNestedManyWithoutUsuarioInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUsuarioInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FAUncheckedCreateNestedManyWithoutUsuarioInput
   comprasRegistradas?: Prisma.CompraUncheckedCreateNestedManyWithoutUsuarioInput
   ventasRegistradas?: Prisma.VentaUncheckedCreateNestedManyWithoutUsuarioInput
+  solicitudesCreadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutSolicitanteInput
+  solicitudesAprobadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutAprobadorInput
+  solicitudesEfectuadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutEfectuadorInput
 }
 
 export type UsuarioCreateOrConnectWithoutNotificacionesInput = {
@@ -1142,16 +2046,23 @@ export type UsuarioUpdateWithoutNotificacionesInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   rol?: Prisma.EnumRolUsuarioFieldUpdateOperationsInput | $Enums.RolUsuario
   activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  totpSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpHabilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   empresa?: Prisma.EmpresaUpdateOneRequiredWithoutUsuariosNestedInput
+  almacen?: Prisma.AlmacenUpdateOneWithoutUsuariosNestedInput
   movimientosRegistrados?: Prisma.MovimientoInventarioUpdateManyWithoutUsuarioNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUsuarioNestedInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FAUpdateManyWithoutUsuarioNestedInput
   comprasRegistradas?: Prisma.CompraUpdateManyWithoutUsuarioNestedInput
   ventasRegistradas?: Prisma.VentaUpdateManyWithoutUsuarioNestedInput
+  solicitudesCreadas?: Prisma.SolicitudUpdateManyWithoutSolicitanteNestedInput
+  solicitudesAprobadas?: Prisma.SolicitudUpdateManyWithoutAprobadorNestedInput
+  solicitudesEfectuadas?: Prisma.SolicitudUpdateManyWithoutEfectuadorNestedInput
 }
 
 export type UsuarioUncheckedUpdateWithoutNotificacionesInput = {
@@ -1161,7 +2072,10 @@ export type UsuarioUncheckedUpdateWithoutNotificacionesInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   rol?: Prisma.EnumRolUsuarioFieldUpdateOperationsInput | $Enums.RolUsuario
   activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  totpSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpHabilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   empresaId?: Prisma.StringFieldUpdateOperationsInput | string
+  almacenId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1169,8 +2083,12 @@ export type UsuarioUncheckedUpdateWithoutNotificacionesInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   movimientosRegistrados?: Prisma.MovimientoInventarioUncheckedUpdateManyWithoutUsuarioNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUsuarioNestedInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FAUncheckedUpdateManyWithoutUsuarioNestedInput
   comprasRegistradas?: Prisma.CompraUncheckedUpdateManyWithoutUsuarioNestedInput
   ventasRegistradas?: Prisma.VentaUncheckedUpdateManyWithoutUsuarioNestedInput
+  solicitudesCreadas?: Prisma.SolicitudUncheckedUpdateManyWithoutSolicitanteNestedInput
+  solicitudesAprobadas?: Prisma.SolicitudUncheckedUpdateManyWithoutAprobadorNestedInput
+  solicitudesEfectuadas?: Prisma.SolicitudUncheckedUpdateManyWithoutEfectuadorNestedInput
 }
 
 export type UsuarioCreateManyEmpresaInput = {
@@ -1180,6 +2098,9 @@ export type UsuarioCreateManyEmpresaInput = {
   nombre: string
   rol?: $Enums.RolUsuario
   activo?: boolean
+  totpSecret?: string | null
+  totpHabilitado?: boolean
+  almacenId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   createdBy?: string | null
@@ -1194,16 +2115,23 @@ export type UsuarioUpdateWithoutEmpresaInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   rol?: Prisma.EnumRolUsuarioFieldUpdateOperationsInput | $Enums.RolUsuario
   activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  totpSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpHabilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  almacen?: Prisma.AlmacenUpdateOneWithoutUsuariosNestedInput
   movimientosRegistrados?: Prisma.MovimientoInventarioUpdateManyWithoutUsuarioNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUsuarioNestedInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FAUpdateManyWithoutUsuarioNestedInput
   notificaciones?: Prisma.NotificacionUpdateManyWithoutUsuarioNestedInput
   comprasRegistradas?: Prisma.CompraUpdateManyWithoutUsuarioNestedInput
   ventasRegistradas?: Prisma.VentaUpdateManyWithoutUsuarioNestedInput
+  solicitudesCreadas?: Prisma.SolicitudUpdateManyWithoutSolicitanteNestedInput
+  solicitudesAprobadas?: Prisma.SolicitudUpdateManyWithoutAprobadorNestedInput
+  solicitudesEfectuadas?: Prisma.SolicitudUpdateManyWithoutEfectuadorNestedInput
 }
 
 export type UsuarioUncheckedUpdateWithoutEmpresaInput = {
@@ -1213,6 +2141,9 @@ export type UsuarioUncheckedUpdateWithoutEmpresaInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   rol?: Prisma.EnumRolUsuarioFieldUpdateOperationsInput | $Enums.RolUsuario
   activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  totpSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpHabilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  almacenId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1220,9 +2151,13 @@ export type UsuarioUncheckedUpdateWithoutEmpresaInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   movimientosRegistrados?: Prisma.MovimientoInventarioUncheckedUpdateManyWithoutUsuarioNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUsuarioNestedInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FAUncheckedUpdateManyWithoutUsuarioNestedInput
   notificaciones?: Prisma.NotificacionUncheckedUpdateManyWithoutUsuarioNestedInput
   comprasRegistradas?: Prisma.CompraUncheckedUpdateManyWithoutUsuarioNestedInput
   ventasRegistradas?: Prisma.VentaUncheckedUpdateManyWithoutUsuarioNestedInput
+  solicitudesCreadas?: Prisma.SolicitudUncheckedUpdateManyWithoutSolicitanteNestedInput
+  solicitudesAprobadas?: Prisma.SolicitudUncheckedUpdateManyWithoutAprobadorNestedInput
+  solicitudesEfectuadas?: Prisma.SolicitudUncheckedUpdateManyWithoutEfectuadorNestedInput
 }
 
 export type UsuarioUncheckedUpdateManyWithoutEmpresaInput = {
@@ -1232,6 +2167,95 @@ export type UsuarioUncheckedUpdateManyWithoutEmpresaInput = {
   nombre?: Prisma.StringFieldUpdateOperationsInput | string
   rol?: Prisma.EnumRolUsuarioFieldUpdateOperationsInput | $Enums.RolUsuario
   activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  totpSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpHabilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  almacenId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+}
+
+export type UsuarioCreateManyAlmacenInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  nombre: string
+  rol?: $Enums.RolUsuario
+  activo?: boolean
+  totpSecret?: string | null
+  totpHabilitado?: boolean
+  empresaId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdBy?: string | null
+  updatedBy?: string | null
+  deletedAt?: Date | string | null
+}
+
+export type UsuarioUpdateWithoutAlmacenInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  rol?: Prisma.EnumRolUsuarioFieldUpdateOperationsInput | $Enums.RolUsuario
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  totpSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpHabilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  empresa?: Prisma.EmpresaUpdateOneRequiredWithoutUsuariosNestedInput
+  movimientosRegistrados?: Prisma.MovimientoInventarioUpdateManyWithoutUsuarioNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUsuarioNestedInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FAUpdateManyWithoutUsuarioNestedInput
+  notificaciones?: Prisma.NotificacionUpdateManyWithoutUsuarioNestedInput
+  comprasRegistradas?: Prisma.CompraUpdateManyWithoutUsuarioNestedInput
+  ventasRegistradas?: Prisma.VentaUpdateManyWithoutUsuarioNestedInput
+  solicitudesCreadas?: Prisma.SolicitudUpdateManyWithoutSolicitanteNestedInput
+  solicitudesAprobadas?: Prisma.SolicitudUpdateManyWithoutAprobadorNestedInput
+  solicitudesEfectuadas?: Prisma.SolicitudUpdateManyWithoutEfectuadorNestedInput
+}
+
+export type UsuarioUncheckedUpdateWithoutAlmacenInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  rol?: Prisma.EnumRolUsuarioFieldUpdateOperationsInput | $Enums.RolUsuario
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  totpSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpHabilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  empresaId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  movimientosRegistrados?: Prisma.MovimientoInventarioUncheckedUpdateManyWithoutUsuarioNestedInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUsuarioNestedInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FAUncheckedUpdateManyWithoutUsuarioNestedInput
+  notificaciones?: Prisma.NotificacionUncheckedUpdateManyWithoutUsuarioNestedInput
+  comprasRegistradas?: Prisma.CompraUncheckedUpdateManyWithoutUsuarioNestedInput
+  ventasRegistradas?: Prisma.VentaUncheckedUpdateManyWithoutUsuarioNestedInput
+  solicitudesCreadas?: Prisma.SolicitudUncheckedUpdateManyWithoutSolicitanteNestedInput
+  solicitudesAprobadas?: Prisma.SolicitudUncheckedUpdateManyWithoutAprobadorNestedInput
+  solicitudesEfectuadas?: Prisma.SolicitudUncheckedUpdateManyWithoutEfectuadorNestedInput
+}
+
+export type UsuarioUncheckedUpdateManyWithoutAlmacenInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  rol?: Prisma.EnumRolUsuarioFieldUpdateOperationsInput | $Enums.RolUsuario
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  totpSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpHabilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  empresaId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1247,17 +2271,25 @@ export type UsuarioUncheckedUpdateManyWithoutEmpresaInput = {
 export type UsuarioCountOutputType = {
   movimientosRegistrados: number
   refreshTokens: number
+  codigosRecuperacion2fa: number
   notificaciones: number
   comprasRegistradas: number
   ventasRegistradas: number
+  solicitudesCreadas: number
+  solicitudesAprobadas: number
+  solicitudesEfectuadas: number
 }
 
 export type UsuarioCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   movimientosRegistrados?: boolean | UsuarioCountOutputTypeCountMovimientosRegistradosArgs
   refreshTokens?: boolean | UsuarioCountOutputTypeCountRefreshTokensArgs
+  codigosRecuperacion2fa?: boolean | UsuarioCountOutputTypeCountCodigosRecuperacion2faArgs
   notificaciones?: boolean | UsuarioCountOutputTypeCountNotificacionesArgs
   comprasRegistradas?: boolean | UsuarioCountOutputTypeCountComprasRegistradasArgs
   ventasRegistradas?: boolean | UsuarioCountOutputTypeCountVentasRegistradasArgs
+  solicitudesCreadas?: boolean | UsuarioCountOutputTypeCountSolicitudesCreadasArgs
+  solicitudesAprobadas?: boolean | UsuarioCountOutputTypeCountSolicitudesAprobadasArgs
+  solicitudesEfectuadas?: boolean | UsuarioCountOutputTypeCountSolicitudesEfectuadasArgs
 }
 
 /**
@@ -1287,6 +2319,13 @@ export type UsuarioCountOutputTypeCountRefreshTokensArgs<ExtArgs extends runtime
 /**
  * UsuarioCountOutputType without action
  */
+export type UsuarioCountOutputTypeCountCodigosRecuperacion2faArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CodigoRecuperacion2FAWhereInput
+}
+
+/**
+ * UsuarioCountOutputType without action
+ */
 export type UsuarioCountOutputTypeCountNotificacionesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.NotificacionWhereInput
 }
@@ -1305,6 +2344,27 @@ export type UsuarioCountOutputTypeCountVentasRegistradasArgs<ExtArgs extends run
   where?: Prisma.VentaWhereInput
 }
 
+/**
+ * UsuarioCountOutputType without action
+ */
+export type UsuarioCountOutputTypeCountSolicitudesCreadasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SolicitudWhereInput
+}
+
+/**
+ * UsuarioCountOutputType without action
+ */
+export type UsuarioCountOutputTypeCountSolicitudesAprobadasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SolicitudWhereInput
+}
+
+/**
+ * UsuarioCountOutputType without action
+ */
+export type UsuarioCountOutputTypeCountSolicitudesEfectuadasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SolicitudWhereInput
+}
+
 
 export type UsuarioSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1313,18 +2373,26 @@ export type UsuarioSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   nombre?: boolean
   rol?: boolean
   activo?: boolean
+  totpSecret?: boolean
+  totpHabilitado?: boolean
   empresaId?: boolean
+  almacenId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   createdBy?: boolean
   updatedBy?: boolean
   deletedAt?: boolean
   empresa?: boolean | Prisma.EmpresaDefaultArgs<ExtArgs>
+  almacen?: boolean | Prisma.Usuario$almacenArgs<ExtArgs>
   movimientosRegistrados?: boolean | Prisma.Usuario$movimientosRegistradosArgs<ExtArgs>
   refreshTokens?: boolean | Prisma.Usuario$refreshTokensArgs<ExtArgs>
+  codigosRecuperacion2fa?: boolean | Prisma.Usuario$codigosRecuperacion2faArgs<ExtArgs>
   notificaciones?: boolean | Prisma.Usuario$notificacionesArgs<ExtArgs>
   comprasRegistradas?: boolean | Prisma.Usuario$comprasRegistradasArgs<ExtArgs>
   ventasRegistradas?: boolean | Prisma.Usuario$ventasRegistradasArgs<ExtArgs>
+  solicitudesCreadas?: boolean | Prisma.Usuario$solicitudesCreadasArgs<ExtArgs>
+  solicitudesAprobadas?: boolean | Prisma.Usuario$solicitudesAprobadasArgs<ExtArgs>
+  solicitudesEfectuadas?: boolean | Prisma.Usuario$solicitudesEfectuadasArgs<ExtArgs>
   _count?: boolean | Prisma.UsuarioCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["usuario"]>
 
@@ -1335,13 +2403,17 @@ export type UsuarioSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   nombre?: boolean
   rol?: boolean
   activo?: boolean
+  totpSecret?: boolean
+  totpHabilitado?: boolean
   empresaId?: boolean
+  almacenId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   createdBy?: boolean
   updatedBy?: boolean
   deletedAt?: boolean
   empresa?: boolean | Prisma.EmpresaDefaultArgs<ExtArgs>
+  almacen?: boolean | Prisma.Usuario$almacenArgs<ExtArgs>
 }, ExtArgs["result"]["usuario"]>
 
 export type UsuarioSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1351,13 +2423,17 @@ export type UsuarioSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   nombre?: boolean
   rol?: boolean
   activo?: boolean
+  totpSecret?: boolean
+  totpHabilitado?: boolean
   empresaId?: boolean
+  almacenId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   createdBy?: boolean
   updatedBy?: boolean
   deletedAt?: boolean
   empresa?: boolean | Prisma.EmpresaDefaultArgs<ExtArgs>
+  almacen?: boolean | Prisma.Usuario$almacenArgs<ExtArgs>
 }, ExtArgs["result"]["usuario"]>
 
 export type UsuarioSelectScalar = {
@@ -1367,7 +2443,10 @@ export type UsuarioSelectScalar = {
   nombre?: boolean
   rol?: boolean
   activo?: boolean
+  totpSecret?: boolean
+  totpHabilitado?: boolean
   empresaId?: boolean
+  almacenId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   createdBy?: boolean
@@ -1375,32 +2454,44 @@ export type UsuarioSelectScalar = {
   deletedAt?: boolean
 }
 
-export type UsuarioOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "passwordHash" | "nombre" | "rol" | "activo" | "empresaId" | "createdAt" | "updatedAt" | "createdBy" | "updatedBy" | "deletedAt", ExtArgs["result"]["usuario"]>
+export type UsuarioOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "passwordHash" | "nombre" | "rol" | "activo" | "totpSecret" | "totpHabilitado" | "empresaId" | "almacenId" | "createdAt" | "updatedAt" | "createdBy" | "updatedBy" | "deletedAt", ExtArgs["result"]["usuario"]>
 export type UsuarioInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   empresa?: boolean | Prisma.EmpresaDefaultArgs<ExtArgs>
+  almacen?: boolean | Prisma.Usuario$almacenArgs<ExtArgs>
   movimientosRegistrados?: boolean | Prisma.Usuario$movimientosRegistradosArgs<ExtArgs>
   refreshTokens?: boolean | Prisma.Usuario$refreshTokensArgs<ExtArgs>
+  codigosRecuperacion2fa?: boolean | Prisma.Usuario$codigosRecuperacion2faArgs<ExtArgs>
   notificaciones?: boolean | Prisma.Usuario$notificacionesArgs<ExtArgs>
   comprasRegistradas?: boolean | Prisma.Usuario$comprasRegistradasArgs<ExtArgs>
   ventasRegistradas?: boolean | Prisma.Usuario$ventasRegistradasArgs<ExtArgs>
+  solicitudesCreadas?: boolean | Prisma.Usuario$solicitudesCreadasArgs<ExtArgs>
+  solicitudesAprobadas?: boolean | Prisma.Usuario$solicitudesAprobadasArgs<ExtArgs>
+  solicitudesEfectuadas?: boolean | Prisma.Usuario$solicitudesEfectuadasArgs<ExtArgs>
   _count?: boolean | Prisma.UsuarioCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UsuarioIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   empresa?: boolean | Prisma.EmpresaDefaultArgs<ExtArgs>
+  almacen?: boolean | Prisma.Usuario$almacenArgs<ExtArgs>
 }
 export type UsuarioIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   empresa?: boolean | Prisma.EmpresaDefaultArgs<ExtArgs>
+  almacen?: boolean | Prisma.Usuario$almacenArgs<ExtArgs>
 }
 
 export type $UsuarioPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Usuario"
   objects: {
     empresa: Prisma.$EmpresaPayload<ExtArgs>
+    almacen: Prisma.$AlmacenPayload<ExtArgs> | null
     movimientosRegistrados: Prisma.$MovimientoInventarioPayload<ExtArgs>[]
     refreshTokens: Prisma.$RefreshTokenPayload<ExtArgs>[]
+    codigosRecuperacion2fa: Prisma.$CodigoRecuperacion2FAPayload<ExtArgs>[]
     notificaciones: Prisma.$NotificacionPayload<ExtArgs>[]
     comprasRegistradas: Prisma.$CompraPayload<ExtArgs>[]
     ventasRegistradas: Prisma.$VentaPayload<ExtArgs>[]
+    solicitudesCreadas: Prisma.$SolicitudPayload<ExtArgs>[]
+    solicitudesAprobadas: Prisma.$SolicitudPayload<ExtArgs>[]
+    solicitudesEfectuadas: Prisma.$SolicitudPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1409,7 +2500,10 @@ export type $UsuarioPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     nombre: string
     rol: $Enums.RolUsuario
     activo: boolean
+    totpSecret: string | null
+    totpHabilitado: boolean
     empresaId: string
+    almacenId: string | null
     createdAt: Date
     updatedAt: Date
     createdBy: string | null
@@ -1810,11 +2904,16 @@ readonly fields: UsuarioFieldRefs;
 export interface Prisma__UsuarioClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   empresa<T extends Prisma.EmpresaDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmpresaDefaultArgs<ExtArgs>>): Prisma.Prisma__EmpresaClient<runtime.Types.Result.GetResult<Prisma.$EmpresaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  almacen<T extends Prisma.Usuario$almacenArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Usuario$almacenArgs<ExtArgs>>): Prisma.Prisma__AlmacenClient<runtime.Types.Result.GetResult<Prisma.$AlmacenPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   movimientosRegistrados<T extends Prisma.Usuario$movimientosRegistradosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Usuario$movimientosRegistradosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MovimientoInventarioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   refreshTokens<T extends Prisma.Usuario$refreshTokensArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Usuario$refreshTokensArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RefreshTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  codigosRecuperacion2fa<T extends Prisma.Usuario$codigosRecuperacion2faArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Usuario$codigosRecuperacion2faArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CodigoRecuperacion2FAPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   notificaciones<T extends Prisma.Usuario$notificacionesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Usuario$notificacionesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificacionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   comprasRegistradas<T extends Prisma.Usuario$comprasRegistradasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Usuario$comprasRegistradasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CompraPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   ventasRegistradas<T extends Prisma.Usuario$ventasRegistradasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Usuario$ventasRegistradasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VentaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  solicitudesCreadas<T extends Prisma.Usuario$solicitudesCreadasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Usuario$solicitudesCreadasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SolicitudPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  solicitudesAprobadas<T extends Prisma.Usuario$solicitudesAprobadasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Usuario$solicitudesAprobadasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SolicitudPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  solicitudesEfectuadas<T extends Prisma.Usuario$solicitudesEfectuadasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Usuario$solicitudesEfectuadasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SolicitudPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1850,7 +2949,10 @@ export interface UsuarioFieldRefs {
   readonly nombre: Prisma.FieldRef<"Usuario", 'String'>
   readonly rol: Prisma.FieldRef<"Usuario", 'RolUsuario'>
   readonly activo: Prisma.FieldRef<"Usuario", 'Boolean'>
+  readonly totpSecret: Prisma.FieldRef<"Usuario", 'String'>
+  readonly totpHabilitado: Prisma.FieldRef<"Usuario", 'Boolean'>
   readonly empresaId: Prisma.FieldRef<"Usuario", 'String'>
+  readonly almacenId: Prisma.FieldRef<"Usuario", 'String'>
   readonly createdAt: Prisma.FieldRef<"Usuario", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Usuario", 'DateTime'>
   readonly createdBy: Prisma.FieldRef<"Usuario", 'String'>
@@ -2257,6 +3359,25 @@ export type UsuarioDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
 }
 
 /**
+ * Usuario.almacen
+ */
+export type Usuario$almacenArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Almacen
+   */
+  select?: Prisma.AlmacenSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Almacen
+   */
+  omit?: Prisma.AlmacenOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AlmacenInclude<ExtArgs> | null
+  where?: Prisma.AlmacenWhereInput
+}
+
+/**
  * Usuario.movimientosRegistrados
  */
 export type Usuario$movimientosRegistradosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2302,6 +3423,30 @@ export type Usuario$refreshTokensArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   distinct?: Prisma.RefreshTokenScalarFieldEnum | Prisma.RefreshTokenScalarFieldEnum[]
+}
+
+/**
+ * Usuario.codigosRecuperacion2fa
+ */
+export type Usuario$codigosRecuperacion2faArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CodigoRecuperacion2FA
+   */
+  select?: Prisma.CodigoRecuperacion2FASelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CodigoRecuperacion2FA
+   */
+  omit?: Prisma.CodigoRecuperacion2FAOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CodigoRecuperacion2FAInclude<ExtArgs> | null
+  where?: Prisma.CodigoRecuperacion2FAWhereInput
+  orderBy?: Prisma.CodigoRecuperacion2FAOrderByWithRelationInput | Prisma.CodigoRecuperacion2FAOrderByWithRelationInput[]
+  cursor?: Prisma.CodigoRecuperacion2FAWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CodigoRecuperacion2FAScalarFieldEnum | Prisma.CodigoRecuperacion2FAScalarFieldEnum[]
 }
 
 /**
@@ -2374,6 +3519,78 @@ export type Usuario$ventasRegistradasArgs<ExtArgs extends runtime.Types.Extensio
   take?: number
   skip?: number
   distinct?: Prisma.VentaScalarFieldEnum | Prisma.VentaScalarFieldEnum[]
+}
+
+/**
+ * Usuario.solicitudesCreadas
+ */
+export type Usuario$solicitudesCreadasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Solicitud
+   */
+  select?: Prisma.SolicitudSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Solicitud
+   */
+  omit?: Prisma.SolicitudOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SolicitudInclude<ExtArgs> | null
+  where?: Prisma.SolicitudWhereInput
+  orderBy?: Prisma.SolicitudOrderByWithRelationInput | Prisma.SolicitudOrderByWithRelationInput[]
+  cursor?: Prisma.SolicitudWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SolicitudScalarFieldEnum | Prisma.SolicitudScalarFieldEnum[]
+}
+
+/**
+ * Usuario.solicitudesAprobadas
+ */
+export type Usuario$solicitudesAprobadasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Solicitud
+   */
+  select?: Prisma.SolicitudSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Solicitud
+   */
+  omit?: Prisma.SolicitudOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SolicitudInclude<ExtArgs> | null
+  where?: Prisma.SolicitudWhereInput
+  orderBy?: Prisma.SolicitudOrderByWithRelationInput | Prisma.SolicitudOrderByWithRelationInput[]
+  cursor?: Prisma.SolicitudWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SolicitudScalarFieldEnum | Prisma.SolicitudScalarFieldEnum[]
+}
+
+/**
+ * Usuario.solicitudesEfectuadas
+ */
+export type Usuario$solicitudesEfectuadasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Solicitud
+   */
+  select?: Prisma.SolicitudSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Solicitud
+   */
+  omit?: Prisma.SolicitudOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SolicitudInclude<ExtArgs> | null
+  where?: Prisma.SolicitudWhereInput
+  orderBy?: Prisma.SolicitudOrderByWithRelationInput | Prisma.SolicitudOrderByWithRelationInput[]
+  cursor?: Prisma.SolicitudWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SolicitudScalarFieldEnum | Prisma.SolicitudScalarFieldEnum[]
 }
 
 /**

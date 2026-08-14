@@ -8,6 +8,13 @@ export const movimientosService = {
     return movimientosRepository.listar(filtros);
   },
 
+  async listarPaginado(filtros: ListarMovimientosQuery) {
+    const page = filtros.page ?? 1;
+    const pageSize = filtros.pageSize;
+    const { data, total } = await movimientosRepository.listarPaginado(filtros, page, pageSize);
+    return { data, meta: { total, page, pageSize, totalPaginas: Math.max(1, Math.ceil(total / pageSize)) } };
+  },
+
   async registrar(usuarioId: string, input: RegistrarMovimientoInput) {
     const producto = await productosRepository.buscarPorId(input.productoId);
     if (!producto) {

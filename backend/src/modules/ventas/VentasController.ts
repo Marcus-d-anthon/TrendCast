@@ -1,9 +1,15 @@
 import type { Request, Response } from "express";
 import { ventasService } from "./VentasService";
-import { crearVentaSchema, idParamSchema } from "./VentasValidators";
+import { crearVentaSchema, idParamSchema, listarVentasQuerySchema } from "./VentasValidators";
 
 export const ventasController = {
-  async listar(_req: Request, res: Response): Promise<void> {
+  async listar(req: Request, res: Response): Promise<void> {
+    if (req.query.page !== undefined) {
+      const query = listarVentasQuerySchema.parse(req.query);
+      const resultado = await ventasService.listarPaginado(query);
+      res.status(200).json(resultado);
+      return;
+    }
     const ventas = await ventasService.listar();
     res.status(200).json({ data: ventas });
   },

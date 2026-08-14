@@ -49,6 +49,7 @@ export type MovimientoInventarioMinAggregateOutputType = {
   movimientoOrigenId: string | null
   compraId: string | null
   ventaId: string | null
+  solicitudId: string | null
   fecha: Date | null
   createdAt: Date | null
 }
@@ -66,6 +67,7 @@ export type MovimientoInventarioMaxAggregateOutputType = {
   movimientoOrigenId: string | null
   compraId: string | null
   ventaId: string | null
+  solicitudId: string | null
   fecha: Date | null
   createdAt: Date | null
 }
@@ -83,6 +85,7 @@ export type MovimientoInventarioCountAggregateOutputType = {
   movimientoOrigenId: number
   compraId: number
   ventaId: number
+  solicitudId: number
   fecha: number
   createdAt: number
   _all: number
@@ -112,6 +115,7 @@ export type MovimientoInventarioMinAggregateInputType = {
   movimientoOrigenId?: true
   compraId?: true
   ventaId?: true
+  solicitudId?: true
   fecha?: true
   createdAt?: true
 }
@@ -129,6 +133,7 @@ export type MovimientoInventarioMaxAggregateInputType = {
   movimientoOrigenId?: true
   compraId?: true
   ventaId?: true
+  solicitudId?: true
   fecha?: true
   createdAt?: true
 }
@@ -146,6 +151,7 @@ export type MovimientoInventarioCountAggregateInputType = {
   movimientoOrigenId?: true
   compraId?: true
   ventaId?: true
+  solicitudId?: true
   fecha?: true
   createdAt?: true
   _all?: true
@@ -250,6 +256,7 @@ export type MovimientoInventarioGroupByOutputType = {
   movimientoOrigenId: string | null
   compraId: string | null
   ventaId: string | null
+  solicitudId: string | null
   fecha: Date
   createdAt: Date
   _count: MovimientoInventarioCountAggregateOutputType | null
@@ -290,6 +297,7 @@ export type MovimientoInventarioWhereInput = {
   movimientoOrigenId?: Prisma.StringNullableFilter<"MovimientoInventario"> | string | null
   compraId?: Prisma.StringNullableFilter<"MovimientoInventario"> | string | null
   ventaId?: Prisma.StringNullableFilter<"MovimientoInventario"> | string | null
+  solicitudId?: Prisma.StringNullableFilter<"MovimientoInventario"> | string | null
   fecha?: Prisma.DateTimeFilter<"MovimientoInventario"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"MovimientoInventario"> | Date | string
   producto?: Prisma.XOR<Prisma.ProductoScalarRelationFilter, Prisma.ProductoWhereInput>
@@ -299,6 +307,7 @@ export type MovimientoInventarioWhereInput = {
   ajustes?: Prisma.MovimientoInventarioListRelationFilter
   compra?: Prisma.XOR<Prisma.CompraNullableScalarRelationFilter, Prisma.CompraWhereInput> | null
   venta?: Prisma.XOR<Prisma.VentaNullableScalarRelationFilter, Prisma.VentaWhereInput> | null
+  solicitud?: Prisma.XOR<Prisma.SolicitudNullableScalarRelationFilter, Prisma.SolicitudWhereInput> | null
 }
 
 export type MovimientoInventarioOrderByWithRelationInput = {
@@ -314,6 +323,7 @@ export type MovimientoInventarioOrderByWithRelationInput = {
   movimientoOrigenId?: Prisma.SortOrderInput | Prisma.SortOrder
   compraId?: Prisma.SortOrderInput | Prisma.SortOrder
   ventaId?: Prisma.SortOrderInput | Prisma.SortOrder
+  solicitudId?: Prisma.SortOrderInput | Prisma.SortOrder
   fecha?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   producto?: Prisma.ProductoOrderByWithRelationInput
@@ -323,6 +333,7 @@ export type MovimientoInventarioOrderByWithRelationInput = {
   ajustes?: Prisma.MovimientoInventarioOrderByRelationAggregateInput
   compra?: Prisma.CompraOrderByWithRelationInput
   venta?: Prisma.VentaOrderByWithRelationInput
+  solicitud?: Prisma.SolicitudOrderByWithRelationInput
 }
 
 export type MovimientoInventarioWhereUniqueInput = Prisma.AtLeast<{
@@ -341,6 +352,7 @@ export type MovimientoInventarioWhereUniqueInput = Prisma.AtLeast<{
   movimientoOrigenId?: Prisma.StringNullableFilter<"MovimientoInventario"> | string | null
   compraId?: Prisma.StringNullableFilter<"MovimientoInventario"> | string | null
   ventaId?: Prisma.StringNullableFilter<"MovimientoInventario"> | string | null
+  solicitudId?: Prisma.StringNullableFilter<"MovimientoInventario"> | string | null
   fecha?: Prisma.DateTimeFilter<"MovimientoInventario"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"MovimientoInventario"> | Date | string
   producto?: Prisma.XOR<Prisma.ProductoScalarRelationFilter, Prisma.ProductoWhereInput>
@@ -350,6 +362,7 @@ export type MovimientoInventarioWhereUniqueInput = Prisma.AtLeast<{
   ajustes?: Prisma.MovimientoInventarioListRelationFilter
   compra?: Prisma.XOR<Prisma.CompraNullableScalarRelationFilter, Prisma.CompraWhereInput> | null
   venta?: Prisma.XOR<Prisma.VentaNullableScalarRelationFilter, Prisma.VentaWhereInput> | null
+  solicitud?: Prisma.XOR<Prisma.SolicitudNullableScalarRelationFilter, Prisma.SolicitudWhereInput> | null
 }, "id">
 
 export type MovimientoInventarioOrderByWithAggregationInput = {
@@ -365,6 +378,7 @@ export type MovimientoInventarioOrderByWithAggregationInput = {
   movimientoOrigenId?: Prisma.SortOrderInput | Prisma.SortOrder
   compraId?: Prisma.SortOrderInput | Prisma.SortOrder
   ventaId?: Prisma.SortOrderInput | Prisma.SortOrder
+  solicitudId?: Prisma.SortOrderInput | Prisma.SortOrder
   fecha?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.MovimientoInventarioCountOrderByAggregateInput
@@ -390,6 +404,7 @@ export type MovimientoInventarioScalarWhereWithAggregatesInput = {
   movimientoOrigenId?: Prisma.StringNullableWithAggregatesFilter<"MovimientoInventario"> | string | null
   compraId?: Prisma.StringNullableWithAggregatesFilter<"MovimientoInventario"> | string | null
   ventaId?: Prisma.StringNullableWithAggregatesFilter<"MovimientoInventario"> | string | null
+  solicitudId?: Prisma.StringNullableWithAggregatesFilter<"MovimientoInventario"> | string | null
   fecha?: Prisma.DateTimeWithAggregatesFilter<"MovimientoInventario"> | Date | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"MovimientoInventario"> | Date | string
 }
@@ -410,6 +425,7 @@ export type MovimientoInventarioCreateInput = {
   ajustes?: Prisma.MovimientoInventarioCreateNestedManyWithoutMovimientoOrigenInput
   compra?: Prisma.CompraCreateNestedOneWithoutMovimientosInput
   venta?: Prisma.VentaCreateNestedOneWithoutMovimientosInput
+  solicitud?: Prisma.SolicitudCreateNestedOneWithoutMovimientosInput
 }
 
 export type MovimientoInventarioUncheckedCreateInput = {
@@ -425,6 +441,7 @@ export type MovimientoInventarioUncheckedCreateInput = {
   movimientoOrigenId?: string | null
   compraId?: string | null
   ventaId?: string | null
+  solicitudId?: string | null
   fecha?: Date | string
   createdAt?: Date | string
   ajustes?: Prisma.MovimientoInventarioUncheckedCreateNestedManyWithoutMovimientoOrigenInput
@@ -446,6 +463,7 @@ export type MovimientoInventarioUpdateInput = {
   ajustes?: Prisma.MovimientoInventarioUpdateManyWithoutMovimientoOrigenNestedInput
   compra?: Prisma.CompraUpdateOneWithoutMovimientosNestedInput
   venta?: Prisma.VentaUpdateOneWithoutMovimientosNestedInput
+  solicitud?: Prisma.SolicitudUpdateOneWithoutMovimientosNestedInput
 }
 
 export type MovimientoInventarioUncheckedUpdateInput = {
@@ -461,6 +479,7 @@ export type MovimientoInventarioUncheckedUpdateInput = {
   movimientoOrigenId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   compraId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ventaId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  solicitudId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ajustes?: Prisma.MovimientoInventarioUncheckedUpdateManyWithoutMovimientoOrigenNestedInput
@@ -479,6 +498,7 @@ export type MovimientoInventarioCreateManyInput = {
   movimientoOrigenId?: string | null
   compraId?: string | null
   ventaId?: string | null
+  solicitudId?: string | null
   fecha?: Date | string
   createdAt?: Date | string
 }
@@ -507,6 +527,7 @@ export type MovimientoInventarioUncheckedUpdateManyInput = {
   movimientoOrigenId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   compraId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ventaId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  solicitudId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -539,6 +560,7 @@ export type MovimientoInventarioCountOrderByAggregateInput = {
   movimientoOrigenId?: Prisma.SortOrder
   compraId?: Prisma.SortOrder
   ventaId?: Prisma.SortOrder
+  solicitudId?: Prisma.SortOrder
   fecha?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -561,6 +583,7 @@ export type MovimientoInventarioMaxOrderByAggregateInput = {
   movimientoOrigenId?: Prisma.SortOrder
   compraId?: Prisma.SortOrder
   ventaId?: Prisma.SortOrder
+  solicitudId?: Prisma.SortOrder
   fecha?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -578,6 +601,7 @@ export type MovimientoInventarioMinOrderByAggregateInput = {
   movimientoOrigenId?: Prisma.SortOrder
   compraId?: Prisma.SortOrder
   ventaId?: Prisma.SortOrder
+  solicitudId?: Prisma.SortOrder
   fecha?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -710,6 +734,48 @@ export type MovimientoInventarioUncheckedUpdateManyWithoutProductoNestedInput = 
   connect?: Prisma.MovimientoInventarioWhereUniqueInput | Prisma.MovimientoInventarioWhereUniqueInput[]
   update?: Prisma.MovimientoInventarioUpdateWithWhereUniqueWithoutProductoInput | Prisma.MovimientoInventarioUpdateWithWhereUniqueWithoutProductoInput[]
   updateMany?: Prisma.MovimientoInventarioUpdateManyWithWhereWithoutProductoInput | Prisma.MovimientoInventarioUpdateManyWithWhereWithoutProductoInput[]
+  deleteMany?: Prisma.MovimientoInventarioScalarWhereInput | Prisma.MovimientoInventarioScalarWhereInput[]
+}
+
+export type MovimientoInventarioCreateNestedManyWithoutSolicitudInput = {
+  create?: Prisma.XOR<Prisma.MovimientoInventarioCreateWithoutSolicitudInput, Prisma.MovimientoInventarioUncheckedCreateWithoutSolicitudInput> | Prisma.MovimientoInventarioCreateWithoutSolicitudInput[] | Prisma.MovimientoInventarioUncheckedCreateWithoutSolicitudInput[]
+  connectOrCreate?: Prisma.MovimientoInventarioCreateOrConnectWithoutSolicitudInput | Prisma.MovimientoInventarioCreateOrConnectWithoutSolicitudInput[]
+  createMany?: Prisma.MovimientoInventarioCreateManySolicitudInputEnvelope
+  connect?: Prisma.MovimientoInventarioWhereUniqueInput | Prisma.MovimientoInventarioWhereUniqueInput[]
+}
+
+export type MovimientoInventarioUncheckedCreateNestedManyWithoutSolicitudInput = {
+  create?: Prisma.XOR<Prisma.MovimientoInventarioCreateWithoutSolicitudInput, Prisma.MovimientoInventarioUncheckedCreateWithoutSolicitudInput> | Prisma.MovimientoInventarioCreateWithoutSolicitudInput[] | Prisma.MovimientoInventarioUncheckedCreateWithoutSolicitudInput[]
+  connectOrCreate?: Prisma.MovimientoInventarioCreateOrConnectWithoutSolicitudInput | Prisma.MovimientoInventarioCreateOrConnectWithoutSolicitudInput[]
+  createMany?: Prisma.MovimientoInventarioCreateManySolicitudInputEnvelope
+  connect?: Prisma.MovimientoInventarioWhereUniqueInput | Prisma.MovimientoInventarioWhereUniqueInput[]
+}
+
+export type MovimientoInventarioUpdateManyWithoutSolicitudNestedInput = {
+  create?: Prisma.XOR<Prisma.MovimientoInventarioCreateWithoutSolicitudInput, Prisma.MovimientoInventarioUncheckedCreateWithoutSolicitudInput> | Prisma.MovimientoInventarioCreateWithoutSolicitudInput[] | Prisma.MovimientoInventarioUncheckedCreateWithoutSolicitudInput[]
+  connectOrCreate?: Prisma.MovimientoInventarioCreateOrConnectWithoutSolicitudInput | Prisma.MovimientoInventarioCreateOrConnectWithoutSolicitudInput[]
+  upsert?: Prisma.MovimientoInventarioUpsertWithWhereUniqueWithoutSolicitudInput | Prisma.MovimientoInventarioUpsertWithWhereUniqueWithoutSolicitudInput[]
+  createMany?: Prisma.MovimientoInventarioCreateManySolicitudInputEnvelope
+  set?: Prisma.MovimientoInventarioWhereUniqueInput | Prisma.MovimientoInventarioWhereUniqueInput[]
+  disconnect?: Prisma.MovimientoInventarioWhereUniqueInput | Prisma.MovimientoInventarioWhereUniqueInput[]
+  delete?: Prisma.MovimientoInventarioWhereUniqueInput | Prisma.MovimientoInventarioWhereUniqueInput[]
+  connect?: Prisma.MovimientoInventarioWhereUniqueInput | Prisma.MovimientoInventarioWhereUniqueInput[]
+  update?: Prisma.MovimientoInventarioUpdateWithWhereUniqueWithoutSolicitudInput | Prisma.MovimientoInventarioUpdateWithWhereUniqueWithoutSolicitudInput[]
+  updateMany?: Prisma.MovimientoInventarioUpdateManyWithWhereWithoutSolicitudInput | Prisma.MovimientoInventarioUpdateManyWithWhereWithoutSolicitudInput[]
+  deleteMany?: Prisma.MovimientoInventarioScalarWhereInput | Prisma.MovimientoInventarioScalarWhereInput[]
+}
+
+export type MovimientoInventarioUncheckedUpdateManyWithoutSolicitudNestedInput = {
+  create?: Prisma.XOR<Prisma.MovimientoInventarioCreateWithoutSolicitudInput, Prisma.MovimientoInventarioUncheckedCreateWithoutSolicitudInput> | Prisma.MovimientoInventarioCreateWithoutSolicitudInput[] | Prisma.MovimientoInventarioUncheckedCreateWithoutSolicitudInput[]
+  connectOrCreate?: Prisma.MovimientoInventarioCreateOrConnectWithoutSolicitudInput | Prisma.MovimientoInventarioCreateOrConnectWithoutSolicitudInput[]
+  upsert?: Prisma.MovimientoInventarioUpsertWithWhereUniqueWithoutSolicitudInput | Prisma.MovimientoInventarioUpsertWithWhereUniqueWithoutSolicitudInput[]
+  createMany?: Prisma.MovimientoInventarioCreateManySolicitudInputEnvelope
+  set?: Prisma.MovimientoInventarioWhereUniqueInput | Prisma.MovimientoInventarioWhereUniqueInput[]
+  disconnect?: Prisma.MovimientoInventarioWhereUniqueInput | Prisma.MovimientoInventarioWhereUniqueInput[]
+  delete?: Prisma.MovimientoInventarioWhereUniqueInput | Prisma.MovimientoInventarioWhereUniqueInput[]
+  connect?: Prisma.MovimientoInventarioWhereUniqueInput | Prisma.MovimientoInventarioWhereUniqueInput[]
+  update?: Prisma.MovimientoInventarioUpdateWithWhereUniqueWithoutSolicitudInput | Prisma.MovimientoInventarioUpdateWithWhereUniqueWithoutSolicitudInput[]
+  updateMany?: Prisma.MovimientoInventarioUpdateManyWithWhereWithoutSolicitudInput | Prisma.MovimientoInventarioUpdateManyWithWhereWithoutSolicitudInput[]
   deleteMany?: Prisma.MovimientoInventarioScalarWhereInput | Prisma.MovimientoInventarioScalarWhereInput[]
 }
 
@@ -874,6 +940,7 @@ export type MovimientoInventarioCreateWithoutUsuarioInput = {
   ajustes?: Prisma.MovimientoInventarioCreateNestedManyWithoutMovimientoOrigenInput
   compra?: Prisma.CompraCreateNestedOneWithoutMovimientosInput
   venta?: Prisma.VentaCreateNestedOneWithoutMovimientosInput
+  solicitud?: Prisma.SolicitudCreateNestedOneWithoutMovimientosInput
 }
 
 export type MovimientoInventarioUncheckedCreateWithoutUsuarioInput = {
@@ -888,6 +955,7 @@ export type MovimientoInventarioUncheckedCreateWithoutUsuarioInput = {
   movimientoOrigenId?: string | null
   compraId?: string | null
   ventaId?: string | null
+  solicitudId?: string | null
   fecha?: Date | string
   createdAt?: Date | string
   ajustes?: Prisma.MovimientoInventarioUncheckedCreateNestedManyWithoutMovimientoOrigenInput
@@ -935,6 +1003,7 @@ export type MovimientoInventarioScalarWhereInput = {
   movimientoOrigenId?: Prisma.StringNullableFilter<"MovimientoInventario"> | string | null
   compraId?: Prisma.StringNullableFilter<"MovimientoInventario"> | string | null
   ventaId?: Prisma.StringNullableFilter<"MovimientoInventario"> | string | null
+  solicitudId?: Prisma.StringNullableFilter<"MovimientoInventario"> | string | null
   fecha?: Prisma.DateTimeFilter<"MovimientoInventario"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"MovimientoInventario"> | Date | string
 }
@@ -954,6 +1023,7 @@ export type MovimientoInventarioCreateWithoutAlmacenInput = {
   ajustes?: Prisma.MovimientoInventarioCreateNestedManyWithoutMovimientoOrigenInput
   compra?: Prisma.CompraCreateNestedOneWithoutMovimientosInput
   venta?: Prisma.VentaCreateNestedOneWithoutMovimientosInput
+  solicitud?: Prisma.SolicitudCreateNestedOneWithoutMovimientosInput
 }
 
 export type MovimientoInventarioUncheckedCreateWithoutAlmacenInput = {
@@ -968,6 +1038,7 @@ export type MovimientoInventarioUncheckedCreateWithoutAlmacenInput = {
   movimientoOrigenId?: string | null
   compraId?: string | null
   ventaId?: string | null
+  solicitudId?: string | null
   fecha?: Date | string
   createdAt?: Date | string
   ajustes?: Prisma.MovimientoInventarioUncheckedCreateNestedManyWithoutMovimientoOrigenInput
@@ -1014,6 +1085,7 @@ export type MovimientoInventarioCreateWithoutProductoInput = {
   ajustes?: Prisma.MovimientoInventarioCreateNestedManyWithoutMovimientoOrigenInput
   compra?: Prisma.CompraCreateNestedOneWithoutMovimientosInput
   venta?: Prisma.VentaCreateNestedOneWithoutMovimientosInput
+  solicitud?: Prisma.SolicitudCreateNestedOneWithoutMovimientosInput
 }
 
 export type MovimientoInventarioUncheckedCreateWithoutProductoInput = {
@@ -1028,6 +1100,7 @@ export type MovimientoInventarioUncheckedCreateWithoutProductoInput = {
   movimientoOrigenId?: string | null
   compraId?: string | null
   ventaId?: string | null
+  solicitudId?: string | null
   fecha?: Date | string
   createdAt?: Date | string
   ajustes?: Prisma.MovimientoInventarioUncheckedCreateNestedManyWithoutMovimientoOrigenInput
@@ -1059,6 +1132,68 @@ export type MovimientoInventarioUpdateManyWithWhereWithoutProductoInput = {
   data: Prisma.XOR<Prisma.MovimientoInventarioUpdateManyMutationInput, Prisma.MovimientoInventarioUncheckedUpdateManyWithoutProductoInput>
 }
 
+export type MovimientoInventarioCreateWithoutSolicitudInput = {
+  id?: string
+  tipo: $Enums.TipoMovimiento
+  cantidad: number
+  saldoResultante: number
+  referencia?: string | null
+  motivo?: string | null
+  fecha?: Date | string
+  createdAt?: Date | string
+  producto: Prisma.ProductoCreateNestedOneWithoutMovimientosInput
+  almacen: Prisma.AlmacenCreateNestedOneWithoutMovimientosInput
+  usuario: Prisma.UsuarioCreateNestedOneWithoutMovimientosRegistradosInput
+  movimientoOrigen?: Prisma.MovimientoInventarioCreateNestedOneWithoutAjustesInput
+  ajustes?: Prisma.MovimientoInventarioCreateNestedManyWithoutMovimientoOrigenInput
+  compra?: Prisma.CompraCreateNestedOneWithoutMovimientosInput
+  venta?: Prisma.VentaCreateNestedOneWithoutMovimientosInput
+}
+
+export type MovimientoInventarioUncheckedCreateWithoutSolicitudInput = {
+  id?: string
+  tipo: $Enums.TipoMovimiento
+  cantidad: number
+  saldoResultante: number
+  referencia?: string | null
+  motivo?: string | null
+  productoId: string
+  almacenId: string
+  usuarioId: string
+  movimientoOrigenId?: string | null
+  compraId?: string | null
+  ventaId?: string | null
+  fecha?: Date | string
+  createdAt?: Date | string
+  ajustes?: Prisma.MovimientoInventarioUncheckedCreateNestedManyWithoutMovimientoOrigenInput
+}
+
+export type MovimientoInventarioCreateOrConnectWithoutSolicitudInput = {
+  where: Prisma.MovimientoInventarioWhereUniqueInput
+  create: Prisma.XOR<Prisma.MovimientoInventarioCreateWithoutSolicitudInput, Prisma.MovimientoInventarioUncheckedCreateWithoutSolicitudInput>
+}
+
+export type MovimientoInventarioCreateManySolicitudInputEnvelope = {
+  data: Prisma.MovimientoInventarioCreateManySolicitudInput | Prisma.MovimientoInventarioCreateManySolicitudInput[]
+  skipDuplicates?: boolean
+}
+
+export type MovimientoInventarioUpsertWithWhereUniqueWithoutSolicitudInput = {
+  where: Prisma.MovimientoInventarioWhereUniqueInput
+  update: Prisma.XOR<Prisma.MovimientoInventarioUpdateWithoutSolicitudInput, Prisma.MovimientoInventarioUncheckedUpdateWithoutSolicitudInput>
+  create: Prisma.XOR<Prisma.MovimientoInventarioCreateWithoutSolicitudInput, Prisma.MovimientoInventarioUncheckedCreateWithoutSolicitudInput>
+}
+
+export type MovimientoInventarioUpdateWithWhereUniqueWithoutSolicitudInput = {
+  where: Prisma.MovimientoInventarioWhereUniqueInput
+  data: Prisma.XOR<Prisma.MovimientoInventarioUpdateWithoutSolicitudInput, Prisma.MovimientoInventarioUncheckedUpdateWithoutSolicitudInput>
+}
+
+export type MovimientoInventarioUpdateManyWithWhereWithoutSolicitudInput = {
+  where: Prisma.MovimientoInventarioScalarWhereInput
+  data: Prisma.XOR<Prisma.MovimientoInventarioUpdateManyMutationInput, Prisma.MovimientoInventarioUncheckedUpdateManyWithoutSolicitudInput>
+}
+
 export type MovimientoInventarioCreateWithoutCompraInput = {
   id?: string
   tipo: $Enums.TipoMovimiento
@@ -1074,6 +1209,7 @@ export type MovimientoInventarioCreateWithoutCompraInput = {
   movimientoOrigen?: Prisma.MovimientoInventarioCreateNestedOneWithoutAjustesInput
   ajustes?: Prisma.MovimientoInventarioCreateNestedManyWithoutMovimientoOrigenInput
   venta?: Prisma.VentaCreateNestedOneWithoutMovimientosInput
+  solicitud?: Prisma.SolicitudCreateNestedOneWithoutMovimientosInput
 }
 
 export type MovimientoInventarioUncheckedCreateWithoutCompraInput = {
@@ -1088,6 +1224,7 @@ export type MovimientoInventarioUncheckedCreateWithoutCompraInput = {
   usuarioId: string
   movimientoOrigenId?: string | null
   ventaId?: string | null
+  solicitudId?: string | null
   fecha?: Date | string
   createdAt?: Date | string
   ajustes?: Prisma.MovimientoInventarioUncheckedCreateNestedManyWithoutMovimientoOrigenInput
@@ -1134,6 +1271,7 @@ export type MovimientoInventarioCreateWithoutVentaInput = {
   movimientoOrigen?: Prisma.MovimientoInventarioCreateNestedOneWithoutAjustesInput
   ajustes?: Prisma.MovimientoInventarioCreateNestedManyWithoutMovimientoOrigenInput
   compra?: Prisma.CompraCreateNestedOneWithoutMovimientosInput
+  solicitud?: Prisma.SolicitudCreateNestedOneWithoutMovimientosInput
 }
 
 export type MovimientoInventarioUncheckedCreateWithoutVentaInput = {
@@ -1148,6 +1286,7 @@ export type MovimientoInventarioUncheckedCreateWithoutVentaInput = {
   usuarioId: string
   movimientoOrigenId?: string | null
   compraId?: string | null
+  solicitudId?: string | null
   fecha?: Date | string
   createdAt?: Date | string
   ajustes?: Prisma.MovimientoInventarioUncheckedCreateNestedManyWithoutMovimientoOrigenInput
@@ -1194,6 +1333,7 @@ export type MovimientoInventarioCreateWithoutAjustesInput = {
   movimientoOrigen?: Prisma.MovimientoInventarioCreateNestedOneWithoutAjustesInput
   compra?: Prisma.CompraCreateNestedOneWithoutMovimientosInput
   venta?: Prisma.VentaCreateNestedOneWithoutMovimientosInput
+  solicitud?: Prisma.SolicitudCreateNestedOneWithoutMovimientosInput
 }
 
 export type MovimientoInventarioUncheckedCreateWithoutAjustesInput = {
@@ -1209,6 +1349,7 @@ export type MovimientoInventarioUncheckedCreateWithoutAjustesInput = {
   movimientoOrigenId?: string | null
   compraId?: string | null
   ventaId?: string | null
+  solicitudId?: string | null
   fecha?: Date | string
   createdAt?: Date | string
 }
@@ -1233,6 +1374,7 @@ export type MovimientoInventarioCreateWithoutMovimientoOrigenInput = {
   ajustes?: Prisma.MovimientoInventarioCreateNestedManyWithoutMovimientoOrigenInput
   compra?: Prisma.CompraCreateNestedOneWithoutMovimientosInput
   venta?: Prisma.VentaCreateNestedOneWithoutMovimientosInput
+  solicitud?: Prisma.SolicitudCreateNestedOneWithoutMovimientosInput
 }
 
 export type MovimientoInventarioUncheckedCreateWithoutMovimientoOrigenInput = {
@@ -1247,6 +1389,7 @@ export type MovimientoInventarioUncheckedCreateWithoutMovimientoOrigenInput = {
   usuarioId: string
   compraId?: string | null
   ventaId?: string | null
+  solicitudId?: string | null
   fecha?: Date | string
   createdAt?: Date | string
   ajustes?: Prisma.MovimientoInventarioUncheckedCreateNestedManyWithoutMovimientoOrigenInput
@@ -1288,6 +1431,7 @@ export type MovimientoInventarioUpdateWithoutAjustesInput = {
   movimientoOrigen?: Prisma.MovimientoInventarioUpdateOneWithoutAjustesNestedInput
   compra?: Prisma.CompraUpdateOneWithoutMovimientosNestedInput
   venta?: Prisma.VentaUpdateOneWithoutMovimientosNestedInput
+  solicitud?: Prisma.SolicitudUpdateOneWithoutMovimientosNestedInput
 }
 
 export type MovimientoInventarioUncheckedUpdateWithoutAjustesInput = {
@@ -1303,6 +1447,7 @@ export type MovimientoInventarioUncheckedUpdateWithoutAjustesInput = {
   movimientoOrigenId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   compraId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ventaId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  solicitudId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1335,6 +1480,7 @@ export type MovimientoInventarioCreateManyUsuarioInput = {
   movimientoOrigenId?: string | null
   compraId?: string | null
   ventaId?: string | null
+  solicitudId?: string | null
   fecha?: Date | string
   createdAt?: Date | string
 }
@@ -1354,6 +1500,7 @@ export type MovimientoInventarioUpdateWithoutUsuarioInput = {
   ajustes?: Prisma.MovimientoInventarioUpdateManyWithoutMovimientoOrigenNestedInput
   compra?: Prisma.CompraUpdateOneWithoutMovimientosNestedInput
   venta?: Prisma.VentaUpdateOneWithoutMovimientosNestedInput
+  solicitud?: Prisma.SolicitudUpdateOneWithoutMovimientosNestedInput
 }
 
 export type MovimientoInventarioUncheckedUpdateWithoutUsuarioInput = {
@@ -1368,6 +1515,7 @@ export type MovimientoInventarioUncheckedUpdateWithoutUsuarioInput = {
   movimientoOrigenId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   compraId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ventaId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  solicitudId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ajustes?: Prisma.MovimientoInventarioUncheckedUpdateManyWithoutMovimientoOrigenNestedInput
@@ -1385,6 +1533,7 @@ export type MovimientoInventarioUncheckedUpdateManyWithoutUsuarioInput = {
   movimientoOrigenId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   compraId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ventaId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  solicitudId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1401,6 +1550,7 @@ export type MovimientoInventarioCreateManyAlmacenInput = {
   movimientoOrigenId?: string | null
   compraId?: string | null
   ventaId?: string | null
+  solicitudId?: string | null
   fecha?: Date | string
   createdAt?: Date | string
 }
@@ -1420,6 +1570,7 @@ export type MovimientoInventarioUpdateWithoutAlmacenInput = {
   ajustes?: Prisma.MovimientoInventarioUpdateManyWithoutMovimientoOrigenNestedInput
   compra?: Prisma.CompraUpdateOneWithoutMovimientosNestedInput
   venta?: Prisma.VentaUpdateOneWithoutMovimientosNestedInput
+  solicitud?: Prisma.SolicitudUpdateOneWithoutMovimientosNestedInput
 }
 
 export type MovimientoInventarioUncheckedUpdateWithoutAlmacenInput = {
@@ -1434,6 +1585,7 @@ export type MovimientoInventarioUncheckedUpdateWithoutAlmacenInput = {
   movimientoOrigenId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   compraId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ventaId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  solicitudId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ajustes?: Prisma.MovimientoInventarioUncheckedUpdateManyWithoutMovimientoOrigenNestedInput
@@ -1451,6 +1603,7 @@ export type MovimientoInventarioUncheckedUpdateManyWithoutAlmacenInput = {
   movimientoOrigenId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   compraId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ventaId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  solicitudId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1467,6 +1620,7 @@ export type MovimientoInventarioCreateManyProductoInput = {
   movimientoOrigenId?: string | null
   compraId?: string | null
   ventaId?: string | null
+  solicitudId?: string | null
   fecha?: Date | string
   createdAt?: Date | string
 }
@@ -1486,6 +1640,7 @@ export type MovimientoInventarioUpdateWithoutProductoInput = {
   ajustes?: Prisma.MovimientoInventarioUpdateManyWithoutMovimientoOrigenNestedInput
   compra?: Prisma.CompraUpdateOneWithoutMovimientosNestedInput
   venta?: Prisma.VentaUpdateOneWithoutMovimientosNestedInput
+  solicitud?: Prisma.SolicitudUpdateOneWithoutMovimientosNestedInput
 }
 
 export type MovimientoInventarioUncheckedUpdateWithoutProductoInput = {
@@ -1500,6 +1655,7 @@ export type MovimientoInventarioUncheckedUpdateWithoutProductoInput = {
   movimientoOrigenId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   compraId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ventaId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  solicitudId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ajustes?: Prisma.MovimientoInventarioUncheckedUpdateManyWithoutMovimientoOrigenNestedInput
@@ -1512,6 +1668,77 @@ export type MovimientoInventarioUncheckedUpdateManyWithoutProductoInput = {
   saldoResultante?: Prisma.IntFieldUpdateOperationsInput | number
   referencia?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   motivo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  almacenId?: Prisma.StringFieldUpdateOperationsInput | string
+  usuarioId?: Prisma.StringFieldUpdateOperationsInput | string
+  movimientoOrigenId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  compraId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ventaId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  solicitudId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type MovimientoInventarioCreateManySolicitudInput = {
+  id?: string
+  tipo: $Enums.TipoMovimiento
+  cantidad: number
+  saldoResultante: number
+  referencia?: string | null
+  motivo?: string | null
+  productoId: string
+  almacenId: string
+  usuarioId: string
+  movimientoOrigenId?: string | null
+  compraId?: string | null
+  ventaId?: string | null
+  fecha?: Date | string
+  createdAt?: Date | string
+}
+
+export type MovimientoInventarioUpdateWithoutSolicitudInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  tipo?: Prisma.EnumTipoMovimientoFieldUpdateOperationsInput | $Enums.TipoMovimiento
+  cantidad?: Prisma.IntFieldUpdateOperationsInput | number
+  saldoResultante?: Prisma.IntFieldUpdateOperationsInput | number
+  referencia?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motivo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  producto?: Prisma.ProductoUpdateOneRequiredWithoutMovimientosNestedInput
+  almacen?: Prisma.AlmacenUpdateOneRequiredWithoutMovimientosNestedInput
+  usuario?: Prisma.UsuarioUpdateOneRequiredWithoutMovimientosRegistradosNestedInput
+  movimientoOrigen?: Prisma.MovimientoInventarioUpdateOneWithoutAjustesNestedInput
+  ajustes?: Prisma.MovimientoInventarioUpdateManyWithoutMovimientoOrigenNestedInput
+  compra?: Prisma.CompraUpdateOneWithoutMovimientosNestedInput
+  venta?: Prisma.VentaUpdateOneWithoutMovimientosNestedInput
+}
+
+export type MovimientoInventarioUncheckedUpdateWithoutSolicitudInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  tipo?: Prisma.EnumTipoMovimientoFieldUpdateOperationsInput | $Enums.TipoMovimiento
+  cantidad?: Prisma.IntFieldUpdateOperationsInput | number
+  saldoResultante?: Prisma.IntFieldUpdateOperationsInput | number
+  referencia?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motivo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  productoId?: Prisma.StringFieldUpdateOperationsInput | string
+  almacenId?: Prisma.StringFieldUpdateOperationsInput | string
+  usuarioId?: Prisma.StringFieldUpdateOperationsInput | string
+  movimientoOrigenId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  compraId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  ventaId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  ajustes?: Prisma.MovimientoInventarioUncheckedUpdateManyWithoutMovimientoOrigenNestedInput
+}
+
+export type MovimientoInventarioUncheckedUpdateManyWithoutSolicitudInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  tipo?: Prisma.EnumTipoMovimientoFieldUpdateOperationsInput | $Enums.TipoMovimiento
+  cantidad?: Prisma.IntFieldUpdateOperationsInput | number
+  saldoResultante?: Prisma.IntFieldUpdateOperationsInput | number
+  referencia?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  motivo?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  productoId?: Prisma.StringFieldUpdateOperationsInput | string
   almacenId?: Prisma.StringFieldUpdateOperationsInput | string
   usuarioId?: Prisma.StringFieldUpdateOperationsInput | string
   movimientoOrigenId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1533,6 +1760,7 @@ export type MovimientoInventarioCreateManyCompraInput = {
   usuarioId: string
   movimientoOrigenId?: string | null
   ventaId?: string | null
+  solicitudId?: string | null
   fecha?: Date | string
   createdAt?: Date | string
 }
@@ -1552,6 +1780,7 @@ export type MovimientoInventarioUpdateWithoutCompraInput = {
   movimientoOrigen?: Prisma.MovimientoInventarioUpdateOneWithoutAjustesNestedInput
   ajustes?: Prisma.MovimientoInventarioUpdateManyWithoutMovimientoOrigenNestedInput
   venta?: Prisma.VentaUpdateOneWithoutMovimientosNestedInput
+  solicitud?: Prisma.SolicitudUpdateOneWithoutMovimientosNestedInput
 }
 
 export type MovimientoInventarioUncheckedUpdateWithoutCompraInput = {
@@ -1566,6 +1795,7 @@ export type MovimientoInventarioUncheckedUpdateWithoutCompraInput = {
   usuarioId?: Prisma.StringFieldUpdateOperationsInput | string
   movimientoOrigenId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ventaId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  solicitudId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ajustes?: Prisma.MovimientoInventarioUncheckedUpdateManyWithoutMovimientoOrigenNestedInput
@@ -1583,6 +1813,7 @@ export type MovimientoInventarioUncheckedUpdateManyWithoutCompraInput = {
   usuarioId?: Prisma.StringFieldUpdateOperationsInput | string
   movimientoOrigenId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ventaId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  solicitudId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1599,6 +1830,7 @@ export type MovimientoInventarioCreateManyVentaInput = {
   usuarioId: string
   movimientoOrigenId?: string | null
   compraId?: string | null
+  solicitudId?: string | null
   fecha?: Date | string
   createdAt?: Date | string
 }
@@ -1618,6 +1850,7 @@ export type MovimientoInventarioUpdateWithoutVentaInput = {
   movimientoOrigen?: Prisma.MovimientoInventarioUpdateOneWithoutAjustesNestedInput
   ajustes?: Prisma.MovimientoInventarioUpdateManyWithoutMovimientoOrigenNestedInput
   compra?: Prisma.CompraUpdateOneWithoutMovimientosNestedInput
+  solicitud?: Prisma.SolicitudUpdateOneWithoutMovimientosNestedInput
 }
 
 export type MovimientoInventarioUncheckedUpdateWithoutVentaInput = {
@@ -1632,6 +1865,7 @@ export type MovimientoInventarioUncheckedUpdateWithoutVentaInput = {
   usuarioId?: Prisma.StringFieldUpdateOperationsInput | string
   movimientoOrigenId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   compraId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  solicitudId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ajustes?: Prisma.MovimientoInventarioUncheckedUpdateManyWithoutMovimientoOrigenNestedInput
@@ -1649,6 +1883,7 @@ export type MovimientoInventarioUncheckedUpdateManyWithoutVentaInput = {
   usuarioId?: Prisma.StringFieldUpdateOperationsInput | string
   movimientoOrigenId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   compraId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  solicitudId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1665,6 +1900,7 @@ export type MovimientoInventarioCreateManyMovimientoOrigenInput = {
   usuarioId: string
   compraId?: string | null
   ventaId?: string | null
+  solicitudId?: string | null
   fecha?: Date | string
   createdAt?: Date | string
 }
@@ -1684,6 +1920,7 @@ export type MovimientoInventarioUpdateWithoutMovimientoOrigenInput = {
   ajustes?: Prisma.MovimientoInventarioUpdateManyWithoutMovimientoOrigenNestedInput
   compra?: Prisma.CompraUpdateOneWithoutMovimientosNestedInput
   venta?: Prisma.VentaUpdateOneWithoutMovimientosNestedInput
+  solicitud?: Prisma.SolicitudUpdateOneWithoutMovimientosNestedInput
 }
 
 export type MovimientoInventarioUncheckedUpdateWithoutMovimientoOrigenInput = {
@@ -1698,6 +1935,7 @@ export type MovimientoInventarioUncheckedUpdateWithoutMovimientoOrigenInput = {
   usuarioId?: Prisma.StringFieldUpdateOperationsInput | string
   compraId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ventaId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  solicitudId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   ajustes?: Prisma.MovimientoInventarioUncheckedUpdateManyWithoutMovimientoOrigenNestedInput
@@ -1715,6 +1953,7 @@ export type MovimientoInventarioUncheckedUpdateManyWithoutMovimientoOrigenInput 
   usuarioId?: Prisma.StringFieldUpdateOperationsInput | string
   compraId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   ventaId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  solicitudId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1763,6 +2002,7 @@ export type MovimientoInventarioSelect<ExtArgs extends runtime.Types.Extensions.
   movimientoOrigenId?: boolean
   compraId?: boolean
   ventaId?: boolean
+  solicitudId?: boolean
   fecha?: boolean
   createdAt?: boolean
   producto?: boolean | Prisma.ProductoDefaultArgs<ExtArgs>
@@ -1772,6 +2012,7 @@ export type MovimientoInventarioSelect<ExtArgs extends runtime.Types.Extensions.
   ajustes?: boolean | Prisma.MovimientoInventario$ajustesArgs<ExtArgs>
   compra?: boolean | Prisma.MovimientoInventario$compraArgs<ExtArgs>
   venta?: boolean | Prisma.MovimientoInventario$ventaArgs<ExtArgs>
+  solicitud?: boolean | Prisma.MovimientoInventario$solicitudArgs<ExtArgs>
   _count?: boolean | Prisma.MovimientoInventarioCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["movimientoInventario"]>
 
@@ -1788,6 +2029,7 @@ export type MovimientoInventarioSelectCreateManyAndReturn<ExtArgs extends runtim
   movimientoOrigenId?: boolean
   compraId?: boolean
   ventaId?: boolean
+  solicitudId?: boolean
   fecha?: boolean
   createdAt?: boolean
   producto?: boolean | Prisma.ProductoDefaultArgs<ExtArgs>
@@ -1796,6 +2038,7 @@ export type MovimientoInventarioSelectCreateManyAndReturn<ExtArgs extends runtim
   movimientoOrigen?: boolean | Prisma.MovimientoInventario$movimientoOrigenArgs<ExtArgs>
   compra?: boolean | Prisma.MovimientoInventario$compraArgs<ExtArgs>
   venta?: boolean | Prisma.MovimientoInventario$ventaArgs<ExtArgs>
+  solicitud?: boolean | Prisma.MovimientoInventario$solicitudArgs<ExtArgs>
 }, ExtArgs["result"]["movimientoInventario"]>
 
 export type MovimientoInventarioSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1811,6 +2054,7 @@ export type MovimientoInventarioSelectUpdateManyAndReturn<ExtArgs extends runtim
   movimientoOrigenId?: boolean
   compraId?: boolean
   ventaId?: boolean
+  solicitudId?: boolean
   fecha?: boolean
   createdAt?: boolean
   producto?: boolean | Prisma.ProductoDefaultArgs<ExtArgs>
@@ -1819,6 +2063,7 @@ export type MovimientoInventarioSelectUpdateManyAndReturn<ExtArgs extends runtim
   movimientoOrigen?: boolean | Prisma.MovimientoInventario$movimientoOrigenArgs<ExtArgs>
   compra?: boolean | Prisma.MovimientoInventario$compraArgs<ExtArgs>
   venta?: boolean | Prisma.MovimientoInventario$ventaArgs<ExtArgs>
+  solicitud?: boolean | Prisma.MovimientoInventario$solicitudArgs<ExtArgs>
 }, ExtArgs["result"]["movimientoInventario"]>
 
 export type MovimientoInventarioSelectScalar = {
@@ -1834,11 +2079,12 @@ export type MovimientoInventarioSelectScalar = {
   movimientoOrigenId?: boolean
   compraId?: boolean
   ventaId?: boolean
+  solicitudId?: boolean
   fecha?: boolean
   createdAt?: boolean
 }
 
-export type MovimientoInventarioOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tipo" | "cantidad" | "saldoResultante" | "referencia" | "motivo" | "productoId" | "almacenId" | "usuarioId" | "movimientoOrigenId" | "compraId" | "ventaId" | "fecha" | "createdAt", ExtArgs["result"]["movimientoInventario"]>
+export type MovimientoInventarioOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tipo" | "cantidad" | "saldoResultante" | "referencia" | "motivo" | "productoId" | "almacenId" | "usuarioId" | "movimientoOrigenId" | "compraId" | "ventaId" | "solicitudId" | "fecha" | "createdAt", ExtArgs["result"]["movimientoInventario"]>
 export type MovimientoInventarioInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   producto?: boolean | Prisma.ProductoDefaultArgs<ExtArgs>
   almacen?: boolean | Prisma.AlmacenDefaultArgs<ExtArgs>
@@ -1847,6 +2093,7 @@ export type MovimientoInventarioInclude<ExtArgs extends runtime.Types.Extensions
   ajustes?: boolean | Prisma.MovimientoInventario$ajustesArgs<ExtArgs>
   compra?: boolean | Prisma.MovimientoInventario$compraArgs<ExtArgs>
   venta?: boolean | Prisma.MovimientoInventario$ventaArgs<ExtArgs>
+  solicitud?: boolean | Prisma.MovimientoInventario$solicitudArgs<ExtArgs>
   _count?: boolean | Prisma.MovimientoInventarioCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type MovimientoInventarioIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1856,6 +2103,7 @@ export type MovimientoInventarioIncludeCreateManyAndReturn<ExtArgs extends runti
   movimientoOrigen?: boolean | Prisma.MovimientoInventario$movimientoOrigenArgs<ExtArgs>
   compra?: boolean | Prisma.MovimientoInventario$compraArgs<ExtArgs>
   venta?: boolean | Prisma.MovimientoInventario$ventaArgs<ExtArgs>
+  solicitud?: boolean | Prisma.MovimientoInventario$solicitudArgs<ExtArgs>
 }
 export type MovimientoInventarioIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   producto?: boolean | Prisma.ProductoDefaultArgs<ExtArgs>
@@ -1864,6 +2112,7 @@ export type MovimientoInventarioIncludeUpdateManyAndReturn<ExtArgs extends runti
   movimientoOrigen?: boolean | Prisma.MovimientoInventario$movimientoOrigenArgs<ExtArgs>
   compra?: boolean | Prisma.MovimientoInventario$compraArgs<ExtArgs>
   venta?: boolean | Prisma.MovimientoInventario$ventaArgs<ExtArgs>
+  solicitud?: boolean | Prisma.MovimientoInventario$solicitudArgs<ExtArgs>
 }
 
 export type $MovimientoInventarioPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1876,6 +2125,7 @@ export type $MovimientoInventarioPayload<ExtArgs extends runtime.Types.Extension
     ajustes: Prisma.$MovimientoInventarioPayload<ExtArgs>[]
     compra: Prisma.$CompraPayload<ExtArgs> | null
     venta: Prisma.$VentaPayload<ExtArgs> | null
+    solicitud: Prisma.$SolicitudPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1890,6 +2140,7 @@ export type $MovimientoInventarioPayload<ExtArgs extends runtime.Types.Extension
     movimientoOrigenId: string | null
     compraId: string | null
     ventaId: string | null
+    solicitudId: string | null
     fecha: Date
     createdAt: Date
   }, ExtArgs["result"]["movimientoInventario"]>
@@ -2293,6 +2544,7 @@ export interface Prisma__MovimientoInventarioClient<T, Null = never, ExtArgs ext
   ajustes<T extends Prisma.MovimientoInventario$ajustesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MovimientoInventario$ajustesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MovimientoInventarioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   compra<T extends Prisma.MovimientoInventario$compraArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MovimientoInventario$compraArgs<ExtArgs>>): Prisma.Prisma__CompraClient<runtime.Types.Result.GetResult<Prisma.$CompraPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   venta<T extends Prisma.MovimientoInventario$ventaArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MovimientoInventario$ventaArgs<ExtArgs>>): Prisma.Prisma__VentaClient<runtime.Types.Result.GetResult<Prisma.$VentaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  solicitud<T extends Prisma.MovimientoInventario$solicitudArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.MovimientoInventario$solicitudArgs<ExtArgs>>): Prisma.Prisma__SolicitudClient<runtime.Types.Result.GetResult<Prisma.$SolicitudPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2334,6 +2586,7 @@ export interface MovimientoInventarioFieldRefs {
   readonly movimientoOrigenId: Prisma.FieldRef<"MovimientoInventario", 'String'>
   readonly compraId: Prisma.FieldRef<"MovimientoInventario", 'String'>
   readonly ventaId: Prisma.FieldRef<"MovimientoInventario", 'String'>
+  readonly solicitudId: Prisma.FieldRef<"MovimientoInventario", 'String'>
   readonly fecha: Prisma.FieldRef<"MovimientoInventario", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"MovimientoInventario", 'DateTime'>
 }
@@ -2815,6 +3068,25 @@ export type MovimientoInventario$ventaArgs<ExtArgs extends runtime.Types.Extensi
    */
   include?: Prisma.VentaInclude<ExtArgs> | null
   where?: Prisma.VentaWhereInput
+}
+
+/**
+ * MovimientoInventario.solicitud
+ */
+export type MovimientoInventario$solicitudArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Solicitud
+   */
+  select?: Prisma.SolicitudSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Solicitud
+   */
+  omit?: Prisma.SolicitudOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SolicitudInclude<ExtArgs> | null
+  where?: Prisma.SolicitudWhereInput
 }
 
 /**

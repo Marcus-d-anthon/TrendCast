@@ -19,6 +19,11 @@ const envSchema = z.object({
   REFRESH_TOKEN_TTL_DIAS: z.coerce.number().int().positive().default(7),
   PORT: z.coerce.number().int().positive().default(3000),
   NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
+  // Origen exacto permitido por CORS (Sensitive Data Exposure / Security
+  // Misconfiguration): antes cors() se llamaba sin opciones, lo que refleja
+  // cualquier origen que pida la request. El proxy de Vite en desarrollo
+  // sirve el frontend en este puerto.
+  FRONTEND_URL: z.string().default("http://localhost:5173"),
 });
 
 const parsed = envSchema.safeParse(process.env);

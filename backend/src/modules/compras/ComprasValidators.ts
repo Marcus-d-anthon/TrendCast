@@ -18,4 +18,13 @@ export const crearCompraSchema = z.object({
     .min(1, "La compra debe tener al menos una linea de detalle"),
 });
 
+export const listarComprasQuerySchema = z.object({
+  page: z.coerce.number().int().positive().default(1),
+  pageSize: z.coerce.number().int().positive().max(100).default(10),
+  estado: z.enum(["BORRADOR", "CONFIRMADA", "ANULADA"]).optional(),
+  desde: z.coerce.date().optional(),
+  hasta: z.coerce.date().optional(),
+});
+
 export type CrearCompraInput = z.infer<typeof crearCompraSchema>;
+export type ListarComprasQuery = z.infer<typeof listarComprasQuerySchema>;

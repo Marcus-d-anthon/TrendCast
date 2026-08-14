@@ -20,21 +20,34 @@
   font-weight: var(--weight-display);
 }
 
-.menuButton {
-  display: none;
+.menuButton,
+.collapseButton {
   color: var(--color-text-secondary);
   padding: var(--space-2);
   border-radius: var(--radius-sm);
+  transition: background-color var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out);
 }
 
-.menuButton:hover {
+.menuButton:hover,
+.collapseButton:hover {
   background: var(--color-bg);
   color: var(--color-text);
+}
+
+/* El hamburguesa de "abrir menú" es solo para el drawer móvil; el de
+   "colapsar" solo tiene sentido en escritorio, donde la sidebar fija puede
+   angostarse a solo íconos -- nunca se muestran los dos a la vez. */
+.menuButton {
+  display: none;
 }
 
 @media (max-width: 768px) {
   .menuButton {
     display: flex;
+  }
+
+  .collapseButton {
+    display: none;
   }
 
   .topbar {

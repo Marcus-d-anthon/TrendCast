@@ -1,11 +1,11 @@
-import { obtenerEmpresaId } from "../../lib/empresa";
+import { obtenerEmpresaActiva } from "../../lib/async-context";
 import { prisma } from "../../lib/prisma";
 import type { TipoAlerta } from "../../generated/prisma/enums";
 
 export const alertasRepository = {
   async listarProductosConStockTotal() {
     const productos = await prisma.producto.findMany({
-      where: { deletedAt: null, activo: true },
+      where: { deletedAt: null, activo: true, empresaId: obtenerEmpresaActiva() },
       include: { categoria: true, stocks: true },
       orderBy: { nombre: "asc" },
     });
@@ -19,15 +19,15 @@ export const alertasRepository = {
   },
 
   listarNoResueltas() {
-    return prisma.alerta.findMany({ where: { resuelta: false }, orderBy: { fecha: "desc" } });
+    return prisma.alerta.findMany({ where: { resuelta: false, empresaId: obtenerEmpresaActiva() }, orderBy: { fecha: "desc" } });
   },
 
   buscarPorId(id: string) {
-    return prisma.alerta.findUnique({ where: { id } });
+    return prisma.alerta.findFirst({ where: { id, empresaId: obtenerEmpresaActiva() } });
   },
 
   buscarNoResueltaPorEntidad(tipo: TipoAlerta, entidad: string, registroId: string) {
-    return prisma.alerta.findFirst({ where: { tipo, entidad, registroId, resuelta: false } });
+    return prisma.alerta.findFirst({ where: { tipo, entidad, registroId, resuelta: false, empresaId: obtenerEmpresaActiva() } });
   },
 
   // Idempotente: si ya existe una alerta sin resolver para el mismo
@@ -44,7 +44,7 @@ export const alertasRepository = {
     if (existente) {
       return { alerta: existente, esNueva: false };
     }
-    const empresaId = await obtenerEmpresaId();
+    const empresaId = obtenerEmpresaActiva();
     const alerta = await prisma.alerta.create({ data: { tipo, entidad, registroId, mensaje, empresaId } });
     return { alerta, esNueva: true };
   },

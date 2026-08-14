@@ -3,7 +3,7 @@ import { ConflictError, NotFoundError } from "../../lib/errors";
 import { almacenesRepository } from "../almacenes/AlmacenesRepository";
 import { clientesRepository } from "../clientes/ClientesRepository";
 import { productosRepository } from "../productos/ProductosRepository";
-import { ventasRepository, type DetalleCalculado } from "./VentasRepository";
+import { ventasRepository, type DetalleCalculado, type ListarVentasParams } from "./VentasRepository";
 import type { CrearVentaInput } from "./VentasValidators";
 
 const IVA_ECUADOR = 0.15;
@@ -11,6 +11,14 @@ const IVA_ECUADOR = 0.15;
 export const ventasService = {
   listar() {
     return ventasRepository.listar();
+  },
+
+  async listarPaginado(params: ListarVentasParams) {
+    const { data, total } = await ventasRepository.listarPaginado(params);
+    return {
+      data,
+      meta: { total, page: params.page, pageSize: params.pageSize, totalPaginas: Math.max(1, Math.ceil(total / params.pageSize)) },
+    };
   },
 
   async obtener(id: string) {

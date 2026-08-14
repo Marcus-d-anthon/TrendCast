@@ -77,7 +77,7 @@ export const reportesService = {
       columnas: [
         { header: "SKU", key: "sku", ancho: 16 },
         { header: "Producto", key: "nombre", ancho: 32 },
-        { header: "Categoria", key: "categoria", ancho: 20 },
+        { header: "Categoría", key: "categoria", ancho: 26 },
         { header: "Cantidad", key: "cantidad", ancho: 12 },
         { header: "Precio unitario", key: "precioUnitario", ancho: 16 },
         { header: "Valor total", key: "valorTotal", ancho: 16 },
@@ -89,7 +89,7 @@ export const reportesService = {
   async tablaRotacion(desde?: Date, hasta?: Date): Promise<TablaExport> {
     const filas = await this.rotacion(desde, hasta);
     return {
-      titulo: "Rotacion de inventario",
+      titulo: "Rotación de inventario",
       columnas: [
         { header: "SKU", key: "sku", ancho: 16 },
         { header: "Producto", key: "nombre", ancho: 32 },

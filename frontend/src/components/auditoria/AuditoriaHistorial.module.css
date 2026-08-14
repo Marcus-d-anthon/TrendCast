@@ -1,0 +1,42 @@
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.item {
+  padding-left: var(--space-4);
+  border-left: 2px solid var(--color-border);
+}
+
+.itemHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.fecha {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+}
+
+.actor {
+  margin-top: var(--space-1);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+}
+
+.cambios {
+  margin-top: var(--space-2);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+}
+
+.campo {
+  font-family: var(--font-mono);
+  color: var(--color-text);
+}

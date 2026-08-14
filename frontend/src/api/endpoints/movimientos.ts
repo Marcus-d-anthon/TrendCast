@@ -1,4 +1,4 @@
-import { apiRequest } from '../http-client';
+import { apiRequest, apiRequestPaginado, type RespuestaPaginada } from '../http-client';
 import type { Movimiento, TipoMovimiento } from '../types/domain';
 
 export interface ListarMovimientosParams {
@@ -8,6 +8,11 @@ export interface ListarMovimientosParams {
   tipo?: TipoMovimiento;
   desde?: string;
   hasta?: string;
+}
+
+export interface ListarMovimientosPaginadoParams extends ListarMovimientosParams {
+  page: number;
+  pageSize?: number;
 }
 
 export interface RegistrarMovimientoInput {
@@ -22,6 +27,8 @@ export interface RegistrarMovimientoInput {
 
 export const movimientosApi = {
   listar: (params: ListarMovimientosParams = {}) => apiRequest<Movimiento[]>('/movimientos', { query: params }),
+  listarPaginado: (params: ListarMovimientosPaginadoParams): Promise<RespuestaPaginada<Movimiento>> =>
+    apiRequestPaginado<Movimiento>('/movimientos', { query: params }),
 
   registrar: (input: RegistrarMovimientoInput) =>
     apiRequest<Movimiento>('/movimientos', { method: 'POST', body: input }),
