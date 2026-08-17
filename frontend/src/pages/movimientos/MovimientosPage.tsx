@@ -94,7 +94,7 @@ export function MovimientosPage() {
             ))}
           </Select>
         </FormField>
-        <FormField label="Tipo" htmlFor="mov-tipo" hint="Entrada, salida, ajuste o transferencia">
+        <FormField label="Tipo" htmlFor="mov-tipo" hint="Entrada, salida, ajuste, transferencia o devolución">
           <Select
             id="mov-tipo"
             value={tipo}
@@ -105,6 +105,8 @@ export function MovimientosPage() {
             <option value="SALIDA">Salida</option>
             <option value="AJUSTE">Ajuste</option>
             <option value="TRANSFERENCIA">Transferencia</option>
+            <option value="DEVOLUCION_CLIENTE">Devolución de cliente</option>
+            <option value="DEVOLUCION_PROVEEDOR">Devolución a proveedor</option>
           </Select>
         </FormField>
         <FormField label="Fecha inicio" htmlFor="mov-desde" hint="Por defecto, 2 días atrás">

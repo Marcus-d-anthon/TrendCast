@@ -417,6 +417,8 @@ export const ModelName = {
   DetalleCompra: 'DetalleCompra',
   Venta: 'Venta',
   DetalleVenta: 'DetalleVenta',
+  Devolucion: 'Devolucion',
+  DetalleDevolucion: 'DetalleDevolucion',
   MovimientoInventario: 'MovimientoInventario',
   Alerta: 'Alerta',
   Notificacion: 'Notificacion',
@@ -437,7 +439,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "empresa" | "usuario" | "permiso" | "rolPermiso" | "refreshToken" | "codigoRecuperacion2FA" | "marca" | "unidadMedida" | "categoria" | "almacen" | "producto" | "solicitud" | "stock" | "lote" | "cliente" | "proveedor" | "compra" | "detalleCompra" | "venta" | "detalleVenta" | "movimientoInventario" | "alerta" | "notificacion" | "auditLog" | "errorLog"
+    modelProps: "empresa" | "usuario" | "permiso" | "rolPermiso" | "refreshToken" | "codigoRecuperacion2FA" | "marca" | "unidadMedida" | "categoria" | "almacen" | "producto" | "solicitud" | "stock" | "lote" | "cliente" | "proveedor" | "compra" | "detalleCompra" | "venta" | "detalleVenta" | "devolucion" | "detalleDevolucion" | "movimientoInventario" | "alerta" | "notificacion" | "auditLog" | "errorLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1921,6 +1923,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Devolucion: {
+      payload: Prisma.$DevolucionPayload<ExtArgs>
+      fields: Prisma.DevolucionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DevolucionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DevolucionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DevolucionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DevolucionPayload>
+        }
+        findFirst: {
+          args: Prisma.DevolucionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DevolucionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DevolucionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DevolucionPayload>
+        }
+        findMany: {
+          args: Prisma.DevolucionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DevolucionPayload>[]
+        }
+        create: {
+          args: Prisma.DevolucionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DevolucionPayload>
+        }
+        createMany: {
+          args: Prisma.DevolucionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DevolucionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DevolucionPayload>[]
+        }
+        delete: {
+          args: Prisma.DevolucionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DevolucionPayload>
+        }
+        update: {
+          args: Prisma.DevolucionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DevolucionPayload>
+        }
+        deleteMany: {
+          args: Prisma.DevolucionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DevolucionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DevolucionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DevolucionPayload>[]
+        }
+        upsert: {
+          args: Prisma.DevolucionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DevolucionPayload>
+        }
+        aggregate: {
+          args: Prisma.DevolucionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDevolucion>
+        }
+        groupBy: {
+          args: Prisma.DevolucionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DevolucionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DevolucionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DevolucionCountAggregateOutputType> | number
+        }
+      }
+    }
+    DetalleDevolucion: {
+      payload: Prisma.$DetalleDevolucionPayload<ExtArgs>
+      fields: Prisma.DetalleDevolucionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DetalleDevolucionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DetalleDevolucionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DetalleDevolucionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DetalleDevolucionPayload>
+        }
+        findFirst: {
+          args: Prisma.DetalleDevolucionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DetalleDevolucionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DetalleDevolucionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DetalleDevolucionPayload>
+        }
+        findMany: {
+          args: Prisma.DetalleDevolucionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DetalleDevolucionPayload>[]
+        }
+        create: {
+          args: Prisma.DetalleDevolucionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DetalleDevolucionPayload>
+        }
+        createMany: {
+          args: Prisma.DetalleDevolucionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DetalleDevolucionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DetalleDevolucionPayload>[]
+        }
+        delete: {
+          args: Prisma.DetalleDevolucionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DetalleDevolucionPayload>
+        }
+        update: {
+          args: Prisma.DetalleDevolucionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DetalleDevolucionPayload>
+        }
+        deleteMany: {
+          args: Prisma.DetalleDevolucionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DetalleDevolucionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DetalleDevolucionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DetalleDevolucionPayload>[]
+        }
+        upsert: {
+          args: Prisma.DetalleDevolucionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DetalleDevolucionPayload>
+        }
+        aggregate: {
+          args: Prisma.DetalleDevolucionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDetalleDevolucion>
+        }
+        groupBy: {
+          args: Prisma.DetalleDevolucionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DetalleDevolucionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DetalleDevolucionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DetalleDevolucionCountAggregateOutputType> | number
+        }
+      }
+    }
     MovimientoInventario: {
       payload: Prisma.$MovimientoInventarioPayload<ExtArgs>
       fields: Prisma.MovimientoInventarioFieldRefs
@@ -2652,6 +2802,35 @@ export const DetalleVentaScalarFieldEnum = {
 export type DetalleVentaScalarFieldEnum = (typeof DetalleVentaScalarFieldEnum)[keyof typeof DetalleVentaScalarFieldEnum]
 
 
+export const DevolucionScalarFieldEnum = {
+  id: 'id',
+  numero: 'numero',
+  tipo: 'tipo',
+  fecha: 'fecha',
+  estado: 'estado',
+  motivo: 'motivo',
+  empresaId: 'empresaId',
+  ventaId: 'ventaId',
+  compraId: 'compraId',
+  almacenId: 'almacenId',
+  usuarioId: 'usuarioId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DevolucionScalarFieldEnum = (typeof DevolucionScalarFieldEnum)[keyof typeof DevolucionScalarFieldEnum]
+
+
+export const DetalleDevolucionScalarFieldEnum = {
+  id: 'id',
+  cantidad: 'cantidad',
+  devolucionId: 'devolucionId',
+  productoId: 'productoId'
+} as const
+
+export type DetalleDevolucionScalarFieldEnum = (typeof DetalleDevolucionScalarFieldEnum)[keyof typeof DetalleDevolucionScalarFieldEnum]
+
+
 export const MovimientoInventarioScalarFieldEnum = {
   id: 'id',
   tipo: 'tipo',
@@ -2666,6 +2845,7 @@ export const MovimientoInventarioScalarFieldEnum = {
   compraId: 'compraId',
   ventaId: 'ventaId',
   solicitudId: 'solicitudId',
+  devolucionId: 'devolucionId',
   fecha: 'fecha',
   createdAt: 'createdAt'
 } as const
@@ -2913,6 +3093,20 @@ export type EnumEstadoDocumentoComercialFieldRefInput<$PrismaModel> = FieldRefIn
  * Reference to a field of type 'EstadoDocumentoComercial[]'
  */
 export type ListEnumEstadoDocumentoComercialFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EstadoDocumentoComercial[]'>
+    
+
+
+/**
+ * Reference to a field of type 'TipoDevolucion'
+ */
+export type EnumTipoDevolucionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoDevolucion'>
+    
+
+
+/**
+ * Reference to a field of type 'TipoDevolucion[]'
+ */
+export type ListEnumTipoDevolucionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TipoDevolucion[]'>
     
 
 
@@ -3170,6 +3364,8 @@ export type GlobalOmitConfig = {
   detalleCompra?: Prisma.DetalleCompraOmit
   venta?: Prisma.VentaOmit
   detalleVenta?: Prisma.DetalleVentaOmit
+  devolucion?: Prisma.DevolucionOmit
+  detalleDevolucion?: Prisma.DetalleDevolucionOmit
   movimientoInventario?: Prisma.MovimientoInventarioOmit
   alerta?: Prisma.AlertaOmit
   notificacion?: Prisma.NotificacionOmit

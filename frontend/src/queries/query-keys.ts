@@ -5,6 +5,7 @@ import type { ListarSolicitudesParams } from '../api/endpoints/solicitudes';
 import type { ListarMovimientosParams, ListarMovimientosPaginadoParams } from '../api/endpoints/movimientos';
 import type { ListarProductosPaginadoParams } from '../api/endpoints/productos';
 import type { ListarVentasPaginadoParams } from '../api/endpoints/ventas';
+import type { ListarDevolucionesParams, ListarDevolucionesPaginadoParams } from '../api/endpoints/devoluciones';
 import type { PrediccionParams } from '../api/endpoints/prediccion';
 import type { RangoFechas } from '../api/endpoints/reportes';
 import type { Granularidad } from '../api/types/domain';
@@ -40,4 +41,7 @@ export const queryKeys = {
   solicitudes: (params: ListarSolicitudesParams) => ['solicitudes', params] as const,
   auditoria: (params: ListarAuditoriaParams) => ['auditoria', params] as const,
   errores: (params: ListarErroresParams) => ['errores', params] as const,
+  devoluciones: (params: ListarDevolucionesParams) => ['devoluciones', params] as const,
+  devolucionesPaginado: (params: ListarDevolucionesPaginadoParams) => ['devoluciones', 'paginado', params] as const,
+  devolucion: (id: string) => ['devoluciones', id] as const,
 };

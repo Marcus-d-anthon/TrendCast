@@ -294,6 +294,7 @@ export type VentaWhereInput = {
   usuario?: Prisma.XOR<Prisma.UsuarioScalarRelationFilter, Prisma.UsuarioWhereInput>
   detalle?: Prisma.DetalleVentaListRelationFilter
   movimientos?: Prisma.MovimientoInventarioListRelationFilter
+  devoluciones?: Prisma.DevolucionListRelationFilter
 }
 
 export type VentaOrderByWithRelationInput = {
@@ -316,6 +317,7 @@ export type VentaOrderByWithRelationInput = {
   usuario?: Prisma.UsuarioOrderByWithRelationInput
   detalle?: Prisma.DetalleVentaOrderByRelationAggregateInput
   movimientos?: Prisma.MovimientoInventarioOrderByRelationAggregateInput
+  devoluciones?: Prisma.DevolucionOrderByRelationAggregateInput
 }
 
 export type VentaWhereUniqueInput = Prisma.AtLeast<{
@@ -341,6 +343,7 @@ export type VentaWhereUniqueInput = Prisma.AtLeast<{
   usuario?: Prisma.XOR<Prisma.UsuarioScalarRelationFilter, Prisma.UsuarioWhereInput>
   detalle?: Prisma.DetalleVentaListRelationFilter
   movimientos?: Prisma.MovimientoInventarioListRelationFilter
+  devoluciones?: Prisma.DevolucionListRelationFilter
 }, "id" | "numero">
 
 export type VentaOrderByWithAggregationInput = {
@@ -399,6 +402,7 @@ export type VentaCreateInput = {
   usuario: Prisma.UsuarioCreateNestedOneWithoutVentasRegistradasInput
   detalle?: Prisma.DetalleVentaCreateNestedManyWithoutVentaInput
   movimientos?: Prisma.MovimientoInventarioCreateNestedManyWithoutVentaInput
+  devoluciones?: Prisma.DevolucionCreateNestedManyWithoutVentaInput
 }
 
 export type VentaUncheckedCreateInput = {
@@ -417,6 +421,7 @@ export type VentaUncheckedCreateInput = {
   updatedAt?: Date | string
   detalle?: Prisma.DetalleVentaUncheckedCreateNestedManyWithoutVentaInput
   movimientos?: Prisma.MovimientoInventarioUncheckedCreateNestedManyWithoutVentaInput
+  devoluciones?: Prisma.DevolucionUncheckedCreateNestedManyWithoutVentaInput
 }
 
 export type VentaUpdateInput = {
@@ -435,6 +440,7 @@ export type VentaUpdateInput = {
   usuario?: Prisma.UsuarioUpdateOneRequiredWithoutVentasRegistradasNestedInput
   detalle?: Prisma.DetalleVentaUpdateManyWithoutVentaNestedInput
   movimientos?: Prisma.MovimientoInventarioUpdateManyWithoutVentaNestedInput
+  devoluciones?: Prisma.DevolucionUpdateManyWithoutVentaNestedInput
 }
 
 export type VentaUncheckedUpdateInput = {
@@ -453,6 +459,7 @@ export type VentaUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   detalle?: Prisma.DetalleVentaUncheckedUpdateManyWithoutVentaNestedInput
   movimientos?: Prisma.MovimientoInventarioUncheckedUpdateManyWithoutVentaNestedInput
+  devoluciones?: Prisma.DevolucionUncheckedUpdateManyWithoutVentaNestedInput
 }
 
 export type VentaCreateManyInput = {
@@ -761,6 +768,22 @@ export type VentaUpdateOneRequiredWithoutDetalleNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.VentaUpdateToOneWithWhereWithoutDetalleInput, Prisma.VentaUpdateWithoutDetalleInput>, Prisma.VentaUncheckedUpdateWithoutDetalleInput>
 }
 
+export type VentaCreateNestedOneWithoutDevolucionesInput = {
+  create?: Prisma.XOR<Prisma.VentaCreateWithoutDevolucionesInput, Prisma.VentaUncheckedCreateWithoutDevolucionesInput>
+  connectOrCreate?: Prisma.VentaCreateOrConnectWithoutDevolucionesInput
+  connect?: Prisma.VentaWhereUniqueInput
+}
+
+export type VentaUpdateOneWithoutDevolucionesNestedInput = {
+  create?: Prisma.XOR<Prisma.VentaCreateWithoutDevolucionesInput, Prisma.VentaUncheckedCreateWithoutDevolucionesInput>
+  connectOrCreate?: Prisma.VentaCreateOrConnectWithoutDevolucionesInput
+  upsert?: Prisma.VentaUpsertWithoutDevolucionesInput
+  disconnect?: Prisma.VentaWhereInput | boolean
+  delete?: Prisma.VentaWhereInput | boolean
+  connect?: Prisma.VentaWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.VentaUpdateToOneWithWhereWithoutDevolucionesInput, Prisma.VentaUpdateWithoutDevolucionesInput>, Prisma.VentaUncheckedUpdateWithoutDevolucionesInput>
+}
+
 export type VentaCreateNestedOneWithoutMovimientosInput = {
   create?: Prisma.XOR<Prisma.VentaCreateWithoutMovimientosInput, Prisma.VentaUncheckedCreateWithoutMovimientosInput>
   connectOrCreate?: Prisma.VentaCreateOrConnectWithoutMovimientosInput
@@ -792,6 +815,7 @@ export type VentaCreateWithoutEmpresaInput = {
   usuario: Prisma.UsuarioCreateNestedOneWithoutVentasRegistradasInput
   detalle?: Prisma.DetalleVentaCreateNestedManyWithoutVentaInput
   movimientos?: Prisma.MovimientoInventarioCreateNestedManyWithoutVentaInput
+  devoluciones?: Prisma.DevolucionCreateNestedManyWithoutVentaInput
 }
 
 export type VentaUncheckedCreateWithoutEmpresaInput = {
@@ -809,6 +833,7 @@ export type VentaUncheckedCreateWithoutEmpresaInput = {
   updatedAt?: Date | string
   detalle?: Prisma.DetalleVentaUncheckedCreateNestedManyWithoutVentaInput
   movimientos?: Prisma.MovimientoInventarioUncheckedCreateNestedManyWithoutVentaInput
+  devoluciones?: Prisma.DevolucionUncheckedCreateNestedManyWithoutVentaInput
 }
 
 export type VentaCreateOrConnectWithoutEmpresaInput = {
@@ -871,6 +896,7 @@ export type VentaCreateWithoutUsuarioInput = {
   almacen: Prisma.AlmacenCreateNestedOneWithoutVentasInput
   detalle?: Prisma.DetalleVentaCreateNestedManyWithoutVentaInput
   movimientos?: Prisma.MovimientoInventarioCreateNestedManyWithoutVentaInput
+  devoluciones?: Prisma.DevolucionCreateNestedManyWithoutVentaInput
 }
 
 export type VentaUncheckedCreateWithoutUsuarioInput = {
@@ -888,6 +914,7 @@ export type VentaUncheckedCreateWithoutUsuarioInput = {
   updatedAt?: Date | string
   detalle?: Prisma.DetalleVentaUncheckedCreateNestedManyWithoutVentaInput
   movimientos?: Prisma.MovimientoInventarioUncheckedCreateNestedManyWithoutVentaInput
+  devoluciones?: Prisma.DevolucionUncheckedCreateNestedManyWithoutVentaInput
 }
 
 export type VentaCreateOrConnectWithoutUsuarioInput = {
@@ -931,6 +958,7 @@ export type VentaCreateWithoutAlmacenInput = {
   usuario: Prisma.UsuarioCreateNestedOneWithoutVentasRegistradasInput
   detalle?: Prisma.DetalleVentaCreateNestedManyWithoutVentaInput
   movimientos?: Prisma.MovimientoInventarioCreateNestedManyWithoutVentaInput
+  devoluciones?: Prisma.DevolucionCreateNestedManyWithoutVentaInput
 }
 
 export type VentaUncheckedCreateWithoutAlmacenInput = {
@@ -948,6 +976,7 @@ export type VentaUncheckedCreateWithoutAlmacenInput = {
   updatedAt?: Date | string
   detalle?: Prisma.DetalleVentaUncheckedCreateNestedManyWithoutVentaInput
   movimientos?: Prisma.MovimientoInventarioUncheckedCreateNestedManyWithoutVentaInput
+  devoluciones?: Prisma.DevolucionUncheckedCreateNestedManyWithoutVentaInput
 }
 
 export type VentaCreateOrConnectWithoutAlmacenInput = {
@@ -991,6 +1020,7 @@ export type VentaCreateWithoutClienteInput = {
   usuario: Prisma.UsuarioCreateNestedOneWithoutVentasRegistradasInput
   detalle?: Prisma.DetalleVentaCreateNestedManyWithoutVentaInput
   movimientos?: Prisma.MovimientoInventarioCreateNestedManyWithoutVentaInput
+  devoluciones?: Prisma.DevolucionCreateNestedManyWithoutVentaInput
 }
 
 export type VentaUncheckedCreateWithoutClienteInput = {
@@ -1008,6 +1038,7 @@ export type VentaUncheckedCreateWithoutClienteInput = {
   updatedAt?: Date | string
   detalle?: Prisma.DetalleVentaUncheckedCreateNestedManyWithoutVentaInput
   movimientos?: Prisma.MovimientoInventarioUncheckedCreateNestedManyWithoutVentaInput
+  devoluciones?: Prisma.DevolucionUncheckedCreateNestedManyWithoutVentaInput
 }
 
 export type VentaCreateOrConnectWithoutClienteInput = {
@@ -1051,6 +1082,7 @@ export type VentaCreateWithoutDetalleInput = {
   almacen: Prisma.AlmacenCreateNestedOneWithoutVentasInput
   usuario: Prisma.UsuarioCreateNestedOneWithoutVentasRegistradasInput
   movimientos?: Prisma.MovimientoInventarioCreateNestedManyWithoutVentaInput
+  devoluciones?: Prisma.DevolucionCreateNestedManyWithoutVentaInput
 }
 
 export type VentaUncheckedCreateWithoutDetalleInput = {
@@ -1068,6 +1100,7 @@ export type VentaUncheckedCreateWithoutDetalleInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   movimientos?: Prisma.MovimientoInventarioUncheckedCreateNestedManyWithoutVentaInput
+  devoluciones?: Prisma.DevolucionUncheckedCreateNestedManyWithoutVentaInput
 }
 
 export type VentaCreateOrConnectWithoutDetalleInput = {
@@ -1101,6 +1134,7 @@ export type VentaUpdateWithoutDetalleInput = {
   almacen?: Prisma.AlmacenUpdateOneRequiredWithoutVentasNestedInput
   usuario?: Prisma.UsuarioUpdateOneRequiredWithoutVentasRegistradasNestedInput
   movimientos?: Prisma.MovimientoInventarioUpdateManyWithoutVentaNestedInput
+  devoluciones?: Prisma.DevolucionUpdateManyWithoutVentaNestedInput
 }
 
 export type VentaUncheckedUpdateWithoutDetalleInput = {
@@ -1117,6 +1151,95 @@ export type VentaUncheckedUpdateWithoutDetalleInput = {
   usuarioId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  movimientos?: Prisma.MovimientoInventarioUncheckedUpdateManyWithoutVentaNestedInput
+  devoluciones?: Prisma.DevolucionUncheckedUpdateManyWithoutVentaNestedInput
+}
+
+export type VentaCreateWithoutDevolucionesInput = {
+  id?: string
+  numero: string
+  fecha?: Date | string
+  estado?: $Enums.EstadoDocumentoComercial
+  subtotal?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  impuesto?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  empresa: Prisma.EmpresaCreateNestedOneWithoutVentasInput
+  cliente: Prisma.ClienteCreateNestedOneWithoutVentasInput
+  almacen: Prisma.AlmacenCreateNestedOneWithoutVentasInput
+  usuario: Prisma.UsuarioCreateNestedOneWithoutVentasRegistradasInput
+  detalle?: Prisma.DetalleVentaCreateNestedManyWithoutVentaInput
+  movimientos?: Prisma.MovimientoInventarioCreateNestedManyWithoutVentaInput
+}
+
+export type VentaUncheckedCreateWithoutDevolucionesInput = {
+  id?: string
+  numero: string
+  fecha?: Date | string
+  estado?: $Enums.EstadoDocumentoComercial
+  subtotal?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  impuesto?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  empresaId: string
+  clienteId: string
+  almacenId: string
+  usuarioId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  detalle?: Prisma.DetalleVentaUncheckedCreateNestedManyWithoutVentaInput
+  movimientos?: Prisma.MovimientoInventarioUncheckedCreateNestedManyWithoutVentaInput
+}
+
+export type VentaCreateOrConnectWithoutDevolucionesInput = {
+  where: Prisma.VentaWhereUniqueInput
+  create: Prisma.XOR<Prisma.VentaCreateWithoutDevolucionesInput, Prisma.VentaUncheckedCreateWithoutDevolucionesInput>
+}
+
+export type VentaUpsertWithoutDevolucionesInput = {
+  update: Prisma.XOR<Prisma.VentaUpdateWithoutDevolucionesInput, Prisma.VentaUncheckedUpdateWithoutDevolucionesInput>
+  create: Prisma.XOR<Prisma.VentaCreateWithoutDevolucionesInput, Prisma.VentaUncheckedCreateWithoutDevolucionesInput>
+  where?: Prisma.VentaWhereInput
+}
+
+export type VentaUpdateToOneWithWhereWithoutDevolucionesInput = {
+  where?: Prisma.VentaWhereInput
+  data: Prisma.XOR<Prisma.VentaUpdateWithoutDevolucionesInput, Prisma.VentaUncheckedUpdateWithoutDevolucionesInput>
+}
+
+export type VentaUpdateWithoutDevolucionesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  numero?: Prisma.StringFieldUpdateOperationsInput | string
+  fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  estado?: Prisma.EnumEstadoDocumentoComercialFieldUpdateOperationsInput | $Enums.EstadoDocumentoComercial
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  impuesto?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  empresa?: Prisma.EmpresaUpdateOneRequiredWithoutVentasNestedInput
+  cliente?: Prisma.ClienteUpdateOneRequiredWithoutVentasNestedInput
+  almacen?: Prisma.AlmacenUpdateOneRequiredWithoutVentasNestedInput
+  usuario?: Prisma.UsuarioUpdateOneRequiredWithoutVentasRegistradasNestedInput
+  detalle?: Prisma.DetalleVentaUpdateManyWithoutVentaNestedInput
+  movimientos?: Prisma.MovimientoInventarioUpdateManyWithoutVentaNestedInput
+}
+
+export type VentaUncheckedUpdateWithoutDevolucionesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  numero?: Prisma.StringFieldUpdateOperationsInput | string
+  fecha?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  estado?: Prisma.EnumEstadoDocumentoComercialFieldUpdateOperationsInput | $Enums.EstadoDocumentoComercial
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  impuesto?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  empresaId?: Prisma.StringFieldUpdateOperationsInput | string
+  clienteId?: Prisma.StringFieldUpdateOperationsInput | string
+  almacenId?: Prisma.StringFieldUpdateOperationsInput | string
+  usuarioId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  detalle?: Prisma.DetalleVentaUncheckedUpdateManyWithoutVentaNestedInput
   movimientos?: Prisma.MovimientoInventarioUncheckedUpdateManyWithoutVentaNestedInput
 }
 
@@ -1135,6 +1258,7 @@ export type VentaCreateWithoutMovimientosInput = {
   almacen: Prisma.AlmacenCreateNestedOneWithoutVentasInput
   usuario: Prisma.UsuarioCreateNestedOneWithoutVentasRegistradasInput
   detalle?: Prisma.DetalleVentaCreateNestedManyWithoutVentaInput
+  devoluciones?: Prisma.DevolucionCreateNestedManyWithoutVentaInput
 }
 
 export type VentaUncheckedCreateWithoutMovimientosInput = {
@@ -1152,6 +1276,7 @@ export type VentaUncheckedCreateWithoutMovimientosInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   detalle?: Prisma.DetalleVentaUncheckedCreateNestedManyWithoutVentaInput
+  devoluciones?: Prisma.DevolucionUncheckedCreateNestedManyWithoutVentaInput
 }
 
 export type VentaCreateOrConnectWithoutMovimientosInput = {
@@ -1185,6 +1310,7 @@ export type VentaUpdateWithoutMovimientosInput = {
   almacen?: Prisma.AlmacenUpdateOneRequiredWithoutVentasNestedInput
   usuario?: Prisma.UsuarioUpdateOneRequiredWithoutVentasRegistradasNestedInput
   detalle?: Prisma.DetalleVentaUpdateManyWithoutVentaNestedInput
+  devoluciones?: Prisma.DevolucionUpdateManyWithoutVentaNestedInput
 }
 
 export type VentaUncheckedUpdateWithoutMovimientosInput = {
@@ -1202,6 +1328,7 @@ export type VentaUncheckedUpdateWithoutMovimientosInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   detalle?: Prisma.DetalleVentaUncheckedUpdateManyWithoutVentaNestedInput
+  devoluciones?: Prisma.DevolucionUncheckedUpdateManyWithoutVentaNestedInput
 }
 
 export type VentaCreateManyEmpresaInput = {
@@ -1234,6 +1361,7 @@ export type VentaUpdateWithoutEmpresaInput = {
   usuario?: Prisma.UsuarioUpdateOneRequiredWithoutVentasRegistradasNestedInput
   detalle?: Prisma.DetalleVentaUpdateManyWithoutVentaNestedInput
   movimientos?: Prisma.MovimientoInventarioUpdateManyWithoutVentaNestedInput
+  devoluciones?: Prisma.DevolucionUpdateManyWithoutVentaNestedInput
 }
 
 export type VentaUncheckedUpdateWithoutEmpresaInput = {
@@ -1251,6 +1379,7 @@ export type VentaUncheckedUpdateWithoutEmpresaInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   detalle?: Prisma.DetalleVentaUncheckedUpdateManyWithoutVentaNestedInput
   movimientos?: Prisma.MovimientoInventarioUncheckedUpdateManyWithoutVentaNestedInput
+  devoluciones?: Prisma.DevolucionUncheckedUpdateManyWithoutVentaNestedInput
 }
 
 export type VentaUncheckedUpdateManyWithoutEmpresaInput = {
@@ -1298,6 +1427,7 @@ export type VentaUpdateWithoutUsuarioInput = {
   almacen?: Prisma.AlmacenUpdateOneRequiredWithoutVentasNestedInput
   detalle?: Prisma.DetalleVentaUpdateManyWithoutVentaNestedInput
   movimientos?: Prisma.MovimientoInventarioUpdateManyWithoutVentaNestedInput
+  devoluciones?: Prisma.DevolucionUpdateManyWithoutVentaNestedInput
 }
 
 export type VentaUncheckedUpdateWithoutUsuarioInput = {
@@ -1315,6 +1445,7 @@ export type VentaUncheckedUpdateWithoutUsuarioInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   detalle?: Prisma.DetalleVentaUncheckedUpdateManyWithoutVentaNestedInput
   movimientos?: Prisma.MovimientoInventarioUncheckedUpdateManyWithoutVentaNestedInput
+  devoluciones?: Prisma.DevolucionUncheckedUpdateManyWithoutVentaNestedInput
 }
 
 export type VentaUncheckedUpdateManyWithoutUsuarioInput = {
@@ -1362,6 +1493,7 @@ export type VentaUpdateWithoutAlmacenInput = {
   usuario?: Prisma.UsuarioUpdateOneRequiredWithoutVentasRegistradasNestedInput
   detalle?: Prisma.DetalleVentaUpdateManyWithoutVentaNestedInput
   movimientos?: Prisma.MovimientoInventarioUpdateManyWithoutVentaNestedInput
+  devoluciones?: Prisma.DevolucionUpdateManyWithoutVentaNestedInput
 }
 
 export type VentaUncheckedUpdateWithoutAlmacenInput = {
@@ -1379,6 +1511,7 @@ export type VentaUncheckedUpdateWithoutAlmacenInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   detalle?: Prisma.DetalleVentaUncheckedUpdateManyWithoutVentaNestedInput
   movimientos?: Prisma.MovimientoInventarioUncheckedUpdateManyWithoutVentaNestedInput
+  devoluciones?: Prisma.DevolucionUncheckedUpdateManyWithoutVentaNestedInput
 }
 
 export type VentaUncheckedUpdateManyWithoutAlmacenInput = {
@@ -1426,6 +1559,7 @@ export type VentaUpdateWithoutClienteInput = {
   usuario?: Prisma.UsuarioUpdateOneRequiredWithoutVentasRegistradasNestedInput
   detalle?: Prisma.DetalleVentaUpdateManyWithoutVentaNestedInput
   movimientos?: Prisma.MovimientoInventarioUpdateManyWithoutVentaNestedInput
+  devoluciones?: Prisma.DevolucionUpdateManyWithoutVentaNestedInput
 }
 
 export type VentaUncheckedUpdateWithoutClienteInput = {
@@ -1443,6 +1577,7 @@ export type VentaUncheckedUpdateWithoutClienteInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   detalle?: Prisma.DetalleVentaUncheckedUpdateManyWithoutVentaNestedInput
   movimientos?: Prisma.MovimientoInventarioUncheckedUpdateManyWithoutVentaNestedInput
+  devoluciones?: Prisma.DevolucionUncheckedUpdateManyWithoutVentaNestedInput
 }
 
 export type VentaUncheckedUpdateManyWithoutClienteInput = {
@@ -1468,11 +1603,13 @@ export type VentaUncheckedUpdateManyWithoutClienteInput = {
 export type VentaCountOutputType = {
   detalle: number
   movimientos: number
+  devoluciones: number
 }
 
 export type VentaCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   detalle?: boolean | VentaCountOutputTypeCountDetalleArgs
   movimientos?: boolean | VentaCountOutputTypeCountMovimientosArgs
+  devoluciones?: boolean | VentaCountOutputTypeCountDevolucionesArgs
 }
 
 /**
@@ -1499,6 +1636,13 @@ export type VentaCountOutputTypeCountMovimientosArgs<ExtArgs extends runtime.Typ
   where?: Prisma.MovimientoInventarioWhereInput
 }
 
+/**
+ * VentaCountOutputType without action
+ */
+export type VentaCountOutputTypeCountDevolucionesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DevolucionWhereInput
+}
+
 
 export type VentaSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1520,6 +1664,7 @@ export type VentaSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   usuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
   detalle?: boolean | Prisma.Venta$detalleArgs<ExtArgs>
   movimientos?: boolean | Prisma.Venta$movimientosArgs<ExtArgs>
+  devoluciones?: boolean | Prisma.Venta$devolucionesArgs<ExtArgs>
   _count?: boolean | Prisma.VentaCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["venta"]>
 
@@ -1587,6 +1732,7 @@ export type VentaInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   usuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
   detalle?: boolean | Prisma.Venta$detalleArgs<ExtArgs>
   movimientos?: boolean | Prisma.Venta$movimientosArgs<ExtArgs>
+  devoluciones?: boolean | Prisma.Venta$devolucionesArgs<ExtArgs>
   _count?: boolean | Prisma.VentaCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type VentaIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1611,6 +1757,7 @@ export type $VentaPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     usuario: Prisma.$UsuarioPayload<ExtArgs>
     detalle: Prisma.$DetalleVentaPayload<ExtArgs>[]
     movimientos: Prisma.$MovimientoInventarioPayload<ExtArgs>[]
+    devoluciones: Prisma.$DevolucionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2026,6 +2173,7 @@ export interface Prisma__VentaClient<T, Null = never, ExtArgs extends runtime.Ty
   usuario<T extends Prisma.UsuarioDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UsuarioDefaultArgs<ExtArgs>>): Prisma.Prisma__UsuarioClient<runtime.Types.Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   detalle<T extends Prisma.Venta$detalleArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Venta$detalleArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DetalleVentaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   movimientos<T extends Prisma.Venta$movimientosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Venta$movimientosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MovimientoInventarioPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  devoluciones<T extends Prisma.Venta$devolucionesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Venta$devolucionesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DevolucionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2514,6 +2662,30 @@ export type Venta$movimientosArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.MovimientoInventarioScalarFieldEnum | Prisma.MovimientoInventarioScalarFieldEnum[]
+}
+
+/**
+ * Venta.devoluciones
+ */
+export type Venta$devolucionesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Devolucion
+   */
+  select?: Prisma.DevolucionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Devolucion
+   */
+  omit?: Prisma.DevolucionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DevolucionInclude<ExtArgs> | null
+  where?: Prisma.DevolucionWhereInput
+  orderBy?: Prisma.DevolucionOrderByWithRelationInput | Prisma.DevolucionOrderByWithRelationInput[]
+  cursor?: Prisma.DevolucionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DevolucionScalarFieldEnum | Prisma.DevolucionScalarFieldEnum[]
 }
 
 /**

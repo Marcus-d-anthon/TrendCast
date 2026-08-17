@@ -1,4 +1,4 @@
-import { ArrowLeft, Ban, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, Ban, CheckCircle2, Undo2 } from 'lucide-react';
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import type { EstadoDocumentoComercial } from '../../api/types/domain';
@@ -12,6 +12,8 @@ import { ErrorState } from '../../components/ui/ErrorState';
 import { Skeleton } from '../../components/ui/Skeleton';
 import tableStyles from '../../components/ui/Table.module.css';
 import { toast } from '../../components/ui/toast';
+import { DevolucionFormDrawer } from '../devoluciones/DevolucionFormDrawer';
+import { useDevolucionesDeDocumento } from '../../queries/useDevoluciones';
 import { useAnularVenta, useConfirmarVenta, useVenta } from '../../queries/useVentas';
 import { formatCurrency, formatDateTime } from '../../utils/format';
 import styles from '../productos/ProductoDetailPage.module.css';
@@ -31,13 +33,16 @@ const ESTADO_LABEL: Record<EstadoDocumentoComercial, string> = {
 export function VentaDetailPage() {
   const { id } = useParams<{ id: string }>();
   const puedeEditar = usePermiso('ventas.editar');
+  const puedeDevolver = usePermiso('devoluciones.crear');
 
   const venta = useVenta(id);
   const confirmar = useConfirmarVenta(id ?? '');
   const anular = useAnularVenta(id ?? '');
+  const devoluciones = useDevolucionesDeDocumento({ ventaId: id });
 
   const [confirmando, setConfirmando] = useState(false);
   const [anulando, setAnulando] = useState(false);
+  const [registrandoDevolucion, setRegistrandoDevolucion] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   if (venta.isLoading) {
@@ -67,14 +72,23 @@ export function VentaDetailPage() {
             {v.cliente?.nombre} · {v.almacen?.nombre}
           </span>
         </div>
-        {puedeEditar && esBorrador && (
+        {((puedeEditar && esBorrador) || (puedeDevolver && v.estado === 'CONFIRMADA')) && (
           <div className={styles.actions}>
-            <Button variant="secondary" onClick={() => setAnulando(true)}>
-              <Ban size={16} aria-hidden="true" /> Anular
-            </Button>
-            <Button onClick={() => setConfirmando(true)}>
-              <CheckCircle2 size={16} aria-hidden="true" /> Confirmar
-            </Button>
+            {puedeEditar && esBorrador && (
+              <>
+                <Button variant="secondary" onClick={() => setAnulando(true)}>
+                  <Ban size={16} aria-hidden="true" /> Anular
+                </Button>
+                <Button onClick={() => setConfirmando(true)}>
+                  <CheckCircle2 size={16} aria-hidden="true" /> Confirmar
+                </Button>
+              </>
+            )}
+            {puedeDevolver && v.estado === 'CONFIRMADA' && (
+              <Button variant="secondary" onClick={() => setRegistrandoDevolucion(true)}>
+                <Undo2 size={16} aria-hidden="true" /> Registrar devolución
+              </Button>
+            )}
           </div>
         )}
       </div>
@@ -139,6 +153,42 @@ export function VentaDetailPage() {
           </table>
         </div>
       </Card>
+
+      {devoluciones.data && devoluciones.data.length > 0 && (
+        <Card>
+          <h2 className={styles.sectionTitle}>Devoluciones registradas</h2>
+          <div className={tableStyles.tableWrap}>
+            <table className={tableStyles.table}>
+              <thead>
+                <tr>
+                  <th>Número</th>
+                  <th>Fecha</th>
+                  <th>Estado</th>
+                  <th style={{ textAlign: 'right' }}>Cantidad total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {devoluciones.data.map((dev) => (
+                  <tr key={dev.id}>
+                    <td className={tableStyles.mono}>{dev.numero}</td>
+                    <td>{formatDateTime(dev.fecha)}</td>
+                    <td>
+                      <Badge variant={ESTADO_VARIANT[dev.estado]}>{ESTADO_LABEL[dev.estado]}</Badge>
+                    </td>
+                    <td style={{ textAlign: 'right', fontFamily: 'var(--font-mono)' }}>
+                      {dev.detalle.reduce((suma, linea) => suma + linea.cantidad, 0)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </Card>
+      )}
+
+      {registrandoDevolucion && (
+        <DevolucionFormDrawer tipo="CLIENTE" documento={v} onClose={() => setRegistrandoDevolucion(false)} />
+      )}
 
       {confirmando && (
         <ConfirmDialog

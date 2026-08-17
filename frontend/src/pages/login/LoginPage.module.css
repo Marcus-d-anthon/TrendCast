@@ -1,22 +1,16 @@
-/* Portada: un solo fondo continuo (--color-bg, menta palido) en toda la
-   pantalla -- ningun panel tiene su propio color, para que se lea como una
-   sola superficie y no como dos bloques "cortados". La tarjeta blanca
-   resalta por contraste de superficie (blanco puro sobre menta), no por un
-   cambio de fondo. */
+/* Login en dos mitades con jerarquia real: la izquierda es una superficie de
+   marca (indigo profundo, el mismo degradado del isotipo) y la derecha la
+   superficie de trabajo, clara. Antes ambas mitades compartian el mismo fondo
+   plano, asi que el texto de la izquierda flotaba suelto junto a una tarjeta;
+   con dos superficies distintas cada mitad tiene un porque. El panel de marca
+   se mantiene oscuro en ambos temas: es identidad, no cromo de interfaz. */
 .screen {
   min-height: 100vh;
   display: grid;
-  grid-template-columns: 1.15fr 1fr;
-  background: var(--color-bg);
+  grid-template-columns: 1.1fr 1fr;
 }
 
-@media (max-width: 900px) {
-  .screen {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ── Panel izquierdo: mensaje + ilustracion de fondo ── */
+/* ── Mitad izquierda: superficie de marca ── */
 
 .brandPanel {
   position: relative;
@@ -24,97 +18,128 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: var(--space-24);
+  gap: var(--space-10);
+  padding: var(--space-16) var(--space-12);
+  background: linear-gradient(155deg, #241e5c 0%, #33299b 58%, #4338ca 100%);
+  color: #ffffff;
 }
 
-@media (max-width: 900px) {
-  .brandPanel {
-    padding: var(--space-12) var(--space-8);
-  }
+/* Halo suave: da profundidad al degradado sin dibujar nada figurativo. */
+.brandPanel::after {
+  content: '';
+  position: absolute;
+  top: -30%;
+  right: -20%;
+  width: 70%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(139, 127, 251, 0.4) 0%, rgba(139, 127, 251, 0) 70%);
+  pointer-events: none;
 }
 
-.textLayer {
+.brandInner {
   position: relative;
   z-index: 1;
+  max-width: 30rem;
 }
 
 .wordmark {
-  color: var(--color-text);
+  color: #ffffff;
+}
+
+/* El color va explicito, no heredado: global.css fija `color` en h1..h4, y una
+   regla explicita gana siempre a la herencia del panel. Sin esto el titular
+   saldria en --color-text (casi negro en tema claro) sobre el indigo oscuro. */
+.headline {
+  margin-top: var(--space-12);
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-display);
+  line-height: var(--leading-tight);
+  letter-spacing: -0.02em;
+  color: #ffffff;
 }
 
 .pitch {
-  margin-top: var(--space-8);
-  max-width: 30rem;
-  font-size: var(--text-lg);
-  font-weight: var(--weight-medium);
-  line-height: var(--leading-snug);
-  color: var(--color-text);
+  margin-top: var(--space-5);
+  font-size: var(--text-md);
+  line-height: var(--leading-normal);
+  color: rgba(255, 255, 255, 0.72);
 }
 
 .pitchList {
-  margin-top: var(--space-8);
+  margin-top: var(--space-12);
+  padding-top: var(--space-8);
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
-  max-width: 26rem;
+  gap: var(--space-5);
 }
 
 .pitchItem {
   display: flex;
-  align-items: baseline;
-  gap: var(--space-3);
+  align-items: center;
+  gap: var(--space-4);
   font-size: var(--text-sm);
-  color: var(--color-text-secondary);
+  line-height: var(--leading-snug);
+  color: rgba(255, 255, 255, 0.86);
 }
 
-.pitchGlyph {
-  font-family: var(--font-mono);
-  color: var(--color-primary-hover);
-  font-size: var(--text-sm);
-}
-
-/* ── Panel derecho: tarjeta blanca centrada, mismo fondo detras ── */
-
-.formPanel {
-  position: relative;
+/* El icono va en su propia placa translucida: separa el simbolo del texto sin
+   necesitar vinetas ni glifos sueltos. */
+.pitchIcon {
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--space-8);
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: var(--indigo-300);
 }
 
-.card {
-  position: relative;
-  width: 100%;
-  max-width: 23rem;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
-  padding: var(--space-10);
-}
+/* ── Mitad derecha: formulario sobre superficie limpia ── */
 
-.avatar {
+.formPanel {
   display: flex;
+  align-items: center;
   justify-content: center;
-  margin-bottom: var(--space-6);
+  padding: var(--space-12) var(--space-8);
+  background: var(--color-surface);
+}
+
+/* Sin tarjeta ni sombra: el contraste con el panel de marca ya delimita la
+   zona de trabajo, meter una caja dentro de otra solo recarga la vista. */
+.card {
+  width: 100%;
+  max-width: 22rem;
+}
+
+/* Marca compacta, solo visible cuando el panel de marca se colapsa en movil. */
+.mobileMark {
+  display: none;
+  margin-bottom: var(--space-8);
 }
 
 .cardTitle {
-  text-align: center;
-  font-size: var(--text-xl);
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-display);
+  letter-spacing: -0.015em;
   color: var(--color-text);
 }
 
 .cardSubtitle {
   margin-top: var(--space-2);
-  text-align: center;
   font-size: var(--text-sm);
+  line-height: var(--leading-normal);
   color: var(--color-text-secondary);
 }
 
 .form {
-  margin-top: var(--space-8);
+  margin-top: var(--space-10);
   display: flex;
   flex-direction: column;
   gap: var(--space-5);
@@ -186,13 +211,13 @@
 }
 
 .submit {
-  margin-top: var(--space-2);
+  margin-top: var(--space-3);
   width: 100%;
 }
 
 .backLink {
   width: 100%;
-  margin-top: var(--space-2);
+  margin-top: var(--space-1);
   padding: var(--space-2);
   text-align: center;
   font-size: var(--text-sm);
@@ -216,8 +241,41 @@
 }
 
 .hint {
-  margin-top: var(--space-6);
+  margin-top: var(--space-8);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-border);
   font-size: var(--text-xs);
   color: var(--color-text-secondary);
-  text-align: center;
+}
+
+/* ── Responsive: el panel de marca pasa a ser una cabecera compacta ── */
+
+@media (max-width: 900px) {
+  .screen {
+    grid-template-columns: 1fr;
+  }
+
+  .brandPanel {
+    display: none;
+  }
+
+  .formPanel {
+    align-items: flex-start;
+    padding: var(--space-12) var(--space-6);
+    background: var(--color-bg);
+  }
+
+  .card {
+    max-width: 24rem;
+    margin: 0 auto;
+    padding: var(--space-8);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .mobileMark {
+    display: flex;
+  }
 }

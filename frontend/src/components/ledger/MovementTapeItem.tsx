@@ -3,12 +3,21 @@ import { formatDateTime } from '../../utils/format';
 import { MovementGlyph } from './MovementGlyph';
 import styles from './MovementTape.module.css';
 
-const SIGNO: Record<Movimiento['tipo'], string> = { ENTRADA: '+', SALIDA: '−', AJUSTE: '=', TRANSFERENCIA: '⇄' };
+const SIGNO: Record<Movimiento['tipo'], string> = {
+  ENTRADA: '+',
+  SALIDA: '−',
+  AJUSTE: '=',
+  TRANSFERENCIA: '⇄',
+  DEVOLUCION_CLIENTE: '+',
+  DEVOLUCION_PROVEEDOR: '−',
+};
 const AMOUNT_CLASS: Record<Movimiento['tipo'], string> = {
   ENTRADA: styles.amountEntrada,
   SALIDA: styles.amountSalida,
   AJUSTE: styles.amountAjuste,
   TRANSFERENCIA: styles.amountTransferencia,
+  DEVOLUCION_CLIENTE: styles.amountDevolucionCliente,
+  DEVOLUCION_PROVEEDOR: styles.amountDevolucionProveedor,
 };
 
 interface MovementTapeItemProps {

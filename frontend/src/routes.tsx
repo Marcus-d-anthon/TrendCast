@@ -16,6 +16,7 @@ import { ComprasListPage } from './pages/compras/ComprasListPage';
 import { CompraDetailPage } from './pages/compras/CompraDetailPage';
 import { VentasListPage } from './pages/ventas/VentasListPage';
 import { VentaDetailPage } from './pages/ventas/VentaDetailPage';
+import { DevolucionesListPage } from './pages/devoluciones/DevolucionesListPage';
 import { AlertasPage } from './pages/alertas/AlertasPage';
 import { UsuariosPage } from './pages/usuarios/UsuariosPage';
 import { AdminPage } from './pages/admin/AdminPage';
@@ -64,6 +65,10 @@ export function AppRoutes() {
           <Route element={<RequirePermiso permiso="ventas.ver" />}>
             <Route path="/ventas" element={<VentasListPage />} />
             <Route path="/ventas/:id" element={<VentaDetailPage />} />
+          </Route>
+
+          <Route element={<RequirePermiso permiso="devoluciones.ver" />}>
+            <Route path="/devoluciones" element={<DevolucionesListPage />} />
           </Route>
 
           <Route element={<RequireRole excludeRoles={['BODEGA']} />}>

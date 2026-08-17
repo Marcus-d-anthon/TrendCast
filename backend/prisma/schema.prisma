@@ -39,11 +39,21 @@ enum TipoSolicitud {
   VENTA_ESPECIAL
 }
 
+// DEVOLUCION_CLIENTE/PROVEEDOR se distinguen de ENTRADA/SALIDA normales para
+// que un reporte futuro (kardex) pueda diferenciar "entro por compra" de
+// "entro por devolucion de cliente" sin ambiguedad.
 enum TipoMovimiento {
   ENTRADA
   SALIDA
   AJUSTE
   TRANSFERENCIA
+  DEVOLUCION_CLIENTE
+  DEVOLUCION_PROVEEDOR
+}
+
+enum TipoDevolucion {
+  CLIENTE // el cliente devuelve -> ENTRADA a almacen
+  PROVEEDOR // se devuelve al proveedor -> SALIDA de almacen
 }
 
 enum AccionAuditoria {
@@ -96,9 +106,10 @@ model Empresa {
   productos   Producto[]
   clientes    Cliente[]
   proveedores Proveedor[]
-  compras     Compra[]
-  ventas      Venta[]
-  alertas     Alerta[]
+  compras      Compra[]
+  ventas       Venta[]
+  alertas      Alerta[]
+  devoluciones Devolucion[]
 
   @@map("empresas")
 }
@@ -146,6 +157,7 @@ model Usuario {
   solicitudesCreadas     Solicitud[]             @relation("SolicitudSolicitante")
   solicitudesAprobadas   Solicitud[]             @relation("SolicitudAprobador")
   solicitudesEfectuadas  Solicitud[]             @relation("SolicitudEfectuador")
+  devolucionesRegistradas Devolucion[]           @relation("DevolucionRegistradaPor")
 
   @@index([rol])
   @@index([deletedAt])
@@ -297,13 +309,14 @@ model Almacen {
   updatedBy String?   @map("updated_by")
   deletedAt DateTime? @map("deleted_at")
 
-  stocks      Stock[]
-  lotes       Lote[]
-  movimientos MovimientoInventario[]
-  compras     Compra[]
-  ventas      Venta[]
-  usuarios    Usuario[]
-  solicitudes Solicitud[]
+  stocks       Stock[]
+  lotes        Lote[]
+  movimientos  MovimientoInventario[]
+  compras      Compra[]
+  ventas       Venta[]
+  usuarios     Usuario[]
+  solicitudes  Solicitud[]
+  devoluciones Devolucion[]
 
   @@unique([empresaId, nombre])
   @@index([deletedAt])
@@ -343,12 +356,13 @@ model Producto {
   updatedBy String?   @map("updated_by")
   deletedAt DateTime? @map("deleted_at")
 
-  stocks         Stock[]
-  lotes          Lote[]
-  movimientos    MovimientoInventario[]
-  detallesCompra DetalleCompra[]
-  detallesVenta  DetalleVenta[]
-  solicitudes    Solicitud[]
+  stocks             Stock[]
+  lotes              Lote[]
+  movimientos        MovimientoInventario[]
+  detallesCompra     DetalleCompra[]
+  detallesVenta      DetalleVenta[]
+  solicitudes        Solicitud[]
+  detallesDevolucion DetalleDevolucion[]
 
   @@index([categoriaId])
   @@index([marcaId])
@@ -571,6 +585,7 @@ model Compra {
 
   detalle     DetalleCompra[]
   movimientos MovimientoInventario[]
+  devoluciones Devolucion[]
 
   @@index([proveedorId])
   @@index([estado])
@@ -624,6 +639,7 @@ model Venta {
 
   detalle     DetalleVenta[]
   movimientos MovimientoInventario[]
+  devoluciones Devolucion[]
 
   @@index([clienteId])
   @@index([estado])
@@ -645,6 +661,71 @@ model DetalleVenta {
 
   @@index([ventaId])
   @@map("detalle_ventas")
+}
+
+// ──────────────────────────────
+// DEVOLUCIONES
+// Un cliente devuelve mercaderia de una venta ya CONFIRMADA (entra a
+// almacen), o la empresa devuelve mercaderia a un proveedor de una compra ya
+// CONFIRMADA (sale de almacen). Mismo patron borrador->confirmar que
+// Compra/Venta: en BORRADOR es editable, al CONFIRMAR genera los
+// MovimientoInventario reales (ver DevolucionesRepository.confirmar).
+// Un solo modelo para ambos tipos (no dos separados) porque la estructura es
+// identica -- cabecera + detalle + estado -- y solo cambia a que documento
+// referencia y en que direccion mueve stock.
+// ──────────────────────────────
+
+model Devolucion {
+  id     String                   @id @default(uuid())
+  numero String                   @unique
+  tipo   TipoDevolucion
+  fecha  DateTime                 @default(now())
+  estado EstadoDocumentoComercial @default(BORRADOR)
+  motivo String
+
+  empresaId String  @map("empresa_id")
+  empresa   Empresa @relation(fields: [empresaId], references: [id], onDelete: Restrict)
+
+  // Exactamente uno de los dos, segun `tipo` -- se valida en el Service, no
+  // a nivel de esquema (Postgres no tiene un CHECK declarativo simple para
+  // "exactamente uno de estos dos FKs no es null" sin un trigger).
+  ventaId String? @map("venta_id")
+  venta   Venta?  @relation(fields: [ventaId], references: [id], onDelete: Restrict)
+
+  compraId String? @map("compra_id")
+  compra   Compra? @relation(fields: [compraId], references: [id], onDelete: Restrict)
+
+  // Heredado del documento origen al crear, no editable por el usuario.
+  almacenId String  @map("almacen_id")
+  almacen   Almacen @relation(fields: [almacenId], references: [id], onDelete: Restrict)
+
+  usuarioId String  @map("usuario_id")
+  usuario   Usuario @relation("DevolucionRegistradaPor", fields: [usuarioId], references: [id], onDelete: Restrict)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  detalle     DetalleDevolucion[]
+  movimientos MovimientoInventario[]
+
+  @@index([empresaId])
+  @@index([ventaId])
+  @@index([compraId])
+  @@index([estado])
+  @@map("devoluciones")
+}
+
+model DetalleDevolucion {
+  id           String     @id @default(uuid())
+  cantidad     Int
+  devolucionId String     @map("devolucion_id")
+  devolucion   Devolucion @relation(fields: [devolucionId], references: [id], onDelete: Cascade)
+
+  productoId String   @map("producto_id")
+  producto   Producto @relation(fields: [productoId], references: [id], onDelete: Restrict)
+
+  @@index([devolucionId])
+  @@map("detalle_devoluciones")
 }
 
 // ──────────────────────────────
@@ -689,6 +770,9 @@ model MovimientoInventario {
   solicitudId String?    @map("solicitud_id")
   solicitud   Solicitud? @relation(fields: [solicitudId], references: [id], onDelete: Restrict)
 
+  devolucionId String?     @map("devolucion_id")
+  devolucion   Devolucion? @relation(fields: [devolucionId], references: [id], onDelete: Restrict)
+
   fecha     DateTime @default(now()) // fecha de negocio del movimiento
   createdAt DateTime @default(now()) @map("created_at") // marca de sistema
 
@@ -700,6 +784,7 @@ model MovimientoInventario {
   @@index([compraId])
   @@index([solicitudId])
   @@index([ventaId])
+  @@index([devolucionId])
   @@map("movimientos_inventario")
 }
 

@@ -17,6 +17,7 @@ export const MODULOS_PERMISOS = [
   "reportes",
   "usuarios",
   "solicitudes",
+  "devoluciones",
 ];
 export const ACCIONES_PERMISOS = ["ver", "crear", "editar", "eliminar"] as const;
 
@@ -57,6 +58,9 @@ export const MATRIZ_PERMISOS_POR_ROL: Record<Exclude<RolUsuario, "ADMIN" | "SUPE
     "productos.ver",
     "inventario.ver",
     "reportes.ver",
+    // Registrar devoluciones de sus propias ventas ya confirmadas.
+    "devoluciones.ver",
+    "devoluciones.crear",
   ],
   GERENCIA: [
     ...MODULOS_PERMISOS.filter((m) => m !== "usuarios").map((m) => `${m}.ver`),

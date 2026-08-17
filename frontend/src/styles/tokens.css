@@ -85,6 +85,11 @@
   --color-salida: var(--teal-500);
   --color-ajuste: var(--amber-500);
   --color-transferencia: var(--stone-500);
+  /* Devoluciones: mismo par direccional entrada/salida (violeta = vuelve el
+     cliente, naranja = vuelve al proveedor) pero con tono propio para no
+     confundirse con una compra/venta normal. */
+  --color-devolucion-cliente: #a855f7;
+  --color-devolucion-proveedor: #ea580c;
 
   /* ---- Tipografia ---- */
   --font-display: "Bricolage Grotesque Variable", "Segoe UI", sans-serif;
@@ -199,6 +204,8 @@
     --color-salida: #4fb6c2;
     --color-ajuste: #e3a64e;
     --color-transferencia: #9490b3;
+    --color-devolucion-cliente: #c084fc;
+    --color-devolucion-proveedor: #fb923c;
 
     --chart-series-1: #8b7ffb;
     --chart-series-2: #46a6bd;
@@ -239,6 +246,8 @@
   --color-salida: #4fb6c2;
   --color-ajuste: #e3a64e;
   --color-transferencia: #9490b3;
+  --color-devolucion-cliente: #c084fc;
+  --color-devolucion-proveedor: #fb923c;
 
   --chart-series-1: #8b7ffb;
   --chart-series-2: #46a6bd;

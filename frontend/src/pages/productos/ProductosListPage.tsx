@@ -1,4 +1,4 @@
-import { Package, Plus, ScanBarcode, Search, Upload, Warehouse } from 'lucide-react';
+import { Package, Plus, Search, Upload, Warehouse } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { productosApi } from '../../api/endpoints/productos';
@@ -6,7 +6,6 @@ import type { Producto } from '../../api/types/domain';
 import { usePermiso } from '../../auth/usePermiso';
 import { useAuth } from '../../auth/useAuth';
 import { Badge } from '../../components/ui/Badge';
-import { BarcodeScannerModal } from '../../components/ui/BarcodeScannerModal';
 import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
 import { EmptyState } from '../../components/ui/EmptyState';
@@ -20,7 +19,6 @@ import { Pagination } from '../../components/ui/Pagination';
 import { Select } from '../../components/ui/Select';
 import { Skeleton } from '../../components/ui/Skeleton';
 import tableStyles from '../../components/ui/Table.module.css';
-import { toast } from '../../components/ui/toast';
 import { useDebouncedValue } from '../../hooks/useDebouncedValue';
 import { useCategorias } from '../../queries/useCategorias';
 import { useProductosPaginado } from '../../queries/useProductos';
@@ -64,7 +62,6 @@ export function ProductosListPage() {
   );
 
   const [creando, setCreando] = useState(false);
-  const [escaneando, setEscaneando] = useState(false);
 
   if (sinAlmacenAsignado) {
     return (
@@ -91,13 +88,7 @@ export function ProductosListPage() {
 
   return (
     <div>
-      <FiltersCard
-        actions={
-          <Button type="button" variant="secondary" onClick={() => setEscaneando(true)}>
-            <ScanBarcode size={16} aria-hidden="true" /> Escanear
-          </Button>
-        }
-      >
+      <FiltersCard>
         <FormField label="Buscar" htmlFor="prod-buscar" hint="Por nombre o SKU, desde 3 caracteres">
           <Input
             id="prod-buscar"
@@ -218,16 +209,6 @@ export function ProductosListPage() {
       </Card>
 
       {creando && <ProductoFormDrawer onClose={() => setCreando(false)} />}
-      {escaneando && (
-        <BarcodeScannerModal
-          onClose={() => setEscaneando(false)}
-          onScan={(codigo) => {
-            setEscaneando(false);
-            actualizarParam('q', codigo);
-            toast.success(`Buscando SKU "${codigo}"…`);
-          }}
-        />
-      )}
     </div>
   );
 }

@@ -71,6 +71,8 @@ export const ModelName = {
   DetalleCompra: 'DetalleCompra',
   Venta: 'Venta',
   DetalleVenta: 'DetalleVenta',
+  Devolucion: 'Devolucion',
+  DetalleDevolucion: 'DetalleDevolucion',
   MovimientoInventario: 'MovimientoInventario',
   Alerta: 'Alerta',
   Notificacion: 'Notificacion',
@@ -416,6 +418,35 @@ export const DetalleVentaScalarFieldEnum = {
 export type DetalleVentaScalarFieldEnum = (typeof DetalleVentaScalarFieldEnum)[keyof typeof DetalleVentaScalarFieldEnum]
 
 
+export const DevolucionScalarFieldEnum = {
+  id: 'id',
+  numero: 'numero',
+  tipo: 'tipo',
+  fecha: 'fecha',
+  estado: 'estado',
+  motivo: 'motivo',
+  empresaId: 'empresaId',
+  ventaId: 'ventaId',
+  compraId: 'compraId',
+  almacenId: 'almacenId',
+  usuarioId: 'usuarioId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DevolucionScalarFieldEnum = (typeof DevolucionScalarFieldEnum)[keyof typeof DevolucionScalarFieldEnum]
+
+
+export const DetalleDevolucionScalarFieldEnum = {
+  id: 'id',
+  cantidad: 'cantidad',
+  devolucionId: 'devolucionId',
+  productoId: 'productoId'
+} as const
+
+export type DetalleDevolucionScalarFieldEnum = (typeof DetalleDevolucionScalarFieldEnum)[keyof typeof DetalleDevolucionScalarFieldEnum]
+
+
 export const MovimientoInventarioScalarFieldEnum = {
   id: 'id',
   tipo: 'tipo',
@@ -430,6 +461,7 @@ export const MovimientoInventarioScalarFieldEnum = {
   compraId: 'compraId',
   ventaId: 'ventaId',
   solicitudId: 'solicitudId',
+  devolucionId: 'devolucionId',
   fecha: 'fecha',
   createdAt: 'createdAt'
 } as const

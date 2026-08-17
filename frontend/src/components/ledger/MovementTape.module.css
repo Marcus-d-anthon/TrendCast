@@ -91,6 +91,14 @@
   color: var(--color-transferencia);
 }
 
+.amountDevolucionCliente {
+  color: var(--color-devolucion-cliente);
+}
+
+.amountDevolucionProveedor {
+  color: var(--color-devolucion-proveedor);
+}
+
 .meta {
   margin-top: var(--space-1);
   display: flex;

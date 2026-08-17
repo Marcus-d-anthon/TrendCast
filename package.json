@@ -1,0 +1,11 @@
+{
+  "name": "trendcast",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently -n backend,frontend -c blue,magenta \"cross-env PORT=3000 npm run dev --prefix backend\" \"npm run dev --prefix frontend\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0",
+    "cross-env": "^10.1.0"
+  }
+}

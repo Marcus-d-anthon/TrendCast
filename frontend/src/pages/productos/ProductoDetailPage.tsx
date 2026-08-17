@@ -5,7 +5,6 @@ import { usePermiso } from '../../auth/usePermiso';
 import { useAuth } from '../../auth/useAuth';
 import { ApiError } from '../../api/http-client';
 import { Badge } from '../../components/ui/Badge';
-import { BarcodeLabel } from '../../components/ui/BarcodeLabel';
 import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
 import { ConfirmDialog } from '../../components/ui/ConfirmDialog';
@@ -125,11 +124,6 @@ export function ProductoDetailPage() {
           <Link to={`/prediccion?producto=${p.id}`} className={styles.predictionLink}>
             <TrendingUp size={16} aria-hidden="true" /> Ver proyección de demanda
           </Link>
-
-          <div className={styles.barcodeSection}>
-            <div className={styles.statLabel}>Código de barras</div>
-            <BarcodeLabel sku={p.sku} nombre={p.nombre} />
-          </div>
         </Card>
 
         <Card>

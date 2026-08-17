@@ -16,12 +16,16 @@ const NOMBRE_TIPO: Record<string, string> = {
   SALIDA: 'Salidas',
   AJUSTE: 'Ajustes',
   TRANSFERENCIA: 'Transferencias',
+  DEVOLUCION_CLIENTE: 'Devoluciones de cliente',
+  DEVOLUCION_PROVEEDOR: 'Devoluciones a proveedor',
 };
 const COLOR_TIPO: Record<string, string> = {
   ENTRADA: 'var(--chart-series-1)',
   SALIDA: 'var(--chart-series-2)',
   AJUSTE: 'var(--chart-series-3)',
   TRANSFERENCIA: 'var(--chart-series-4)',
+  DEVOLUCION_CLIENTE: 'var(--color-devolucion-cliente)',
+  DEVOLUCION_PROVEEDOR: 'var(--color-devolucion-proveedor)',
 };
 
 interface FilaPeriodo {
@@ -30,6 +34,8 @@ interface FilaPeriodo {
   SALIDA: number;
   AJUSTE: number;
   TRANSFERENCIA: number;
+  DEVOLUCION_CLIENTE: number;
+  DEVOLUCION_PROVEEDOR: number;
 }
 
 export function PeriodStackedChart({ datos, granularidad }: PeriodStackedChartProps) {
@@ -37,7 +43,15 @@ export function PeriodStackedChart({ datos, granularidad }: PeriodStackedChartPr
     const porPeriodo = new Map<string, FilaPeriodo>();
     for (const item of datos) {
       const etiqueta = formatPeriodo(item.periodo, granularidad);
-      const fila = porPeriodo.get(etiqueta) ?? { periodo: etiqueta, ENTRADA: 0, SALIDA: 0, AJUSTE: 0, TRANSFERENCIA: 0 };
+      const fila = porPeriodo.get(etiqueta) ?? {
+        periodo: etiqueta,
+        ENTRADA: 0,
+        SALIDA: 0,
+        AJUSTE: 0,
+        TRANSFERENCIA: 0,
+        DEVOLUCION_CLIENTE: 0,
+        DEVOLUCION_PROVEEDOR: 0,
+      };
       fila[item.tipo] += item.total;
       porPeriodo.set(etiqueta, fila);
     }
@@ -83,6 +97,8 @@ export function PeriodStackedChart({ datos, granularidad }: PeriodStackedChartPr
             <Bar dataKey="SALIDA" fill={COLOR_TIPO.SALIDA} radius={[4, 4, 0, 0]} maxBarSize={20} />
             <Bar dataKey="AJUSTE" fill={COLOR_TIPO.AJUSTE} radius={[4, 4, 0, 0]} maxBarSize={20} />
             <Bar dataKey="TRANSFERENCIA" fill={COLOR_TIPO.TRANSFERENCIA} radius={[4, 4, 0, 0]} maxBarSize={20} />
+            <Bar dataKey="DEVOLUCION_CLIENTE" fill={COLOR_TIPO.DEVOLUCION_CLIENTE} radius={[4, 4, 0, 0]} maxBarSize={20} />
+            <Bar dataKey="DEVOLUCION_PROVEEDOR" fill={COLOR_TIPO.DEVOLUCION_PROVEEDOR} radius={[4, 4, 0, 0]} maxBarSize={20} />
           </BarChart>
         </ResponsiveContainer>
       </div>

@@ -7,7 +7,14 @@ interface MiniTapeProps {
   movimientos: Movimiento[];
 }
 
-const SIGNO: Record<Movimiento['tipo'], string> = { ENTRADA: '+', SALIDA: '−', AJUSTE: '=', TRANSFERENCIA: '⇄' };
+const SIGNO: Record<Movimiento['tipo'], string> = {
+  ENTRADA: '+',
+  SALIDA: '−',
+  AJUSTE: '=',
+  TRANSFERENCIA: '⇄',
+  DEVOLUCION_CLIENTE: '+',
+  DEVOLUCION_PROVEEDOR: '−',
+};
 
 export function MiniTape({ movimientos }: MiniTapeProps) {
   return (

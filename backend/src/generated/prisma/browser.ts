@@ -118,6 +118,16 @@ export type Venta = Prisma.VentaModel
  */
 export type DetalleVenta = Prisma.DetalleVentaModel
 /**
+ * Model Devolucion
+ * 
+ */
+export type Devolucion = Prisma.DevolucionModel
+/**
+ * Model DetalleDevolucion
+ * 
+ */
+export type DetalleDevolucion = Prisma.DetalleDevolucionModel
+/**
  * Model MovimientoInventario
  * 
  */

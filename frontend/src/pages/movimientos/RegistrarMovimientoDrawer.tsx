@@ -17,7 +17,10 @@ interface RegistrarMovimientoDrawerProps {
   onClose: () => void;
 }
 
-type TipoRegistrable = Exclude<TipoMovimiento, 'TRANSFERENCIA'>;
+// Las devoluciones no se registran aqui a mano: solo se crean desde el flujo
+// dedicado (VentaDetailPage/CompraDetailPage), que valida cuanto se puede
+// devolver contra el documento origen -- ver DevolucionesService.crear.
+type TipoRegistrable = Exclude<TipoMovimiento, 'TRANSFERENCIA' | 'DEVOLUCION_CLIENTE' | 'DEVOLUCION_PROVEEDOR'>;
 
 const TIPOS: { value: TipoRegistrable; label: string }[] = [
   { value: 'ENTRADA', label: 'Entrada' },

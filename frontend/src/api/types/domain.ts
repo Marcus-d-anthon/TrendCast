@@ -139,7 +139,34 @@ export interface Venta {
   detalle: DetalleVenta[];
 }
 
-export type TipoMovimiento = 'ENTRADA' | 'SALIDA' | 'AJUSTE' | 'TRANSFERENCIA';
+export type TipoMovimiento = 'ENTRADA' | 'SALIDA' | 'AJUSTE' | 'TRANSFERENCIA' | 'DEVOLUCION_CLIENTE' | 'DEVOLUCION_PROVEEDOR';
+
+export type TipoDevolucion = 'CLIENTE' | 'PROVEEDOR';
+
+export interface DetalleDevolucion {
+  id: string;
+  cantidad: number;
+  productoId: string;
+  producto?: DetalleDocumentoProducto;
+}
+
+export interface Devolucion {
+  id: string;
+  numero: string;
+  tipo: TipoDevolucion;
+  fecha: string;
+  estado: EstadoDocumentoComercial;
+  motivo: string;
+  ventaId: string | null;
+  compraId: string | null;
+  almacenId: string;
+  usuarioId: string;
+  venta?: { id: string; numero: string } | null;
+  compra?: { id: string; numero: string } | null;
+  almacen?: Almacen;
+  usuario?: { id: string; nombre: string; email: string };
+  detalle: DetalleDevolucion[];
+}
 
 export interface MovimientoUsuario {
   id: string;

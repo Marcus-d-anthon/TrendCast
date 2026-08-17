@@ -287,6 +287,23 @@ export type EnumEstadoDocumentoComercialWithAggregatesFilter<$PrismaModel = neve
   _max?: Prisma.NestedEnumEstadoDocumentoComercialFilter<$PrismaModel>
 }
 
+export type EnumTipoDevolucionFilter<$PrismaModel = never> = {
+  equals?: $Enums.TipoDevolucion | Prisma.EnumTipoDevolucionFieldRefInput<$PrismaModel>
+  in?: $Enums.TipoDevolucion[] | Prisma.ListEnumTipoDevolucionFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TipoDevolucion[] | Prisma.ListEnumTipoDevolucionFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTipoDevolucionFilter<$PrismaModel> | $Enums.TipoDevolucion
+}
+
+export type EnumTipoDevolucionWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.TipoDevolucion | Prisma.EnumTipoDevolucionFieldRefInput<$PrismaModel>
+  in?: $Enums.TipoDevolucion[] | Prisma.ListEnumTipoDevolucionFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TipoDevolucion[] | Prisma.ListEnumTipoDevolucionFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTipoDevolucionWithAggregatesFilter<$PrismaModel> | $Enums.TipoDevolucion
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumTipoDevolucionFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumTipoDevolucionFilter<$PrismaModel>
+}
+
 export type EnumTipoMovimientoFilter<$PrismaModel = never> = {
   equals?: $Enums.TipoMovimiento | Prisma.EnumTipoMovimientoFieldRefInput<$PrismaModel>
   in?: $Enums.TipoMovimiento[] | Prisma.ListEnumTipoMovimientoFieldRefInput<$PrismaModel>
@@ -690,6 +707,23 @@ export type NestedEnumEstadoDocumentoComercialWithAggregatesFilter<$PrismaModel 
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumEstadoDocumentoComercialFilter<$PrismaModel>
   _max?: Prisma.NestedEnumEstadoDocumentoComercialFilter<$PrismaModel>
+}
+
+export type NestedEnumTipoDevolucionFilter<$PrismaModel = never> = {
+  equals?: $Enums.TipoDevolucion | Prisma.EnumTipoDevolucionFieldRefInput<$PrismaModel>
+  in?: $Enums.TipoDevolucion[] | Prisma.ListEnumTipoDevolucionFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TipoDevolucion[] | Prisma.ListEnumTipoDevolucionFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTipoDevolucionFilter<$PrismaModel> | $Enums.TipoDevolucion
+}
+
+export type NestedEnumTipoDevolucionWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.TipoDevolucion | Prisma.EnumTipoDevolucionFieldRefInput<$PrismaModel>
+  in?: $Enums.TipoDevolucion[] | Prisma.ListEnumTipoDevolucionFieldRefInput<$PrismaModel>
+  notIn?: $Enums.TipoDevolucion[] | Prisma.ListEnumTipoDevolucionFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumTipoDevolucionWithAggregatesFilter<$PrismaModel> | $Enums.TipoDevolucion
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumTipoDevolucionFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumTipoDevolucionFilter<$PrismaModel>
 }
 
 export type NestedEnumTipoMovimientoFilter<$PrismaModel = never> = {

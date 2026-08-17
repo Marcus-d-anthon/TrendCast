@@ -11,6 +11,7 @@ import {
   ShoppingCart,
   Tags,
   TrendingUp,
+  Undo2,
   Users,
   type LucideIcon,
 } from 'lucide-react';
@@ -48,6 +49,7 @@ export const navItems: NavItem[] = [
   { to: '/movimientos', label: 'Movimientos', icon: ArrowLeftRight },
   { to: '/compras', label: 'Compras', icon: ShoppingCart, permiso: 'compras.ver' },
   { to: '/ventas', label: 'Ventas', icon: Receipt, permiso: 'ventas.ver' },
+  { to: '/devoluciones', label: 'Devoluciones', icon: Undo2, permiso: 'devoluciones.ver' },
   { to: '/alertas', label: 'Alertas', icon: AlertTriangle, ocultarPara: ['BODEGA'] },
   { to: '/prediccion', label: 'Predicción', icon: TrendingUp, ocultarPara: ['BODEGA'] },
   { to: '/reportes', label: 'Reportes', icon: BarChart3, permiso: 'reportes.ver' },

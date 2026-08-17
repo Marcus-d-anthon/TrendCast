@@ -1,0 +1,981 @@
+<title>Defensa TrendCast</title>
+<style>
+  :root {
+    --paper:      #FBFAFC;
+    --surface:    #FFFFFF;
+    --surface-2:  #F3F1F8;
+    --ink:        #1A1830;
+    --ink-soft:   #4A4666;
+    --ink-mute:   #6E6A88;
+    --rule:       #DEDAEC;
+    --rule-soft:  #EBE8F3;
+    --indigo:     #4A3FC4;
+    --indigo-bg:  #ECEAFB;
+    --ok:         #1E7A52;
+    --ok-bg:      #E2F3EA;
+    --warn:       #8A5A0B;
+    --warn-bg:    #FAEEDB;
+    --risk:       #B4362C;
+    --risk-bg:    #FBE7E4;
+
+    --display: Georgia, "Iowan Old Style", "Times New Roman", serif;
+    --body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --mono: ui-monospace, "Cascadia Mono", "SF Mono", Menlo, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:     #121125;
+      --surface:   #1A1932;
+      --surface-2: #232141;
+      --ink:       #EAE8F7;
+      --ink-soft:  #B8B4D4;
+      --ink-mute:  #8A86AB;
+      --rule:      #322F55;
+      --rule-soft: #272545;
+      --indigo:    #A99EFF;
+      --indigo-bg: #262252;
+      --ok:        #62C79A;
+      --ok-bg:     #16382A;
+      --warn:      #E0A94E;
+      --warn-bg:   #3A2A10;
+      --risk:      #F0857A;
+      --risk-bg:   #3D1B18;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper:     #121125;
+    --surface:   #1A1932;
+    --surface-2: #232141;
+    --ink:       #EAE8F7;
+    --ink-soft:  #B8B4D4;
+    --ink-mute:  #8A86AB;
+    --rule:      #322F55;
+    --rule-soft: #272545;
+    --indigo:    #A99EFF;
+    --indigo-bg: #262252;
+    --ok:        #62C79A;
+    --ok-bg:     #16382A;
+    --warn:      #E0A94E;
+    --warn-bg:   #3A2A10;
+    --risk:      #F0857A;
+    --risk-bg:   #3D1B18;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0 24px 96px;
+  }
+
+  .wrap { max-width: 820px; margin: 0 auto; }
+
+  /* ---- Cabecera ---- */
+  header.top {
+    padding: 72px 0 40px;
+    border-bottom: 2px solid var(--ink);
+    margin-bottom: 48px;
+  }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--indigo);
+    margin: 0 0 20px;
+  }
+  h1 {
+    font-family: var(--display);
+    font-size: clamp(34px, 6vw, 52px);
+    line-height: 1.08;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    margin: 0 0 20px;
+    text-wrap: balance;
+  }
+  .standfirst {
+    font-size: 18px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 62ch;
+    margin: 0;
+  }
+
+  /* ---- Estructura ---- */
+  section { margin-bottom: 64px; scroll-margin-top: 24px; }
+
+  h2 {
+    font-family: var(--display);
+    font-size: 27px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    margin: 0 0 8px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--rule);
+    text-wrap: balance;
+  }
+  h3 {
+    font-family: var(--body);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin: 40px 0 16px;
+  }
+  .lede { color: var(--ink-soft); max-width: 65ch; margin: 16px 0 28px; }
+  p { max-width: 65ch; }
+
+  /* ---- Índice ---- */
+  nav.toc {
+    background: var(--surface-2);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 24px 28px;
+    margin-bottom: 56px;
+  }
+  nav.toc ol {
+    margin: 0; padding: 0; list-style: none;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 4px 28px;
+    counter-reset: toc;
+  }
+  nav.toc li { counter-increment: toc; }
+  nav.toc a {
+    display: flex; gap: 12px; align-items: baseline;
+    color: var(--ink); text-decoration: none;
+    padding: 6px 0; font-size: 15px;
+    border-bottom: 1px solid transparent;
+  }
+  nav.toc a::before {
+    content: counter(toc, decimal-leading-zero);
+    font-family: var(--mono); font-size: 11px; color: var(--indigo); flex-shrink: 0;
+  }
+  nav.toc a:hover { color: var(--indigo); }
+
+  /* ---- Chips de evidencia ---- */
+  .chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: var(--mono); font-size: 10px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 3px 9px; border-radius: 2px; white-space: nowrap;
+  }
+  .chip.ok   { background: var(--ok-bg);   color: var(--ok); }
+  .chip.warn { background: var(--warn-bg); color: var(--warn); }
+  .chip.risk { background: var(--risk-bg); color: var(--risk); }
+
+  /* ---- Bloque Q&A ---- */
+  .qa {
+    border-top: 1px solid var(--rule-soft);
+    padding: 22px 0;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .qa:last-child { border-bottom: 1px solid var(--rule-soft); }
+  .qa-head { display: flex; gap: 12px; align-items: flex-start; flex-wrap: wrap; }
+  .qnum {
+    font-family: var(--mono); font-size: 12px; color: var(--ink-mute);
+    flex-shrink: 0; padding-top: 3px; min-width: 34px;
+  }
+  .q {
+    font-family: var(--display); font-size: 19px; line-height: 1.35;
+    margin: 0; flex: 1 1 320px; text-wrap: balance;
+  }
+  .qa-body { padding-left: 46px; display: flex; flex-direction: column; gap: 12px; }
+  .qa-body > * { margin: 0; }
+  @media (max-width: 620px) { .qa-body { padding-left: 0; } }
+
+  /* ---- Cita textual ---- */
+  blockquote {
+    margin: 0; padding: 12px 0 12px 18px;
+    border-left: 3px solid var(--indigo);
+    background: var(--indigo-bg);
+    border-radius: 0 3px 3px 0;
+    padding-right: 16px;
+  }
+  blockquote p { margin: 0; font-size: 15px; line-height: 1.55; }
+  blockquote cite {
+    display: block; margin-top: 8px;
+    font-family: var(--mono); font-size: 11px; font-style: normal;
+    letter-spacing: 0.05em; color: var(--indigo);
+  }
+
+  /* ---- Guion hablado ---- */
+  .guion {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--ok);
+    border-radius: 0 3px 3px 0;
+    padding: 16px 18px;
+  }
+  .guion .label {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--ok); display: block; margin-bottom: 8px;
+  }
+  .guion p { font-size: 15.5px; line-height: 1.6; }
+  .guion p + p { margin-top: 10px; }
+
+  .nodigas {
+    border-left: 3px solid var(--risk);
+    background: var(--risk-bg);
+    border-radius: 0 3px 3px 0;
+    padding: 14px 18px;
+  }
+  .nodigas .label {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--risk); display: block; margin-bottom: 6px;
+  }
+  .nodigas p { font-size: 15px; }
+
+  /* ---- Alerta destacada ---- */
+  .alerta {
+    background: var(--risk-bg);
+    border: 1px solid var(--risk);
+    border-radius: 3px;
+    padding: 26px 28px;
+    margin-bottom: 40px;
+  }
+  .alerta h3 { margin-top: 0; color: var(--risk); }
+  .alerta p { max-width: none; }
+
+  /* ---- Tablas ---- */
+  .tw { overflow-x: auto; margin: 4px 0; }
+  table { border-collapse: collapse; width: 100%; font-size: 14.5px; min-width: 460px; }
+  th {
+    text-align: left; font-family: var(--body); font-size: 11px;
+    letter-spacing: 0.09em; text-transform: uppercase; color: var(--ink-mute);
+    border-bottom: 1.5px solid var(--rule); padding: 8px 14px 8px 0; font-weight: 700;
+  }
+  td { border-bottom: 1px solid var(--rule-soft); padding: 10px 14px 10px 0; vertical-align: top; }
+  td.num { font-variant-numeric: tabular-nums; font-family: var(--mono); font-size: 13px; }
+  code {
+    font-family: var(--mono); font-size: 0.87em;
+    background: var(--surface-2); padding: 1px 5px; border-radius: 2px;
+  }
+  strong { font-weight: 700; }
+  a { color: var(--indigo); }
+  :focus-visible { outline: 2px solid var(--indigo); outline-offset: 3px; }
+  ul { max-width: 65ch; padding-left: 20px; }
+  li { margin-bottom: 6px; }
+  hr { border: 0; border-top: 1px solid var(--rule); margin: 40px 0; }
+  .foot {
+    border-top: 2px solid var(--ink); padding-top: 24px; margin-top: 72px;
+    font-size: 14px; color: var(--ink-mute);
+  }
+</style>
+
+<div class="wrap">
+
+<header class="top">
+  <p class="eyebrow">Proyecto Integrador ISTLC · TIANSHI ECUADOR S.A.</p>
+  <h1>Defensa del sistema, con la evidencia en la mano</h1>
+  <p class="standfirst">Cada pregunta del banco contrastada contra dos fuentes: el texto literal de la tesis y el código real del proyecto. Lo que tiene respaldo, lo que solo se puede razonar, y lo que no se puede responder — dicho sin adornos.</p>
+</header>
+
+<nav class="toc" aria-label="Índice">
+  <ol>
+    <li><a href="#errores">Errores en el banco</a></li>
+    <li><a href="#sistema">Sistema de evidencia</a></li>
+    <li><a href="#criticas">Las 6 críticas</a></li>
+    <li><a href="#negocio">Emprendimientos</a></li>
+    <li><a href="#lego">Público no técnico</a></li>
+    <li><a href="#motivacion">Motivación</a></li>
+    <li><a href="#ti">Administrador de TI</a></li>
+    <li><a href="#gerente">Gerente comprador</a></li>
+    <li><a href="#bodeguero">Bodeguero</a></li>
+    <li><a href="#informatico">Jurado informático</a></li>
+    <li><a href="#predictivo">Análisis predictivo</a></li>
+    <li><a href="#resultados">Resultados y validación</a></li>
+    <li><a href="#sinrespaldo">Sin respaldo: estrategia</a></li>
+  </ol>
+</nav>
+
+<section id="errores">
+  <h2>Antes de estudiar: tres errores dentro del propio banco de preguntas</h2>
+  <p class="lede">El banco que te pasaron contiene afirmaciones sobre tu proyecto que <strong>son falsas</strong>. Si estudias con ellas y las repites en la defensa, afirmarás cosas que no existen en tu código. Esto es lo más urgente de esta página.</p>
+
+  <div class="alerta">
+    <h3>Error 1 — El «conteo físico» no existe en tu proyecto</h3>
+    <p>El banco afirma: <em>«Tu diseño contempla entidades como Company, User, Product… además de estructuras para auditoría, conteo físico y notificaciones»</em>. Verifiqué el esquema completo: <strong>no hay ninguna tabla, módulo ni endpoint de conteo físico</strong>. Si te preguntan por él y respondes que sí lo tienes, quedas expuesto de inmediato.</p>
+  </div>
+
+  <div class="alerta">
+    <h3>Error 2 — Los nombres de entidades están en español, no en inglés</h3>
+    <p>El banco pregunta por <code>Company</code>, <code>Warehouse</code>, <code>Inventory</code>, <code>Movement</code> y <code>companyId</code>. Tu esquema real usa <code>Empresa</code>, <code>Almacen</code>, <code>Stock</code>, <code>MovimientoInventario</code> y <code>empresaId</code>. No hay ninguna entidad llamada <code>Inventory</code>: el saldo por producto y almacén se llama <code>Stock</code>.</p>
+  </div>
+
+  <div class="alerta">
+    <h3>Error 3 — «Relación entre Product e Inventory» no se puede responder como está planteada</h3>
+    <p>La pregunta 7.20 asume un modelo que no es el tuyo. La relación real es <code>Producto</code> ↔ <code>Stock</code> ↔ <code>Almacen</code>, con clave única compuesta <code>(productoId, almacenId)</code>. Reformúlala mentalmente antes de responder.</p>
+  </div>
+</section>
+
+<section id="sistema">
+  <h2>Cómo leer las respuestas</h2>
+  <p class="lede">Cada respuesta lleva una marca según el tipo de respaldo que tiene. No todas las preguntas se defienden igual, y confundir los niveles es lo que hunde una sustentación.</p>
+
+  <div class="tw">
+  <table>
+    <thead><tr><th>Marca</th><th>Significa</th><th>Cómo responder</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="chip ok">Sustentado</span></td>
+        <td>Hay cita literal en la tesis o el código lo confirma.</td>
+        <td>Responde con seguridad. Puedes citar el apartado.</td>
+      </tr>
+      <tr>
+        <td><span class="chip warn">Defendible</span></td>
+        <td>No hay cita directa, pero es coherente con el alcance declarado.</td>
+        <td>Razona desde la delimitación. No inventes datos.</td>
+      </tr>
+      <tr>
+        <td><span class="chip risk">Sin respaldo</span></td>
+        <td>El estudio no lo midió ni lo documentó.</td>
+        <td>Reconócelo. Reconocer un límite suma; inventar hunde.</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section id="criticas">
+  <h2>Las seis preguntas que deciden tu defensa</h2>
+  <p class="lede">Si solo tuvieras tiempo para seis, son estas. Cuatro tienen respaldo textual fuerte. Dos exigen que reconozcas un límite.</p>
+
+  <div class="qa">
+    <div class="qa-head">
+      <span class="qnum">9.5</span>
+      <p class="q">¿Por qué en la metodología aparecen 20 usuarios y en los resultados 19?</p>
+    </div>
+    <div class="qa-body">
+      <span class="chip ok">Sustentado — la razón sí está documentada</span>
+      <p>El banco te advierte «no inventes la razón si no está documentada». Buena noticia: <strong>está documentada, literal, en tu apartado de Resultados</strong>.</p>
+      <blockquote>
+        <p>«…se implementó un instrumento digital dirigido a un grupo de veinte colaboradores… De los cuestionarios obtenidos, diecinueve de ellos cumplieron con todos los criterios de inclusión establecidos previamente en el apartado 4.4. <strong>Un cuestionario fue descalificado del análisis, ya que el colaborador correspondiente indicó que no participaba directamente en actividades de control o gestión de stock</strong>, lo cual era un requisito esencial para ser parte de la muestra.»</p>
+        <cite>Propuesta Técnica → Resultado</cite>
+      </blockquote>
+      <div class="guion">
+        <span class="label">Respuesta</span>
+        <p>La población objetivo fueron 20 colaboradores vinculados directamente a inventario, trabajada por censo. El instrumento se aplicó a los 20. Al depurar las respuestas contra los criterios de inclusión definidos en el apartado 4.4, un cuestionario fue descalificado porque el participante declaró no intervenir directamente en actividades de control o gestión de stock.</p>
+        <p>Por consistencia metodológica se excluyó ese caso, y los resultados se reportan sobre los 19 casos válidos. No es una pérdida muestral no explicada: es la aplicación del criterio de exclusión que el propio diseño estableció.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <span class="qnum">9.3</span>
+      <p class="q">¿Su investigación demuestra que las predicciones son estadísticamente exactas?</p>
+    </div>
+    <div class="qa-body">
+      <span class="chip ok">Sustentado — tu tesis ya declara el límite</span>
+      <p>Esta es la pregunta más peligrosa del banco y, paradójicamente, la que mejor cubierta tienes. <strong>Tu Discusión ya lo reconoce por escrito.</strong> Responder que sí sería contradecir tu propio documento.</p>
+      <blockquote>
+        <p>«…los resultados favorables obtenidos reflejan la <strong>percepción de utilidad y claridad</strong> de los usuarios, <strong>no una medición de la exactitud estadística de las proyecciones (error de pronóstico), la cual no formó parte del alcance</strong> de este estudio y queda planteada como línea de trabajo futuro, condicionada a la acumulación de un historial de movimientos suficientemente extenso.»</p>
+        <cite>Propuesta Técnica → Discusión</cite>
+      </blockquote>
+      <div class="guion">
+        <span class="label">Respuesta</span>
+        <p>No. El estudio validó la percepción de utilidad y claridad del módulo predictivo mediante un cuestionario de desempeño, obteniendo 4.33 sobre 5. No realizó una evaluación de exactitud estadística mediante métricas de error de pronóstico.</p>
+        <p>Esa distinción está explícitamente reconocida en la discusión del trabajo, donde se plantea como línea futura condicionada a disponer de un historial de movimientos más extenso. Medir MAE o RMSE con la serie disponible habría producido un indicador sin robustez suficiente.</p>
+      </div>
+      <div class="nodigas">
+        <span class="label">No digas</span>
+        <p>«Las predicciones son precisas» / «el modelo tiene un error bajo». No tienes ninguna medición que lo respalde y tu propio documento dice lo contrario.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <span class="qnum">8.8</span>
+      <p class="q">Si afirma que tiene análisis predictivo, ¿por qué no utilizó inteligencia artificial?</p>
+    </div>
+    <div class="qa-body">
+      <span class="chip ok">Sustentado — exclusión explícita y verificada en código</span>
+      <blockquote>
+        <p>«El alcance del sistema <strong>no incluye modelos complejos de inteligencia artificial, redes neuronales, aprendizaje profundo</strong>, contabilidad, recursos humanos, facturación electrónica completa ni logística externa.»</p>
+        <cite>Marco Introductorio → Delimitación</cite>
+      </blockquote>
+      <p>Verifiqué el <code>package.json</code> del backend: <strong>cero dependencias de aprendizaje automático</strong>. No hay TensorFlow, ni brain.js, ni ninguna librería de IA. La coherencia entre lo declarado y lo construido es comprobable.</p>
+      <div class="guion">
+        <span class="label">Respuesta</span>
+        <p>Porque análisis predictivo e inteligencia artificial no son sinónimos. El análisis predictivo es la disciplina de estimar comportamiento futuro a partir de datos históricos; la inteligencia artificial es un conjunto de técnicas para hacerlo. Mi trabajo se delimitó explícitamente a modelos estadísticos básicos: promedio móvil simple y regresión lineal simple.</p>
+        <p>La decisión responde a tres criterios: interpretabilidad, porque el responsable de bodega puede entender por qué se sugiere reponer; adecuación al volumen de datos de una PYME, donde no hay series suficientes para entrenar un modelo de aprendizaje; y coherencia con la delimitación, que excluye expresamente redes neuronales y aprendizaje profundo.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <span class="qnum">5.20</span>
+      <p class="q">¿Usted me garantiza que su sistema me dirá exactamente cuánto voy a vender el próximo mes?</p>
+    </div>
+    <div class="qa-body">
+      <span class="chip ok">Sustentado — y verificado en el código</span>
+      <blockquote>
+        <p>«Las predicciones generadas funcionarán como <strong>apoyo para la toma de decisiones, mas no como decisiones automáticas obligatorias</strong>.»</p>
+        <cite>Marco Introductorio → Delimitación</cite>
+      </blockquote>
+      <p>Verifiqué el <code>PrediccionService</code>: <strong>no ejecuta ninguna escritura</strong>. No crea compras, no genera movimientos, no modifica stock. Solo lee historial y devuelve una proyección. La delimitación no es una declaración de intención: está implementada.</p>
+      <div class="guion">
+        <span class="label">Respuesta</span>
+        <p>No, y el sistema no fue diseñado para eso. Genera una estimación a partir del comportamiento histórico de salidas, mediante promedio móvil simple y regresión lineal. Es una referencia cuantitativa para apoyar la decisión de reposición, no una certeza.</p>
+        <p>De hecho, el módulo predictivo no ejecuta ninguna acción sobre el inventario: no genera órdenes de compra ni movimientos. La decisión sigue siendo enteramente del responsable, y así está delimitado en el documento.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <span class="qnum">1.24</span>
+      <p class="q">¿Su proyecto es un producto comercial o un prototipo académico?</p>
+    </div>
+    <div class="qa-body">
+      <span class="chip warn">Defendible — no hay estudio comercial, pero sí alcance declarado</span>
+      <p>Tu tesis <strong>no contiene modelo de negocio, análisis de mercado ni estudio de costos</strong>. No intentes improvisar cifras. La salida honesta es reencuadrar: fue validado en producción real, no en laboratorio.</p>
+      <div class="guion">
+        <span class="label">Respuesta</span>
+        <p>Es una solución validada en un entorno real de operación, no un prototipo de laboratorio: se implementó sobre los procesos vigentes de TIANSHI ECUADOR S.A. y fue evaluada por sus colaboradores operativos.</p>
+        <p>Dicho eso, el trabajo se delimitó como proyecto de ingeniería de software, no como plan de negocio. No realicé estudio de mercado, estructura de costos ni proyección financiera, porque no formaban parte de los objetivos. Para convertirlo en producto comercial faltaría precisamente esa capa: modelo de licenciamiento, soporte y despliegue multiempresa, sobre una base técnica que ya contempla segmentación por empresa.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head">
+      <span class="qnum">5.2</span>
+      <p class="q">¿Cuánto dinero me puede ahorrar?</p>
+    </div>
+    <div class="qa-body">
+      <span class="chip risk">Sin respaldo — no se midió impacto económico</span>
+      <p>Tu estudio midió <strong>usabilidad y percepción</strong>, no ahorro. No existe ninguna cifra económica en el documento. Cualquier número que digas será inventado y refutable.</p>
+      <div class="guion">
+        <span class="label">Respuesta</span>
+        <p>No puedo darle una cifra, porque el estudio no midió impacto económico: su alcance fue la validación funcional y de usabilidad del sistema. Darle un número sería especular.</p>
+        <p>Lo que sí puedo señalar con evidencia son los problemas concretos que el diagnóstico identificó y que el sistema atiende: ausencia de alertas automáticas de stock mínimo, que derivaba en quiebres detectados tarde; reportería manual, lenta y propensa a error; y control sin trazabilidad por usuario. Cuantificar el ahorro requeriría una medición antes-después sobre indicadores operativos, que sería la continuación natural de este trabajo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="negocio">
+  <h2>1 · Jurado de Emprendimientos</h2>
+  <p class="lede">Es la sección más expuesta: tu tesis no contiene modelo de negocio, precios, costos ni análisis competitivo. La estrategia es responder con criterio profesional, marcando siempre que está fuera del alcance declarado.</p>
+
+  <h3>Preguntas con respaldo en el documento</h3>
+
+  <div class="qa">
+    <div class="qa-head"><span class="qnum">1–4</span><p class="q">¿Por qué inventarios, por qué PYMES y por qué el Guayas?</p></div>
+    <div class="qa-body">
+      <span class="chip ok">Sustentado</span>
+      <blockquote>
+        <p>«…muchas empresas todavía usan herramientas básicas, tales como Excel o la anotación manual, lo que no solo limita su capacidad de realizar un análisis más profundo de las cadenas de valor empresarial, sino que además incurre en costos innecesarios asociados a procesos empíricos.» (Romero-Agila et al., 2021)</p>
+        <cite>Marco Introductorio → Antecedentes</cite>
+      </blockquote>
+      <p>Sumas la evidencia local: el estudio de Vayas Cruz (2023) en Milagro, que documenta deterioro de mercancía y pérdidas económicas por falta de planificación técnica del inventario. Y el dato de Atnafu y Balda (2018): los materiales directos pueden representar hasta el 50% del costo de productos.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head"><span class="qnum">9, 10, 22</span><p class="q">¿Qué diferencia su sistema de un CRUD o de Excel?</p></div>
+    <div class="qa-body">
+      <span class="chip ok">Sustentado — está en el planteamiento del problema</span>
+      <blockquote>
+        <p>«…por ser un sistema de inventario tradicional de tipo CRUD se puede crear, leer, actualizar y borrar información pero no significa que se le otorgue a dicho sistema <strong>la capacidad analítica que permita determinar el comportamiento de la demanda</strong>…»</p>
+        <cite>Marco Introductorio → Planteamiento del Problema</cite>
+      </blockquote>
+      <div class="guion">
+        <span class="label">Respuesta</span>
+        <p>Frente a Excel, tres diferencias verificables: trazabilidad, porque el libro de movimientos es inmutable a nivel de aplicación y toda corrección queda como un movimiento nuevo, no como una celda sobrescrita; control de acceso por rol y permiso granular, que una hoja compartida no puede dar; y una capa analítica que procesa el historial para proyectar demanda.</p>
+        <p>Frente a un CRUD, la diferencia es que el sistema no solo almacena y consulta: convierte el historial operativo en recomendaciones de reposición.</p>
+      </div>
+    </div>
+  </div>
+
+  <h3>Preguntas sin respaldo documental — responde con criterio, no con cifras</h3>
+
+  <div class="qa">
+    <div class="qa-head"><span class="qnum">13–17, 26</span><p class="q">¿Cómo lo monetizaría? ¿Licencia o suscripción? ¿Cuánto costaría implementarlo?</p></div>
+    <div class="qa-body">
+      <span class="chip risk">Sin respaldo</span>
+      <p>No hay estudio de costos ni modelo de negocio en la tesis. <strong>Ninguna cifra que des es defendible.</strong> Responde con el razonamiento técnico, que sí puedes sostener.</p>
+      <div class="guion">
+        <span class="label">Respuesta</span>
+        <p>El trabajo no incluyó un modelo de negocio, así que no puedo darle cifras respaldadas. Desde lo técnico sí puedo decirle que la arquitectura ya contempla segmentación de datos por empresa, lo que la hace compatible con un esquema de suscripción multiempresa sin rediseño.</p>
+        <p>Los costos relevantes serían hospedaje, base de datos administrada y soporte. Cuantificarlos exigiría un estudio que no formó parte de los objetivos de este proyecto.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head"><span class="qnum">29, 30</span><p class="q">¿Cómo escalaría a 100 o 1.000 empresas?</p></div>
+    <div class="qa-body">
+      <span class="chip warn">Defendible — hay base técnica real</span>
+      <p>Aquí sí tienes sustento en el código: el modelo es multi-tenant. Pero cuidado — tu Discusión advierte que <strong>no fue validado empíricamente</strong> en otra empresa.</p>
+      <blockquote>
+        <p>«Aunque el modelo de datos (campo empresaId) es multi-tenant y, por lo tanto, tiene potencial para ser aplicable a otras PYMES… <strong>este estudio no ha realizado una validación empírica al respecto</strong> y esta posibilidad debe considerarse como una opción de escalabilidad técnica, no como un hallazgo confirmado.»</p>
+        <cite>Propuesta Técnica → Discusión</cite>
+      </blockquote>
+      <div class="guion">
+        <span class="label">Respuesta</span>
+        <p>El modelo de datos segmenta toda la información de negocio por empresa, de modo que atender varias organizaciones sobre una misma instancia es viable por diseño. Ahora bien, quiero ser preciso: eso es escalabilidad técnica potencial, no un hallazgo validado. El estudio se realizó sobre un solo caso, y así lo consigno en la discusión.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head"><span class="qnum">35</span><p class="q">Preséntelo a un inversionista en 60 segundos.</p></div>
+    <div class="qa-body">
+      <span class="chip warn">Defendible</span>
+      <div class="guion">
+        <span class="label">Guion de 60 segundos</span>
+        <p>Las PYMES comerciales del Guayas administran inventario en hojas de cálculo. Eso les cuesta trazabilidad, les provoca quiebres de stock que detectan tarde, y les obliga a comprar por intuición.</p>
+        <p>TrendCast centraliza el inventario en una plataforma web con un libro de movimientos inmutable, control por rol y alertas automáticas de stock mínimo. Y sobre ese historial calcula proyecciones de demanda que traduce en recomendaciones de reposición.</p>
+        <p>Se implementó y validó en TIANSHI ECUADOR S.A. con sus operadores reales: 83.25 sobre 100 en usabilidad y 4.33 sobre 5 en el módulo predictivo. La arquitectura ya está segmentada por empresa, así que atender más clientes es una decisión comercial, no un rediseño técnico.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="lego">
+  <h2>2 · Público sin conocimientos técnicos</h2>
+  <p class="lede">Aquí el riesgo no es equivocarte: es sonar técnico. Cada respuesta debe poder entenderla alguien que nunca usó un sistema.</p>
+
+  <div class="qa">
+    <div class="qa-head"><span class="qnum">1–3</span><p class="q">¿Qué es exactamente su proyecto? Explíquelo como si no supiera de informática.</p></div>
+    <div class="qa-body">
+      <span class="chip ok">Sustentado</span>
+      <div class="guion">
+        <span class="label">Respuesta</span>
+        <p>Es una plataforma web que le permite a una empresa saber, en todo momento, qué productos tiene, cuántos, en qué bodega, y quién movió cada cosa. Además revisa el historial de salidas y estima cuánto podría necesitarse del producto el próximo periodo, para que la compra no se haga por corazonada.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head"><span class="qnum">11, 12</span><p class="q">¿El sistema puede saber el futuro? ¿Usa inteligencia artificial?</p></div>
+    <div class="qa-body">
+      <span class="chip ok">Sustentado</span>
+      <div class="guion">
+        <span class="label">Respuesta</span>
+        <p>No adivina nada. Mira lo que pasó antes y calcula una tendencia, igual que cuando usted observa que cada diciembre vende más y se prepara. La diferencia es que lo hace con una fórmula, sobre todos sus productos, y sin depender de la memoria de nadie.</p>
+        <p>Y no, no usa inteligencia artificial. Usa dos cálculos estadísticos conocidos. Lo decidí así a propósito: cualquiera puede entender de dónde sale el número, y eso genera confianza.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head"><span class="qnum">15</span><p class="q">¿Qué sucede si los datos ingresados son incorrectos?</p></div>
+    <div class="qa-body">
+      <span class="chip warn">Defendible — pero reconoce el límite</span>
+      <p>Esta es una pregunta trampa suave. El sistema valida <em>forma</em>, no <em>veracidad</em>. Si alguien registra 100 unidades y llegaron 90, ningún software lo detecta sin un conteo físico — que tu sistema <strong>no tiene</strong>.</p>
+      <div class="guion">
+        <span class="label">Respuesta</span>
+        <p>El sistema valida que el dato sea coherente: no acepta cantidades negativas, no permite sacar más stock del que existe, y exige que el producto y la bodega existan. Lo que ningún sistema puede validar por sí solo es si lo que se digitó corresponde a lo que físicamente llegó.</p>
+        <p>Para eso queda el rastro: cada movimiento guarda quién lo hizo y cuándo, de modo que una diferencia puede investigarse. La conciliación contra un conteo físico sería el complemento natural, y no formó parte del alcance de este trabajo.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head"><span class="qnum">17, 18</span><p class="q">¿Puede usarse desde un celular? ¿Necesito instalar algo?</p></div>
+    <div class="qa-body">
+      <span class="chip ok">Sustentado — hay dato numérico</span>
+      <p>No se instala nada: es una aplicación web, se abre en el navegador. Y la adaptabilidad responsiva <strong>fue evaluada por los usuarios con 4.35 sobre 5</strong>, el ítem mejor valorado junto a los tiempos de respuesta.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head"><span class="qnum">19, 20</span><p class="q">¿Y si tengo varias bodegas? ¿Y si varios usan el sistema a la vez?</p></div>
+    <div class="qa-body">
+      <span class="chip ok">Sustentado</span>
+      <p>El stock se lleva por producto <em>y</em> almacén, con transferencias entre bodegas como tipo de movimiento propio. Sobre concurrencia: las confirmaciones de compra, venta y devolución se ejecutan dentro de una transacción de base de datos, que valida el saldo antes de escribir.</p>
+    </div>
+  </div>
+</section>
+
+<section id="motivacion">
+  <h2>3 · «¿Por qué creaste este proyecto?»</h2>
+
+  <div class="qa">
+    <div class="qa-head"><span class="qnum">8–11</span><p class="q">¿El problema realmente existe? ¿Cómo lo comprobó?</p></div>
+    <div class="qa-body">
+      <span class="chip ok">Sustentado — cuatro instrumentos documentados</span>
+      <p>No respondas «porque lo vi». Tienes instrumentos formales documentados: entrevista semiestructurada al Gerente General, al responsable de logística y a dos operadores de almacén; observación directa durante una jornada completa; ficha técnica de infraestructura; y matriz de requisitos.</p>
+      <div class="tw">
+      <table>
+        <thead><tr><th>Hallazgo</th><th>Impacto operativo</th></tr></thead>
+        <tbody>
+          <tr><td>Control manual en hojas de cálculo sin historial versionado</td><td>Pérdida de trazabilidad, datos inconsistentes</td></tr>
+          <tr><td>Ausencia de alertas automáticas de stock mínimo</td><td>Quiebres de stock no detectados a tiempo</td></tr>
+          <tr><td>Ningún mecanismo de proyección de demanda</td><td>Decisiones de compra reactivas y empíricas</td></tr>
+          <tr><td>Sin control de accesos diferenciados por rol</td><td>Riesgo de manipulación no controlada</td></tr>
+          <tr><td>Generación manual de reportes</td><td>Demora en decisiones gerenciales</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>Los cinco hallazgos se corresponden uno a uno con módulos construidos. Ese mapeo es tu mejor argumento de coherencia.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head"><span class="qnum">20 / pregunta personal</span><p class="q">¿Qué parte todavía puede mejorar? ¿Qué característica eliminaría?</p></div>
+    <div class="qa-body">
+      <span class="chip ok">Sustentado — usa tu propio dato más bajo</span>
+      <p>Responde con evidencia numérica, no con modestia genérica. Los dos ítems peor valorados fueron <strong>visibilidad de alertas (4.20)</strong> y <strong>claridad de gráficos (4.20)</strong>, y tu propia Recomendación ya lo señala.</p>
+      <blockquote>
+        <p>«Se sugiere fortalecer la capa de visualización del módulo predictivo (alertas de stock mínimo y gráficos de demanda), ya que son los elementos con la calificación más baja en comparación con un resultado global positivo.»</p>
+        <cite>Propuesta Técnica → Recomendaciones</cite>
+      </blockquote>
+      <p>Que identifiques tu punto débil con el dato en la mano — y que ya esté escrito en el documento — demuestra control sobre tu propio trabajo.</p>
+    </div>
+  </div>
+</section>
+
+<section id="ti">
+  <h2>4 · Administrador de TI</h2>
+
+  <div class="qa">
+    <div class="qa-head"><span class="qnum">1–5</span><p class="q">¿Qué arquitectura utilizó y por qué tres capas?</p></div>
+    <div class="qa-body">
+      <span class="chip ok">Sustentado</span>
+      <blockquote>
+        <p>«El Sistema de Gestión de Inventarios (SGI) está construido sobre una arquitectura cliente-servidor de <strong>tres capas</strong>… La capa de presentación está hecha en React con TypeScript y Vite… La capa de negocio se desarrolló con Node.js, Express y TypeScript… la capa de persistencia emplea PostgreSQL como SGBD y Prisma ORM.»</p>
+        <cite>Propuesta Técnica → Arquitectura General del Sistema</cite>
+      </blockquote>
+      <p>Dentro de la capa de negocio, cada módulo sigue <code>Routes → Controller → Service → Repository</code>. Puedes explicar la responsabilidad de cada una: Routes define endpoints y middlewares; Controller traduce HTTP a llamadas de servicio; Service concentra reglas de negocio; Repository es la única capa que toca Prisma.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head"><span class="qnum">14, 15</span><p class="q">¿Qué ocurre si falla el backend o la base de datos?</p></div>
+    <div class="qa-body">
+      <span class="chip warn">Defendible — sé honesto sobre alta disponibilidad</span>
+      <div class="guion">
+        <span class="label">Respuesta</span>
+        <p>Si el backend cae, el frontend deja de operar: es una aplicación en línea, sin modo desconectado. Si cae la base de datos, el backend responde con error controlado y ninguna operación queda a medias, porque las confirmaciones de documentos se ejecutan dentro de transacciones: o se aplican completas o no se aplican.</p>
+        <p>El trabajo no abordó alta disponibilidad ni redundancia; la recomendación documentada es mantener las políticas de respaldo periódico de PostgreSQL.</p>
+      </div>
+    </div>
+  </div>
+
+  <h3>Seguridad</h3>
+
+  <div class="qa">
+    <div class="qa-head"><span class="qnum">18–33</span><p class="q">¿Cómo autentica, autoriza y protege la API?</p></div>
+    <div class="qa-body">
+      <span class="chip ok">Sustentado — hay apartado dedicado</span>
+      <div class="tw">
+      <table>
+        <thead><tr><th>Mecanismo</th><th>Qué responde</th></tr></thead>
+        <tbody>
+          <tr><td>JWT + refresh tokens</td><td>Autenticación. El token de acceso es de corta vida; el refresh se persiste en PostgreSQL y puede revocarse.</td></tr>
+          <tr><td>Hashing de contraseñas</td><td>Nunca se almacena la contraseña, solo su hash. No es reversible.</td></tr>
+          <tr><td>Roles y permisos</td><td>Autenticación es «quién eres»; autorización es «qué puedes». Los cinco roles son ADMIN, SUPERVISOR, BODEGA, VENTAS y GERENCIA, con permisos granulares por módulo y acción en las tablas <code>permisos</code> / <code>roles_permisos</code>.</td></tr>
+          <tr><td>Rate limiting</td><td>Limita intentos por ventana de tiempo. En login está fijado en 10 intentos por 15 minutos, lo que frena ataques de fuerza bruta.</td></tr>
+          <tr><td>Helmet</td><td>Cabeceras HTTP de seguridad: CSP, HSTS, anti-clickjacking, <code>nosniff</code>.</td></tr>
+          <tr><td>Zod</td><td>Valida y tipa cada entrada antes de que llegue a la lógica de negocio. Lo que no cumple el esquema es rechazado con 400.</td></tr>
+          <tr><td>AuditLog</td><td>Registra cada mutación con usuario, fecha, entidad, valor anterior y nuevo.</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>Sobre la pregunta 30 — «¿qué pasa si un usuario accede a algo que no le corresponde?» — la respuesta es que el middleware de permisos rechaza con 403 antes de llegar al controlador. Y sobre la 31, la extensión de libro inmutable <strong>bloquea a nivel de cliente cualquier UPDATE o DELETE físico sobre movimientos</strong>: toda corrección entra como movimiento nuevo.</p>
+    </div>
+  </div>
+</section>
+
+<section id="gerente">
+  <h2>5 · Gerente: «convénzame de comprarlo»</h2>
+  <p class="lede">Casi todas estas se responden con funcionalidad verificable. Las dos que no — ahorro económico y costo de implementación — están tratadas arriba en «Las seis críticas».</p>
+
+  <div class="qa">
+    <div class="qa-head"><span class="qnum">10–14</span><p class="q">¿Puedo saber quién hizo un movimiento, qué se está agotando y cuánto vale mi inventario?</p></div>
+    <div class="qa-body">
+      <span class="chip ok">Sustentado — verificado en código</span>
+      <p>Sí a las tres. Cada movimiento guarda usuario y fecha, y el registro es inmutable. Las alertas de stock mínimo se generan automáticamente. Y sobre valorización, existe el reporte de <strong>existencias valorizadas</strong>, además de rotación de inventario y movimientos por período, todos exportables.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head"><span class="qnum">4, 5</span><p class="q">¿Qué pasa si mis empleados no saben usarlo? ¿Cuánto tarda la implementación?</p></div>
+    <div class="qa-body">
+      <span class="chip warn">Defendible — usa el SUS, no una promesa</span>
+      <div class="guion">
+        <span class="label">Respuesta</span>
+        <p>Sobre la curva de aprendizaje tengo un dato, no una opinión: el sistema fue evaluado con la escala SUS por diecinueve colaboradores operativos, sin formación técnica previa, y obtuvo 83.25 sobre 100 — categoría «Excelente», por encima del promedio de la industria, que es 68.</p>
+        <p>Sobre tiempos de implementación no puedo darle una cifra, porque el estudio no midió el proceso de despliegue en otras organizaciones.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head"><span class="qnum">18, 19</span><p class="q">¿Qué pasa si pierdo conexión o si mis datos históricos son insuficientes?</p></div>
+    <div class="qa-body">
+      <span class="chip risk">Sin respaldo en el caso de la conexión</span>
+      <p>No hay modo desconectado y la tesis no lo menciona. Dilo directamente. Sobre el historial insuficiente sí tienes cobertura documental: tu Discusión reconoce que un despliegue nuevo requiere <strong>«consolidar un historial de movimientos propio antes de que las proyecciones de demanda logren la misma utilidad percibida»</strong>.</p>
+    </div>
+  </div>
+</section>
+
+<section id="bodeguero">
+  <h2>6 · Bodeguero que nunca usó una plataforma</h2>
+
+  <div class="qa">
+    <div class="qa-head"><span class="qnum">Práctica</span><p class="q">Llegaron 50 unidades de un producto. Explíqueme exactamente qué hago.</p></div>
+    <div class="qa-body">
+      <span class="chip ok">Sustentado</span>
+      <div class="guion">
+        <span class="label">Respuesta, sin lenguaje técnico</span>
+        <p>Entra al sistema con su usuario. Va a movimientos y registra una entrada: elige el producto, la bodega donde lo va a guardar, escribe 50 y confirma.</p>
+        <p>En ese momento el sistema suma esas 50 unidades a la existencia de esa bodega y guarda el registro con su nombre y la hora. Si esas 50 llegaron por una compra registrada, en lugar de eso se confirma la compra y el ingreso se genera solo, para no digitar dos veces.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head"><span class="qnum">6, 7, 20</span><p class="q">¿Puedo equivocarme? ¿Puedo corregir un movimiento?</p></div>
+    <div class="qa-body">
+      <span class="chip ok">Sustentado — y es un punto fuerte, no débil</span>
+      <div class="guion">
+        <span class="label">Respuesta</span>
+        <p>Sí puede equivocarse, y el sistema está diseñado contando con eso. Lo que no puede hacer es borrar ni editar un movimiento ya registrado: el libro es inmutable a propósito.</p>
+        <p>La corrección se hace registrando un ajuste, de modo que quedan ambos: el error y la corrección, con su responsable. Eso protege al bodeguero, porque cualquier diferencia se puede rastrear y explicar en lugar de convertirse en una sospecha.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head"><span class="qnum">12, 13</span><p class="q">¿Cómo registro una pérdida o un producto dañado?</p></div>
+    <div class="qa-body">
+      <span class="chip risk">Atención — no existe un tipo de movimiento «pérdida»</span>
+      <p>Verifiqué los tipos de movimiento reales: <code>ENTRADA</code>, <code>SALIDA</code>, <code>AJUSTE</code>, <code>TRANSFERENCIA</code>, <code>DEVOLUCION_CLIENTE</code>, <code>DEVOLUCION_PROVEEDOR</code>. <strong>No hay un tipo específico de pérdida o merma</strong>, y tampoco existe un reporte de «pérdidas reconocidas», aunque el marco teórico menciona esos conceptos.</p>
+      <div class="guion">
+        <span class="label">Respuesta</span>
+        <p>Una pérdida o un daño se registra como un ajuste negativo, indicando el motivo. El sistema no maneja un tipo de movimiento diferenciado para mermas: se resuelve con el ajuste, que deja igualmente trazabilidad de quién lo hizo y por qué.</p>
+        <p>Tipificar las mermas como categoría propia, para poder reportarlas por separado, sería una extensión natural del modelo actual.</p>
+      </div>
+      <div class="nodigas">
+        <span class="label">No digas</span>
+        <p>«El sistema tiene un módulo de pérdidas» o «genera reportes de pérdidas reconocidas». Ninguna de las dos cosas existe.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="informatico">
+  <h2>7 · Jurado informático</h2>
+  <p class="lede">Recuerda los tres errores del banco antes de esta sección: las entidades están en español y el conteo físico no existe.</p>
+
+  <div class="qa">
+    <div class="qa-head"><span class="qnum">10</span><p class="q">¿Qué diferencia hay entre PUT y PATCH? ¿Cuál usa usted?</p></div>
+    <div class="qa-body">
+      <span class="chip ok">Sustentado — y tu API los distingue bien</span>
+      <p>Esta pregunta busca ver si entiendes lo que escribiste. Tu API usa <strong>45 GET, 25 POST, 8 PUT, 8 DELETE y 5 PATCH</strong>, y el criterio es correcto.</p>
+      <div class="guion">
+        <span class="label">Respuesta</span>
+        <p>PUT reemplaza el recurso completo; PATCH modifica parcialmente. En el sistema uso PUT para la actualización completa de entidades de catálogo, como un producto, donde el cliente envía el recurso entero.</p>
+        <p>PATCH lo reservé para transiciones de estado sobre un recurso existente: resolver una alerta, marcar una notificación como leída, o aprobar, rechazar y efectuar una solicitud. En esos casos no se reemplaza el recurso, solo cambia su estado.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head"><span class="qnum">19–22</span><p class="q">¿Cuáles son las entidades principales y cómo se relacionan?</p></div>
+    <div class="qa-body">
+      <span class="chip ok">Sustentado</span>
+      <p>Tu Diseño de Base de Datos agrupa el modelo en cinco núcleos: organización, catálogos, inventario, documentos comerciales y trazabilidad. Y define las ocho entidades que concentran el flujo: <code>Empresa</code>, <code>Usuario</code>, <code>Producto</code>, <code>Compra</code>, <code>Venta</code>, <code>MovimientoInventario</code>, <code>Stock</code> y <code>Cliente</code>.</p>
+      <p>La relación que el banco plantea mal es esta: <strong>no existe una entidad <code>Inventory</code></strong>. El saldo vive en <code>Stock</code>, que relaciona <code>Producto</code> con <code>Almacen</code> mediante clave única compuesta. Un <code>MovimientoInventario</code> referencia producto, almacén y usuario, y cuando corresponde la compra o venta que lo originó.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head"><span class="qnum">27</span><p class="q">¿Cómo evita cantidades negativas?</p></div>
+    <div class="qa-body">
+      <span class="chip ok">Sustentado — verificado en cuatro módulos</span>
+      <p>Hay validación explícita de saldo resultante antes de escribir, en movimientos, transferencias entre almacenes, solicitudes y devoluciones. Si el saldo quedaría negativo, la operación se rechaza con un error de conflicto y la transacción no se aplica. El mensaje indica cuántas unidades hay y cuántas se intentaban retirar.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head"><span class="qnum">28, 29</span><p class="q">¿Cómo separa los datos de distintas empresas? ¿Qué función cumple <code>companyId</code>?</p></div>
+    <div class="qa-body">
+      <span class="chip ok">Sustentado — corrige el nombre</span>
+      <p>El campo se llama <code>empresaId</code>, no <code>companyId</code>. Toda entidad de negocio lo lleva, y las consultas se filtran por la empresa activa del usuario autenticado. Tu documento describe a <code>Empresa</code> como origen de once relaciones uno a muchos.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head"><span class="qnum">31, 32</span><p class="q">¿Qué ocurre si se elimina una empresa o un producto con movimientos históricos?</p></div>
+    <div class="qa-body">
+      <span class="chip ok">Sustentado</span>
+      <div class="guion">
+        <span class="label">Respuesta</span>
+        <p>No se eliminan físicamente. El modelo aplica dos mecanismos: reglas <code>ON DELETE RESTRICT</code> en las claves foráneas, que impiden borrar un registro del que dependen otros, y baja lógica mediante un campo de fecha de eliminación en las entidades de catálogo.</p>
+        <p>Un producto con movimientos históricos se marca como dado de baja y deja de aparecer en los listados operativos, pero su historial permanece intacto. Borrarlo destruiría la trazabilidad del inventario, que es precisamente lo que el sistema busca garantizar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="predictivo">
+  <h2>8 · Análisis predictivo</h2>
+  <p class="lede">La zona de mayor exposición. Tres preguntas — 16 a 20 — se responden reconociendo un límite ya documentado.</p>
+
+  <div class="qa">
+    <div class="qa-head"><span class="qnum">5, 6</span><p class="q">¿Qué es un promedio móvil? ¿Qué es una regresión lineal?</p></div>
+    <div class="qa-body">
+      <span class="chip ok">Sustentado</span>
+      <p>Debes poder explicarlas sin leer. El promedio móvil simple promedia los últimos <em>k</em> periodos y suaviza fluctuaciones aleatorias; sirve como proyección ingenua del siguiente periodo. La regresión lineal simple ajusta una recta por mínimos cuadrados sobre la serie, tomando el tiempo como variable independiente, y su pendiente indica si el consumo del producto crece o decrece.</p>
+      <p>El sistema recorta a cero cualquier proyección negativa, porque una tendencia decreciente pronunciada puede dar un valor negativo que no tiene sentido como demanda.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head"><span class="qnum">11, 12</span><p class="q">¿Qué desventajas tienen los modelos simples? ¿Y si la demanda es irregular?</p></div>
+    <div class="qa-body">
+      <span class="chip warn">Defendible — aquí está la estacionalidad</span>
+      <p>Responde con precisión técnica; te da autoridad. Y prepárate para la repregunta sobre estacionalidad.</p>
+      <div class="guion">
+        <span class="label">Respuesta</span>
+        <p>Sus limitaciones son conocidas y las asumí de forma consciente. El promedio móvil reacciona con retraso ante cambios de nivel y no capta tendencia. La regresión lineal capta tendencia pero asume que es constante, y <strong>ninguno de los dos modela componentes estacionales</strong>.</p>
+        <p>Con demanda muy irregular ambos pierden precisión, y por eso el sistema presenta la proyección como recomendación y no como orden automática. La estacionalidad, en este alcance, se aborda por vía visual: los gráficos de demanda con granularidad mensual permiten al responsable identificar picos por temporada. Incorporar un modelo estacional exigiría un historial más extenso y excede la delimitación de modelos estadísticos básicos.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head"><span class="qnum">13, 14</span><p class="q">¿Qué sucede si no hay suficiente historial? ¿Y con productos nuevos?</p></div>
+    <div class="qa-body">
+      <span class="chip ok">Sustentado</span>
+      <p>Con un solo punto no hay tendencia que ajustar y el modelo devuelve el propio valor; sin datos, devuelve cero. Un producto nuevo no tiene historial, así que su proyección no es informativa hasta acumular movimientos — y eso está reconocido en tu Discusión al hablar del traslado a otra organización.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head"><span class="qnum">16–20</span><p class="q">¿Utilizó MAE, RMSE o MAPE? ¿Por qué no midió el error de pronóstico?</p></div>
+    <div class="qa-body">
+      <span class="chip ok">Sustentado — el límite está escrito</span>
+      <p>Debes conocer las tres métricas aunque no las hayas usado: MAE es el error absoluto medio; RMSE penaliza más los errores grandes al elevarlos al cuadrado; MAPE expresa el error en porcentaje, lo que permite comparar entre productos de distinta escala.</p>
+      <div class="guion">
+        <span class="label">Respuesta</span>
+        <p>No las apliqué, y la razón está consignada en la discusión del trabajo. Medir error de pronóstico exige separar la serie en entrenamiento y validación, y con el historial disponible en la organización el indicador habría carecido de robustez.</p>
+        <p>El estudio se delimitó a validar percepción de utilidad y claridad, no exactitud estadística. La medición del error queda planteada como línea de trabajo futuro, condicionada a acumular un historial más extenso.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="resultados">
+  <h2>10 · Resultados y validación</h2>
+
+  <div class="qa">
+    <div class="qa-head"><span class="qnum">3–9</span><p class="q">¿Qué es SUS, por qué lo usó y qué significa 83.25?</p></div>
+    <div class="qa-body">
+      <span class="chip ok">Sustentado — domina estas cifras</span>
+      <div class="tw">
+      <table>
+        <thead><tr><th>Dato</th><th>Valor</th></tr></thead>
+        <tbody>
+          <tr><td>SUS — media</td><td class="num">83.25 / 100</td></tr>
+          <tr><td>SUS — mediana</td><td class="num">82.5</td></tr>
+          <tr><td>SUS — desviación estándar</td><td class="num">5.25</td></tr>
+          <tr><td>SUS — rango</td><td class="num">72.5 – 92.5</td></tr>
+          <tr><td>Casos válidos</td><td class="num">19</td></tr>
+          <tr><td>Módulo predictivo — media</td><td class="num">4.33 / 5</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p>SUS es la System Usability Scale de Brooke (1996): diez afirmaciones en escala Likert de cinco puntos, que producen un puntaje de 0 a 100. La elegiste porque está ampliamente validada y no requiere validación adicional. El 83.25 cae en categoría <strong>«Excelente», grado A</strong> según Bangor, Kortum y Miller (2009), superando el umbral de 80.3 y el promedio de industria de 68.</p>
+      <p>Ojo con la trampa: <strong>el puntaje SUS no es un porcentaje.</strong> Si dices «83% de satisfacción» estás usando mal el instrumento.</p>
+    </div>
+  </div>
+
+  <div class="qa">
+    <div class="qa-head"><span class="qnum">14, 15</span><p class="q">¿Los resultados demuestran que el sistema funciona? ¿Permiten generalizar a todas las PYMES?</p></div>
+    <div class="qa-body">
+      <span class="chip ok">Sustentado — cuidado con la segunda</span>
+      <p>La segunda es una trampa clara. La respuesta es <strong>no</strong>, y tu documento ya lo dice.</p>
+      <blockquote>
+        <p>«…es una validación no experimental, transversal, que se aplica a un solo caso piloto —TIANSHI ECUADOR S.A.— y <strong>no a una investigación que busca generalizar estadísticamente</strong> al conjunto de las PYMES comerciales del Guayas.»</p>
+        <cite>Propuesta Técnica → Discusión</cite>
+      </blockquote>
+      <div class="guion">
+        <span class="label">Respuesta</span>
+        <p>Demuestran que el sistema cumple sus objetivos funcionales y de usabilidad en el caso estudiado. No permiten generalizar: el diseño fue no experimental y transversal sobre un único caso, con muestreo por censo de la población vinculada a inventario. Generalizar exigiría replicar la validación en varias organizaciones, y así lo planteo en las recomendaciones.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sinrespaldo">
+  <h2>Las preguntas que no puedes responder con evidencia</h2>
+  <p class="lede">Estas son las que me pediste identificar. No tienen respaldo en la tesis ni en el código. La estrategia no es evadirlas: es reconocer el límite y redirigir a lo que sí puedes sostener.</p>
+
+  <div class="tw">
+  <table>
+    <thead><tr><th>Pregunta</th><th>Por qué no se puede</th><th>Qué hacer</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>Ahorro económico, ROI, costo de implementación <span class="chip risk">1.12, 1.26, 1.34, 5.2</span></td>
+        <td>No se midió impacto económico ni se hizo estudio de costos.</td>
+        <td>Reconoce que fue fuera de alcance. Redirige a los hallazgos del diagnóstico.</td>
+      </tr>
+      <tr>
+        <td>Modelo de negocio, precios, licenciamiento <span class="chip risk">1.13–1.17</span></td>
+        <td>La tesis no contiene plan de negocio.</td>
+        <td>Responde como criterio profesional, marcando que no es hallazgo del estudio.</td>
+      </tr>
+      <tr>
+        <td>Comparación con ERP y competencia <span class="chip risk">1.18, 1.19, 1.21</span></td>
+        <td>No hay análisis competitivo ni benchmarking.</td>
+        <td>Compara por características técnicas verificables, nunca por precio o cuota de mercado.</td>
+      </tr>
+      <tr>
+        <td>Adquisición de clientes y soporte post-venta <span class="chip risk">1.27, 1.28</span></td>
+        <td>Fuera del alcance de ingeniería de software.</td>
+        <td>Dilo abiertamente. Es legítimo que un proyecto técnico no lo cubra.</td>
+      </tr>
+      <tr>
+        <td>Exactitud del pronóstico <span class="chip warn">8.16–8.20</span></td>
+        <td>No se midió — <strong>pero está documentado como límite</strong>.</td>
+        <td>Cítalo. Aquí sí tienes respaldo para el «no».</td>
+      </tr>
+      <tr>
+        <td>Funcionamiento sin conexión <span class="chip risk">5.18</span></td>
+        <td>No hay modo desconectado ni se menciona.</td>
+        <td>Respuesta corta: requiere conexión, es una aplicación web.</td>
+      </tr>
+      <tr>
+        <td>Registro tipificado de pérdidas y mermas <span class="chip risk">6.12, 6.13</span></td>
+        <td>No existe tipo de movimiento ni reporte de pérdidas.</td>
+        <td>Explica que se resuelve con ajuste. No afirmes que hay módulo de pérdidas.</td>
+      </tr>
+      <tr>
+        <td>Conteo físico y conciliación <span class="chip risk">error del banco</span></td>
+        <td><strong>No existe en el proyecto.</strong> El banco lo afirma por error.</td>
+        <td>Si te preguntan, di que no está implementado y que sería la extensión natural.</td>
+      </tr>
+      <tr>
+        <td>Alta disponibilidad y recuperación ante fallas <span class="chip risk">4.15–4.17</span></td>
+        <td>No se abordó redundancia ni plan de recuperación.</td>
+        <td>Menciona transacciones y la recomendación de respaldos periódicos de PostgreSQL.</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>La regla que gobierna todas estas</h3>
+  <p>Un tribunal no penaliza el desconocimiento de lo que estuvo fuera de alcance; penaliza la afirmación sin respaldo. La fórmula segura tiene tres movimientos: <strong>reconoce el límite, explica por qué quedó fuera del alcance declarado, y redirige a la evidencia que sí tienes.</strong></p>
+  <p>Tienes una ventaja concreta: tu Discusión ya ejerce esa disciplina por escrito, al separar percepción de utilidad de exactitud estadística. Eso no es una debilidad del trabajo — es la señal de madurez metodológica que un tribunal busca.</p>
+</section>
+
+<p class="foot">Documento de preparación · Cada cita proviene del texto de «Proyecto Integrador ISTLC» y cada afirmación técnica fue verificada contra el código fuente del proyecto.</p>
+
+</div>

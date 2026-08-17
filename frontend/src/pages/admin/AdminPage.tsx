@@ -82,7 +82,7 @@ export function AdminPage() {
       </Card>
 
       <Card className={styles.sectionGap}>
-        <h2 className={styles.tituloSeccion}>Usuarios de todas las empresas</h2>
+        <h2 className={styles.tituloSeccion}>Usuarios de esta empresa</h2>
         {usuarios.isLoading && <Skeleton height="14rem" />}
         {usuarios.isError && <ErrorState onRetry={() => usuarios.refetch()} />}
         {usuarios.data && (

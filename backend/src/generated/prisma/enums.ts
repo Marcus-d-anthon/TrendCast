@@ -43,10 +43,20 @@ export const TipoMovimiento = {
   ENTRADA: 'ENTRADA',
   SALIDA: 'SALIDA',
   AJUSTE: 'AJUSTE',
-  TRANSFERENCIA: 'TRANSFERENCIA'
+  TRANSFERENCIA: 'TRANSFERENCIA',
+  DEVOLUCION_CLIENTE: 'DEVOLUCION_CLIENTE',
+  DEVOLUCION_PROVEEDOR: 'DEVOLUCION_PROVEEDOR'
 } as const
 
 export type TipoMovimiento = (typeof TipoMovimiento)[keyof typeof TipoMovimiento]
+
+
+export const TipoDevolucion = {
+  CLIENTE: 'CLIENTE',
+  PROVEEDOR: 'PROVEEDOR'
+} as const
+
+export type TipoDevolucion = (typeof TipoDevolucion)[keyof typeof TipoDevolucion]
 
 
 export const AccionAuditoria = {

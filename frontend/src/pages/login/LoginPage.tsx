@@ -1,17 +1,16 @@
-import { Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff, ScrollText, ShieldCheck, TrendingUp, type LucideIcon } from 'lucide-react';
 import { useState, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../../components/ui/Button';
-import { TrendCastMark } from '../../components/brand/TrendCastMark';
 import { TrendCastWordmark } from '../../components/brand/TrendCastWordmark';
 import { ApiError } from '../../api/http-client';
 import { useAuth } from '../../auth/useAuth';
 import styles from './LoginPage.module.css';
 
-const PITCH_ITEMS = [
-  { glyph: '↳', text: 'Libro de movimientos inmutable, con trazabilidad completa por usuario' },
-  { glyph: '△', text: 'Proyección de demanda con promedio móvil y regresión lineal' },
-  { glyph: '◇', text: 'Auditoría automática de cada mutación del inventario' },
+const PITCH_ITEMS: { icon: LucideIcon; text: string }[] = [
+  { icon: ShieldCheck, text: 'Libro de movimientos inmutable, con trazabilidad por usuario' },
+  { icon: TrendingUp, text: 'Proyección de demanda con promedio móvil y regresión lineal' },
+  { icon: ScrollText, text: 'Auditoría automática de cada mutación del inventario' },
 ];
 
 export function LoginPage() {
@@ -51,17 +50,19 @@ export function LoginPage() {
   return (
     <div className={styles.screen}>
       <section className={styles.brandPanel}>
-        <div className={styles.textLayer}>
-          <TrendCastWordmark markSize={34} textSize="var(--text-2xl)" className={styles.wordmark} />
+        <div className={styles.brandInner}>
+          <TrendCastWordmark markSize={32} textSize="var(--text-xl)" className={styles.wordmark} />
+          <h1 className={styles.headline}>Inventario bajo control, demanda bajo previsión.</h1>
           <p className={styles.pitch}>
-            Sistema de Gestión de Inventarios con Análisis Predictivo: Control de Existencias, Movimientos y
-            Proyección de Demanda en un mismo lugar.
+            Gestión de existencias, movimientos y proyección de demanda en un mismo lugar.
           </p>
           <div className={styles.pitchList}>
-            {PITCH_ITEMS.map((item) => (
-              <div className={styles.pitchItem} key={item.text}>
-                <span className={styles.pitchGlyph}>{item.glyph}</span>
-                <span>{item.text}</span>
+            {PITCH_ITEMS.map(({ icon: Icono, text }) => (
+              <div className={styles.pitchItem} key={text}>
+                <span className={styles.pitchIcon}>
+                  <Icono size={18} aria-hidden="true" />
+                </span>
+                <span>{text}</span>
               </div>
             ))}
           </div>
@@ -70,9 +71,7 @@ export function LoginPage() {
 
       <section className={styles.formPanel}>
         <div className={styles.card}>
-          <div className={styles.avatar}>
-            <TrendCastMark size={64} />
-          </div>
+          <TrendCastWordmark markSize={30} textSize="var(--text-xl)" className={styles.mobileMark} />
           <h2 className={styles.cardTitle}>{pideCodigo ? 'Verificación en dos pasos' : 'Iniciar sesión'}</h2>
           <p className={styles.cardSubtitle}>
             {pideCodigo

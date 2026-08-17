@@ -209,6 +209,7 @@ export type EmpresaWhereInput = {
   compras?: Prisma.CompraListRelationFilter
   ventas?: Prisma.VentaListRelationFilter
   alertas?: Prisma.AlertaListRelationFilter
+  devoluciones?: Prisma.DevolucionListRelationFilter
 }
 
 export type EmpresaOrderByWithRelationInput = {
@@ -230,6 +231,7 @@ export type EmpresaOrderByWithRelationInput = {
   compras?: Prisma.CompraOrderByRelationAggregateInput
   ventas?: Prisma.VentaOrderByRelationAggregateInput
   alertas?: Prisma.AlertaOrderByRelationAggregateInput
+  devoluciones?: Prisma.DevolucionOrderByRelationAggregateInput
 }
 
 export type EmpresaWhereUniqueInput = Prisma.AtLeast<{
@@ -254,6 +256,7 @@ export type EmpresaWhereUniqueInput = Prisma.AtLeast<{
   compras?: Prisma.CompraListRelationFilter
   ventas?: Prisma.VentaListRelationFilter
   alertas?: Prisma.AlertaListRelationFilter
+  devoluciones?: Prisma.DevolucionListRelationFilter
 }, "id" | "ruc">
 
 export type EmpresaOrderByWithAggregationInput = {
@@ -301,6 +304,7 @@ export type EmpresaCreateInput = {
   compras?: Prisma.CompraCreateNestedManyWithoutEmpresaInput
   ventas?: Prisma.VentaCreateNestedManyWithoutEmpresaInput
   alertas?: Prisma.AlertaCreateNestedManyWithoutEmpresaInput
+  devoluciones?: Prisma.DevolucionCreateNestedManyWithoutEmpresaInput
 }
 
 export type EmpresaUncheckedCreateInput = {
@@ -322,6 +326,7 @@ export type EmpresaUncheckedCreateInput = {
   compras?: Prisma.CompraUncheckedCreateNestedManyWithoutEmpresaInput
   ventas?: Prisma.VentaUncheckedCreateNestedManyWithoutEmpresaInput
   alertas?: Prisma.AlertaUncheckedCreateNestedManyWithoutEmpresaInput
+  devoluciones?: Prisma.DevolucionUncheckedCreateNestedManyWithoutEmpresaInput
 }
 
 export type EmpresaUpdateInput = {
@@ -343,6 +348,7 @@ export type EmpresaUpdateInput = {
   compras?: Prisma.CompraUpdateManyWithoutEmpresaNestedInput
   ventas?: Prisma.VentaUpdateManyWithoutEmpresaNestedInput
   alertas?: Prisma.AlertaUpdateManyWithoutEmpresaNestedInput
+  devoluciones?: Prisma.DevolucionUpdateManyWithoutEmpresaNestedInput
 }
 
 export type EmpresaUncheckedUpdateInput = {
@@ -364,6 +370,7 @@ export type EmpresaUncheckedUpdateInput = {
   compras?: Prisma.CompraUncheckedUpdateManyWithoutEmpresaNestedInput
   ventas?: Prisma.VentaUncheckedUpdateManyWithoutEmpresaNestedInput
   alertas?: Prisma.AlertaUncheckedUpdateManyWithoutEmpresaNestedInput
+  devoluciones?: Prisma.DevolucionUncheckedUpdateManyWithoutEmpresaNestedInput
 }
 
 export type EmpresaCreateManyInput = {
@@ -587,6 +594,20 @@ export type EmpresaUpdateOneRequiredWithoutVentasNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.EmpresaUpdateToOneWithWhereWithoutVentasInput, Prisma.EmpresaUpdateWithoutVentasInput>, Prisma.EmpresaUncheckedUpdateWithoutVentasInput>
 }
 
+export type EmpresaCreateNestedOneWithoutDevolucionesInput = {
+  create?: Prisma.XOR<Prisma.EmpresaCreateWithoutDevolucionesInput, Prisma.EmpresaUncheckedCreateWithoutDevolucionesInput>
+  connectOrCreate?: Prisma.EmpresaCreateOrConnectWithoutDevolucionesInput
+  connect?: Prisma.EmpresaWhereUniqueInput
+}
+
+export type EmpresaUpdateOneRequiredWithoutDevolucionesNestedInput = {
+  create?: Prisma.XOR<Prisma.EmpresaCreateWithoutDevolucionesInput, Prisma.EmpresaUncheckedCreateWithoutDevolucionesInput>
+  connectOrCreate?: Prisma.EmpresaCreateOrConnectWithoutDevolucionesInput
+  upsert?: Prisma.EmpresaUpsertWithoutDevolucionesInput
+  connect?: Prisma.EmpresaWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.EmpresaUpdateToOneWithWhereWithoutDevolucionesInput, Prisma.EmpresaUpdateWithoutDevolucionesInput>, Prisma.EmpresaUncheckedUpdateWithoutDevolucionesInput>
+}
+
 export type EmpresaCreateNestedOneWithoutAlertasInput = {
   create?: Prisma.XOR<Prisma.EmpresaCreateWithoutAlertasInput, Prisma.EmpresaUncheckedCreateWithoutAlertasInput>
   connectOrCreate?: Prisma.EmpresaCreateOrConnectWithoutAlertasInput
@@ -619,6 +640,7 @@ export type EmpresaCreateWithoutUsuariosInput = {
   compras?: Prisma.CompraCreateNestedManyWithoutEmpresaInput
   ventas?: Prisma.VentaCreateNestedManyWithoutEmpresaInput
   alertas?: Prisma.AlertaCreateNestedManyWithoutEmpresaInput
+  devoluciones?: Prisma.DevolucionCreateNestedManyWithoutEmpresaInput
 }
 
 export type EmpresaUncheckedCreateWithoutUsuariosInput = {
@@ -639,6 +661,7 @@ export type EmpresaUncheckedCreateWithoutUsuariosInput = {
   compras?: Prisma.CompraUncheckedCreateNestedManyWithoutEmpresaInput
   ventas?: Prisma.VentaUncheckedCreateNestedManyWithoutEmpresaInput
   alertas?: Prisma.AlertaUncheckedCreateNestedManyWithoutEmpresaInput
+  devoluciones?: Prisma.DevolucionUncheckedCreateNestedManyWithoutEmpresaInput
 }
 
 export type EmpresaCreateOrConnectWithoutUsuariosInput = {
@@ -675,6 +698,7 @@ export type EmpresaUpdateWithoutUsuariosInput = {
   compras?: Prisma.CompraUpdateManyWithoutEmpresaNestedInput
   ventas?: Prisma.VentaUpdateManyWithoutEmpresaNestedInput
   alertas?: Prisma.AlertaUpdateManyWithoutEmpresaNestedInput
+  devoluciones?: Prisma.DevolucionUpdateManyWithoutEmpresaNestedInput
 }
 
 export type EmpresaUncheckedUpdateWithoutUsuariosInput = {
@@ -695,6 +719,7 @@ export type EmpresaUncheckedUpdateWithoutUsuariosInput = {
   compras?: Prisma.CompraUncheckedUpdateManyWithoutEmpresaNestedInput
   ventas?: Prisma.VentaUncheckedUpdateManyWithoutEmpresaNestedInput
   alertas?: Prisma.AlertaUncheckedUpdateManyWithoutEmpresaNestedInput
+  devoluciones?: Prisma.DevolucionUncheckedUpdateManyWithoutEmpresaNestedInput
 }
 
 export type EmpresaCreateWithoutMarcasInput = {
@@ -715,6 +740,7 @@ export type EmpresaCreateWithoutMarcasInput = {
   compras?: Prisma.CompraCreateNestedManyWithoutEmpresaInput
   ventas?: Prisma.VentaCreateNestedManyWithoutEmpresaInput
   alertas?: Prisma.AlertaCreateNestedManyWithoutEmpresaInput
+  devoluciones?: Prisma.DevolucionCreateNestedManyWithoutEmpresaInput
 }
 
 export type EmpresaUncheckedCreateWithoutMarcasInput = {
@@ -735,6 +761,7 @@ export type EmpresaUncheckedCreateWithoutMarcasInput = {
   compras?: Prisma.CompraUncheckedCreateNestedManyWithoutEmpresaInput
   ventas?: Prisma.VentaUncheckedCreateNestedManyWithoutEmpresaInput
   alertas?: Prisma.AlertaUncheckedCreateNestedManyWithoutEmpresaInput
+  devoluciones?: Prisma.DevolucionUncheckedCreateNestedManyWithoutEmpresaInput
 }
 
 export type EmpresaCreateOrConnectWithoutMarcasInput = {
@@ -771,6 +798,7 @@ export type EmpresaUpdateWithoutMarcasInput = {
   compras?: Prisma.CompraUpdateManyWithoutEmpresaNestedInput
   ventas?: Prisma.VentaUpdateManyWithoutEmpresaNestedInput
   alertas?: Prisma.AlertaUpdateManyWithoutEmpresaNestedInput
+  devoluciones?: Prisma.DevolucionUpdateManyWithoutEmpresaNestedInput
 }
 
 export type EmpresaUncheckedUpdateWithoutMarcasInput = {
@@ -791,6 +819,7 @@ export type EmpresaUncheckedUpdateWithoutMarcasInput = {
   compras?: Prisma.CompraUncheckedUpdateManyWithoutEmpresaNestedInput
   ventas?: Prisma.VentaUncheckedUpdateManyWithoutEmpresaNestedInput
   alertas?: Prisma.AlertaUncheckedUpdateManyWithoutEmpresaNestedInput
+  devoluciones?: Prisma.DevolucionUncheckedUpdateManyWithoutEmpresaNestedInput
 }
 
 export type EmpresaCreateWithoutUnidadesInput = {
@@ -811,6 +840,7 @@ export type EmpresaCreateWithoutUnidadesInput = {
   compras?: Prisma.CompraCreateNestedManyWithoutEmpresaInput
   ventas?: Prisma.VentaCreateNestedManyWithoutEmpresaInput
   alertas?: Prisma.AlertaCreateNestedManyWithoutEmpresaInput
+  devoluciones?: Prisma.DevolucionCreateNestedManyWithoutEmpresaInput
 }
 
 export type EmpresaUncheckedCreateWithoutUnidadesInput = {
@@ -831,6 +861,7 @@ export type EmpresaUncheckedCreateWithoutUnidadesInput = {
   compras?: Prisma.CompraUncheckedCreateNestedManyWithoutEmpresaInput
   ventas?: Prisma.VentaUncheckedCreateNestedManyWithoutEmpresaInput
   alertas?: Prisma.AlertaUncheckedCreateNestedManyWithoutEmpresaInput
+  devoluciones?: Prisma.DevolucionUncheckedCreateNestedManyWithoutEmpresaInput
 }
 
 export type EmpresaCreateOrConnectWithoutUnidadesInput = {
@@ -867,6 +898,7 @@ export type EmpresaUpdateWithoutUnidadesInput = {
   compras?: Prisma.CompraUpdateManyWithoutEmpresaNestedInput
   ventas?: Prisma.VentaUpdateManyWithoutEmpresaNestedInput
   alertas?: Prisma.AlertaUpdateManyWithoutEmpresaNestedInput
+  devoluciones?: Prisma.DevolucionUpdateManyWithoutEmpresaNestedInput
 }
 
 export type EmpresaUncheckedUpdateWithoutUnidadesInput = {
@@ -887,6 +919,7 @@ export type EmpresaUncheckedUpdateWithoutUnidadesInput = {
   compras?: Prisma.CompraUncheckedUpdateManyWithoutEmpresaNestedInput
   ventas?: Prisma.VentaUncheckedUpdateManyWithoutEmpresaNestedInput
   alertas?: Prisma.AlertaUncheckedUpdateManyWithoutEmpresaNestedInput
+  devoluciones?: Prisma.DevolucionUncheckedUpdateManyWithoutEmpresaNestedInput
 }
 
 export type EmpresaCreateWithoutCategoriasInput = {
@@ -907,6 +940,7 @@ export type EmpresaCreateWithoutCategoriasInput = {
   compras?: Prisma.CompraCreateNestedManyWithoutEmpresaInput
   ventas?: Prisma.VentaCreateNestedManyWithoutEmpresaInput
   alertas?: Prisma.AlertaCreateNestedManyWithoutEmpresaInput
+  devoluciones?: Prisma.DevolucionCreateNestedManyWithoutEmpresaInput
 }
 
 export type EmpresaUncheckedCreateWithoutCategoriasInput = {
@@ -927,6 +961,7 @@ export type EmpresaUncheckedCreateWithoutCategoriasInput = {
   compras?: Prisma.CompraUncheckedCreateNestedManyWithoutEmpresaInput
   ventas?: Prisma.VentaUncheckedCreateNestedManyWithoutEmpresaInput
   alertas?: Prisma.AlertaUncheckedCreateNestedManyWithoutEmpresaInput
+  devoluciones?: Prisma.DevolucionUncheckedCreateNestedManyWithoutEmpresaInput
 }
 
 export type EmpresaCreateOrConnectWithoutCategoriasInput = {
@@ -963,6 +998,7 @@ export type EmpresaUpdateWithoutCategoriasInput = {
   compras?: Prisma.CompraUpdateManyWithoutEmpresaNestedInput
   ventas?: Prisma.VentaUpdateManyWithoutEmpresaNestedInput
   alertas?: Prisma.AlertaUpdateManyWithoutEmpresaNestedInput
+  devoluciones?: Prisma.DevolucionUpdateManyWithoutEmpresaNestedInput
 }
 
 export type EmpresaUncheckedUpdateWithoutCategoriasInput = {
@@ -983,6 +1019,7 @@ export type EmpresaUncheckedUpdateWithoutCategoriasInput = {
   compras?: Prisma.CompraUncheckedUpdateManyWithoutEmpresaNestedInput
   ventas?: Prisma.VentaUncheckedUpdateManyWithoutEmpresaNestedInput
   alertas?: Prisma.AlertaUncheckedUpdateManyWithoutEmpresaNestedInput
+  devoluciones?: Prisma.DevolucionUncheckedUpdateManyWithoutEmpresaNestedInput
 }
 
 export type EmpresaCreateWithoutAlmacenesInput = {
@@ -1003,6 +1040,7 @@ export type EmpresaCreateWithoutAlmacenesInput = {
   compras?: Prisma.CompraCreateNestedManyWithoutEmpresaInput
   ventas?: Prisma.VentaCreateNestedManyWithoutEmpresaInput
   alertas?: Prisma.AlertaCreateNestedManyWithoutEmpresaInput
+  devoluciones?: Prisma.DevolucionCreateNestedManyWithoutEmpresaInput
 }
 
 export type EmpresaUncheckedCreateWithoutAlmacenesInput = {
@@ -1023,6 +1061,7 @@ export type EmpresaUncheckedCreateWithoutAlmacenesInput = {
   compras?: Prisma.CompraUncheckedCreateNestedManyWithoutEmpresaInput
   ventas?: Prisma.VentaUncheckedCreateNestedManyWithoutEmpresaInput
   alertas?: Prisma.AlertaUncheckedCreateNestedManyWithoutEmpresaInput
+  devoluciones?: Prisma.DevolucionUncheckedCreateNestedManyWithoutEmpresaInput
 }
 
 export type EmpresaCreateOrConnectWithoutAlmacenesInput = {
@@ -1059,6 +1098,7 @@ export type EmpresaUpdateWithoutAlmacenesInput = {
   compras?: Prisma.CompraUpdateManyWithoutEmpresaNestedInput
   ventas?: Prisma.VentaUpdateManyWithoutEmpresaNestedInput
   alertas?: Prisma.AlertaUpdateManyWithoutEmpresaNestedInput
+  devoluciones?: Prisma.DevolucionUpdateManyWithoutEmpresaNestedInput
 }
 
 export type EmpresaUncheckedUpdateWithoutAlmacenesInput = {
@@ -1079,6 +1119,7 @@ export type EmpresaUncheckedUpdateWithoutAlmacenesInput = {
   compras?: Prisma.CompraUncheckedUpdateManyWithoutEmpresaNestedInput
   ventas?: Prisma.VentaUncheckedUpdateManyWithoutEmpresaNestedInput
   alertas?: Prisma.AlertaUncheckedUpdateManyWithoutEmpresaNestedInput
+  devoluciones?: Prisma.DevolucionUncheckedUpdateManyWithoutEmpresaNestedInput
 }
 
 export type EmpresaCreateWithoutProductosInput = {
@@ -1099,6 +1140,7 @@ export type EmpresaCreateWithoutProductosInput = {
   compras?: Prisma.CompraCreateNestedManyWithoutEmpresaInput
   ventas?: Prisma.VentaCreateNestedManyWithoutEmpresaInput
   alertas?: Prisma.AlertaCreateNestedManyWithoutEmpresaInput
+  devoluciones?: Prisma.DevolucionCreateNestedManyWithoutEmpresaInput
 }
 
 export type EmpresaUncheckedCreateWithoutProductosInput = {
@@ -1119,6 +1161,7 @@ export type EmpresaUncheckedCreateWithoutProductosInput = {
   compras?: Prisma.CompraUncheckedCreateNestedManyWithoutEmpresaInput
   ventas?: Prisma.VentaUncheckedCreateNestedManyWithoutEmpresaInput
   alertas?: Prisma.AlertaUncheckedCreateNestedManyWithoutEmpresaInput
+  devoluciones?: Prisma.DevolucionUncheckedCreateNestedManyWithoutEmpresaInput
 }
 
 export type EmpresaCreateOrConnectWithoutProductosInput = {
@@ -1155,6 +1198,7 @@ export type EmpresaUpdateWithoutProductosInput = {
   compras?: Prisma.CompraUpdateManyWithoutEmpresaNestedInput
   ventas?: Prisma.VentaUpdateManyWithoutEmpresaNestedInput
   alertas?: Prisma.AlertaUpdateManyWithoutEmpresaNestedInput
+  devoluciones?: Prisma.DevolucionUpdateManyWithoutEmpresaNestedInput
 }
 
 export type EmpresaUncheckedUpdateWithoutProductosInput = {
@@ -1175,6 +1219,7 @@ export type EmpresaUncheckedUpdateWithoutProductosInput = {
   compras?: Prisma.CompraUncheckedUpdateManyWithoutEmpresaNestedInput
   ventas?: Prisma.VentaUncheckedUpdateManyWithoutEmpresaNestedInput
   alertas?: Prisma.AlertaUncheckedUpdateManyWithoutEmpresaNestedInput
+  devoluciones?: Prisma.DevolucionUncheckedUpdateManyWithoutEmpresaNestedInput
 }
 
 export type EmpresaCreateWithoutClientesInput = {
@@ -1195,6 +1240,7 @@ export type EmpresaCreateWithoutClientesInput = {
   compras?: Prisma.CompraCreateNestedManyWithoutEmpresaInput
   ventas?: Prisma.VentaCreateNestedManyWithoutEmpresaInput
   alertas?: Prisma.AlertaCreateNestedManyWithoutEmpresaInput
+  devoluciones?: Prisma.DevolucionCreateNestedManyWithoutEmpresaInput
 }
 
 export type EmpresaUncheckedCreateWithoutClientesInput = {
@@ -1215,6 +1261,7 @@ export type EmpresaUncheckedCreateWithoutClientesInput = {
   compras?: Prisma.CompraUncheckedCreateNestedManyWithoutEmpresaInput
   ventas?: Prisma.VentaUncheckedCreateNestedManyWithoutEmpresaInput
   alertas?: Prisma.AlertaUncheckedCreateNestedManyWithoutEmpresaInput
+  devoluciones?: Prisma.DevolucionUncheckedCreateNestedManyWithoutEmpresaInput
 }
 
 export type EmpresaCreateOrConnectWithoutClientesInput = {
@@ -1251,6 +1298,7 @@ export type EmpresaUpdateWithoutClientesInput = {
   compras?: Prisma.CompraUpdateManyWithoutEmpresaNestedInput
   ventas?: Prisma.VentaUpdateManyWithoutEmpresaNestedInput
   alertas?: Prisma.AlertaUpdateManyWithoutEmpresaNestedInput
+  devoluciones?: Prisma.DevolucionUpdateManyWithoutEmpresaNestedInput
 }
 
 export type EmpresaUncheckedUpdateWithoutClientesInput = {
@@ -1271,6 +1319,7 @@ export type EmpresaUncheckedUpdateWithoutClientesInput = {
   compras?: Prisma.CompraUncheckedUpdateManyWithoutEmpresaNestedInput
   ventas?: Prisma.VentaUncheckedUpdateManyWithoutEmpresaNestedInput
   alertas?: Prisma.AlertaUncheckedUpdateManyWithoutEmpresaNestedInput
+  devoluciones?: Prisma.DevolucionUncheckedUpdateManyWithoutEmpresaNestedInput
 }
 
 export type EmpresaCreateWithoutProveedoresInput = {
@@ -1291,6 +1340,7 @@ export type EmpresaCreateWithoutProveedoresInput = {
   compras?: Prisma.CompraCreateNestedManyWithoutEmpresaInput
   ventas?: Prisma.VentaCreateNestedManyWithoutEmpresaInput
   alertas?: Prisma.AlertaCreateNestedManyWithoutEmpresaInput
+  devoluciones?: Prisma.DevolucionCreateNestedManyWithoutEmpresaInput
 }
 
 export type EmpresaUncheckedCreateWithoutProveedoresInput = {
@@ -1311,6 +1361,7 @@ export type EmpresaUncheckedCreateWithoutProveedoresInput = {
   compras?: Prisma.CompraUncheckedCreateNestedManyWithoutEmpresaInput
   ventas?: Prisma.VentaUncheckedCreateNestedManyWithoutEmpresaInput
   alertas?: Prisma.AlertaUncheckedCreateNestedManyWithoutEmpresaInput
+  devoluciones?: Prisma.DevolucionUncheckedCreateNestedManyWithoutEmpresaInput
 }
 
 export type EmpresaCreateOrConnectWithoutProveedoresInput = {
@@ -1347,6 +1398,7 @@ export type EmpresaUpdateWithoutProveedoresInput = {
   compras?: Prisma.CompraUpdateManyWithoutEmpresaNestedInput
   ventas?: Prisma.VentaUpdateManyWithoutEmpresaNestedInput
   alertas?: Prisma.AlertaUpdateManyWithoutEmpresaNestedInput
+  devoluciones?: Prisma.DevolucionUpdateManyWithoutEmpresaNestedInput
 }
 
 export type EmpresaUncheckedUpdateWithoutProveedoresInput = {
@@ -1367,6 +1419,7 @@ export type EmpresaUncheckedUpdateWithoutProveedoresInput = {
   compras?: Prisma.CompraUncheckedUpdateManyWithoutEmpresaNestedInput
   ventas?: Prisma.VentaUncheckedUpdateManyWithoutEmpresaNestedInput
   alertas?: Prisma.AlertaUncheckedUpdateManyWithoutEmpresaNestedInput
+  devoluciones?: Prisma.DevolucionUncheckedUpdateManyWithoutEmpresaNestedInput
 }
 
 export type EmpresaCreateWithoutComprasInput = {
@@ -1387,6 +1440,7 @@ export type EmpresaCreateWithoutComprasInput = {
   proveedores?: Prisma.ProveedorCreateNestedManyWithoutEmpresaInput
   ventas?: Prisma.VentaCreateNestedManyWithoutEmpresaInput
   alertas?: Prisma.AlertaCreateNestedManyWithoutEmpresaInput
+  devoluciones?: Prisma.DevolucionCreateNestedManyWithoutEmpresaInput
 }
 
 export type EmpresaUncheckedCreateWithoutComprasInput = {
@@ -1407,6 +1461,7 @@ export type EmpresaUncheckedCreateWithoutComprasInput = {
   proveedores?: Prisma.ProveedorUncheckedCreateNestedManyWithoutEmpresaInput
   ventas?: Prisma.VentaUncheckedCreateNestedManyWithoutEmpresaInput
   alertas?: Prisma.AlertaUncheckedCreateNestedManyWithoutEmpresaInput
+  devoluciones?: Prisma.DevolucionUncheckedCreateNestedManyWithoutEmpresaInput
 }
 
 export type EmpresaCreateOrConnectWithoutComprasInput = {
@@ -1443,6 +1498,7 @@ export type EmpresaUpdateWithoutComprasInput = {
   proveedores?: Prisma.ProveedorUpdateManyWithoutEmpresaNestedInput
   ventas?: Prisma.VentaUpdateManyWithoutEmpresaNestedInput
   alertas?: Prisma.AlertaUpdateManyWithoutEmpresaNestedInput
+  devoluciones?: Prisma.DevolucionUpdateManyWithoutEmpresaNestedInput
 }
 
 export type EmpresaUncheckedUpdateWithoutComprasInput = {
@@ -1463,6 +1519,7 @@ export type EmpresaUncheckedUpdateWithoutComprasInput = {
   proveedores?: Prisma.ProveedorUncheckedUpdateManyWithoutEmpresaNestedInput
   ventas?: Prisma.VentaUncheckedUpdateManyWithoutEmpresaNestedInput
   alertas?: Prisma.AlertaUncheckedUpdateManyWithoutEmpresaNestedInput
+  devoluciones?: Prisma.DevolucionUncheckedUpdateManyWithoutEmpresaNestedInput
 }
 
 export type EmpresaCreateWithoutVentasInput = {
@@ -1483,6 +1540,7 @@ export type EmpresaCreateWithoutVentasInput = {
   proveedores?: Prisma.ProveedorCreateNestedManyWithoutEmpresaInput
   compras?: Prisma.CompraCreateNestedManyWithoutEmpresaInput
   alertas?: Prisma.AlertaCreateNestedManyWithoutEmpresaInput
+  devoluciones?: Prisma.DevolucionCreateNestedManyWithoutEmpresaInput
 }
 
 export type EmpresaUncheckedCreateWithoutVentasInput = {
@@ -1503,6 +1561,7 @@ export type EmpresaUncheckedCreateWithoutVentasInput = {
   proveedores?: Prisma.ProveedorUncheckedCreateNestedManyWithoutEmpresaInput
   compras?: Prisma.CompraUncheckedCreateNestedManyWithoutEmpresaInput
   alertas?: Prisma.AlertaUncheckedCreateNestedManyWithoutEmpresaInput
+  devoluciones?: Prisma.DevolucionUncheckedCreateNestedManyWithoutEmpresaInput
 }
 
 export type EmpresaCreateOrConnectWithoutVentasInput = {
@@ -1539,6 +1598,7 @@ export type EmpresaUpdateWithoutVentasInput = {
   proveedores?: Prisma.ProveedorUpdateManyWithoutEmpresaNestedInput
   compras?: Prisma.CompraUpdateManyWithoutEmpresaNestedInput
   alertas?: Prisma.AlertaUpdateManyWithoutEmpresaNestedInput
+  devoluciones?: Prisma.DevolucionUpdateManyWithoutEmpresaNestedInput
 }
 
 export type EmpresaUncheckedUpdateWithoutVentasInput = {
@@ -1558,6 +1618,107 @@ export type EmpresaUncheckedUpdateWithoutVentasInput = {
   clientes?: Prisma.ClienteUncheckedUpdateManyWithoutEmpresaNestedInput
   proveedores?: Prisma.ProveedorUncheckedUpdateManyWithoutEmpresaNestedInput
   compras?: Prisma.CompraUncheckedUpdateManyWithoutEmpresaNestedInput
+  alertas?: Prisma.AlertaUncheckedUpdateManyWithoutEmpresaNestedInput
+  devoluciones?: Prisma.DevolucionUncheckedUpdateManyWithoutEmpresaNestedInput
+}
+
+export type EmpresaCreateWithoutDevolucionesInput = {
+  id?: string
+  ruc: string
+  razonSocial: string
+  nombreComercial?: string | null
+  activo?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  usuarios?: Prisma.UsuarioCreateNestedManyWithoutEmpresaInput
+  marcas?: Prisma.MarcaCreateNestedManyWithoutEmpresaInput
+  unidades?: Prisma.UnidadMedidaCreateNestedManyWithoutEmpresaInput
+  almacenes?: Prisma.AlmacenCreateNestedManyWithoutEmpresaInput
+  categorias?: Prisma.CategoriaCreateNestedManyWithoutEmpresaInput
+  productos?: Prisma.ProductoCreateNestedManyWithoutEmpresaInput
+  clientes?: Prisma.ClienteCreateNestedManyWithoutEmpresaInput
+  proveedores?: Prisma.ProveedorCreateNestedManyWithoutEmpresaInput
+  compras?: Prisma.CompraCreateNestedManyWithoutEmpresaInput
+  ventas?: Prisma.VentaCreateNestedManyWithoutEmpresaInput
+  alertas?: Prisma.AlertaCreateNestedManyWithoutEmpresaInput
+}
+
+export type EmpresaUncheckedCreateWithoutDevolucionesInput = {
+  id?: string
+  ruc: string
+  razonSocial: string
+  nombreComercial?: string | null
+  activo?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  usuarios?: Prisma.UsuarioUncheckedCreateNestedManyWithoutEmpresaInput
+  marcas?: Prisma.MarcaUncheckedCreateNestedManyWithoutEmpresaInput
+  unidades?: Prisma.UnidadMedidaUncheckedCreateNestedManyWithoutEmpresaInput
+  almacenes?: Prisma.AlmacenUncheckedCreateNestedManyWithoutEmpresaInput
+  categorias?: Prisma.CategoriaUncheckedCreateNestedManyWithoutEmpresaInput
+  productos?: Prisma.ProductoUncheckedCreateNestedManyWithoutEmpresaInput
+  clientes?: Prisma.ClienteUncheckedCreateNestedManyWithoutEmpresaInput
+  proveedores?: Prisma.ProveedorUncheckedCreateNestedManyWithoutEmpresaInput
+  compras?: Prisma.CompraUncheckedCreateNestedManyWithoutEmpresaInput
+  ventas?: Prisma.VentaUncheckedCreateNestedManyWithoutEmpresaInput
+  alertas?: Prisma.AlertaUncheckedCreateNestedManyWithoutEmpresaInput
+}
+
+export type EmpresaCreateOrConnectWithoutDevolucionesInput = {
+  where: Prisma.EmpresaWhereUniqueInput
+  create: Prisma.XOR<Prisma.EmpresaCreateWithoutDevolucionesInput, Prisma.EmpresaUncheckedCreateWithoutDevolucionesInput>
+}
+
+export type EmpresaUpsertWithoutDevolucionesInput = {
+  update: Prisma.XOR<Prisma.EmpresaUpdateWithoutDevolucionesInput, Prisma.EmpresaUncheckedUpdateWithoutDevolucionesInput>
+  create: Prisma.XOR<Prisma.EmpresaCreateWithoutDevolucionesInput, Prisma.EmpresaUncheckedCreateWithoutDevolucionesInput>
+  where?: Prisma.EmpresaWhereInput
+}
+
+export type EmpresaUpdateToOneWithWhereWithoutDevolucionesInput = {
+  where?: Prisma.EmpresaWhereInput
+  data: Prisma.XOR<Prisma.EmpresaUpdateWithoutDevolucionesInput, Prisma.EmpresaUncheckedUpdateWithoutDevolucionesInput>
+}
+
+export type EmpresaUpdateWithoutDevolucionesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  ruc?: Prisma.StringFieldUpdateOperationsInput | string
+  razonSocial?: Prisma.StringFieldUpdateOperationsInput | string
+  nombreComercial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  usuarios?: Prisma.UsuarioUpdateManyWithoutEmpresaNestedInput
+  marcas?: Prisma.MarcaUpdateManyWithoutEmpresaNestedInput
+  unidades?: Prisma.UnidadMedidaUpdateManyWithoutEmpresaNestedInput
+  almacenes?: Prisma.AlmacenUpdateManyWithoutEmpresaNestedInput
+  categorias?: Prisma.CategoriaUpdateManyWithoutEmpresaNestedInput
+  productos?: Prisma.ProductoUpdateManyWithoutEmpresaNestedInput
+  clientes?: Prisma.ClienteUpdateManyWithoutEmpresaNestedInput
+  proveedores?: Prisma.ProveedorUpdateManyWithoutEmpresaNestedInput
+  compras?: Prisma.CompraUpdateManyWithoutEmpresaNestedInput
+  ventas?: Prisma.VentaUpdateManyWithoutEmpresaNestedInput
+  alertas?: Prisma.AlertaUpdateManyWithoutEmpresaNestedInput
+}
+
+export type EmpresaUncheckedUpdateWithoutDevolucionesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  ruc?: Prisma.StringFieldUpdateOperationsInput | string
+  razonSocial?: Prisma.StringFieldUpdateOperationsInput | string
+  nombreComercial?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  usuarios?: Prisma.UsuarioUncheckedUpdateManyWithoutEmpresaNestedInput
+  marcas?: Prisma.MarcaUncheckedUpdateManyWithoutEmpresaNestedInput
+  unidades?: Prisma.UnidadMedidaUncheckedUpdateManyWithoutEmpresaNestedInput
+  almacenes?: Prisma.AlmacenUncheckedUpdateManyWithoutEmpresaNestedInput
+  categorias?: Prisma.CategoriaUncheckedUpdateManyWithoutEmpresaNestedInput
+  productos?: Prisma.ProductoUncheckedUpdateManyWithoutEmpresaNestedInput
+  clientes?: Prisma.ClienteUncheckedUpdateManyWithoutEmpresaNestedInput
+  proveedores?: Prisma.ProveedorUncheckedUpdateManyWithoutEmpresaNestedInput
+  compras?: Prisma.CompraUncheckedUpdateManyWithoutEmpresaNestedInput
+  ventas?: Prisma.VentaUncheckedUpdateManyWithoutEmpresaNestedInput
   alertas?: Prisma.AlertaUncheckedUpdateManyWithoutEmpresaNestedInput
 }
 
@@ -1579,6 +1740,7 @@ export type EmpresaCreateWithoutAlertasInput = {
   proveedores?: Prisma.ProveedorCreateNestedManyWithoutEmpresaInput
   compras?: Prisma.CompraCreateNestedManyWithoutEmpresaInput
   ventas?: Prisma.VentaCreateNestedManyWithoutEmpresaInput
+  devoluciones?: Prisma.DevolucionCreateNestedManyWithoutEmpresaInput
 }
 
 export type EmpresaUncheckedCreateWithoutAlertasInput = {
@@ -1599,6 +1761,7 @@ export type EmpresaUncheckedCreateWithoutAlertasInput = {
   proveedores?: Prisma.ProveedorUncheckedCreateNestedManyWithoutEmpresaInput
   compras?: Prisma.CompraUncheckedCreateNestedManyWithoutEmpresaInput
   ventas?: Prisma.VentaUncheckedCreateNestedManyWithoutEmpresaInput
+  devoluciones?: Prisma.DevolucionUncheckedCreateNestedManyWithoutEmpresaInput
 }
 
 export type EmpresaCreateOrConnectWithoutAlertasInput = {
@@ -1635,6 +1798,7 @@ export type EmpresaUpdateWithoutAlertasInput = {
   proveedores?: Prisma.ProveedorUpdateManyWithoutEmpresaNestedInput
   compras?: Prisma.CompraUpdateManyWithoutEmpresaNestedInput
   ventas?: Prisma.VentaUpdateManyWithoutEmpresaNestedInput
+  devoluciones?: Prisma.DevolucionUpdateManyWithoutEmpresaNestedInput
 }
 
 export type EmpresaUncheckedUpdateWithoutAlertasInput = {
@@ -1655,6 +1819,7 @@ export type EmpresaUncheckedUpdateWithoutAlertasInput = {
   proveedores?: Prisma.ProveedorUncheckedUpdateManyWithoutEmpresaNestedInput
   compras?: Prisma.CompraUncheckedUpdateManyWithoutEmpresaNestedInput
   ventas?: Prisma.VentaUncheckedUpdateManyWithoutEmpresaNestedInput
+  devoluciones?: Prisma.DevolucionUncheckedUpdateManyWithoutEmpresaNestedInput
 }
 
 
@@ -1674,6 +1839,7 @@ export type EmpresaCountOutputType = {
   compras: number
   ventas: number
   alertas: number
+  devoluciones: number
 }
 
 export type EmpresaCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1688,6 +1854,7 @@ export type EmpresaCountOutputTypeSelect<ExtArgs extends runtime.Types.Extension
   compras?: boolean | EmpresaCountOutputTypeCountComprasArgs
   ventas?: boolean | EmpresaCountOutputTypeCountVentasArgs
   alertas?: boolean | EmpresaCountOutputTypeCountAlertasArgs
+  devoluciones?: boolean | EmpresaCountOutputTypeCountDevolucionesArgs
 }
 
 /**
@@ -1777,6 +1944,13 @@ export type EmpresaCountOutputTypeCountAlertasArgs<ExtArgs extends runtime.Types
   where?: Prisma.AlertaWhereInput
 }
 
+/**
+ * EmpresaCountOutputType without action
+ */
+export type EmpresaCountOutputTypeCountDevolucionesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DevolucionWhereInput
+}
+
 
 export type EmpresaSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1797,6 +1971,7 @@ export type EmpresaSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   compras?: boolean | Prisma.Empresa$comprasArgs<ExtArgs>
   ventas?: boolean | Prisma.Empresa$ventasArgs<ExtArgs>
   alertas?: boolean | Prisma.Empresa$alertasArgs<ExtArgs>
+  devoluciones?: boolean | Prisma.Empresa$devolucionesArgs<ExtArgs>
   _count?: boolean | Prisma.EmpresaCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["empresa"]>
 
@@ -1843,6 +2018,7 @@ export type EmpresaInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   compras?: boolean | Prisma.Empresa$comprasArgs<ExtArgs>
   ventas?: boolean | Prisma.Empresa$ventasArgs<ExtArgs>
   alertas?: boolean | Prisma.Empresa$alertasArgs<ExtArgs>
+  devoluciones?: boolean | Prisma.Empresa$devolucionesArgs<ExtArgs>
   _count?: boolean | Prisma.EmpresaCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type EmpresaIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1862,6 +2038,7 @@ export type $EmpresaPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     compras: Prisma.$CompraPayload<ExtArgs>[]
     ventas: Prisma.$VentaPayload<ExtArgs>[]
     alertas: Prisma.$AlertaPayload<ExtArgs>[]
+    devoluciones: Prisma.$DevolucionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2276,6 +2453,7 @@ export interface Prisma__EmpresaClient<T, Null = never, ExtArgs extends runtime.
   compras<T extends Prisma.Empresa$comprasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Empresa$comprasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CompraPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   ventas<T extends Prisma.Empresa$ventasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Empresa$ventasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VentaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   alertas<T extends Prisma.Empresa$alertasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Empresa$alertasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AlertaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  devoluciones<T extends Prisma.Empresa$devolucionesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Empresa$devolucionesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DevolucionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2966,6 +3144,30 @@ export type Empresa$alertasArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   distinct?: Prisma.AlertaScalarFieldEnum | Prisma.AlertaScalarFieldEnum[]
+}
+
+/**
+ * Empresa.devoluciones
+ */
+export type Empresa$devolucionesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Devolucion
+   */
+  select?: Prisma.DevolucionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Devolucion
+   */
+  omit?: Prisma.DevolucionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DevolucionInclude<ExtArgs> | null
+  where?: Prisma.DevolucionWhereInput
+  orderBy?: Prisma.DevolucionOrderByWithRelationInput | Prisma.DevolucionOrderByWithRelationInput[]
+  cursor?: Prisma.DevolucionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DevolucionScalarFieldEnum | Prisma.DevolucionScalarFieldEnum[]
 }
 
 /**

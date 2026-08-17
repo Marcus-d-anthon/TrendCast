@@ -273,6 +273,7 @@ export type UsuarioWhereInput = {
   solicitudesCreadas?: Prisma.SolicitudListRelationFilter
   solicitudesAprobadas?: Prisma.SolicitudListRelationFilter
   solicitudesEfectuadas?: Prisma.SolicitudListRelationFilter
+  devolucionesRegistradas?: Prisma.DevolucionListRelationFilter
 }
 
 export type UsuarioOrderByWithRelationInput = {
@@ -302,6 +303,7 @@ export type UsuarioOrderByWithRelationInput = {
   solicitudesCreadas?: Prisma.SolicitudOrderByRelationAggregateInput
   solicitudesAprobadas?: Prisma.SolicitudOrderByRelationAggregateInput
   solicitudesEfectuadas?: Prisma.SolicitudOrderByRelationAggregateInput
+  devolucionesRegistradas?: Prisma.DevolucionOrderByRelationAggregateInput
 }
 
 export type UsuarioWhereUniqueInput = Prisma.AtLeast<{
@@ -334,6 +336,7 @@ export type UsuarioWhereUniqueInput = Prisma.AtLeast<{
   solicitudesCreadas?: Prisma.SolicitudListRelationFilter
   solicitudesAprobadas?: Prisma.SolicitudListRelationFilter
   solicitudesEfectuadas?: Prisma.SolicitudListRelationFilter
+  devolucionesRegistradas?: Prisma.DevolucionListRelationFilter
 }, "id" | "email">
 
 export type UsuarioOrderByWithAggregationInput = {
@@ -403,6 +406,7 @@ export type UsuarioCreateInput = {
   solicitudesCreadas?: Prisma.SolicitudCreateNestedManyWithoutSolicitanteInput
   solicitudesAprobadas?: Prisma.SolicitudCreateNestedManyWithoutAprobadorInput
   solicitudesEfectuadas?: Prisma.SolicitudCreateNestedManyWithoutEfectuadorInput
+  devolucionesRegistradas?: Prisma.DevolucionCreateNestedManyWithoutUsuarioInput
 }
 
 export type UsuarioUncheckedCreateInput = {
@@ -430,6 +434,7 @@ export type UsuarioUncheckedCreateInput = {
   solicitudesCreadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutSolicitanteInput
   solicitudesAprobadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutAprobadorInput
   solicitudesEfectuadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutEfectuadorInput
+  devolucionesRegistradas?: Prisma.DevolucionUncheckedCreateNestedManyWithoutUsuarioInput
 }
 
 export type UsuarioUpdateInput = {
@@ -457,6 +462,7 @@ export type UsuarioUpdateInput = {
   solicitudesCreadas?: Prisma.SolicitudUpdateManyWithoutSolicitanteNestedInput
   solicitudesAprobadas?: Prisma.SolicitudUpdateManyWithoutAprobadorNestedInput
   solicitudesEfectuadas?: Prisma.SolicitudUpdateManyWithoutEfectuadorNestedInput
+  devolucionesRegistradas?: Prisma.DevolucionUpdateManyWithoutUsuarioNestedInput
 }
 
 export type UsuarioUncheckedUpdateInput = {
@@ -484,6 +490,7 @@ export type UsuarioUncheckedUpdateInput = {
   solicitudesCreadas?: Prisma.SolicitudUncheckedUpdateManyWithoutSolicitanteNestedInput
   solicitudesAprobadas?: Prisma.SolicitudUncheckedUpdateManyWithoutAprobadorNestedInput
   solicitudesEfectuadas?: Prisma.SolicitudUncheckedUpdateManyWithoutEfectuadorNestedInput
+  devolucionesRegistradas?: Prisma.DevolucionUncheckedUpdateManyWithoutUsuarioNestedInput
 }
 
 export type UsuarioCreateManyInput = {
@@ -806,6 +813,20 @@ export type UsuarioUpdateOneRequiredWithoutVentasRegistradasNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UsuarioUpdateToOneWithWhereWithoutVentasRegistradasInput, Prisma.UsuarioUpdateWithoutVentasRegistradasInput>, Prisma.UsuarioUncheckedUpdateWithoutVentasRegistradasInput>
 }
 
+export type UsuarioCreateNestedOneWithoutDevolucionesRegistradasInput = {
+  create?: Prisma.XOR<Prisma.UsuarioCreateWithoutDevolucionesRegistradasInput, Prisma.UsuarioUncheckedCreateWithoutDevolucionesRegistradasInput>
+  connectOrCreate?: Prisma.UsuarioCreateOrConnectWithoutDevolucionesRegistradasInput
+  connect?: Prisma.UsuarioWhereUniqueInput
+}
+
+export type UsuarioUpdateOneRequiredWithoutDevolucionesRegistradasNestedInput = {
+  create?: Prisma.XOR<Prisma.UsuarioCreateWithoutDevolucionesRegistradasInput, Prisma.UsuarioUncheckedCreateWithoutDevolucionesRegistradasInput>
+  connectOrCreate?: Prisma.UsuarioCreateOrConnectWithoutDevolucionesRegistradasInput
+  upsert?: Prisma.UsuarioUpsertWithoutDevolucionesRegistradasInput
+  connect?: Prisma.UsuarioWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UsuarioUpdateToOneWithWhereWithoutDevolucionesRegistradasInput, Prisma.UsuarioUpdateWithoutDevolucionesRegistradasInput>, Prisma.UsuarioUncheckedUpdateWithoutDevolucionesRegistradasInput>
+}
+
 export type UsuarioCreateNestedOneWithoutMovimientosRegistradosInput = {
   create?: Prisma.XOR<Prisma.UsuarioCreateWithoutMovimientosRegistradosInput, Prisma.UsuarioUncheckedCreateWithoutMovimientosRegistradosInput>
   connectOrCreate?: Prisma.UsuarioCreateOrConnectWithoutMovimientosRegistradosInput
@@ -858,6 +879,7 @@ export type UsuarioCreateWithoutEmpresaInput = {
   solicitudesCreadas?: Prisma.SolicitudCreateNestedManyWithoutSolicitanteInput
   solicitudesAprobadas?: Prisma.SolicitudCreateNestedManyWithoutAprobadorInput
   solicitudesEfectuadas?: Prisma.SolicitudCreateNestedManyWithoutEfectuadorInput
+  devolucionesRegistradas?: Prisma.DevolucionCreateNestedManyWithoutUsuarioInput
 }
 
 export type UsuarioUncheckedCreateWithoutEmpresaInput = {
@@ -884,6 +906,7 @@ export type UsuarioUncheckedCreateWithoutEmpresaInput = {
   solicitudesCreadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutSolicitanteInput
   solicitudesAprobadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutAprobadorInput
   solicitudesEfectuadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutEfectuadorInput
+  devolucionesRegistradas?: Prisma.DevolucionUncheckedCreateNestedManyWithoutUsuarioInput
 }
 
 export type UsuarioCreateOrConnectWithoutEmpresaInput = {
@@ -957,6 +980,7 @@ export type UsuarioCreateWithoutRefreshTokensInput = {
   solicitudesCreadas?: Prisma.SolicitudCreateNestedManyWithoutSolicitanteInput
   solicitudesAprobadas?: Prisma.SolicitudCreateNestedManyWithoutAprobadorInput
   solicitudesEfectuadas?: Prisma.SolicitudCreateNestedManyWithoutEfectuadorInput
+  devolucionesRegistradas?: Prisma.DevolucionCreateNestedManyWithoutUsuarioInput
 }
 
 export type UsuarioUncheckedCreateWithoutRefreshTokensInput = {
@@ -983,6 +1007,7 @@ export type UsuarioUncheckedCreateWithoutRefreshTokensInput = {
   solicitudesCreadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutSolicitanteInput
   solicitudesAprobadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutAprobadorInput
   solicitudesEfectuadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutEfectuadorInput
+  devolucionesRegistradas?: Prisma.DevolucionUncheckedCreateNestedManyWithoutUsuarioInput
 }
 
 export type UsuarioCreateOrConnectWithoutRefreshTokensInput = {
@@ -1025,6 +1050,7 @@ export type UsuarioUpdateWithoutRefreshTokensInput = {
   solicitudesCreadas?: Prisma.SolicitudUpdateManyWithoutSolicitanteNestedInput
   solicitudesAprobadas?: Prisma.SolicitudUpdateManyWithoutAprobadorNestedInput
   solicitudesEfectuadas?: Prisma.SolicitudUpdateManyWithoutEfectuadorNestedInput
+  devolucionesRegistradas?: Prisma.DevolucionUpdateManyWithoutUsuarioNestedInput
 }
 
 export type UsuarioUncheckedUpdateWithoutRefreshTokensInput = {
@@ -1051,6 +1077,7 @@ export type UsuarioUncheckedUpdateWithoutRefreshTokensInput = {
   solicitudesCreadas?: Prisma.SolicitudUncheckedUpdateManyWithoutSolicitanteNestedInput
   solicitudesAprobadas?: Prisma.SolicitudUncheckedUpdateManyWithoutAprobadorNestedInput
   solicitudesEfectuadas?: Prisma.SolicitudUncheckedUpdateManyWithoutEfectuadorNestedInput
+  devolucionesRegistradas?: Prisma.DevolucionUncheckedUpdateManyWithoutUsuarioNestedInput
 }
 
 export type UsuarioCreateWithoutCodigosRecuperacion2faInput = {
@@ -1077,6 +1104,7 @@ export type UsuarioCreateWithoutCodigosRecuperacion2faInput = {
   solicitudesCreadas?: Prisma.SolicitudCreateNestedManyWithoutSolicitanteInput
   solicitudesAprobadas?: Prisma.SolicitudCreateNestedManyWithoutAprobadorInput
   solicitudesEfectuadas?: Prisma.SolicitudCreateNestedManyWithoutEfectuadorInput
+  devolucionesRegistradas?: Prisma.DevolucionCreateNestedManyWithoutUsuarioInput
 }
 
 export type UsuarioUncheckedCreateWithoutCodigosRecuperacion2faInput = {
@@ -1103,6 +1131,7 @@ export type UsuarioUncheckedCreateWithoutCodigosRecuperacion2faInput = {
   solicitudesCreadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutSolicitanteInput
   solicitudesAprobadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutAprobadorInput
   solicitudesEfectuadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutEfectuadorInput
+  devolucionesRegistradas?: Prisma.DevolucionUncheckedCreateNestedManyWithoutUsuarioInput
 }
 
 export type UsuarioCreateOrConnectWithoutCodigosRecuperacion2faInput = {
@@ -1145,6 +1174,7 @@ export type UsuarioUpdateWithoutCodigosRecuperacion2faInput = {
   solicitudesCreadas?: Prisma.SolicitudUpdateManyWithoutSolicitanteNestedInput
   solicitudesAprobadas?: Prisma.SolicitudUpdateManyWithoutAprobadorNestedInput
   solicitudesEfectuadas?: Prisma.SolicitudUpdateManyWithoutEfectuadorNestedInput
+  devolucionesRegistradas?: Prisma.DevolucionUpdateManyWithoutUsuarioNestedInput
 }
 
 export type UsuarioUncheckedUpdateWithoutCodigosRecuperacion2faInput = {
@@ -1171,6 +1201,7 @@ export type UsuarioUncheckedUpdateWithoutCodigosRecuperacion2faInput = {
   solicitudesCreadas?: Prisma.SolicitudUncheckedUpdateManyWithoutSolicitanteNestedInput
   solicitudesAprobadas?: Prisma.SolicitudUncheckedUpdateManyWithoutAprobadorNestedInput
   solicitudesEfectuadas?: Prisma.SolicitudUncheckedUpdateManyWithoutEfectuadorNestedInput
+  devolucionesRegistradas?: Prisma.DevolucionUncheckedUpdateManyWithoutUsuarioNestedInput
 }
 
 export type UsuarioCreateWithoutAlmacenInput = {
@@ -1197,6 +1228,7 @@ export type UsuarioCreateWithoutAlmacenInput = {
   solicitudesCreadas?: Prisma.SolicitudCreateNestedManyWithoutSolicitanteInput
   solicitudesAprobadas?: Prisma.SolicitudCreateNestedManyWithoutAprobadorInput
   solicitudesEfectuadas?: Prisma.SolicitudCreateNestedManyWithoutEfectuadorInput
+  devolucionesRegistradas?: Prisma.DevolucionCreateNestedManyWithoutUsuarioInput
 }
 
 export type UsuarioUncheckedCreateWithoutAlmacenInput = {
@@ -1223,6 +1255,7 @@ export type UsuarioUncheckedCreateWithoutAlmacenInput = {
   solicitudesCreadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutSolicitanteInput
   solicitudesAprobadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutAprobadorInput
   solicitudesEfectuadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutEfectuadorInput
+  devolucionesRegistradas?: Prisma.DevolucionUncheckedCreateNestedManyWithoutUsuarioInput
 }
 
 export type UsuarioCreateOrConnectWithoutAlmacenInput = {
@@ -1275,6 +1308,7 @@ export type UsuarioCreateWithoutSolicitudesCreadasInput = {
   ventasRegistradas?: Prisma.VentaCreateNestedManyWithoutUsuarioInput
   solicitudesAprobadas?: Prisma.SolicitudCreateNestedManyWithoutAprobadorInput
   solicitudesEfectuadas?: Prisma.SolicitudCreateNestedManyWithoutEfectuadorInput
+  devolucionesRegistradas?: Prisma.DevolucionCreateNestedManyWithoutUsuarioInput
 }
 
 export type UsuarioUncheckedCreateWithoutSolicitudesCreadasInput = {
@@ -1301,6 +1335,7 @@ export type UsuarioUncheckedCreateWithoutSolicitudesCreadasInput = {
   ventasRegistradas?: Prisma.VentaUncheckedCreateNestedManyWithoutUsuarioInput
   solicitudesAprobadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutAprobadorInput
   solicitudesEfectuadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutEfectuadorInput
+  devolucionesRegistradas?: Prisma.DevolucionUncheckedCreateNestedManyWithoutUsuarioInput
 }
 
 export type UsuarioCreateOrConnectWithoutSolicitudesCreadasInput = {
@@ -1332,6 +1367,7 @@ export type UsuarioCreateWithoutSolicitudesAprobadasInput = {
   ventasRegistradas?: Prisma.VentaCreateNestedManyWithoutUsuarioInput
   solicitudesCreadas?: Prisma.SolicitudCreateNestedManyWithoutSolicitanteInput
   solicitudesEfectuadas?: Prisma.SolicitudCreateNestedManyWithoutEfectuadorInput
+  devolucionesRegistradas?: Prisma.DevolucionCreateNestedManyWithoutUsuarioInput
 }
 
 export type UsuarioUncheckedCreateWithoutSolicitudesAprobadasInput = {
@@ -1358,6 +1394,7 @@ export type UsuarioUncheckedCreateWithoutSolicitudesAprobadasInput = {
   ventasRegistradas?: Prisma.VentaUncheckedCreateNestedManyWithoutUsuarioInput
   solicitudesCreadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutSolicitanteInput
   solicitudesEfectuadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutEfectuadorInput
+  devolucionesRegistradas?: Prisma.DevolucionUncheckedCreateNestedManyWithoutUsuarioInput
 }
 
 export type UsuarioCreateOrConnectWithoutSolicitudesAprobadasInput = {
@@ -1389,6 +1426,7 @@ export type UsuarioCreateWithoutSolicitudesEfectuadasInput = {
   ventasRegistradas?: Prisma.VentaCreateNestedManyWithoutUsuarioInput
   solicitudesCreadas?: Prisma.SolicitudCreateNestedManyWithoutSolicitanteInput
   solicitudesAprobadas?: Prisma.SolicitudCreateNestedManyWithoutAprobadorInput
+  devolucionesRegistradas?: Prisma.DevolucionCreateNestedManyWithoutUsuarioInput
 }
 
 export type UsuarioUncheckedCreateWithoutSolicitudesEfectuadasInput = {
@@ -1415,6 +1453,7 @@ export type UsuarioUncheckedCreateWithoutSolicitudesEfectuadasInput = {
   ventasRegistradas?: Prisma.VentaUncheckedCreateNestedManyWithoutUsuarioInput
   solicitudesCreadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutSolicitanteInput
   solicitudesAprobadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutAprobadorInput
+  devolucionesRegistradas?: Prisma.DevolucionUncheckedCreateNestedManyWithoutUsuarioInput
 }
 
 export type UsuarioCreateOrConnectWithoutSolicitudesEfectuadasInput = {
@@ -1457,6 +1496,7 @@ export type UsuarioUpdateWithoutSolicitudesCreadasInput = {
   ventasRegistradas?: Prisma.VentaUpdateManyWithoutUsuarioNestedInput
   solicitudesAprobadas?: Prisma.SolicitudUpdateManyWithoutAprobadorNestedInput
   solicitudesEfectuadas?: Prisma.SolicitudUpdateManyWithoutEfectuadorNestedInput
+  devolucionesRegistradas?: Prisma.DevolucionUpdateManyWithoutUsuarioNestedInput
 }
 
 export type UsuarioUncheckedUpdateWithoutSolicitudesCreadasInput = {
@@ -1483,6 +1523,7 @@ export type UsuarioUncheckedUpdateWithoutSolicitudesCreadasInput = {
   ventasRegistradas?: Prisma.VentaUncheckedUpdateManyWithoutUsuarioNestedInput
   solicitudesAprobadas?: Prisma.SolicitudUncheckedUpdateManyWithoutAprobadorNestedInput
   solicitudesEfectuadas?: Prisma.SolicitudUncheckedUpdateManyWithoutEfectuadorNestedInput
+  devolucionesRegistradas?: Prisma.DevolucionUncheckedUpdateManyWithoutUsuarioNestedInput
 }
 
 export type UsuarioUpsertWithoutSolicitudesAprobadasInput = {
@@ -1520,6 +1561,7 @@ export type UsuarioUpdateWithoutSolicitudesAprobadasInput = {
   ventasRegistradas?: Prisma.VentaUpdateManyWithoutUsuarioNestedInput
   solicitudesCreadas?: Prisma.SolicitudUpdateManyWithoutSolicitanteNestedInput
   solicitudesEfectuadas?: Prisma.SolicitudUpdateManyWithoutEfectuadorNestedInput
+  devolucionesRegistradas?: Prisma.DevolucionUpdateManyWithoutUsuarioNestedInput
 }
 
 export type UsuarioUncheckedUpdateWithoutSolicitudesAprobadasInput = {
@@ -1546,6 +1588,7 @@ export type UsuarioUncheckedUpdateWithoutSolicitudesAprobadasInput = {
   ventasRegistradas?: Prisma.VentaUncheckedUpdateManyWithoutUsuarioNestedInput
   solicitudesCreadas?: Prisma.SolicitudUncheckedUpdateManyWithoutSolicitanteNestedInput
   solicitudesEfectuadas?: Prisma.SolicitudUncheckedUpdateManyWithoutEfectuadorNestedInput
+  devolucionesRegistradas?: Prisma.DevolucionUncheckedUpdateManyWithoutUsuarioNestedInput
 }
 
 export type UsuarioUpsertWithoutSolicitudesEfectuadasInput = {
@@ -1583,6 +1626,7 @@ export type UsuarioUpdateWithoutSolicitudesEfectuadasInput = {
   ventasRegistradas?: Prisma.VentaUpdateManyWithoutUsuarioNestedInput
   solicitudesCreadas?: Prisma.SolicitudUpdateManyWithoutSolicitanteNestedInput
   solicitudesAprobadas?: Prisma.SolicitudUpdateManyWithoutAprobadorNestedInput
+  devolucionesRegistradas?: Prisma.DevolucionUpdateManyWithoutUsuarioNestedInput
 }
 
 export type UsuarioUncheckedUpdateWithoutSolicitudesEfectuadasInput = {
@@ -1609,6 +1653,7 @@ export type UsuarioUncheckedUpdateWithoutSolicitudesEfectuadasInput = {
   ventasRegistradas?: Prisma.VentaUncheckedUpdateManyWithoutUsuarioNestedInput
   solicitudesCreadas?: Prisma.SolicitudUncheckedUpdateManyWithoutSolicitanteNestedInput
   solicitudesAprobadas?: Prisma.SolicitudUncheckedUpdateManyWithoutAprobadorNestedInput
+  devolucionesRegistradas?: Prisma.DevolucionUncheckedUpdateManyWithoutUsuarioNestedInput
 }
 
 export type UsuarioCreateWithoutComprasRegistradasInput = {
@@ -1635,6 +1680,7 @@ export type UsuarioCreateWithoutComprasRegistradasInput = {
   solicitudesCreadas?: Prisma.SolicitudCreateNestedManyWithoutSolicitanteInput
   solicitudesAprobadas?: Prisma.SolicitudCreateNestedManyWithoutAprobadorInput
   solicitudesEfectuadas?: Prisma.SolicitudCreateNestedManyWithoutEfectuadorInput
+  devolucionesRegistradas?: Prisma.DevolucionCreateNestedManyWithoutUsuarioInput
 }
 
 export type UsuarioUncheckedCreateWithoutComprasRegistradasInput = {
@@ -1661,6 +1707,7 @@ export type UsuarioUncheckedCreateWithoutComprasRegistradasInput = {
   solicitudesCreadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutSolicitanteInput
   solicitudesAprobadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutAprobadorInput
   solicitudesEfectuadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutEfectuadorInput
+  devolucionesRegistradas?: Prisma.DevolucionUncheckedCreateNestedManyWithoutUsuarioInput
 }
 
 export type UsuarioCreateOrConnectWithoutComprasRegistradasInput = {
@@ -1703,6 +1750,7 @@ export type UsuarioUpdateWithoutComprasRegistradasInput = {
   solicitudesCreadas?: Prisma.SolicitudUpdateManyWithoutSolicitanteNestedInput
   solicitudesAprobadas?: Prisma.SolicitudUpdateManyWithoutAprobadorNestedInput
   solicitudesEfectuadas?: Prisma.SolicitudUpdateManyWithoutEfectuadorNestedInput
+  devolucionesRegistradas?: Prisma.DevolucionUpdateManyWithoutUsuarioNestedInput
 }
 
 export type UsuarioUncheckedUpdateWithoutComprasRegistradasInput = {
@@ -1729,6 +1777,7 @@ export type UsuarioUncheckedUpdateWithoutComprasRegistradasInput = {
   solicitudesCreadas?: Prisma.SolicitudUncheckedUpdateManyWithoutSolicitanteNestedInput
   solicitudesAprobadas?: Prisma.SolicitudUncheckedUpdateManyWithoutAprobadorNestedInput
   solicitudesEfectuadas?: Prisma.SolicitudUncheckedUpdateManyWithoutEfectuadorNestedInput
+  devolucionesRegistradas?: Prisma.DevolucionUncheckedUpdateManyWithoutUsuarioNestedInput
 }
 
 export type UsuarioCreateWithoutVentasRegistradasInput = {
@@ -1755,6 +1804,7 @@ export type UsuarioCreateWithoutVentasRegistradasInput = {
   solicitudesCreadas?: Prisma.SolicitudCreateNestedManyWithoutSolicitanteInput
   solicitudesAprobadas?: Prisma.SolicitudCreateNestedManyWithoutAprobadorInput
   solicitudesEfectuadas?: Prisma.SolicitudCreateNestedManyWithoutEfectuadorInput
+  devolucionesRegistradas?: Prisma.DevolucionCreateNestedManyWithoutUsuarioInput
 }
 
 export type UsuarioUncheckedCreateWithoutVentasRegistradasInput = {
@@ -1781,6 +1831,7 @@ export type UsuarioUncheckedCreateWithoutVentasRegistradasInput = {
   solicitudesCreadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutSolicitanteInput
   solicitudesAprobadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutAprobadorInput
   solicitudesEfectuadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutEfectuadorInput
+  devolucionesRegistradas?: Prisma.DevolucionUncheckedCreateNestedManyWithoutUsuarioInput
 }
 
 export type UsuarioCreateOrConnectWithoutVentasRegistradasInput = {
@@ -1823,6 +1874,7 @@ export type UsuarioUpdateWithoutVentasRegistradasInput = {
   solicitudesCreadas?: Prisma.SolicitudUpdateManyWithoutSolicitanteNestedInput
   solicitudesAprobadas?: Prisma.SolicitudUpdateManyWithoutAprobadorNestedInput
   solicitudesEfectuadas?: Prisma.SolicitudUpdateManyWithoutEfectuadorNestedInput
+  devolucionesRegistradas?: Prisma.DevolucionUpdateManyWithoutUsuarioNestedInput
 }
 
 export type UsuarioUncheckedUpdateWithoutVentasRegistradasInput = {
@@ -1846,6 +1898,131 @@ export type UsuarioUncheckedUpdateWithoutVentasRegistradasInput = {
   codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FAUncheckedUpdateManyWithoutUsuarioNestedInput
   notificaciones?: Prisma.NotificacionUncheckedUpdateManyWithoutUsuarioNestedInput
   comprasRegistradas?: Prisma.CompraUncheckedUpdateManyWithoutUsuarioNestedInput
+  solicitudesCreadas?: Prisma.SolicitudUncheckedUpdateManyWithoutSolicitanteNestedInput
+  solicitudesAprobadas?: Prisma.SolicitudUncheckedUpdateManyWithoutAprobadorNestedInput
+  solicitudesEfectuadas?: Prisma.SolicitudUncheckedUpdateManyWithoutEfectuadorNestedInput
+  devolucionesRegistradas?: Prisma.DevolucionUncheckedUpdateManyWithoutUsuarioNestedInput
+}
+
+export type UsuarioCreateWithoutDevolucionesRegistradasInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  nombre: string
+  rol?: $Enums.RolUsuario
+  activo?: boolean
+  totpSecret?: string | null
+  totpHabilitado?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdBy?: string | null
+  updatedBy?: string | null
+  deletedAt?: Date | string | null
+  empresa: Prisma.EmpresaCreateNestedOneWithoutUsuariosInput
+  almacen?: Prisma.AlmacenCreateNestedOneWithoutUsuariosInput
+  movimientosRegistrados?: Prisma.MovimientoInventarioCreateNestedManyWithoutUsuarioInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUsuarioInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FACreateNestedManyWithoutUsuarioInput
+  notificaciones?: Prisma.NotificacionCreateNestedManyWithoutUsuarioInput
+  comprasRegistradas?: Prisma.CompraCreateNestedManyWithoutUsuarioInput
+  ventasRegistradas?: Prisma.VentaCreateNestedManyWithoutUsuarioInput
+  solicitudesCreadas?: Prisma.SolicitudCreateNestedManyWithoutSolicitanteInput
+  solicitudesAprobadas?: Prisma.SolicitudCreateNestedManyWithoutAprobadorInput
+  solicitudesEfectuadas?: Prisma.SolicitudCreateNestedManyWithoutEfectuadorInput
+}
+
+export type UsuarioUncheckedCreateWithoutDevolucionesRegistradasInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  nombre: string
+  rol?: $Enums.RolUsuario
+  activo?: boolean
+  totpSecret?: string | null
+  totpHabilitado?: boolean
+  empresaId: string
+  almacenId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  createdBy?: string | null
+  updatedBy?: string | null
+  deletedAt?: Date | string | null
+  movimientosRegistrados?: Prisma.MovimientoInventarioUncheckedCreateNestedManyWithoutUsuarioInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUsuarioInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FAUncheckedCreateNestedManyWithoutUsuarioInput
+  notificaciones?: Prisma.NotificacionUncheckedCreateNestedManyWithoutUsuarioInput
+  comprasRegistradas?: Prisma.CompraUncheckedCreateNestedManyWithoutUsuarioInput
+  ventasRegistradas?: Prisma.VentaUncheckedCreateNestedManyWithoutUsuarioInput
+  solicitudesCreadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutSolicitanteInput
+  solicitudesAprobadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutAprobadorInput
+  solicitudesEfectuadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutEfectuadorInput
+}
+
+export type UsuarioCreateOrConnectWithoutDevolucionesRegistradasInput = {
+  where: Prisma.UsuarioWhereUniqueInput
+  create: Prisma.XOR<Prisma.UsuarioCreateWithoutDevolucionesRegistradasInput, Prisma.UsuarioUncheckedCreateWithoutDevolucionesRegistradasInput>
+}
+
+export type UsuarioUpsertWithoutDevolucionesRegistradasInput = {
+  update: Prisma.XOR<Prisma.UsuarioUpdateWithoutDevolucionesRegistradasInput, Prisma.UsuarioUncheckedUpdateWithoutDevolucionesRegistradasInput>
+  create: Prisma.XOR<Prisma.UsuarioCreateWithoutDevolucionesRegistradasInput, Prisma.UsuarioUncheckedCreateWithoutDevolucionesRegistradasInput>
+  where?: Prisma.UsuarioWhereInput
+}
+
+export type UsuarioUpdateToOneWithWhereWithoutDevolucionesRegistradasInput = {
+  where?: Prisma.UsuarioWhereInput
+  data: Prisma.XOR<Prisma.UsuarioUpdateWithoutDevolucionesRegistradasInput, Prisma.UsuarioUncheckedUpdateWithoutDevolucionesRegistradasInput>
+}
+
+export type UsuarioUpdateWithoutDevolucionesRegistradasInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  rol?: Prisma.EnumRolUsuarioFieldUpdateOperationsInput | $Enums.RolUsuario
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  totpSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpHabilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  empresa?: Prisma.EmpresaUpdateOneRequiredWithoutUsuariosNestedInput
+  almacen?: Prisma.AlmacenUpdateOneWithoutUsuariosNestedInput
+  movimientosRegistrados?: Prisma.MovimientoInventarioUpdateManyWithoutUsuarioNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUsuarioNestedInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FAUpdateManyWithoutUsuarioNestedInput
+  notificaciones?: Prisma.NotificacionUpdateManyWithoutUsuarioNestedInput
+  comprasRegistradas?: Prisma.CompraUpdateManyWithoutUsuarioNestedInput
+  ventasRegistradas?: Prisma.VentaUpdateManyWithoutUsuarioNestedInput
+  solicitudesCreadas?: Prisma.SolicitudUpdateManyWithoutSolicitanteNestedInput
+  solicitudesAprobadas?: Prisma.SolicitudUpdateManyWithoutAprobadorNestedInput
+  solicitudesEfectuadas?: Prisma.SolicitudUpdateManyWithoutEfectuadorNestedInput
+}
+
+export type UsuarioUncheckedUpdateWithoutDevolucionesRegistradasInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  nombre?: Prisma.StringFieldUpdateOperationsInput | string
+  rol?: Prisma.EnumRolUsuarioFieldUpdateOperationsInput | $Enums.RolUsuario
+  activo?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  totpSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  totpHabilitado?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  empresaId?: Prisma.StringFieldUpdateOperationsInput | string
+  almacenId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  updatedBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  movimientosRegistrados?: Prisma.MovimientoInventarioUncheckedUpdateManyWithoutUsuarioNestedInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUsuarioNestedInput
+  codigosRecuperacion2fa?: Prisma.CodigoRecuperacion2FAUncheckedUpdateManyWithoutUsuarioNestedInput
+  notificaciones?: Prisma.NotificacionUncheckedUpdateManyWithoutUsuarioNestedInput
+  comprasRegistradas?: Prisma.CompraUncheckedUpdateManyWithoutUsuarioNestedInput
+  ventasRegistradas?: Prisma.VentaUncheckedUpdateManyWithoutUsuarioNestedInput
   solicitudesCreadas?: Prisma.SolicitudUncheckedUpdateManyWithoutSolicitanteNestedInput
   solicitudesAprobadas?: Prisma.SolicitudUncheckedUpdateManyWithoutAprobadorNestedInput
   solicitudesEfectuadas?: Prisma.SolicitudUncheckedUpdateManyWithoutEfectuadorNestedInput
@@ -1875,6 +2052,7 @@ export type UsuarioCreateWithoutMovimientosRegistradosInput = {
   solicitudesCreadas?: Prisma.SolicitudCreateNestedManyWithoutSolicitanteInput
   solicitudesAprobadas?: Prisma.SolicitudCreateNestedManyWithoutAprobadorInput
   solicitudesEfectuadas?: Prisma.SolicitudCreateNestedManyWithoutEfectuadorInput
+  devolucionesRegistradas?: Prisma.DevolucionCreateNestedManyWithoutUsuarioInput
 }
 
 export type UsuarioUncheckedCreateWithoutMovimientosRegistradosInput = {
@@ -1901,6 +2079,7 @@ export type UsuarioUncheckedCreateWithoutMovimientosRegistradosInput = {
   solicitudesCreadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutSolicitanteInput
   solicitudesAprobadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutAprobadorInput
   solicitudesEfectuadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutEfectuadorInput
+  devolucionesRegistradas?: Prisma.DevolucionUncheckedCreateNestedManyWithoutUsuarioInput
 }
 
 export type UsuarioCreateOrConnectWithoutMovimientosRegistradosInput = {
@@ -1943,6 +2122,7 @@ export type UsuarioUpdateWithoutMovimientosRegistradosInput = {
   solicitudesCreadas?: Prisma.SolicitudUpdateManyWithoutSolicitanteNestedInput
   solicitudesAprobadas?: Prisma.SolicitudUpdateManyWithoutAprobadorNestedInput
   solicitudesEfectuadas?: Prisma.SolicitudUpdateManyWithoutEfectuadorNestedInput
+  devolucionesRegistradas?: Prisma.DevolucionUpdateManyWithoutUsuarioNestedInput
 }
 
 export type UsuarioUncheckedUpdateWithoutMovimientosRegistradosInput = {
@@ -1969,6 +2149,7 @@ export type UsuarioUncheckedUpdateWithoutMovimientosRegistradosInput = {
   solicitudesCreadas?: Prisma.SolicitudUncheckedUpdateManyWithoutSolicitanteNestedInput
   solicitudesAprobadas?: Prisma.SolicitudUncheckedUpdateManyWithoutAprobadorNestedInput
   solicitudesEfectuadas?: Prisma.SolicitudUncheckedUpdateManyWithoutEfectuadorNestedInput
+  devolucionesRegistradas?: Prisma.DevolucionUncheckedUpdateManyWithoutUsuarioNestedInput
 }
 
 export type UsuarioCreateWithoutNotificacionesInput = {
@@ -1995,6 +2176,7 @@ export type UsuarioCreateWithoutNotificacionesInput = {
   solicitudesCreadas?: Prisma.SolicitudCreateNestedManyWithoutSolicitanteInput
   solicitudesAprobadas?: Prisma.SolicitudCreateNestedManyWithoutAprobadorInput
   solicitudesEfectuadas?: Prisma.SolicitudCreateNestedManyWithoutEfectuadorInput
+  devolucionesRegistradas?: Prisma.DevolucionCreateNestedManyWithoutUsuarioInput
 }
 
 export type UsuarioUncheckedCreateWithoutNotificacionesInput = {
@@ -2021,6 +2203,7 @@ export type UsuarioUncheckedCreateWithoutNotificacionesInput = {
   solicitudesCreadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutSolicitanteInput
   solicitudesAprobadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutAprobadorInput
   solicitudesEfectuadas?: Prisma.SolicitudUncheckedCreateNestedManyWithoutEfectuadorInput
+  devolucionesRegistradas?: Prisma.DevolucionUncheckedCreateNestedManyWithoutUsuarioInput
 }
 
 export type UsuarioCreateOrConnectWithoutNotificacionesInput = {
@@ -2063,6 +2246,7 @@ export type UsuarioUpdateWithoutNotificacionesInput = {
   solicitudesCreadas?: Prisma.SolicitudUpdateManyWithoutSolicitanteNestedInput
   solicitudesAprobadas?: Prisma.SolicitudUpdateManyWithoutAprobadorNestedInput
   solicitudesEfectuadas?: Prisma.SolicitudUpdateManyWithoutEfectuadorNestedInput
+  devolucionesRegistradas?: Prisma.DevolucionUpdateManyWithoutUsuarioNestedInput
 }
 
 export type UsuarioUncheckedUpdateWithoutNotificacionesInput = {
@@ -2089,6 +2273,7 @@ export type UsuarioUncheckedUpdateWithoutNotificacionesInput = {
   solicitudesCreadas?: Prisma.SolicitudUncheckedUpdateManyWithoutSolicitanteNestedInput
   solicitudesAprobadas?: Prisma.SolicitudUncheckedUpdateManyWithoutAprobadorNestedInput
   solicitudesEfectuadas?: Prisma.SolicitudUncheckedUpdateManyWithoutEfectuadorNestedInput
+  devolucionesRegistradas?: Prisma.DevolucionUncheckedUpdateManyWithoutUsuarioNestedInput
 }
 
 export type UsuarioCreateManyEmpresaInput = {
@@ -2132,6 +2317,7 @@ export type UsuarioUpdateWithoutEmpresaInput = {
   solicitudesCreadas?: Prisma.SolicitudUpdateManyWithoutSolicitanteNestedInput
   solicitudesAprobadas?: Prisma.SolicitudUpdateManyWithoutAprobadorNestedInput
   solicitudesEfectuadas?: Prisma.SolicitudUpdateManyWithoutEfectuadorNestedInput
+  devolucionesRegistradas?: Prisma.DevolucionUpdateManyWithoutUsuarioNestedInput
 }
 
 export type UsuarioUncheckedUpdateWithoutEmpresaInput = {
@@ -2158,6 +2344,7 @@ export type UsuarioUncheckedUpdateWithoutEmpresaInput = {
   solicitudesCreadas?: Prisma.SolicitudUncheckedUpdateManyWithoutSolicitanteNestedInput
   solicitudesAprobadas?: Prisma.SolicitudUncheckedUpdateManyWithoutAprobadorNestedInput
   solicitudesEfectuadas?: Prisma.SolicitudUncheckedUpdateManyWithoutEfectuadorNestedInput
+  devolucionesRegistradas?: Prisma.DevolucionUncheckedUpdateManyWithoutUsuarioNestedInput
 }
 
 export type UsuarioUncheckedUpdateManyWithoutEmpresaInput = {
@@ -2218,6 +2405,7 @@ export type UsuarioUpdateWithoutAlmacenInput = {
   solicitudesCreadas?: Prisma.SolicitudUpdateManyWithoutSolicitanteNestedInput
   solicitudesAprobadas?: Prisma.SolicitudUpdateManyWithoutAprobadorNestedInput
   solicitudesEfectuadas?: Prisma.SolicitudUpdateManyWithoutEfectuadorNestedInput
+  devolucionesRegistradas?: Prisma.DevolucionUpdateManyWithoutUsuarioNestedInput
 }
 
 export type UsuarioUncheckedUpdateWithoutAlmacenInput = {
@@ -2244,6 +2432,7 @@ export type UsuarioUncheckedUpdateWithoutAlmacenInput = {
   solicitudesCreadas?: Prisma.SolicitudUncheckedUpdateManyWithoutSolicitanteNestedInput
   solicitudesAprobadas?: Prisma.SolicitudUncheckedUpdateManyWithoutAprobadorNestedInput
   solicitudesEfectuadas?: Prisma.SolicitudUncheckedUpdateManyWithoutEfectuadorNestedInput
+  devolucionesRegistradas?: Prisma.DevolucionUncheckedUpdateManyWithoutUsuarioNestedInput
 }
 
 export type UsuarioUncheckedUpdateManyWithoutAlmacenInput = {
@@ -2278,6 +2467,7 @@ export type UsuarioCountOutputType = {
   solicitudesCreadas: number
   solicitudesAprobadas: number
   solicitudesEfectuadas: number
+  devolucionesRegistradas: number
 }
 
 export type UsuarioCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2290,6 +2480,7 @@ export type UsuarioCountOutputTypeSelect<ExtArgs extends runtime.Types.Extension
   solicitudesCreadas?: boolean | UsuarioCountOutputTypeCountSolicitudesCreadasArgs
   solicitudesAprobadas?: boolean | UsuarioCountOutputTypeCountSolicitudesAprobadasArgs
   solicitudesEfectuadas?: boolean | UsuarioCountOutputTypeCountSolicitudesEfectuadasArgs
+  devolucionesRegistradas?: boolean | UsuarioCountOutputTypeCountDevolucionesRegistradasArgs
 }
 
 /**
@@ -2365,6 +2556,13 @@ export type UsuarioCountOutputTypeCountSolicitudesEfectuadasArgs<ExtArgs extends
   where?: Prisma.SolicitudWhereInput
 }
 
+/**
+ * UsuarioCountOutputType without action
+ */
+export type UsuarioCountOutputTypeCountDevolucionesRegistradasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DevolucionWhereInput
+}
+
 
 export type UsuarioSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -2393,6 +2591,7 @@ export type UsuarioSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   solicitudesCreadas?: boolean | Prisma.Usuario$solicitudesCreadasArgs<ExtArgs>
   solicitudesAprobadas?: boolean | Prisma.Usuario$solicitudesAprobadasArgs<ExtArgs>
   solicitudesEfectuadas?: boolean | Prisma.Usuario$solicitudesEfectuadasArgs<ExtArgs>
+  devolucionesRegistradas?: boolean | Prisma.Usuario$devolucionesRegistradasArgs<ExtArgs>
   _count?: boolean | Prisma.UsuarioCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["usuario"]>
 
@@ -2467,6 +2666,7 @@ export type UsuarioInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   solicitudesCreadas?: boolean | Prisma.Usuario$solicitudesCreadasArgs<ExtArgs>
   solicitudesAprobadas?: boolean | Prisma.Usuario$solicitudesAprobadasArgs<ExtArgs>
   solicitudesEfectuadas?: boolean | Prisma.Usuario$solicitudesEfectuadasArgs<ExtArgs>
+  devolucionesRegistradas?: boolean | Prisma.Usuario$devolucionesRegistradasArgs<ExtArgs>
   _count?: boolean | Prisma.UsuarioCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UsuarioIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2492,6 +2692,7 @@ export type $UsuarioPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     solicitudesCreadas: Prisma.$SolicitudPayload<ExtArgs>[]
     solicitudesAprobadas: Prisma.$SolicitudPayload<ExtArgs>[]
     solicitudesEfectuadas: Prisma.$SolicitudPayload<ExtArgs>[]
+    devolucionesRegistradas: Prisma.$DevolucionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2914,6 +3115,7 @@ export interface Prisma__UsuarioClient<T, Null = never, ExtArgs extends runtime.
   solicitudesCreadas<T extends Prisma.Usuario$solicitudesCreadasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Usuario$solicitudesCreadasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SolicitudPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   solicitudesAprobadas<T extends Prisma.Usuario$solicitudesAprobadasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Usuario$solicitudesAprobadasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SolicitudPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   solicitudesEfectuadas<T extends Prisma.Usuario$solicitudesEfectuadasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Usuario$solicitudesEfectuadasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SolicitudPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  devolucionesRegistradas<T extends Prisma.Usuario$devolucionesRegistradasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Usuario$devolucionesRegistradasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DevolucionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3591,6 +3793,30 @@ export type Usuario$solicitudesEfectuadasArgs<ExtArgs extends runtime.Types.Exte
   take?: number
   skip?: number
   distinct?: Prisma.SolicitudScalarFieldEnum | Prisma.SolicitudScalarFieldEnum[]
+}
+
+/**
+ * Usuario.devolucionesRegistradas
+ */
+export type Usuario$devolucionesRegistradasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Devolucion
+   */
+  select?: Prisma.DevolucionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Devolucion
+   */
+  omit?: Prisma.DevolucionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DevolucionInclude<ExtArgs> | null
+  where?: Prisma.DevolucionWhereInput
+  orderBy?: Prisma.DevolucionOrderByWithRelationInput | Prisma.DevolucionOrderByWithRelationInput[]
+  cursor?: Prisma.DevolucionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DevolucionScalarFieldEnum | Prisma.DevolucionScalarFieldEnum[]
 }
 
 /**
