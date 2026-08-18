@@ -1,14 +1,46 @@
-node_modules
-dist
+# ==========================================
+# Dependencias y Compilaciones (Global y por carpetas)
+# ==========================================
+node_modules/
+backend/node_modules/
+frontend/node_modules/
 
-# Variables de entorno (nunca versionar secretos/credenciales)
+dist/
+backend/dist/
+frontend/dist/
+
+# ==========================================
+# Variables de Entorno y Datos Sensibles
+# ==========================================
 .env
-.env.test
+backend/.env
+backend/.env.test
+frontend/.env.development
 
-# Cliente Prisma generado (se regenera con `npx prisma generate`)
-src/generated/prisma
-
-# Logs
-*.log
+# Archivos de credenciales específicos en la raíz
 credenciales.txt
+
+# ==========================================
+# Prisma (Backend)
+# ==========================================
+# Cliente autogenerado (si lo configuraste en esa ruta interna)
+backend/src/generated/prisma/
+
+# Base de datos local SQLite (por si acaso la usas en desarrollo)
+backend/prisma/*.db
+backend/prisma/*.db-journal
+
+# ==========================================
+# Herramientas, Logs y Caché
+# ==========================================
+*.log
+npm-debug.log*
 .claude/
+.vite/
+.parcel-cache/
+
+# ==========================================
+# Sistema Operativo
+# ==========================================
+.DS_Store
+Thumbs.db
